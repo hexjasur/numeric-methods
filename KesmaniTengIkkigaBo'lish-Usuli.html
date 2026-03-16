@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kesishma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+</head>
+
+<body class="bg-slate-900 min-h-screen flex items-center justify-center p-4 text-slate-200">
+
+    <div class="bg-slate-800 shadow-2xl rounded-2xl w-full max-w-3xl overflow-hidden border border-slate-700">
+        <div class="bg-gradient-to-r from-indigo-600 to-blue-500 p-6">
+            <h1 class="text-2xl font-black text-white text-center uppercase tracking-tighter">Matematik Solver</h1>
+            <p class="text-indigo-100 text-center text-sm opacity-80">Kesmani Teng ikkiga bo'lish usuli orqali ildizni topish</p>
+        </div>
+
+        <div class="p-6 space-y-6">
+            <div class="space-y-2">
+                <label class="text-xs font-bold uppercase text-slate-400">Funksiyani kiriting (f(x)):</label>
+                <input type="text" id="equation" value="x - 1 - sin(x)/10"
+                    class="w-full bg-slate-900 border border-slate-700 p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-indigo-400 font-mono text-lg"
+                    placeholder="Masalan: x^2 - log(x)">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase text-slate-500 text-center block">Boshlang'ich
+                        (a)</label>
+                    <input type="number" id="inputA" value="1" step="0.1"
+                        class="w-full bg-slate-900 border border-slate-700 p-2 rounded focus:border-indigo-500 outline-none text-center">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase text-slate-500 text-center block">Yakuniy (b)</label>
+                    <input type="number" id="inputB" value="2" step="0.1"
+                        class="w-full bg-slate-900 border border-slate-700 p-2 rounded focus:border-indigo-500 outline-none text-center">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase text-slate-500 text-center block">Aniqlik (ε)</label>
+                    <input type="number" id="inputEps" value="0.01" step="0.001"
+                        class="w-full bg-slate-900 border border-slate-700 p-2 rounded focus:border-indigo-500 outline-none text-center">
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="calculate()"
+                    class="flex-1 bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all active:scale-95 shadow-lg shadow-indigo-900/20">HISOBLASH</button>
+                <button onclick="reset()"
+                    class="px-6 bg-slate-700 hover:bg-slate-600 py-3 rounded-xl font-bold transition-all">TOZALASH</button>
+            </div>
+
+            <div class="space-y-4 pt-4 border-t border-slate-700">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="font-bold text-slate-400 uppercase tracking-widest">Iteratsiyalar jadvali</span>
+                    <span id="iterCount"
+                        class="bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded border border-indigo-500/20 text-xs">0
+                        qadam</span>
+                </div>
+
+                <div id="logs"
+                    class="bg-black/50 border border-slate-700 rounded-xl p-4 h-60 overflow-y-auto font-mono text-[11px] space-y-1 scrollbar-thin scrollbar-thumb-slate-700">
+                    <span class="text-slate-600 italic">Hisoblashni boshlash uchun tugmani bosing...</span>
+                </div>
+
+                <div id="resultCard" class="hidden transform transition-all scale-100">
+                    <div
+                        class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <p class="text-[10px] font-bold text-indigo-400 uppercase">Topilgan ildiz</p>
+                            <h2 id="finalX" class="text-3xl font-black text-white">1.0859</h2>
+                        </div>
+                        <div class="text-right border-l border-indigo-500/20 pl-4 hidden md:block">
+                            <p class="text-[10px] font-bold text-slate-500 uppercase">Qoldiq f(x)</p>
+                            <p id="finalF" class="text-sm font-mono text-indigo-300">0.0001</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="p-4 bg-slate-900/50 text-center text-[9px] text-slate-600 uppercase tracking-[0.2em]">
+            &copy; 2026 Jasurbek Haydarov Software
+        </footer>
+    </div>
+
+    <script>
+        function reset() {
+            location.reload();
+        }
+
+        function calculate() {
+            const exprStr = document.getElementById('equation').value;
+            const a_in = parseFloat(document.getElementById('inputA').value);
+            const b_in = parseFloat(document.getElementById('inputB').value);
+            const eps = parseFloat(document.getElementById('inputEps').value);
+            const logBox = document.getElementById('logs');
+            const resultCard = document.getElementById('resultCard');
+
+            logBox.innerHTML = "";
+
+            try {
+                // Funksiyani x ga nisbatan kompilyatsiya qilish
+                const node = math.parse(exprStr);
+                const code = node.compile();
+
+                const f = (xVal) => code.evaluate({ x: xVal });
+
+                let a = a_in;
+                let b = b_in;
+
+                // 1. Dastlabki tekshiruv (Interval aniqlanganmi?)
+                if (f(a) * f(b) > 0) {
+                    logBox.innerHTML = `<span class="text-red-500 font-bold">[XATOLIK]</span> f(a) va f(b) ishoralari bir xil (${f(a).toFixed(2)} va ${f(b).toFixed(2)}). Bu oraliqda ildiz yo'q yoki juft sonda!`;
+                    return;
+                }
+
+                let iteration = 0;
+                let c;
+
+                while ((b - a) / 2 > eps) {
+                    iteration++;
+                    c = (a + b) / 2;
+                    let fc = f(c);
+
+                    // Listga chiqarish
+                    const row = document.createElement('div');
+                    row.className = "hover:bg-indigo-500/5 p-1 rounded transition-colors border-b border-slate-800/50";
+                    row.innerHTML = `
+                        <span class="text-indigo-500 font-bold">#${iteration}</span> 
+                        <span class="text-slate-400">x:</span> <span class="text-white">${c.toFixed(6)}</span> | 
+                        <span class="text-slate-400">f(x):</span> <span class="${fc >= 0 ? 'text-green-400' : 'text-orange-400'}">${fc.toFixed(6)}</span> | 
+                        <span class="text-[9px] text-slate-500">Range: [${a.toFixed(4)}, ${b.toFixed(4)}]</span>
+                    `;
+                    logBox.appendChild(row);
+
+                    if (Math.abs(fc) < 1e-12) break;
+
+                    if (f(a) * fc < 0) {
+                        b = c;
+                    } else {
+                        a = c;
+                    }
+                }
+
+                // Yakuniy natija
+                const resX = (a + b) / 2;
+                document.getElementById('finalX').innerText = resX.toFixed(6);
+                document.getElementById('finalF').innerText = f(resX).toFixed(10);
+                document.getElementById('iterCount').innerText = `${iteration} qadam`;
+                resultCard.classList.remove('hidden');
+
+                logBox.scrollTop = logBox.scrollHeight;
+
+            } catch (err) {
+                logBox.innerHTML = `<span class="text-red-500 font-bold">[FORMULA XATO]</span> Misolni kiritishda xatolik: ${err.message}`;
+            }
+        }
+    </script>
+</body>
+
+</html>

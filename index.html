@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonli Usullar | Haydarov Jasurbek</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
+
+    body {
+      background-color: #f8fafc;
+      font-family: 'JetBrains+Mono', monospace;
+      color: #0f172a;
+    }
+
+    .cyber-header {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+      border-bottom: 5px solid #00f2ff;
+      background: white;
+    }
+
+    .cyber-card {
+      background: white;
+      border: 2px solid #000;
+      box-shadow: 6px 6px 0px #00f2ff;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    }
+
+    .cyber-button {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #00f2ff;
+      color: #000;
+      border: 1px solid #000;
+    }
+
+    .cyber-button:hover {
+      background: #ff00ea;
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 0, 234, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 280px;
+      background: white;
+      border-right: 2px solid #000;
+      box-shadow: 6px 0 20px rgba(0,0,0,0.1);
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 50;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+      border-bottom: 2px solid #000;
+      padding: 20px;
+      background: #f8fafc;
+    }
+
+    .sidebar-menu {
+      padding: 20px;
+    }
+
+    .sidebar-item {
+      display: block;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      background: #f1f5f9;
+      border: 1px solid #000;
+      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+
+    .sidebar-item:hover {
+      background: #e2e8f0;
+      transform: translateX(4px);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 40;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .main-content {
+      margin-left: 0;
+      transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .main-content.shifted {
+      margin-left: 280px;
+    }
+
+    @media (min-width: 1024px) {
+      .sidebar {
+        transform: translateX(0);
+      }
+      .main-content {
+        margin-left: 280px;
+      }
+      .overlay {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3 class="text-xl font-black">MENU</h3>
+      <p class="text-xs text-gray-600 mt-1">Sonli Usullar</p>
+    </div>
+    <div class="sidebar-menu">
+      <a href="Iteratsiya-Usuli.html" class="sidebar-item">ITERATSIYA USULI</a>
+      <a href="KesmaniTengIkkigaBo'lish-Usuli.html" class="sidebar-item">KESMANI TENG IKKIGA BO'lish</a>
+      <a href="FunksiyaKesishishNuqtasiAniqlash.html" class="sidebar-item">FUNKSIYA KESISHISH NUQTA</a>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <header class="cyber-header p-8 mb-12 text-center shadow-sm">
+      <h1 class="text-4xl font-black tracking-widest text-black">SONLI USULLAR v2.1</h1>
+      <p class="text-xs font-bold text-cyan-600 mt-2 uppercase tracking-widest">Qarshi Davlat Universiteti | Kompyuter ilmlari Fakulteti <br>Amaliy Matematika</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <div class="cyber-card p-6">
+        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+          <span class="mr-2">⚡</span> LOYIHA
+        </h3>
+        <div class="space-y-2 text-sm font-bold">
+          <p class="flex justify-between"><span>Maqsad:</span> <span class="text-cyan-600">Sonli usullarni o'rganish</span></p>
+          <p class="flex justify-between"><span>Yaratuvchi:</span> <span class="text-magenta-600">Haydarov Jasurbek</span></p>
+          <p class="flex justify-between"><span>Guruh:</span> <span class="text-cyan-600">023-40</span></p>
+          <p class="flex justify-between"><span>Yil:</span> <span class="text-magenta-600">2026</span></p>
+        </div>
+      </div>
+
+      <div class="cyber-card p-6 lg:col-span-2">
+        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+          <span class="mr-2">👤</span> BOSHQARUV PANELI
+        </h3>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <p class="text-2xl font-black text-black">JASURBEK HAYDAROV</p>
+            <p class="text-sm text-gray-500 font-bold">Sonli usullar faniga qo'shgan hissasi</p>
+            <p class="text-xs mt-3 leading-relaxed max-w-md">
+              Ushbu loyiha QarDU talabasi tomonidan sonli usullar fanini o'rganish va amaliyot qilish maqsadida yaratildi.
+              Har bir usul alohida HTML faylda bajarilgan.
+            </p>
+          </div>
+          <button onclick="toggleSidebar()" class="cyber-button px-12 py-4 font-black text-lg">MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <a href="Iteratsiya-Usuli.html" class="cyber-card p-6 hover:shadow-lg transition-shadow">
+        <h4 class="font-black text-lg mb-2">ITERATSIYA USULI</h4>
+        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish</p>
+        <div class="mt-4 text-xs text-cyan-600 font-bold">BATAFSIL →</div>
+      </a>
+
+      <a href="KesmaniTengIkkigaBo'lish-Usuli.html" class="cyber-card p-6 hover:shadow-lg transition-shadow">
+        <h4 class="font-black text-lg mb-2">KESMANI TENG IKKIGA BO'lish</h4>
+        <p class="text-sm text-gray-600">Oraliqni qisqartirish orqali ildizni topish</p>
+        <div class="mt-4 text-xs text-cyan-600 font-bold">BATAFSIL →</div>
+      </a>
+
+      <a href="FunksiyaKesishishNuqtasiAniqlash.html" class="cyber-card p-6 hover:shadow-lg transition-shadow">
+        <h4 class="font-black text-lg mb-2">FUNKSIYA KESISHISH NUQTA</h4>
+        <p class="text-sm text-gray-600">Grafik usulda kesishish nuqtalarini aniqlash</p>
+        <div class="mt-4 text-xs text-cyan-600 font-bold">BATAFSIL →</div>
+      </a>
+    </div>
+
+    <footer class="mt-24 text-center">
+      <div class="inline-block border-t-2 border-black pt-4 px-10">
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+          © 2026 Qarshi Davlat Universiteti | Haydarov Jasurbek
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const main = document.getElementById('main-content');
+      
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+      main.classList.toggle('shifted');
+    }
+
+    // Close sidebar when clicking overlay
+    document.getElementById('overlay').addEventListener('click', toggleSidebar);
+  </script>
+</body>
+</html>

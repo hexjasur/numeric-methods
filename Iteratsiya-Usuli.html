@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iteratsiya Lab | Haydarov Jasurbek</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
+
+    body {
+      background-color: #f8fafc;
+      font-family: 'JetBrains+Mono', monospace;
+      color: #0f172a;
+    }
+
+    .cyber-header {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+      border-bottom: 5px solid #00f2ff;
+      background: white;
+    }
+
+    .cyber-card {
+      background: white;
+      border: 2px solid #000;
+      box-shadow: 6px 6px 0px #00f2ff;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    }
+
+    .cyber-button {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #00f2ff;
+      color: #000;
+      border: 1px solid #000;
+    }
+
+    .cyber-button:hover {
+      background: #ff00ea;
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 0, 234, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .step-box {
+      border-left: 6px solid #ff00ea;
+      background: linear-gradient(90deg, rgba(255, 0, 234, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    .success-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #dcfce7;
+      color: #166534;
+      padding: 4px 12px;
+      border: 1px solid #166534;
+      font-weight: bold;
+      clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
+    }
+  </style>
+</head>
+
+<body class="p-4 md:p-8">
+
+  <div class="max-w-5xl mx-auto">
+    <header class="cyber-header p-8 mb-12 text-center shadow-sm">
+      <h1 class="text-4xl font-black tracking-widest text-black">ITERATSIYA USULI v2.1</h1>
+      <p class="text-xs font-bold text-cyan-600 mt-2 uppercase tracking-widest">Qarshi Davlat Universiteti |
+        Kompyuter ilmlari Fakulteti <br>Amaliy Matematika</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <div class="cyber-card p-6">
+        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+          <span class="mr-2">⚡</span> ANALIZ
+        </h3>
+        <div id="math-equation" class="my-6 text-xl"></div>
+        <div class="space-y-2 text-sm font-bold">
+          <p class="flex justify-between"><span>Oraliq:</span> <span class="text-cyan-600">[1, 2]</span></p>
+          <p class="flex justify-between"><span>Aniqlik:</span> <span class="text-magenta-600">ε = 0.01</span></p>
+        </div>
+      </div>
+
+      <div class="cyber-card p-6 lg:col-span-2">
+        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+          <span class="mr-2">👤</span> SYSTEM OPERATOR
+        </h3>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <p class="text-2xl font-black text-black">JASURBEK HAYDAROV</p>
+            <p class="text-sm text-gray-500 font-bold">Guruh: 023-40 | 2026-yil</p>
+            <p class="text-xs mt-3 leading-relaxed max-w-md">
+              Dastur QarDU talabasi tomonidan sonli usullarni fani uchun tayyorlandi.
+              <span class="text-magenta-600">Iteration</span> algoritmi orqali yechish uchun ishlab
+              chiqildi.
+            </p>
+          </div>
+          <button onclick="solve()" class="cyber-button px-12 py-4 font-black text-lg">HISOBLASH</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="display-area" class="hidden space-y-8">
+      <div class="flex items-center gap-4">
+        <h2 class="font-black text-2xl uppercase tracking-tighter">Ishlanish bosqichlari</h2>
+        <div class="h-1 bg-black flex-grow"></div>
+      </div>
+
+      <div id="steps-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+      <div id="final-card" class="mt-12 cyber-card p-8 bg-white border-black hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h4 class="font-black text-gray-500 text-sm uppercase mb-2">Algoritm yakuni:</h4>
+            <div id="result-math" class="text-4xl font-black"></div>
+          </div>
+          <div id="check-logic" class="p-6 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="mt-24 text-center">
+      <div class="inline-block border-t-2 border-black pt-4 px-10">
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+          © 2026 Qarshi Davlat Universiteti | Haydarov Jasurbek
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    window.onload = function () {
+      katex.render("f(x) = x - 1 - \\frac{\\sin(x)}{10} = 0", document.getElementById('math-equation'));
+    };
+
+    function solve() {
+      const container = document.getElementById('steps-container');
+      const displayArea = document.getElementById('display-area');
+      const finalCard = document.getElementById('final-card');
+      const checkLogic = document.getElementById('check-logic');
+
+      container.innerHTML = '';
+      displayArea.classList.remove('hidden');
+
+      let x_k = 1.5;
+      const epsilon = 0.01;
+      let diff = 1;
+      let k = 0;
+
+      while (diff > epsilon && k < 12) {
+        let x_next = 1 + (Math.sin(x_k) / 10);
+        diff = Math.abs(x_next - x_k);
+        k++;
+
+        const stepDiv = document.createElement('div');
+        stepDiv.className = "cyber-card p-5 step-box";
+
+        const header = `
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-[10px] font-black bg-black text-white px-2 py-1">STEP_0${k}</span>
+            <span class="text-[10px] font-bold text-gray-400">STATUS: COMPUTING</span>
+          </div>
+        `;
+
+        const mathContent = document.createElement('div');
+        mathContent.className = "text-sm md:text-base";
+        const formula = `x_{${k}} = 1 + \\frac{\\sin(${x_k.toFixed(5)})}{10} = ${x_next.toFixed(6)}`;
+
+        stepDiv.innerHTML = header;
+        stepDiv.appendChild(mathContent);
+        katex.render(formula, mathContent);
+
+        const errorLabel = document.createElement('div');
+        errorLabel.className = "mt-4 text-[10px] font-bold text-magenta-600 uppercase";
+        errorLabel.innerHTML = `Delta: ${diff.toFixed(6)}`;
+        stepDiv.appendChild(errorLabel);
+
+        container.appendChild(stepDiv);
+
+        if (diff < epsilon) {
+          finalCard.classList.remove('hidden');
+          katex.render(`\\xi \\approx ${x_next.toFixed(5)}`, document.getElementById('result-math'));
+
+          // Shartni tekshirish qismi (Siz so'ragan joyi)
+          checkLogic.innerHTML = `
+            <p class="text-xs font-bold text-gray-500 mb-2 uppercase">Tekshirish (Stopping Condition):</p>
+            <div id="logic-math" class="text-xl mb-3"></div>
+            <div class="success-badge">
+              <span class="mr-2">✔</span> SHART BAJARILDI: SYSTEM_READY
+            </div>
+          `;
+
+          katex.render(`|x_{${k}} - x_{${k - 1}}| < \\epsilon \\implies ${diff.toFixed(6)} < ${epsilon}`, document.getElementById('logic-math'));
+          break;
+        }
+        x_k = x_next;
+      }
+    }
+  </script>
+</body>
+
+</html>
