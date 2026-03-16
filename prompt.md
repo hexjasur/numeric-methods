@@ -1,3 +1,8 @@
+## Kesmani teng ikkiga bo'lish usuli uchun to‘liq misol ishlanishi
+```
+test 111
+```
+
 ## Iteratsiya Usuli uchun to‘liq misol ishlanishi
 
 ```text

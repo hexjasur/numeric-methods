@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Viewer | Haydarov Jasurbek</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
+
+    body {
+      background-color: #f8fafc;
+      font-family: 'JetBrains+Mono', monospace;
+      color: #0f172a;
+    }
+
+    .cyber-header {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+      border-bottom: 5px solid #00f2ff;
+      background: white;
+    }
+
+    .cyber-card {
+      background: white;
+      border: 2px solid #000;
+      box-shadow: 6px 6px 0px #00f2ff;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    }
+
+    .cyber-button {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #00f2ff;
+      color: #000;
+      border: 1px solid #000;
+    }
+
+    .cyber-button:hover {
+      background: #ff00ea;
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 0, 234, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .code-block {
+      background: #0f172a;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .step-number {
+      background: #00f2ff;
+      color: #000;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+    }
+
+    .math-formula {
+      background: #f1f5f9;
+      border-left: 4px solid #00f2ff;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 4px;
+    }
+
+    .highlight-box {
+      background: linear-gradient(90deg, rgba(255, 0, 234, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+      border-left: 4px solid #ff00ea;
+      padding: 16px;
+      margin: 16px 0;
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+
+  <div class="max-w-6xl mx-auto">
+    <header class="cyber-header p-8 mb-12 text-center shadow-sm">
+      <h1 class="text-4xl font-black tracking-widest text-black">PROMPT VIEWER</h1>
+      <p class="text-xs font-bold text-cyan-600 mt-2 uppercase tracking-widest">Haydarov Jasurbek | Sonli Usullar</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+      <div class="cyber-card p-6 lg:col-span-1">
+        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+          <span class="mr-2">📋</span> NAVIGATSIYA
+        </h3>
+        <div class="space-y-3">
+          <a href="index.html" class="block cyber-button px-4 py-2 text-sm">ASOSIY SAHIFA</a>
+          <a href="Iteratsiya-Usuli.html" class="block cyber-button px-4 py-2 text-sm">ITERATSIYA USULI</a>
+          <a href="KesmaniTengIkkigaBo'lish-Usuli.html" class="block cyber-button px-4 py-2 text-sm">KESMANI TENG IKKIGA BO'lish</a>
+          <a href="FunksiyaKesishishNuqtasiAniqlash.html" class="block cyber-button px-4 py-2 text-sm">FUNKSIYA KESISHISH NUQTA</a>
+          <a href="prompt-viewer.html" class="block cyber-button px-4 py-2 text-sm">PROMPT VIEWER</a>
+        </div>
+      </div>
+
+      <div class="cyber-card p-6 lg:col-span-3">
+        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+          <span class="mr-2">📄</span> PROMPT MA'LUMOTI
+        </h3>
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-bold text-gray-600">Fayl nomi:</span>
+            <span class="text-sm bg-gray-200 px-3 py-1 rounded">prompt.md</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-bold text-gray-600">Yaratilgan sana:</span>
+            <span class="text-sm bg-gray-200 px-3 py-1 rounded">2026-yil</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-bold text-gray-600">Muallif:</span>
+            <span class="text-sm bg-gray-200 px-3 py-1 rounded">Haydarov Jasurbek</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cyber-card p-8">
+      <h2 class="text-2xl font-black mb-6 flex items-center">
+        <span class="step-number mr-3">📋</span> PROMPT MATNI
+      </h2>
+      
+      <div class="highlight-box">
+        <p class="text-sm text-gray-600 mb-2">Ushbu prompt sonli usullar fanidan matematik yechimlarni bosqichma-bosqich tushuntirib berish uchun mo'ljallangan.</p>
+      </div>
+
+      <div class="space-y-8">
+        <div>
+          <h3 class="text-lg font-black mb-4 border-b-2 border-gray-300 pb-2">Asosiy Vazifa</h3>
+          <p class="text-gray-700 leading-relaxed">
+            Foydalanuvchiga berilgan tenglama uchun oddiy iteratsiya usuli orqali ildizni topishning to'liq ishlanishini chiqarish.
+            Ishlanish matematik jihatdan aniq, tushunarli va chiroyli bosqichlarda bo'lishi kerak.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-black mb-4 border-b-2 border-gray-300 pb-2">Ishlanish Tartibi</h3>
+          
+          <div class="space-y-6">
+            <div class="math-formula">
+              <span class="step-number">1</span>
+              <strong>Berilgan tenglama</strong>
+              <div class="mt-2">f(x) = 0 ko'rinishida yozilsin.</div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">2</span>
+              <strong>Tenglamani iteratsiya ko'rinishiga keltirish</strong>
+              <div class="mt-2">x = φ(x)</div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">3</span>
+              <strong>Iteratsiya formulasi</strong>
+              <div class="mt-2">φ(x) = x - f(x) / M</div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">4</span>
+              <strong>Boshlang'ich yaqinlashishni tanlash (x₀)</strong>
+              <div class="mt-2">
+                Oraliq [a, b] berilgan bo'lsa quyidagi shart tekshirilsin:
+                <div class="mt-2 font-mono bg-gray-100 p-2 rounded">f(x) · f''(x) > 0</div>
+                <ul class="mt-2 list-disc list-inside space-y-1">
+                  <li>agar x = a qo'yilganda shart bajarilsa → x₀ = a</li>
+                  <li>aks holda x = b tekshirilsin</li>
+                  <li>hisob-kitoblar aniq ko'rsatilsin</li>
+                  <li>musbat yoki manfiy ekanligi yozilsin</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">5</span>
+              <strong>M ni topish</strong>
+              <div class="mt-2">
+                Avval f'(x) hosila topilsin, so'ng formula orqali hisoblanadi:
+                <div class="mt-2 font-mono bg-gray-100 p-2 rounded">M = 1.01 · f'(x₀)</div>
+                <ul class="mt-2 list-disc list-inside space-y-1">
+                  <li>f'(x₀) hisoblab chiqarilsin</li>
+                  <li>keyin M qiymati topilsin</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">6</span>
+              <strong>Yaqinlashish sharti tekshirilsin</strong>
+              <div class="mt-2 font-mono bg-gray-100 p-2 rounded">|1 − f'(x₀)/M| < 1</div>
+              <div class="mt-2">agar shart bajarilsa iteratsiya usuli ishlashi aytilsin.</div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">7</span>
+              <strong>Iteratsiya formulasi</strong>
+              <div class="mt-2 font-mono bg-gray-100 p-2 rounded">xₖ₊₁ = xₖ − f(xₖ)/M</div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">8</span>
+              <strong>Iteratsiya bosqichlari</strong>
+              <div class="mt-2">
+                <div class="font-mono bg-gray-100 p-2 rounded">
+                  x₁<br>
+                  x₂<br>
+                  x₃<br>
+                  ...
+                </div>
+                <div class="mt-2">Har bir qadam aniq formulasi bilan yozilsin.</div>
+              </div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">9</span>
+              <strong>To'xtash sharti</strong>
+              <div class="mt-2 font-mono bg-gray-100 p-2 rounded">|xₖ₊₁ − xₖ| < ε</div>
+              <div class="mt-2">ε berilgan aniqlikka teng bo'ladi.</div>
+            </div>
+
+            <div class="math-formula">
+              <span class="step-number">10</span>
+              <strong>Yakuniy natija</strong>
+              <div class="mt-2 font-mono bg-gray-100 p-2 rounded">ξ ≈ ildiz qiymati</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-black mb-4 border-b-2 border-gray-300 pb-2">Maxsus Eslatmalar</h3>
+          <div class="highlight-box">
+            <p class="text-sm">
+              <strong>6.5 Qara:</strong> 5 va 6 dagi M ni topish borku, shunda 6 ni uzi yetadi, faqat tengsizlikni qanoatlantiruvchi eng kichik butun son olinsin, 5 shart bo'lmaydi, unchalik
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-black mb-4 border-b-2 border-gray-300 pb-2">Natijaning Ko'rinishi</h3>
+          <p class="text-gray-700 leading-relaxed">
+            Natija matematik ishlanish ko'rinishida, tushunarli va chiroyli bosqichlarda chiqarilsin.
+            Har bir formulaga hisob-kitoblar yozilsin.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="mt-24 text-center">
+      <div class="inline-block border-t-2 border-black pt-4 px-10">
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+          © 2026 Qarshi Davlat Universiteti | Haydarov Jasurbek
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Add some interactivity
+    document.addEventListener('DOMContentLoaded', function() {
+      const mathElements = document.querySelectorAll('.math-formula');
+      mathElements.forEach(el => {
+        el.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateX(4px)';
+          this.style.transition = 'transform 0.3s ease';
+        });
+        el.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateX(0)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
