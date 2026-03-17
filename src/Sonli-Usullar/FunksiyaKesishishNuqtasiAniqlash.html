@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Engine v3.0 - Cyber Edition</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* Siz bergan CSS uslublari */
+    body {
+      background-color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      color: #0f172a;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    .cyber-header {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+      border-bottom: 5px solid #00f2ff;
+      background: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 280px;
+      background: white;
+      border-right: 2px solid #000;
+      box-shadow: 6px 0 20px rgba(0, 0, 0, 0.05);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+      border-bottom: 2px solid #000;
+      padding: 25px 20px;
+      background: #f8fafc;
+    }
+
+    .sidebar-menu {
+      padding: 20px;
+    }
+
+    .sidebar-item {
+      display: block;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      background: #f1f5f9;
+      border: 1px solid #000;
+      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-item:hover {
+      background: #00f2ff;
+      transform: translateX(5px);
+    }
+
+    .main-content {
+      margin-left: 280px;
+      padding: 30px;
+      transition: all 0.3s;
+    }
+
+    .cyber-card {
+      background: white;
+      border: 2px solid #000;
+      box-shadow: 6px 6px 0px #00f2ff;
+      padding: 20px;
+      margin-bottom: 30px;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    }
+
+    .cyber-button {
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #00f2ff;
+      color: #000;
+      border: 1px solid #000;
+      padding: 12px 25px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .cyber-button:hover {
+      background: #ff00ea;
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 0, 234, 0.4);
+    }
+
+    .math-input {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 2px solid #000;
+      padding: 12px;
+      width: 100%;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    #katex-render {
+      margin: 15px 0;
+      padding: 10px;
+      min-height: 40px;
+      font-size: 1.2rem;
+      text-align: center;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .canvas-container {
+      background: white;
+      border: 2px solid #000;
+      height: 550px;
+      position: relative;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+
+    .results-panel {
+      margin-top: 20px;
+    }
+
+    .success-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #dcfce7;
+      color: #166534;
+      padding: 4px 12px;
+      border: 1px solid #166534;
+      font-weight: bold;
+      clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div style="font-size: 0.8rem; color: #64748b;">QARDU | KOMPYUTER ILMLARI</div>
+      <div style="font-size: 1.2rem; font-weight: bold;">SONLI USULLAR</div>
+    </div>
+    <div class="sidebar-menu">
+      <a href="/index.html" class="sidebar-item">ASOSIY SAHIFA</a>
+      <a href="/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" style="background: #ff00ea; color: white;"
+        class="sidebar-item">FUNKSIYA KESISHISH</a>
+      <a href="/src/Sonli-Usullar/Iteratsiya-Usuli.html" class="sidebar-item">ITERATSIYA USULI</a>
+      <a href="/src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="sidebar-item">KESMANI TENG IKKIGA BO'LISH</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <header class="cyber-header">
+      <div style="font-size: 1.5rem; letter-spacing: 2px;">GRAPH ENGINE <span style="color: #ff00ea;">V3.0</span></div>
+      <div style="font-size: 0.9rem;">OPERATOR: J. HAYDAROV | 2026</div>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 350px 1fr; gap: 30px; margin-top: 30px;">
+
+      <div class="left-col">
+        <div class="cyber-card">
+          <label style="font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 8px;">FUNKSIYANI
+            KIRITING:</label>
+          <input type="text" id="eq" class="math-input" value="x-1-sin(x)/10" oninput="updateKaTeX()">
+
+          <div id="katex-render"></div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.7rem;">X MIN</label>
+              <input type="number" id="xmin" class="math-input" value="-10" style="padding: 8px;">
+            </div>
+            <div>
+              <label style="font-size: 0.7rem;">X MAX</label>
+              <input type="number" id="xmax" class="math-input" value="10" style="padding: 8px;">
+            </div>
+          </div>
+
+          <button class="cyber-button" onclick="init()">GRAFIKNI CHIZISH</button>
+        </div>
+
+        <div class="cyber-card results-panel" id="results-card">
+          <div class="success-badge">ILDIZLAR</div>
+          <div id="results-list" style="font-size: 0.9rem;">Hozircha ildizlar topilmadi...</div>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div class="canvas-container" id="wrap">
+          <canvas id="gc"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gc');
+    const ctx = canvas.getContext('2d');
+    const wrap = document.getElementById('wrap');
+
+    let W, H;
+    let viewX = -10, viewY = -6, viewW = 20, viewH = 12;
+    let fFunc = null;
+    let roots = [];
+
+    // KaTeX Render funksiyasi
+    function updateKaTeX() {
+      const input = document.getElementById('eq').value;
+      const renderArea = document.getElementById('katex-render');
+      try {
+        // mathjs orqali chiroyli formatga o'tkazish
+        const node = math.parse(input);
+        const latex = node.toTex({ parenthesis: 'keep', implicit: 'hide' });
+        katex.render("f(x) = " + latex, renderArea, { throwOnError: false });
+      } catch (e) {
+        renderArea.innerHTML = "<span style='color:red; font-size:0.8rem'>Xato kiritildi...</span>";
+      }
+    }
+
+    function resize() {
+      W = wrap.clientWidth;
+      H = wrap.clientHeight;
+      canvas.width = W;
+      canvas.height = H;
+      draw();
+    }
+
+    function toScreen(wx, wy) {
+      return {
+        x: (wx - viewX) / viewW * W,
+        y: H - (wy - viewY) / viewH * H
+      };
+    }
+
+    function toWorld(sx, sy) {
+      return {
+        x: viewX + sx / W * viewW,
+        y: viewY + (H - sy) / H * viewH
+      };
+    }
+
+    function draw() {
+      if (!W) return;
+      ctx.clearRect(0, 0, W, H);
+
+      const origin = toScreen(0, 0);
+
+      // Grid (To'r) - Minimalist uslubda
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      const step = niceStep(viewW / 10);
+
+      for (let x = Math.floor(viewX / step) * step; x <= viewX + viewW; x += step) {
+        let p = toScreen(x, 0);
+        ctx.beginPath(); ctx.moveTo(p.x, 0); ctx.lineTo(p.x, H); ctx.stroke();
+
+        ctx.fillStyle = "#475569"; // Biroz quyuqroq rang
+        ctx.strokeStyle = "#000";  // Chiziqchalar uchun qora rang
+        ctx.font = "bold 11px JetBrains Mono";
+        if (Math.abs(x) > 0.001) {
+          // O'q ustidagi kichik chiziqcha (tick)
+          ctx.beginPath();
+          ctx.moveTo(p.x, origin.y - 5);
+          ctx.lineTo(p.x, origin.y + 5);
+          ctx.stroke();
+
+          // Raqamni o'qning tagiga yozish (H-5 emas, origin.y + 15)
+          ctx.fillText(x.toFixed(1), p.x + 2, origin.y + 18);
+        }
+      }
+
+      for (let y = Math.floor(viewY / step) * step; y <= viewY + viewH; y += step) {
+        let p = toScreen(0, y);
+
+        // Grid (sizda bor edi)
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.beginPath(); ctx.moveTo(0, p.y); ctx.lineTo(W, p.y); ctx.stroke();
+
+        // --- MANA SHU YERINI O'ZGARTIRAMIZ ---
+        ctx.fillStyle = "#475569";
+        ctx.strokeStyle = "#000";
+
+        if (Math.abs(y) > 0.001) {
+          // O'q ustidagi kichik chiziqcha (tick)
+          ctx.beginPath();
+          ctx.moveTo(origin.x - 5, p.y);
+          ctx.lineTo(origin.x + 5, p.y);
+          ctx.stroke();
+
+          // Raqamni o'qning yoniga yozish (5 emas, origin.x + 8)
+          ctx.fillText(y.toFixed(1), origin.x + 8, p.y + 3);
+        }
+      }
+
+      // Asosiy o'qlar - Qora rangda
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, origin.y); ctx.lineTo(W, origin.y); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(origin.x, 0); ctx.lineTo(origin.x, H); ctx.stroke();
+
+      // Grafik chizish
+      if (fFunc) {
+        ctx.strokeStyle = '#00f2ff'; // Cyan rang
+        ctx.lineWidth = 3;
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = '#00f2ff';
+        ctx.beginPath();
+        let started = false;
+        for (let i = 0; i <= W; i++) {
+          let wx = viewX + (i / W) * viewW;
+          try {
+            let wy = fFunc(wx);
+            let p = toScreen(wx, wy);
+            if (p.y >= -100 && p.y <= H + 100) {
+              if (!started) { ctx.moveTo(p.x, p.y); started = true; }
+              else ctx.lineTo(p.x, p.y);
+            } else { started = false; }
+          } catch (e) { started = false; }
+        }
+        ctx.stroke();
+        ctx.shadowBlur = 0; // Effektni o'chirish
+      }
+
+      // Ildiz nuqtalari - Magenta (Pushti)
+      roots.forEach(r => {
+        let p = toScreen(r, 0);
+        ctx.fillStyle = '#ff00ea';
+        ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke();
+      });
+    }
+
+    function niceStep(val) {
+      let exp = Math.floor(Math.log10(val));
+      let f = val / Math.pow(10, exp);
+      if (f < 1.5) f = 1; else if (f < 3) f = 2; else if (f < 7) f = 5; else f = 10;
+      return f * Math.pow(10, exp);
+    }
+
+    function init() {
+      const expr = document.getElementById('eq').value;
+      const xmin = parseFloat(document.getElementById('xmin').value);
+      const xmax = parseFloat(document.getElementById('xmax').value);
+
+      try {
+        const node = math.parse(expr);
+        const code = node.compile();
+        fFunc = (x) => code.evaluate({ x });
+
+        roots = [];
+        const searchStep = (xmax - xmin) / 200;
+        for (let x = xmin; x <= xmax; x += searchStep) {
+          if (fFunc(x) * fFunc(x + searchStep) < 0) {
+            roots.push(bisect(fFunc, x, x + searchStep));
+          }
+        }
+
+        viewX = xmin;
+        viewW = xmax - xmin;
+        viewY = -viewW / 3;
+        viewH = viewW * (H / W);
+
+        renderResults();
+        draw();
+      } catch (e) {
+        alert("Xatolik: " + e.message);
+      }
+    }
+
+    function bisect(f, a, b) {
+      for (let i = 0; i < 25; i++) {
+        let m = (a + b) / 2;
+        if (f(a) * f(m) < 0) b = m; else a = m;
+      }
+      return (a + b) / 2;
+    }
+
+    function renderResults() {
+      const list = document.getElementById('results-list');
+      list.innerHTML = '';
+      roots.forEach((r, i) => {
+        list.innerHTML += `<div style="padding: 5px 0; border-bottom: 1px solid #f1f5f9;">
+                <span style="color:#ff00ea; font-weight:bold;">x${i + 1}</span> ≈ ${r.toFixed(6)}
+            </div>`;
+      });
+      if (roots.length === 0) list.innerHTML = 'Ildiz topilmadi.';
+    }
+
+    // Zoom & Pan
+    wrap.addEventListener('wheel', e => {
+      e.preventDefault();
+      let zoom = e.deltaY > 0 ? 1.1 : 0.9;
+      viewW *= zoom; viewH *= zoom;
+      draw();
+    });
+
+    let dragging = false, lastX, lastY;
+    wrap.addEventListener('mousedown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      let dx = (e.clientX - lastX) / W * viewW;
+      let dy = (e.clientY - lastY) / H * viewH;
+      viewX -= dx; viewY += dy;
+      lastX = e.clientX; lastY = e.clientY;
+      draw();
+    });
+    window.addEventListener('mouseup', () => dragging = false);
+
+    window.addEventListener('resize', resize);
+
+    // Ilk yuklanish
+    resize();
+    updateKaTeX();
+  </script>
+
+</body>
+
+</html>

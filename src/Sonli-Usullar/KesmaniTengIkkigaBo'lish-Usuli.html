@@ -185,14 +185,14 @@
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <h3 class="text-xl font-black">MENU</h3>
-      <p class="text-xs text-gray-600 mt-1">Sonli Usullar</p>
+      <p class="mt-1 text-xs text-gray-600">Sonli Usullar</p>
     </div>
     <div class="sidebar-menu">
-      <a href="index.html" class="sidebar-item">ASOSIY SAHIFA</a>
+      <a href="/index.html" class="sidebar-item">ASOSIY SAHIFA</a>
+      <a href="FunksiyaKesishishNuqtasiAniqlash.html" class="sidebar-item">FUNKSIYA KESISHISH</a>
       <a href="Iteratsiya-Usuli.html" class="sidebar-item">ITERATSIYA USULI</a>
-      <a href="KesmaniTengIkkigaBo'lish-Usuli.html" class="sidebar-item">KESMANI TENG IKKIGA BO'lish</a>
-      <a href="FunksiyaKesishishNuqtasiAniqlash.html" class="sidebar-item">FUNKSIYA KESISHISH NUQTA</a>
-      <a href="prompt-viewer.html" class="sidebar-item">PROMPT VIEWER</a>
+      <a style="background: #ff00ea; color: white;" href="KesmaniTengIkkigaBo'lish-Usuli.html"
+        class="sidebar-item">KESMANI TENG IKKIGA BO'lish</a>
     </div>
   </div>
 
@@ -201,15 +201,15 @@
 
   <!-- Main Content -->
   <div class="main-content" id="main-content">
-    <header class="cyber-header p-8 mb-12 text-center shadow-sm">
+    <header class="p-8 mb-12 text-center shadow-sm cyber-header">
       <h1 class="text-4xl font-black tracking-widest text-black">KESMANI TENG IKKIGA BO'lish USULI v2.1</h1>
-      <p class="text-xs font-bold text-cyan-600 mt-2 uppercase tracking-widest">Qarshi Davlat Universiteti | Kompyuter
+      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Kompyuter
         ilmlari Fakulteti <br>Amaliy Matematika</p>
     </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-      <div class="cyber-card p-6">
-        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+    <div class="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-3">
+      <div class="p-6 cyber-card">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
           <span class="mr-2">⚡</span> FORMULA
         </h3>
         <div id="math-equation" class="my-6 text-xl"></div>
@@ -219,74 +219,74 @@
         </div>
       </div>
 
-      <div class="cyber-card p-6 lg:col-span-2">
-        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+      <div class="p-6 cyber-card lg:col-span-2">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
           <span class="mr-2">👤</span> BOSHQARUV PANELI
         </h3>
         <div class="space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div>
-              <label class="text-xs font-bold text-gray-600 block mb-2">Funksiya f(x):</label>
+              <label class="block mb-2 text-xs font-bold text-gray-600">Funksiya f(x):</label>
               <input type="text" id="equation" value="x - 1 - sin(x)/10" class="math-input"
                 placeholder="Masalan: x^2 - log(x)">
             </div>
             <div>
-              <label class="text-xs font-bold text-gray-600 block mb-2">Boshlang'ich (a):</label>
+              <label class="block mb-2 text-xs font-bold text-gray-600">Boshlang'ich (a):</label>
               <input type="number" id="inputA" value="1" step="0.1"
-                class="w-full bg-white border-2 border-gray-300 p-3 rounded-lg font-mono text-lg">
+                class="w-full p-3 font-mono text-lg bg-white border-2 border-gray-300 rounded-lg">
             </div>
             <div>
-              <label class="text-xs font-bold text-gray-600 block mb-2">Yakuniy (b):</label>
+              <label class="block mb-2 text-xs font-bold text-gray-600">Yakuniy (b):</label>
               <input type="number" id="inputB" value="2" step="0.1"
-                class="w-full bg-white border-2 border-gray-300 p-3 rounded-lg font-mono text-lg">
+                class="w-full p-3 font-mono text-lg bg-white border-2 border-gray-300 rounded-lg">
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div>
-              <label class="text-xs font-bold text-gray-600 block mb-2">Aniqlik (ε):</label>
+              <label class="block mb-2 text-xs font-bold text-gray-600">Aniqlik (ε):</label>
               <input type="number" id="inputEps" value="0.01" step="0.001"
-                class="w-full bg-white border-2 border-gray-300 p-3 rounded-lg font-mono text-lg">
+                class="w-full p-3 font-mono text-lg bg-white border-2 border-gray-300 rounded-lg">
             </div>
-            <div class="md:col-span-2 flex gap-3 items-end">
-              <button onclick="calculate()" class="cyber-button px-12 py-4 font-black text-lg">HISOBLASH</button>
+            <div class="flex items-end gap-3 md:col-span-2">
+              <button onclick="calculate()" class="px-12 py-4 text-lg font-black cyber-button">HISOBLASH</button>
               <button onclick="reset()"
-                class="cyber-button px-8 py-4 font-black text-lg bg-gray-400 border-gray-600">TOZALASH</button>
+                class="px-8 py-4 text-lg font-black bg-gray-400 border-gray-600 cyber-button">TOZALASH</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-      <div class="cyber-card p-6">
-        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+    <div class="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-2">
+      <div class="p-6 cyber-card">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
           <span class="mr-2">📊</span> ITERATSIYA JADVALI
         </h3>
-        <div class="flex items-center justify-between text-sm mb-4">
+        <div class="flex items-center justify-between mb-4 text-sm">
           <span class="font-bold text-gray-600 uppercase">Hisoblash jarayoni</span>
           <span id="iterCount"
-            class="bg-cyan-500/20 text-cyan-600 px-3 py-1 rounded border border-cyan-500/30 text-xs">0 qadam</span>
+            class="px-3 py-1 text-xs border rounded bg-cyan-500/20 text-cyan-600 border-cyan-500/30">0 qadam</span>
         </div>
-        <div id="logs" class="space-y-2 h-64 overflow-y-auto pr-2">
-          <div class="text-gray-500 italic text-sm">Hisoblashni boshlash uchun tugmani bosing...</div>
+        <div id="logs" class="h-64 pr-2 space-y-2 overflow-y-auto">
+          <div class="text-sm italic text-gray-500">Hisoblashni boshlash uchun tugmani bosing...</div>
         </div>
       </div>
 
-      <div class="cyber-card p-6">
-        <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+      <div class="p-6 cyber-card">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
           <span class="mr-2">🎯</span> NATIJA
         </h3>
         <div id="resultCard" class="hidden space-y-6">
-          <div class="bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border border-cyan-500/30 p-6 rounded-xl">
+          <div class="p-6 border bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border-cyan-500/30 rounded-xl">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-xs font-bold text-cyan-600 uppercase mb-2">Topilgan ildiz</p>
+                <p class="mb-2 text-xs font-bold uppercase text-cyan-600">Topilgan ildiz</p>
                 <h2 id="finalX" class="text-4xl font-black text-black">1.085938</h2>
               </div>
               <div class="text-right">
-                <p class="text-xs font-bold text-gray-600 uppercase mb-2">Funksiya qiymati</p>
-                <p id="finalF" class="text-lg font-mono text-magenta-600">0.000000</p>
+                <p class="mb-2 text-xs font-bold text-gray-600 uppercase">Funksiya qiymati</p>
+                <p id="finalF" class="font-mono text-lg text-magenta-600">0.000000</p>
               </div>
             </div>
           </div>
@@ -298,15 +298,15 @@
       </div>
     </div>
 
-    <div class="cyber-card p-6">
-      <h3 class="font-black border-b-2 border-black mb-4 flex items-center">
+    <div class="p-6 cyber-card">
+      <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
         <span class="mr-2">📚</span> USUL HAQIDA
       </h3>
-      <div class="text-sm text-gray-700 leading-relaxed space-y-3">
+      <div class="space-y-3 text-sm leading-relaxed text-gray-700">
         <p><strong>Kesmani teng ikkiga bo'lish usuli</strong> (Bisection method) - bu oraliqni qisqartirish orqali
           ildizni topish usulidir.</p>
         <p><strong>Asosiy qadamlar:</strong></p>
-        <ul class="list-disc list-inside space-y-1">
+        <ul class="space-y-1 list-disc list-inside">
           <li>Oraliq [a, b] tanlanadi, bunda f(a) · f(b) < 0</li>
           <li>Oraliq markazi c = (a + b)/2 hisoblanadi</li>
           <li>Agar f(c) = 0 bo'lsa, ildiz topildi</li>
@@ -319,7 +319,7 @@
     </div>
 
     <footer class="mt-24 text-center">
-      <div class="inline-block border-t-2 border-black pt-4 px-10">
+      <div class="inline-block px-10 pt-4 border-t-2 border-black">
         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
           © 2026 Qarshi Davlat Universiteti | Haydarov Jasurbek
         </p>
@@ -361,7 +361,7 @@
 
         // 1. Dastlabki tekshiruv (Interval aniqlanganmi?)
         if (f(a) * f(b) > 0) {
-          logBox.innerHTML = `<div class="log-entry bg-red-500/20 border-red-500 text-red-700">[XATOLIK] f(a) va f(b) ishoralari bir xil (${f(a).toFixed(2)} va ${f(b).toFixed(2)}). Bu oraliqda ildiz yo'q yoki juft sonda!</div>`;
+          logBox.innerHTML = `<div class="text-red-700 border-red-500 log-entry bg-red-500/20">[XATOLIK] f(a) va f(b) ishoralari bir xil (${f(a).toFixed(2)} va ${f(b).toFixed(2)}). Bu oraliqda ildiz yo'q yoki juft sonda!</div>`;
           return;
         }
 
@@ -377,7 +377,7 @@
           const logEntry = document.createElement('div');
           logEntry.className = "log-entry";
           logEntry.innerHTML = `
-            <span class="text-cyan-600 font-bold">#${iteration}</span> 
+            <span class="font-bold text-cyan-600">#${iteration}</span> 
             <span class="text-gray-600">c =</span> <span class="text-black">${c.toFixed(6)}</span> | 
             <span class="text-gray-600">f(c) =</span> <span class="${fc >= 0 ? 'text-green-600' : 'text-orange-600'}">${fc.toFixed(6)}</span> | 
             <span class="text-[10px] text-gray-500">Oraliq: [${a.toFixed(4)}, ${b.toFixed(4)}]</span>
@@ -409,7 +409,7 @@
         logBox.scrollTop = logBox.scrollHeight;
 
       } catch (err) {
-        logBox.innerHTML = `<div class="log-entry bg-red-500/20 border-red-500 text-red-700">[FORMULA XATO] Misolni kiritishda xatolik: ${err.message}</div>`;
+        logBox.innerHTML = `<div class="text-red-700 border-red-500 log-entry bg-red-500/20">[FORMULA XATO] Misolni kiritishda xatolik: ${err.message}</div>`;
       }
     }
 
