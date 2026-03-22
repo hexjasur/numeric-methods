@@ -55,7 +55,7 @@
       <p class="text-[10px] font-bold text-gray-500 uppercase">QarDU | Amaliy Matematika | 023-40 guruh</p>
     </header>
 
-    <div class="p-3 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
+    <div class="p-3 bg-yellow-100 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
       <div><b>📌 Misollar:</b></div>
 
       <div>
@@ -63,7 +63,7 @@
         <code>sinx deb yozmang xato, sin(x) deb qiymatni qavis ichida yozing!</code>
       </div>
 
-      <div><br>Daraja: <code>x^2</code> yoki <code>x^(3+1)</code></div>
+      <div>Daraja: <code>x^2</code> yoki <code>x^(3+1)</code></div>
 
       <div>Trigonometriya:
         <code>sin(x)</code>,
@@ -91,6 +91,14 @@
       <div>O‘zgarmaslar:
         <code>pi</code>,
         <code>e</code>
+      </div>
+
+      <div>
+        Dasturdagi xatoliklar:
+        <br>
+        <code>1) Ildiz bo'lmagan oraliq: Agar siz kiritgan [a, b] oraliqda funksiya nolga teng bo'lmasa (masalan, funksiya doim musbat bo'lsa).</code>
+        <br>
+        <code>2) Juda murakkab funksiyalar: Agar hosila juda katta bo'lib ketsa, M soni ham juda katta bo'ladi va iteratsiya juda ko'p qadam talab qilishi mumkin (shuning uchun dasturda k < 20 cheklovi bor).</code>
       </div>
     </div>
 
@@ -232,7 +240,7 @@
         let f_prime_a = Math.abs(df.evaluate({ x: a }));
         let f_prime_b = Math.abs(df.evaluate({ x: b }));
         let max_df = Math.max(f_prime_a, f_prime_b);
-        let M = Math.ceil(max_df);
+        let M = Math.ceil(max_df) + 1;
         // let M = Math.ceil(max_df) + 1 ; // Qiymat barqaror bo‘lishi uchun +1 qo‘shish
 
         document.getElementById('m-val-display').innerHTML = `
@@ -243,13 +251,19 @@
 
         let x_old = b; // Odatda b dan boshlanadi
         let k = 0;
-        let diff = 100;
+        let isConditionMet = false; // To'xtatish bayrog'i
+        let k_max = 20; // k ning cheklovi k < 20.
 
-        while (diff > eps && k < 15) {
+        while (!isConditionMet && k < k_max) {
           k++;
           let fk = f.evaluate({ x: x_old });
           let x_new = x_old - (fk / M);
-          diff = Math.abs(x_new - x_old);
+
+          // Ildizlar farqi (ixtiyoriy, UI uchun)
+          let diff = Math.abs(x_new - x_old);
+
+          // ASOSIY O'ZGARISH: f(x) ning o'zidagi xatolikni hisoblash
+          let f_new_val = Math.abs(f.evaluate({ x: x_new }));
 
           const card = document.createElement('div');
           card.className = "cyber-card p-5 bg-white";
@@ -260,7 +274,7 @@
           card.innerHTML = `
             <div class="step-title">${k}-yaqinlashish:</div>
             <div id="${stepId}" class="mb-2"></div>
-            <div class="error-text">Xatolik:</div>
+            <div class="error-text">Xatolik |F(x)|:</div>
             <div id="${errorId}" class="text-sm font-bold"></div>
           `;
           resultsContainer.appendChild(card);
@@ -268,15 +282,18 @@
           // Math Render
           katex.render(`x_{${k}} = ${x_old.toFixed(4)} - \\frac{f(${x_old.toFixed(4)})}{${M}} \\approx ${x_new.toFixed(4)}`, document.getElementById(stepId));
 
-          const errorSymbol = diff <= eps ? "<" : ">";
-          katex.render(`|x_{${k}} - x_{${k - 1 == 0 ? '0' : k - 1}}| = |${x_new.toFixed(4)} - ${x_old.toFixed(4)}| = ${diff.toFixed(4)} ${errorSymbol} \\epsilon`, document.getElementById(errorId));
+          // Ekranga x_new ni farqini emas, funksiya xatoligini chiqaramiz (ustozingizdek)
+          const errorSymbol = f_new_val <= eps ? "<" : ">";
+          katex.render(`|F(x_{${k}})| = |${f_new_val.toFixed(4)}| ${errorSymbol} \\epsilon`, document.getElementById(errorId));
 
-          if (diff <= eps) {
+          // TO'XTATISH SHARTI: Agar F(x) < eps bo'lsa tsikldan chiqadi
+          if (f_new_val <= eps) {
             document.getElementById('final-verify').classList.remove('hidden');
             const finalF = f.evaluate({ x: x_new });
-            katex.render(`f(\\xi) = f(${x_new.toFixed(4)}) \\approx ${finalF.toFixed(4)} < ${eps}`, document.getElementById('verify-math'));
-            break;
+            katex.render(`f(\\xi) = f(${x_new.toFixed(4)}) \\approx ${finalF.toFixed(4)} \\le ${eps}`, document.getElementById('verify-math'));
+            isConditionMet = true; // tsiklni to'xtatadi
           }
+
           x_old = x_new;
         }
       } catch (err) {
