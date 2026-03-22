@@ -40,10 +40,7 @@
   <link rel="canonical" href="https://math.yolnoma.uz/">
 
   <!-- Favicon -->
-  <!-- Light mode -->
   <link rel="icon" href="src/assets/images/logo-dark.png" media="(prefers-color-scheme: light)">
-
-  <!-- Dark mode -->
   <link rel="icon" href="src/assets/images/logo-light.png" media="(prefers-color-scheme: dark)">
 
   <!-- Structured Data (JSON-LD) -->
@@ -54,220 +51,192 @@
     "name": "Sonli Usullar",
     "description": "Sonli usullar faniga oid amaliy dasturlar to'plami",
     "url": "https://math.yolnoma.uz/",
-    "author": {
-      "@type": "Person",
-      "name": "Haydarov Jasurbek"
-    },
+    "author": { "@type": "Person", "name": "Haydarov Jasurbek" },
     "educationalLevel": "University",
     "inLanguage": "uz",
-    "keywords": ["sonli usullar", "matematik usullar", "iteratsiya usuli", "bisection method", "matematik hisoblash"],
+    "keywords": ["sonli usullar", "matematik usullar", "iteratsiya usuli", "bisection method"],
     "license": "CC BY-SA 4.0",
     "dateCreated": "2026-03-16",
-    "dateModified": "2026-03-16",
-    "hasPart": [
-      {
-        "@type": "SoftwareApplication",
-        "name": "Iteratsiya Usuli",
-        "url": "https://math.yolnoma.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html",
-        "description": "Takroriy jarayon orqali ildizni topish usuli"
-      },
-      {
-        "@type": "SoftwareApplication", 
-        "name": "Kesmani Teng Ikkiqa Bo'lish Usuli",
-        "url": "https://math.yolnoma.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html",
-        "description": "Oraliqni qisqartirish orqali ildizni topish usuli"
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "Funksiya Kesishish Nuqtasi Aniqlash", 
-        "url": "https://math.yolnoma.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html",
-        "description": "Grafik usulda kesishish nuqtalarini aniqlash"
-      }
-    ]
+    "dateModified": "2026-03-23"
   }
   </script>
+
+  <!-- Shared Sidebar CSS -->
+  <link rel="stylesheet" href="src/assets/css/sidebar.css">
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
-
-    body {
-      background-color: #f8fafc;
-      font-family: 'JetBrains+Mono', monospace;
-      color: #0f172a;
-    }
-
-    .cyber-header {
+    /* Page-specific styles for index.html */
+    .hero-counter {
       font-family: 'Orbitron', sans-serif;
-      clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
-      border-bottom: 5px solid #00f2ff;
-      background: white;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #00f2ff;
+      line-height: 1;
     }
 
-    .cyber-card {
+    .stat-card {
+      background: white;
+      border: 2px solid #000;
+      box-shadow: 4px 4px 0 #00f2ff;
+      padding: 18px;
+      text-align: center;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 6px 6px 0 #ff00ea;
+    }
+
+    .module-card {
       background: white;
       border: 2px solid #000;
       box-shadow: 6px 6px 0px #00f2ff;
-      position: relative;
       clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+      text-decoration: none;
+      color: #0f172a;
+      display: block;
+      padding: 24px;
+      transition: box-shadow 0.25s, transform 0.25s;
     }
 
-    .cyber-button {
-      font-family: 'Orbitron', sans-serif;
-      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    .module-card:hover {
+      box-shadow: 8px 8px 0px #ff00ea;
+      transform: translateY(-4px);
+    }
+
+    .module-card .badge {
+      display: inline-block;
       background: #00f2ff;
       color: #000;
-      border: 1px solid #000;
+      font-size: 0.65rem;
+      font-weight: 900;
+      padding: 3px 10px;
+      letter-spacing: 0.08em;
+      clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+      margin-bottom: 10px;
     }
 
-    .cyber-button:hover {
-      background: #ff00ea;
-      color: white;
-      box-shadow: 0 0 20px rgba(255, 0, 234, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 280px;
-      background: white;
-      border-right: 2px solid #000;
-      box-shadow: 6px 0 20px rgba(0, 0, 0, 0.1);
-      transform: translateX(-100%);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 50;
-    }
-
-    .sidebar.open {
-      transform: translateX(0);
-    }
-
-    .sidebar-header {
+    .ticker-wrap {
+      overflow: hidden;
+      background: #000;
+      color: #00f2ff;
       font-family: 'Orbitron', sans-serif;
-      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
-      border-bottom: 2px solid #000;
-      padding: 20px;
-      background: #f8fafc;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 8px 0;
+      border-top: 2px solid #00f2ff;
+      border-bottom: 2px solid #00f2ff;
     }
 
-    .sidebar-menu {
-      padding: 20px;
+    .ticker-inner {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: ticker 22s linear infinite;
     }
 
-    .sidebar-item {
-      display: block;
-      padding: 12px 16px;
-      margin-bottom: 8px;
-      background: #f1f5f9;
-      border: 1px solid #000;
-      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
-      text-decoration: none;
-      color: #000;
-      font-weight: bold;
-      transition: all 0.2s;
+    .ticker-inner span {
+      padding: 0 32px;
     }
 
-    .sidebar-item:hover {
-      background: #e2e8f0;
-      transform: translateX(4px);
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 40;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-
-    .overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .main-content {
-      margin-left: 0;
-      transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .main-content.shifted {
-      margin-left: 280px;
-    }
-
-    @media (min-width: 1024px) {
-      .sidebar {
-        transform: translateX(0);
-      }
-
-      .main-content {
-        margin-left: 280px;
-      }
-
-      .overlay {
-        display: none;
-      }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
   </style>
 </head>
 
-<body class="p-4 md:p-8">
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <h3 class="text-xl font-black">MENU</h3>
-      <p class="mt-1 text-xs text-gray-600">Sonli Usullar</p>
-    </div>
-    <div class="sidebar-menu">
-      <a style="background: #ff00ea; color: white;" href="index.html" class="sidebar-item">ASOSIY SAHIFA</a>
-      <a href="src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" class="sidebar-item">FUNKSIYA KESISHISH
-        <a href="src/Sonli-Usullar/Iteratsiya-Usuli.html" class="sidebar-item">ITERATSIYA USULI</a>
-        <a href="src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="sidebar-item">
-          KESMANI TENG IKKIGA
-          BO'LISH USULI
-        </a>
-        <a href="src/Sonli-Usullar/Gauss-Seydel-usuli.html" class="sidebar-item">GAUSS-SEYDEL USULI</a>
-    </div>
-  </div>
-
-  <!-- Overlay -->
-  <div class="overlay" id="overlay"></div>
+<body>
+  <!-- Sidebar injected by sidebar.js -->
+  <script>
+    window.SIDEBAR_BASE = '';
+    window.SIDEBAR_ACTIVE = 'home';
+  </script>
+  <script src="src/assets/js/sidebar.js"></script>
 
   <!-- Main Content -->
-  <div class="main-content" id="main-content">
-    <header class="p-8 mb-12 text-center shadow-sm cyber-header">
-      <h1 class="text-4xl font-black tracking-widest text-black">SONLI USULLAR v2.1</h1>
-      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Kompyuter
-        ilmlari Fakulteti <br>Amaliy Matematika</p>
+  <div class="main-content p-4 md:p-8" id="main-content">
+
+    <!-- Ticker / Breaking News Bar -->
+    <div class="ticker-wrap mb-6">
+      <div class="ticker-inner">
+        <span>⚡ SONLI USULLAR v2.1</span>
+        <span>//</span>
+        <span>🔄 ITERATSIYA USULI</span>
+        <span>//</span>
+        <span>✂️ BISECTION METHOD</span>
+        <span>//</span>
+        <span>📈 GRAFIK ENGINE v3.0</span>
+        <span>//</span>
+        <span>🧮 GAUSS-SEYDEL USULI</span>
+        <span>//</span>
+        <span>QarDU · Amaliy Matematika · 023-40 guruh · 2026</span>
+        <span>//</span>
+        <!-- Repeat for seamless loop -->
+        <span>⚡ SONLI USULLAR v2.1</span>
+        <span>//</span>
+        <span>🔄 ITERATSIYA USULI</span>
+        <span>//</span>
+        <span>✂️ BISECTION METHOD</span>
+        <span>//</span>
+        <span>📈 GRAFIK ENGINE v3.0</span>
+        <span>//</span>
+        <span>🧮 GAUSS-SEYDEL USULI</span>
+        <span>//</span>
+        <span>QarDU · Amaliy Matematika · 023-40 guruh · 2026</span>
+        <span>//</span>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="p-8 mb-10 text-center shadow-sm cyber-header">
+      <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">SONLI USULLAR <span style="color:#00f2ff">v2.1</span></h1>
+      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Amaliy Matematika | 023-40 guruh</p>
     </header>
 
-    <div class="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-3">
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div class="stat-card">
+        <div class="hero-counter" id="cnt-modules">5</div>
+        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Modullar</div>
+      </div>
+      <div class="stat-card">
+        <div class="hero-counter">∞</div>
+        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Hisoblar</div>
+      </div>
+      <div class="stat-card">
+        <div class="hero-counter">0.01</div>
+        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Aniqlik (ε)</div>
+      </div>
+      <div class="stat-card">
+        <div class="hero-counter">2026</div>
+        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Yil</div>
+      </div>
+    </div>
+
+    <!-- Info cards -->
+    <div class="grid grid-cols-1 gap-8 mb-10 lg:grid-cols-3">
       <div class="p-6 cyber-card">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
           <span class="mr-2">⚡</span> LOYIHA
         </h3>
         <div class="space-y-2 text-sm font-bold">
-          <p class="flex justify-between"><span>Maqsad:</span> <span class="text-cyan-600">Sonli usullarni
-              o'rganish</span></p>
-          <p class="flex justify-between"><span>Yaratuvchi:</span> <span class="text-magenta-600">Haydarov
-              Jasurbek</span></p>
+          <p class="flex justify-between"><span>Maqsad:</span> <span class="text-cyan-600">Sonli usullarni o'rganish</span></p>
+          <p class="flex justify-between"><span>Yaratuvchi:</span> <span style="color:#ff00ea">Haydarov Jasurbek</span></p>
           <p class="flex justify-between"><span>Guruh:</span> <span class="text-cyan-600">023-40</span></p>
-          <p class="flex justify-between"><span>Yil:</span> <span class="text-magenta-600">2026</span></p>
+          <p class="flex justify-between"><span>Yil:</span> <span style="color:#ff00ea">2026</span></p>
         </div>
       </div>
 
       <div class="p-6 cyber-card lg:col-span-2">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
           <span class="mr-2">👤</span> BOSHQARUV PANELI
         </h3>
         <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
@@ -275,9 +244,9 @@
             <p class="text-2xl font-black text-black">JASURBEK HAYDAROV</p>
             <p class="text-sm font-bold text-gray-500">Sonli usullar faniga qo'shgan hissasi</p>
             <p class="max-w-md mt-3 text-xs leading-relaxed">
-              Ushbu loyiha QarDU talabasi tomonidan sonli usullar fanini o'rganish va amaliyot qilish maqsadida
-              yaratildi.
-              Har bir usul alohida HTML faylda bajarilgan.
+              Ushbu loyiha QarDU talabasi tomonidan sonli usullar fanini o'rganish va amaliyot
+              qilish maqsadida yaratildi. Har bir usul alohida HTML faylda bajarilgan va interaktiv
+              hisoblash imkoniyati mavjud.
             </p>
           </div>
           <button onclick="toggleSidebar()" class="px-12 py-4 text-lg font-black cyber-button">MENU</button>
@@ -285,60 +254,81 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-      <a href="Iteratsiya-Usuli.html" class="p-6 transition-shadow cyber-card hover:shadow-lg">
-        <h4 class="mb-2 text-lg font-black">ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish</p>
+    <!-- Module cards -->
+    <h2 class="text-xl font-black mb-6 tracking-wider" style="font-family:'Orbitron',sans-serif">
+      📦 MODULLAR
+    </h2>
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
+
+      <a href="src/Sonli-Usullar/Iteratsiya-Usuli.html" class="module-card">
+        <div class="badge">01 / USUL</div>
+        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ITERATSIYA USULI</h4>
+        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.</p>
         <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
       </a>
 
-      <a href="KesmaniTengIkkigaBo'lish-Usuli.html" class="p-6 transition-shadow cyber-card hover:shadow-lg">
-        <h4 class="mb-2 text-lg font-black">KESMANI TENG IKKIGA BO'lish</h4>
-        <p class="text-sm text-gray-600">Oraliqni qisqartirish orqali ildizni topish</p>
+      <a href="src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="module-card">
+        <div class="badge">02 / USUL</div>
+        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">KESMANI TENG IKKIGA BO'LISH</h4>
+        <p class="text-sm text-gray-600">Oraliqni qisqartirish orqali ildizni topish (Bisection Method).</p>
         <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
       </a>
 
-      <a href="FunksiyaKesishishNuqtasiAniqlash.html" class="p-6 transition-shadow cyber-card hover:shadow-lg">
-        <h4 class="mb-2 text-lg font-black">FUNKSIYA KESISHISH NUQTA</h4>
-        <p class="text-sm text-gray-600">Grafik usulda kesishish nuqtalarini aniqlash</p>
+      <a href="src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" class="module-card">
+        <div class="badge">03 / USUL</div>
+        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">FUNKSIYA KESISHISH NUQTA</h4>
+        <p class="text-sm text-gray-600">Grafik usulda kesishish nuqtalarini aniqlash. Zoom & Pan qo'llab-quvvatlash.</p>
         <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
       </a>
 
-      <a href="prompt-viewer.html" class="p-6 transition-shadow cyber-card hover:shadow-lg">
-        <h4 class="mb-2 text-lg font-black">PROMPT VIEWER</h4>
-        <p class="text-sm text-gray-600">Iteratsiya usuli uchun to'liq misol ishlanishi</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">KO'rish →</div>
+      <a href="src/Sonli-Usullar/Gauss-Seydel-usuli.html" class="module-card">
+        <div class="badge">04 / USUL</div>
+        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">GAUSS-SEYDEL USULI</h4>
+        <p class="text-sm text-gray-600">Nochiziqli tenglamalar sistemasini yechish uchun iterativ usul.</p>
+        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
       </a>
+
+      <a href="src/Sonli-Usullar/Nazariya.html" class="module-card">
+        <div class="badge">05 / NAZARIYA</div>
+        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">NAZARIYA (PROMPT)</h4>
+        <p class="text-sm text-gray-600">Iteratsiya usuli uchun to'liq misol ishlanishi va nazariya.</p>
+        <div class="mt-4 text-xs font-bold text-cyan-600">KO'RISH →</div>
+      </a>
+
+      <a href="src/about.html" class="module-card">
+        <div class="badge">ℹ️ / HAQIDA</div>
+        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">WEBSITE HAQIDA</h4>
+        <p class="text-sm text-gray-600">Loyiha haqida batafsil ma'lumot, texnologiyalar va muallif.</p>
+        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
+      </a>
+
     </div>
 
-    <div class="mt-16 text-center">
-      Foydalanilgan texnologiyalar: HTML, CSS, Tailwind CSS, JavaScript, KaTeX. Loyiha maqsadi - matematikani o'rganish
-      va amaliyot qilish uchun interaktiv platforma yaratish.
+    <!-- Tech stack -->
+    <div class="p-5 cyber-card mb-12">
+      <h3 class="font-black mb-3 text-sm tracking-wider" style="font-family:'Orbitron',sans-serif">🔧 TEXNOLOGIYALAR</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-3 py-1 text-xs font-bold bg-black text-white border border-black">HTML5</span>
+        <span class="px-3 py-1 text-xs font-bold bg-cyan-100 text-black border border-black">CSS3</span>
+        <span class="px-3 py-1 text-xs font-bold bg-yellow-100 text-black border border-black">JavaScript</span>
+        <span class="px-3 py-1 text-xs font-bold bg-blue-100 text-black border border-black">Tailwind CSS</span>
+        <span class="px-3 py-1 text-xs font-bold bg-purple-100 text-black border border-black">KaTeX</span>
+        <span class="px-3 py-1 text-xs font-bold bg-green-100 text-black border border-black">Math.js</span>
+        <span class="px-3 py-1 text-xs font-bold bg-orange-100 text-black border border-black">Canvas API</span>
+        <span class="px-3 py-1 text-xs font-bold" style="background:#00f2ff; border:1px solid #000">Orbitron Font</span>
+        <span class="px-3 py-1 text-xs font-bold" style="background:#ff00ea; color:white; border:1px solid #000">JetBrains Mono</span>
+      </div>
     </div>
 
-    <footer class="mt-24 text-center">
+    <footer class="mt-4 text-center">
       <div class="inline-block px-10 pt-4 border-t-2 border-black">
         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
           © 2026 Qarshi Davlat Universiteti talabasi | Haydarov Jasurbek
         </p>
       </div>
     </footer>
-  </div>
 
-  <script>
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      const main = document.getElementById('main-content');
-
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-      main.classList.toggle('shifted');
-    }
-
-    // Close sidebar when clicking overlay
-    document.getElementById('overlay').addEventListener('click', toggleSidebar);
-  </script>
+  </div><!-- /main-content -->
 </body>
 
 </html>

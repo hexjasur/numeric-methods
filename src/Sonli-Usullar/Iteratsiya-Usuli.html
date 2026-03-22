@@ -4,32 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iteratsiya Lab v4.0 | Haydarov Jasurbek</title>
+  <title>Iteratsiya Usuli | Sonli Usullar</title>
+  <!-- Shared Sidebar CSS -->
+  <link rel="stylesheet" href="../assets/css/sidebar.css">
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Math.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
-
-    body {
-      background-color: #f1f5f9;
-      font-family: 'JetBrains Mono', monospace;
-      color: #1e293b;
-    }
-
-    .cyber-card {
-      background: white;
-      border: 2px solid #000;
-      box-shadow: 4px 4px 0px #000;
-      transition: all 0.2s;
-    }
-
     .input-field {
       border: 2px solid #000;
       padding: 10px;
       width: 100%;
       outline: none;
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .step-title {
@@ -48,106 +40,84 @@
 </head>
 
 <body class="p-4 md:p-8">
+  <!-- Sidebar -->
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'iteratsiya';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
 
-  <div class="max-w-4xl mx-auto">
-    <header class="p-6 mb-8 text-center bg-white cyber-card">
-      <h1 style="font-family: 'Orbitron'" class="text-2xl font-black">SONLI USULLAR: ITERATSIYA USULI</h1>
-      <p class="text-[10px] font-bold text-gray-500 uppercase">QarDU | Amaliy Matematika | 023-40 guruh</p>
-    </header>
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <div class="max-w-4xl mx-auto">
+      <header class="p-6 mb-8 text-center bg-white cyber-card">
+        <h1 style="font-family: 'Orbitron', sans-serif" class="text-2xl font-black">SONLI USULLAR: ITERATSIYA USULI</h1>
+        <p class="text-[10px] font-bold text-gray-500 uppercase mt-1">QarDU | Amaliy Matematika | 023-40 guruh</p>
+      </header>
 
-    <div class="p-3 bg-yellow-100 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
-      <div><b>📌 Misollar:</b></div>
-
-      <div>
-        Eslatma:
-        <code>sinx deb yozmang xato, sin(x) deb qiymatni qavis ichida yozing!</code>
+      <div class="p-3 bg-yellow-100 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
+        <div><b>📌 Eslatmalar:</b></div>
+        <div>Eslatma: <code>sinx deb yozmang xato, sin(x) deb qiymatni qavis ichida yozing!</code></div>
+        <div>Daraja: <code>x^2</code> yoki <code>x^(3+1)</code></div>
+        <div>Trigonometriya: <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code>, <code>cot(x)</code></div>
+        <div>Ildiz: <code>sqrt(x)</code> (kvadrat ildiz), <code>cbrt(x)</code> (kub ildiz)</div>
+        <div>Logarifm: <code>log(x)</code> (natural log), <code>log10(x)</code></div>
+        <div>Eksponenta: <code>exp(x)</code>, <code>e^x</code></div>
+        <div>O'zgarmaslar: <code>pi</code>, <code>e</code></div>
+        <div>
+          Dasturdagi xatoliklar:<br>
+          <code>1) Ildiz bo'lmagan oraliq: oraliqda funksiya nolga teng bo'lmasa.</code><br>
+          <code>2) Juda murakkab funksiyalar: hosila juda katta bo'lib ketsa (k &lt; 20 cheklovi bor).</code>
+        </div>
       </div>
 
-      <div>Daraja: <code>x^2</code> yoki <code>x^(3+1)</code></div>
-
-      <div>Trigonometriya:
-        <code>sin(x)</code>,
-        <code>cos(x)</code>,
-        <code>tan(x)</code>,
-        <code>cot(x)</code>
+      <div class="p-3 pb-5 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
+        <div class="font-bold">📌 Misollar (bosib qo'llang):</div>
+        <div id="examples" class="grid grid-cols-1 gap-2"></div>
       </div>
 
-      <div>
-        Ildiz:
-        <code>sqrt(x)</code> (kvadrat ildiz),
-        <code>cbrt(x)</code> (kub ildiz)
-      </div>
-
-      <div>Logarifm:
-        <code>log(x)</code> (natural log),
-        <code>log10(x)</code>
-      </div>
-
-      <div>Eksponenta:
-        <code>exp(x)</code>,
-        <code>e^x</code>
-      </div>
-
-      <div>O‘zgarmaslar:
-        <code>pi</code>,
-        <code>e</code>
-      </div>
-
-      <div>
-        Dasturdagi xatoliklar:
-        <br>
-        <code>1) Ildiz bo'lmagan oraliq: Agar siz kiritgan [a, b] oraliqda funksiya nolga teng bo'lmasa (masalan, funksiya doim musbat bo'lsa).</code>
-        <br>
-        <code>2) Juda murakkab funksiyalar: Agar hosila juda katta bo'lib ketsa, M soni ham juda katta bo'ladi va iteratsiya juda ko'p qadam talab qilishi mumkin (shuning uchun dasturda k < 20 cheklovi bor).</code>
-      </div>
-    </div>
-
-    <div class="p-3 pb-5 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
-      <div class="font-bold">📌 Misollar (bosib qo‘llang):</div>
-
-      <div id="examples" class="grid grid-cols-1 gap-2"></div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-      <div class="space-y-4 md:col-span-1">
-        <div class="p-5 cyber-card">
-          <h3 class="mb-4 font-black">📥 MA'LUMOTLAR</h3>
-          <div class="space-y-4">
-            <div>
-              <label class="text-[10px] font-bold">f(x) funksiya:</label>
-              <input type="text" id="funcInput" value="x^3 + x - 1" class="input-field" oninput="renderPreview()">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="space-y-4 md:col-span-1">
+          <div class="p-5 cyber-card">
+            <h3 class="mb-4 font-black">📥 MA'LUMOTLAR</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="text-[10px] font-bold">f(x) funksiya:</label>
+                <input type="text" id="funcInput" value="x^3 + x - 1" class="input-field" oninput="renderPreview()">
+              </div>
+              <div id="math-preview" class="flex justify-center py-2 italic text-blue-600 border-b"></div>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="number" id="aInput" placeholder="a" value="0" class="text-center input-field">
+                <input type="number" id="bInput" placeholder="b" value="1" class="text-center input-field">
+              </div>
+              <input type="number" id="epsInput" placeholder="Epsilon" value="0.01" step="0.001" class="input-field">
+              <button onclick="calculate()"
+                class="w-full py-3 font-black text-white uppercase transition-colors bg-black hover:bg-blue-600">Hisoblash</button>
             </div>
-            <div id="math-preview" class="flex justify-center py-2 italic text-blue-600 border-b"></div>
-            <div class="grid grid-cols-2 gap-2">
-              <input type="number" id="aInput" placeholder="a" value="0" class="text-center input-field">
-              <input type="number" id="bInput" placeholder="b" value="1" class="text-center input-field">
-            </div>
-            <input type="number" id="epsInput" placeholder="Epsilon" value="0.01" step="0.001" class="input-field">
-            <button onclick="calculate()"
-              class="w-full py-3 font-black text-white uppercase transition-colors bg-black hover:bg-blue-600">Hisoblash</button>
+          </div>
+
+          <div id="m-info" class="hidden p-4 cyber-card bg-yellow-50">
+            <p class="text-[10px] font-bold">HISOB-KITOB ASOSI:</p>
+            <div id="m-val-display" class="text-xs"></div>
           </div>
         </div>
 
-        <div id="m-info" class="hidden p-4 cyber-card bg-yellow-50">
-          <p class="text-[10px] font-bold">HISOB-KITOB ASOSI:</p>
-          <div id="m-val-display" class="text-xs"></div>
-        </div>
-      </div>
+        <div class="space-y-4 md:col-span-2">
+          <div id="results-container" class="space-y-4">
+            <div class="p-10 italic text-center text-gray-400 cyber-card">
+              Parametrlarni kiriting va tugmani bosing...
+            </div>
+          </div>
 
-      <div class="space-y-4 md:col-span-2">
-        <div id="results-container" class="space-y-4">
-          <div class="p-10 italic text-center text-gray-400 cyber-card">
-            Parametrlarni kiriting va tugmani bosing...
+          <div id="final-verify" class="hidden p-5 border-green-600 cyber-card bg-green-50">
+            <h4 class="mb-2 text-sm font-black text-green-700">YAKUNIY TEKSHIRISH:</h4>
+            <div id="verify-math"></div>
           </div>
         </div>
-
-        <div id="final-verify" class="hidden p-5 border-green-600 cyber-card bg-green-50">
-          <h4 class="mb-2 text-sm font-black text-green-700">YAKUNIY TEKSHIRISH:</h4>
-          <div id="verify-math"></div>
-        </div>
       </div>
-    </div>
-  </div>
+
+    </div><!-- /max-w -->
+  </div><!-- /main-content -->
 
   <script>
     function renderPreview() {
@@ -158,27 +128,9 @@
     }
 
     const examples = [
-      {
-        func: "x^3 + x - 1",
-        latex: "x^3 + x - 1",
-        a: 0,
-        b: 1,
-        eps: 0.01
-      },
-      {
-        func: "sqrt(x+1) - 1/x",
-        latex: "\\sqrt{x+1} - \\frac{1}{x}",
-        a: 0.5,
-        b: 2,
-        eps: 0.01
-      },
-      {
-        func: "x - 1 - sin(x)/10",
-        latex: "x - 1 - \\frac{\\sin(x)}{10}",
-        a: 0,
-        b: 1,
-        eps: 0.01
-      }
+      { func: "x^3 + x - 1", latex: "x^3 + x - 1", a: 0, b: 1, eps: 0.01 },
+      { func: "sqrt(x+1) - 1/x", latex: "\\sqrt{x+1} - \\frac{1}{x}", a: 0.5, b: 2, eps: 0.01 },
+      { func: "x - 1 - sin(x)/10", latex: "x - 1 - \\frac{\\sin(x)}{10}", a: 0, b: 1, eps: 0.01 }
     ];
 
     function applyExample(ex) {
@@ -186,40 +138,27 @@
       document.getElementById('aInput').value = ex.a;
       document.getElementById('bInput').value = ex.b;
       document.getElementById('epsInput').value = ex.eps;
-
       renderPreview();
     }
 
     function renderExamples() {
       const container = document.getElementById('examples');
       container.innerHTML = '';
-
       examples.forEach((ex, i) => {
         const el = document.createElement('div');
-
         el.className = "p-2 bg-white border cursor-pointer hover:bg-blue-50";
         el.onclick = () => applyExample(ex);
-
         const mathId = `example-math-${i}`;
-
         el.innerHTML = `
-        <div id="${mathId}" class="text-center text-blue-600"></div>
-        <div class="text-[10px] mt-1 text-gray-500 text-center">
-          [${ex.a}, ${ex.b}], ε = ${ex.eps}
-        </div>
-      `;
-
+          <div id="${mathId}" class="text-center text-blue-600"></div>
+          <div class="text-[10px] mt-1 text-gray-500 text-center">[${ex.a}, ${ex.b}], ε = ${ex.eps}</div>
+        `;
         container.appendChild(el);
-
-        // KaTeX render
         katex.render(ex.latex, document.getElementById(mathId));
       });
     }
 
-    window.onload = () => {
-      renderPreview();
-      renderExamples();
-    };
+    window.onload = () => { renderPreview(); renderExamples(); };
 
     function calculate() {
       const funcStr = document.getElementById('funcInput').value;
@@ -236,41 +175,32 @@
         const f = math.compile(funcStr);
         const df = math.derivative(funcStr, 'x').compile();
 
-        // 1. M ni aniqlash (Daftardagidek max|f'|)
         let f_prime_a = Math.abs(df.evaluate({ x: a }));
         let f_prime_b = Math.abs(df.evaluate({ x: b }));
         let max_df = Math.max(f_prime_a, f_prime_b);
         let M = Math.ceil(max_df) + 1;
-        // let M = Math.ceil(max_df) + 1 ; // Qiymat barqaror bo‘lishi uchun +1 qo‘shish
 
         document.getElementById('m-val-display').innerHTML = `
-                M = ${M} <br> 
-                x<sub>0</sub> = ${b} (Boshlang'ich) <br>
-                Formula: x<sub>k+1</sub> = x<sub>k</sub> - f(x<sub>k</sub>)/${M}
-            `;
+          M = ${M} <br>
+          x<sub>0</sub> = ${b} (Boshlang'ich) <br>
+          Formula: x<sub>k+1</sub> = x<sub>k</sub> - f(x<sub>k</sub>)/${M}
+        `;
 
-        let x_old = b; // Odatda b dan boshlanadi
+        let x_old = b;
         let k = 0;
-        let isConditionMet = false; // To'xtatish bayrog'i
-        let k_max = 20; // k ning cheklovi k < 20.
+        let isConditionMet = false;
+        let k_max = 20;
 
         while (!isConditionMet && k < k_max) {
           k++;
           let fk = f.evaluate({ x: x_old });
           let x_new = x_old - (fk / M);
-
-          // Ildizlar farqi (ixtiyoriy, UI uchun)
-          let diff = Math.abs(x_new - x_old);
-
-          // ASOSIY O'ZGARISH: f(x) ning o'zidagi xatolikni hisoblash
           let f_new_val = Math.abs(f.evaluate({ x: x_new }));
 
           const card = document.createElement('div');
           card.className = "cyber-card p-5 bg-white";
-
           const stepId = `step-${k}`;
           const errorId = `err-${k}`;
-
           card.innerHTML = `
             <div class="step-title">${k}-yaqinlashish:</div>
             <div id="${stepId}" class="mb-2"></div>
@@ -279,19 +209,16 @@
           `;
           resultsContainer.appendChild(card);
 
-          // Math Render
           katex.render(`x_{${k}} = ${x_old.toFixed(4)} - \\frac{f(${x_old.toFixed(4)})}{${M}} \\approx ${x_new.toFixed(4)}`, document.getElementById(stepId));
 
-          // Ekranga x_new ni farqini emas, funksiya xatoligini chiqaramiz (ustozingizdek)
           const errorSymbol = f_new_val <= eps ? "<" : ">";
           katex.render(`|F(x_{${k}})| = |${f_new_val.toFixed(4)}| ${errorSymbol} \\epsilon`, document.getElementById(errorId));
 
-          // TO'XTATISH SHARTI: Agar F(x) < eps bo'lsa tsikldan chiqadi
           if (f_new_val <= eps) {
             document.getElementById('final-verify').classList.remove('hidden');
             const finalF = f.evaluate({ x: x_new });
             katex.render(`f(\\xi) = f(${x_new.toFixed(4)}) \\approx ${finalF.toFixed(4)} \\le ${eps}`, document.getElementById('verify-math'));
-            isConditionMet = true; // tsiklni to'xtatadi
+            isConditionMet = true;
           }
 
           x_old = x_new;

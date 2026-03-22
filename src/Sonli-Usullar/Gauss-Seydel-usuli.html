@@ -1,108 +1,158 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Zeydel Usuli - Aniq Misol</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gauss-Seydel Usuli | Sonli Usullar</title>
+  <!-- Shared Sidebar CSS -->
+  <link rel="stylesheet" href="../assets/css/sidebar.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-100 p-4 md:p-10">
 
-    <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl overflow-hidden border border-gray-200">
-        <div class="bg-indigo-600 p-6 text-white text-center">
-            <h1 class="text-2xl font-bold uppercase tracking-widest">Zeydel Usuli</h1>
-            <p class="mt-2 text-indigo-100 font-mono text-sm">
-                sin(y) + 2x = 2 | cos(x-1) + y = 0
-            </p>
+<body class="p-4 md:p-8">
+  <!-- Sidebar -->
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'gauss';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+
+    <header class="p-8 mb-10 text-center shadow-sm cyber-header">
+      <h1 class="text-3xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">
+        GAUSS-SEYDEL <span style="color:#00f2ff">USULI</span>
+      </h1>
+      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">
+        QarDU | Amaliy Matematika | 023-40 guruh
+      </p>
+    </header>
+
+    <div class="max-w-3xl mx-auto">
+      <div class="cyber-card p-6 mb-8">
+        <h3 class="font-black mb-3 border-b-2 border-black pb-2" style="font-family:'Orbitron',sans-serif">
+          📐 TENGLAMA SISTEMASI
+        </h3>
+        <div class="p-4 bg-gray-50 font-mono text-sm space-y-1 border border-gray-200 rounded">
+          <div>sin(y) + 2x = 2</div>
+          <div>cos(x−1) + y = 0</div>
         </div>
+      </div>
 
-        <div class="p-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">x₀</label>
-                    <input type="number" id="x0" value="1" step="0.1" class="w-full border-2 border-gray-100 rounded-xl px-3 py-2 outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">y₀</label>
-                    <input type="number" id="y0" value="-0.3" step="0.1" class="w-full border-2 border-gray-100 rounded-xl px-3 py-2 outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">M₁</label>
-                    <input type="number" id="m1" value="2" class="w-full border-2 border-gray-100 rounded-xl px-3 py-2 outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1">M₂</label>
-                    <input type="number" id="m2" value="1" class="w-full border-2 border-gray-100 rounded-xl px-3 py-2 outline-none focus:border-indigo-500">
-                </div>
-            </div>
-
-            <button onclick="solve()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl shadow-lg transition active:scale-95">
-                Hisoblash (ε = 0.01)
-            </button>
-
-            <div id="resultWrapper" class="hidden mt-10">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-50 border-b text-gray-400 text-xs font-black uppercase">
-                            <tr>
-                                <th class="px-4 py-3">Iter</th>
-                                <th class="px-4 py-3 text-indigo-600">x_n</th>
-                                <th class="px-4 py-3 text-indigo-600">y_n</th>
-                                <th class="px-4 py-3">Farq (Δ)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody" class="divide-y divide-gray-50 font-mono text-sm"></tbody>
-                    </table>
-                </div>
-                <div id="finalNote" class="mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 text-center font-bold text-xl"></div>
-            </div>
+      <div class="cyber-card p-6 mb-8">
+        <h3 class="font-black mb-4 border-b-2 border-black pb-2" style="font-family:'Orbitron',sans-serif">
+          📥 PARAMETRLAR
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div>
+            <label class="block text-xs font-bold text-gray-400 mb-1">x₀</label>
+            <input type="number" id="x0" value="1" step="0.1"
+              class="w-full border-2 border-black px-3 py-2 outline-none focus:border-cyan-500 font-mono">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-400 mb-1">y₀</label>
+            <input type="number" id="y0" value="-0.3" step="0.1"
+              class="w-full border-2 border-black px-3 py-2 outline-none focus:border-cyan-500 font-mono">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-400 mb-1">M₁</label>
+            <input type="number" id="m1" value="2"
+              class="w-full border-2 border-black px-3 py-2 outline-none focus:border-cyan-500 font-mono">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-400 mb-1">M₂</label>
+            <input type="number" id="m2" value="1"
+              class="w-full border-2 border-black px-3 py-2 outline-none focus:border-cyan-500 font-mono">
+          </div>
         </div>
+        <button onclick="solve()" class="cyber-button px-12 py-4 text-lg font-black w-full">
+          HISOBLASH (ε = 0.01)
+        </button>
+      </div>
+
+      <div id="resultWrapper" class="hidden cyber-card p-6 mb-8">
+        <h3 class="font-black mb-4 border-b-2 border-black pb-2" style="font-family:'Orbitron',sans-serif">
+          📊 ITERATSIYA JADVALI
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-gray-50 border-b text-gray-400 text-xs font-black uppercase">
+              <tr>
+                <th class="px-4 py-3">Iter</th>
+                <th class="px-4 py-3 text-cyan-600">x_n</th>
+                <th class="px-4 py-3 text-cyan-600">y_n</th>
+                <th class="px-4 py-3">Farq (Δ)</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody" class="divide-y divide-gray-100 font-mono text-sm"></tbody>
+          </table>
+        </div>
+        <div id="finalNote"
+          class="mt-6 p-5 bg-green-50 border-2 border-green-300 text-green-800 text-center font-black text-xl"></div>
+      </div>
+
+      <div class="cyber-card p-6 mb-8">
+        <h3 class="font-black mb-3 border-b-2 border-black pb-2" style="font-family:'Orbitron',sans-serif">
+          📚 USUL HAQIDA
+        </h3>
+        <div class="space-y-2 text-sm leading-relaxed text-gray-700">
+          <p><strong>Gauss-Seydel usuli</strong> — chiziqsiz tenglamalar sistemasini iterativ yechish usulidir.</p>
+          <p>Har bir iteratsiyada yangi qiymatlar darhol keyingi hisoblamalarga ishlatiladi (Zeydel usuli).</p>
+          <p>Bu farq ordinary Gauss usulidan tezroq yaqinlashishni ta'minlaydi.</p>
+        </div>
+      </div>
     </div>
 
-    <script>
-        function solve() {
-            let x = parseFloat(document.getElementById('x0').value);
-            let y = parseFloat(document.getElementById('y0').value);
-            const m1 = parseFloat(document.getElementById('m1').value);
-            const m2 = parseFloat(document.getElementById('m2').value);
-            const eps = 0.01;
+    <footer class="mt-8 text-center">
+      <div class="inline-block px-10 pt-4 border-t-2 border-black">
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+          © 2026 Qarshi Davlat Universiteti | Haydarov Jasurbek
+        </p>
+      </div>
+    </footer>
+  </div><!-- /main-content -->
 
-            const tbody = document.getElementById('tableBody');
-            const wrapper = document.getElementById('resultWrapper');
-            tbody.innerHTML = '';
-            wrapper.classList.remove('hidden');
+  <script>
+    function solve() {
+      let x = parseFloat(document.getElementById('x0').value);
+      let y = parseFloat(document.getElementById('y0').value);
+      const m1 = parseFloat(document.getElementById('m1').value);
+      const m2 = parseFloat(document.getElementById('m2').value);
+      const eps = 0.01;
 
-            let iteration = 0;
-            let diff = 1;
+      const tbody = document.getElementById('tableBody');
+      const wrapper = document.getElementById('resultWrapper');
+      tbody.innerHTML = '';
+      wrapper.classList.remove('hidden');
 
-            while (diff > eps && iteration < 10) {
-                iteration++;
-                let xOld = x;
-                let yOld = y;
+      let iteration = 0;
+      let diff = 1;
 
-                // x = x - (sin(y) + 2x - 2) / M1
-                let xNew = xOld - (Math.sin(yOld) + 2 * xOld - 2) / m1;
-                
-                // y = y - (cos(x_new - 1) + y) / M2
-                // Zeydel: Yangi xNew ishlatiladi!
-                let yNew = yOld - (Math.cos(xNew - 1) + yOld) / m2;
+      while (diff > eps && iteration < 10) {
+        iteration++;
+        let xOld = x, yOld = y;
+        let xNew = xOld - (Math.sin(yOld) + 2 * xOld - 2) / m1;
+        let yNew = yOld - (Math.cos(xNew - 1) + yOld) / m2;
+        diff = Math.abs(xNew - xOld);
 
-                diff = Math.abs(xNew - xOld);
+        const rowClass = diff <= eps ? 'bg-green-50 text-green-700 font-bold' : '';
+        tbody.insertAdjacentHTML('beforeend', `
+          <tr class="hover:bg-cyan-50 transition-colors ${rowClass}">
+            <td class="px-4 py-3 text-gray-400">${iteration}</td>
+            <td class="px-4 py-3">${xNew.toFixed(6)}</td>
+            <td class="px-4 py-3">${yNew.toFixed(6)}</td>
+            <td class="px-4 py-3 text-cyan-600">${diff.toFixed(6)}</td>
+          </tr>
+        `);
 
-                tbody.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-indigo-50/50">
-                        <td class="px-4 py-4 text-gray-400">${iteration}</td>
-                        <td class="px-4 py-4">${xNew.toFixed(6)}</td>
-                        <td class="px-4 py-4">${yNew.toFixed(6)}</td>
-                        <td class="px-4 py-4 text-indigo-500">${diff.toFixed(6)}</td>
-                    </tr>
-                `);
+        x = xNew; y = yNew;
+      }
 
-                x = xNew;
-                y = yNew;
-            }
-
-            document.getElementById('finalNote').innerText = `X* = ${x.toFixed(4)}, Y* = ${y.toFixed(4)}`;
-        }
-    </script>
+      document.getElementById('finalNote').innerText = `X* ≈ ${x.toFixed(4)},   Y* ≈ ${y.toFixed(4)}`;
+    }
+  </script>
 </body>
 </html>

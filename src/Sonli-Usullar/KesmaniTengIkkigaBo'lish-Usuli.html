@@ -4,140 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kesmani Teng Ikkiqa Bo'lish Usuli | Haydarov Jasurbek</title>
+  <title>Kesmani Teng Ikkiga Bo'lish Usuli | Sonli Usullar</title>
+  <!-- Shared Sidebar CSS -->
+  <link rel="stylesheet" href="../assets/css/sidebar.css">
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <!-- Math.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
-
-    body {
-      background-color: #f8fafc;
-      font-family: 'JetBrains+Mono', monospace;
-      color: #0f172a;
-    }
-
-    .cyber-header {
-      font-family: 'Orbitron', sans-serif;
-      clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
-      border-bottom: 5px solid #00f2ff;
-      background: white;
-    }
-
-    .cyber-card {
-      background: white;
-      border: 2px solid #000;
-      box-shadow: 6px 6px 0px #00f2ff;
-      position: relative;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
-    }
-
-    .cyber-button {
-      font-family: 'Orbitron', sans-serif;
-      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      background: #00f2ff;
-      color: #000;
-      border: 1px solid #000;
-    }
-
-    .cyber-button:hover {
-      background: #ff00ea;
-      color: white;
-      box-shadow: 0 0 20px rgba(255, 0, 234, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 280px;
-      background: white;
-      border-right: 2px solid #000;
-      box-shadow: 6px 0 20px rgba(0, 0, 0, 0.1);
-      transform: translateX(-100%);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 50;
-    }
-
-    .sidebar.open {
-      transform: translateX(0);
-    }
-
-    .sidebar-header {
-      font-family: 'Orbitron', sans-serif;
-      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
-      border-bottom: 2px solid #000;
-      padding: 20px;
-      background: #f8fafc;
-    }
-
-    .sidebar-menu {
-      padding: 20px;
-    }
-
-    .sidebar-item {
-      display: block;
-      padding: 12px 16px;
-      margin-bottom: 8px;
-      background: #f1f5f9;
-      border: 1px solid #000;
-      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
-      text-decoration: none;
-      color: #000;
-      font-weight: bold;
-      transition: all 0.2s;
-    }
-
-    .sidebar-item:hover {
-      background: #e2e8f0;
-      transform: translateX(4px);
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 40;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-
-    .overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .main-content {
-      margin-left: 0;
-      transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .main-content.shifted {
-      margin-left: 280px;
-    }
-
-    @media (min-width: 1024px) {
-      .sidebar {
-        transform: translateX(0);
-      }
-
-      .main-content {
-        margin-left: 280px;
-      }
-
-      .overlay {
-        display: none;
-      }
-    }
-
     .math-input {
       font-family: 'JetBrains Mono', monospace;
       font-size: 1.1rem;
@@ -180,47 +58,39 @@
 </head>
 
 <body class="p-4 md:p-8">
-
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <h3 class="text-xl font-black">MENU</h3>
-      <p class="mt-1 text-xs text-gray-600">Sonli Usullar</p>
-    </div>
-    <div class="sidebar-menu">
-      <a href="/index.html" class="sidebar-item">ASOSIY SAHIFA</a>
-      <a href="FunksiyaKesishishNuqtasiAniqlash.html" class="sidebar-item">FUNKSIYA KESISHISH</a>
-      <a href="Iteratsiya-Usuli.html" class="sidebar-item">ITERATSIYA USULI</a>
-      <a style="background: #ff00ea; color: white;" href="KesmaniTengIkkigaBo'lish-Usuli.html"
-        class="sidebar-item">KESMANI TENG IKKIGA BO'lish</a>
-    </div>
-  </div>
-
-  <!-- Overlay -->
-  <div class="overlay" id="overlay"></div>
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'kesma';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
 
   <!-- Main Content -->
   <div class="main-content" id="main-content">
+
     <header class="p-8 mb-12 text-center shadow-sm cyber-header">
-      <h1 class="text-4xl font-black tracking-widest text-black">KESMANI TENG IKKIGA BO'lish USULI v2.1</h1>
-      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Kompyuter
-        ilmlari Fakulteti <br>Amaliy Matematika</p>
+      <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">
+        KESMANI TENG IKKIGA BO'LISH <span style="color:#00f2ff">v2.1</span>
+      </h1>
+      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">
+        Qarshi Davlat Universiteti | Amaliy Matematika
+      </p>
     </header>
 
     <div class="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-3">
       <div class="p-6 cyber-card">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
           <span class="mr-2">⚡</span> FORMULA
         </h3>
         <div id="math-equation" class="my-6 text-xl"></div>
         <div class="space-y-2 text-sm font-bold">
           <p class="flex justify-between"><span>Oraliq:</span> <span class="text-cyan-600">[1, 2]</span></p>
-          <p class="flex justify-between"><span>Aniqlik:</span> <span class="text-magenta-600">ε = 0.01</span></p>
+          <p class="flex justify-between"><span>Aniqlik:</span> <span style="color:#ff00ea">ε = 0.01</span></p>
         </div>
       </div>
 
       <div class="p-6 cyber-card lg:col-span-2">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
           <span class="mr-2">👤</span> BOSHQARUV PANELI
         </h3>
         <div class="space-y-4">
@@ -250,8 +120,8 @@
             </div>
             <div class="flex items-end gap-3 md:col-span-2">
               <button onclick="calculate()" class="px-12 py-4 text-lg font-black cyber-button">HISOBLASH</button>
-              <button onclick="reset()"
-                class="px-8 py-4 text-lg font-black bg-gray-400 border-gray-600 cyber-button">TOZALASH</button>
+              <button onclick="reset()" class="px-8 py-4 text-lg font-black cyber-button"
+                style="background:#9ca3af">TOZALASH</button>
             </div>
           </div>
         </div>
@@ -260,7 +130,7 @@
 
     <div class="grid grid-cols-1 gap-8 mb-12 lg:grid-cols-2">
       <div class="p-6 cyber-card">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
           <span class="mr-2">📊</span> ITERATSIYA JADVALI
         </h3>
         <div class="flex items-center justify-between mb-4 text-sm">
@@ -274,67 +144,61 @@
       </div>
 
       <div class="p-6 cyber-card">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
+        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
           <span class="mr-2">🎯</span> NATIJA
         </h3>
         <div id="resultCard" class="hidden space-y-6">
-          <div class="p-6 border bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border-cyan-500/30 rounded-xl">
+          <div class="p-6 border bg-gradient-to-r from-cyan-500/20 to-pink-500/20 border-cyan-500/30 rounded-xl">
             <div class="flex items-center justify-between">
               <div>
                 <p class="mb-2 text-xs font-bold uppercase text-cyan-600">Topilgan ildiz</p>
-                <h2 id="finalX" class="text-4xl font-black text-black">1.085938</h2>
+                <h2 id="finalX" class="text-4xl font-black text-black">–</h2>
               </div>
               <div class="text-right">
                 <p class="mb-2 text-xs font-bold text-gray-600 uppercase">Funksiya qiymati</p>
-                <p id="finalF" class="font-mono text-lg text-magenta-600">0.000000</p>
+                <p id="finalF" class="font-mono text-lg" style="color:#ff00ea">–</p>
               </div>
             </div>
           </div>
-
-          <div class="success-badge">
-            <span class="mr-2">✔</span> ANIQLIK TALABIGA MOS
-          </div>
+          <div class="success-badge"><span class="mr-2">✔</span> ANIQLIK TALABIGA MOS</div>
         </div>
       </div>
     </div>
 
-    <div class="p-6 cyber-card">
-      <h3 class="flex items-center mb-4 font-black border-b-2 border-black">
+    <div class="p-6 cyber-card mb-8">
+      <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
         <span class="mr-2">📚</span> USUL HAQIDA
       </h3>
       <div class="space-y-3 text-sm leading-relaxed text-gray-700">
-        <p><strong>Kesmani teng ikkiga bo'lish usuli</strong> (Bisection method) - bu oraliqni qisqartirish orqali
-          ildizni topish usulidir.</p>
+        <p><strong>Kesmani teng ikkiga bo'lish usuli</strong> (Bisection method) — oraliqni qisqartirish orqali ildizni topish usulidir.</p>
         <p><strong>Asosiy qadamlar:</strong></p>
         <ul class="space-y-1 list-disc list-inside">
-          <li>Oraliq [a, b] tanlanadi, bunda f(a) · f(b) < 0</li>
+          <li>Oraliq [a, b] tanlanadi, bunda f(a) · f(b) &lt; 0</li>
           <li>Oraliq markazi c = (a + b)/2 hisoblanadi</li>
           <li>Agar f(c) = 0 bo'lsa, ildiz topildi</li>
-          <li>Aks holda f(a) · f(c) < 0 bo'lsa, yangi oraliq [a, c] bo'ladi</li>
-          <li>Shart |b - a| < ε bajarilguncha takrorlanadi</li>
+          <li>Aks holda f(a) · f(c) &lt; 0 bo'lsa, yangi oraliq [a, c] bo'ladi</li>
+          <li>Shart |b - a| &lt; ε bajarilguncha takrorlanadi</li>
         </ul>
         <p><strong>Afzalliklari:</strong> Har doim yaqinlashadi, oddiy va ishonchli</p>
         <p><strong>Kamchiliklari:</strong> Sekin yaqinlashadi, faqat bitta ildizni topadi</p>
       </div>
     </div>
 
-    <footer class="mt-24 text-center">
+    <footer class="mt-12 text-center">
       <div class="inline-block px-10 pt-4 border-t-2 border-black">
         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
           © 2026 Qarshi Davlat Universiteti | Haydarov Jasurbek
         </p>
       </div>
     </footer>
-  </div>
+  </div><!-- /main-content -->
 
   <script>
     window.onload = function () {
       katex.render("f(x) = x - 1 - \\frac{\\sin(x)}{10} = 0", document.getElementById('math-equation'));
     };
 
-    function reset() {
-      location.reload();
-    }
+    function reset() { location.reload(); }
 
     function calculate() {
       const exprStr = document.getElementById('equation').value;
@@ -349,83 +213,54 @@
       resultCard.classList.add('hidden');
 
       try {
-        // Funksiyani x ga nisbatan kompilyatsiya qilish
         const node = math.parse(exprStr);
         const code = node.compile();
-
         const f = (xVal) => code.evaluate({ x: xVal });
 
-        let a = a_in;
-        let b = b_in;
-        let iteration = 0;
+        let a = a_in, b = b_in, iteration = 0;
 
-        // 1. Dastlabki tekshiruv (Interval aniqlanganmi?)
         if (f(a) * f(b) > 0) {
-          logBox.innerHTML = `<div class="text-red-700 border-red-500 log-entry bg-red-500/20">[XATOLIK] f(a) va f(b) ishoralari bir xil (${f(a).toFixed(2)} va ${f(b).toFixed(2)}). Bu oraliqda ildiz yo'q yoki juft sonda!</div>`;
+          logBox.innerHTML = `<div class="text-red-700 border-red-500 log-entry bg-red-500/20">[XATOLIK] f(a) va f(b) ishoralari bir xil (${f(a).toFixed(2)} va ${f(b).toFixed(2)}). Bu oraliqda ildiz yo'q!</div>`;
           return;
         }
 
-        // Boshlang'ich log
-        logBox.innerHTML += `<div class="log-entry">Boshlang'ich oraliq: [${a.toFixed(4)}, ${b.toFixed(4)}], f(a) = ${f(a).toFixed(6)}, f(b) = ${f(b).toFixed(6)}</div>`;
+        logBox.innerHTML += `<div class="log-entry">Boshlang'ich oraliq: [${a.toFixed(4)}, ${b.toFixed(4)}], f(a)=${f(a).toFixed(6)}, f(b)=${f(b).toFixed(6)}</div>`;
 
         while ((b - a) / 2 > eps) {
           iteration++;
           const c = (a + b) / 2;
           const fc = f(c);
 
-          // Logga chiqarish
           const logEntry = document.createElement('div');
           logEntry.className = "log-entry";
           logEntry.innerHTML = `
-            <span class="font-bold text-cyan-600">#${iteration}</span> 
-            <span class="text-gray-600">c =</span> <span class="text-black">${c.toFixed(6)}</span> | 
-            <span class="text-gray-600">f(c) =</span> <span class="${fc >= 0 ? 'text-green-600' : 'text-orange-600'}">${fc.toFixed(6)}</span> | 
+            <span class="font-bold text-cyan-600">#${iteration}</span>
+            <span class="text-gray-600"> c =</span> <span class="text-black">${c.toFixed(6)}</span> |
+            <span class="text-gray-600"> f(c) =</span> <span class="${fc >= 0 ? 'text-green-600' : 'text-orange-600'}">${fc.toFixed(6)}</span> |
             <span class="text-[10px] text-gray-500">Oraliq: [${a.toFixed(4)}, ${b.toFixed(4)}]</span>
           `;
           logBox.appendChild(logEntry);
 
           if (Math.abs(fc) < 1e-12) break;
-
-          if (f(a) * fc < 0) {
-            b = c;
-          } else {
-            a = c;
-          }
+          if (f(a) * fc < 0) b = c; else a = c;
         }
 
-        // Yakuniy natija
         const resX = (a + b) / 2;
         document.getElementById('finalX').innerText = resX.toFixed(6);
         document.getElementById('finalF').innerText = f(resX).toFixed(10);
         iterCount.innerText = `${iteration} qadam`;
         resultCard.classList.remove('hidden');
 
-        // Yakuniy log
         const finalLog = document.createElement('div');
         finalLog.className = "log-entry bg-green-500/20 border-green-500 text-green-700 font-bold";
         finalLog.innerHTML = `Yakun: ildiz ≈ ${resX.toFixed(6)}, f(x) = ${f(resX).toFixed(10)}`;
         logBox.appendChild(finalLog);
-
         logBox.scrollTop = logBox.scrollHeight;
 
       } catch (err) {
-        logBox.innerHTML = `<div class="text-red-700 border-red-500 log-entry bg-red-500/20">[FORMULA XATO] Misolni kiritishda xatolik: ${err.message}</div>`;
+        logBox.innerHTML = `<div class="text-red-700 border-red-500 log-entry bg-red-500/20">[FORMULA XATO] ${err.message}</div>`;
       }
     }
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      const main = document.getElementById('main-content');
-
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-      main.classList.toggle('shifted');
-    }
-
-    // Close sidebar when clicking overlay
-    document.getElementById('overlay').addEventListener('click', toggleSidebar);
   </script>
 </body>
-
 </html>

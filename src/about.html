@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Haqida | Sonli Usullar</title>
+  <meta name="description" content="Sonli Usullar loyihasi haqida batafsil ma'lumot. Maqsad, texnologiyalar, muallif va loyihaning tarkibi.">
+  <!-- Shared Sidebar CSS -->
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .tech-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 2px solid #000;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+      transition: background 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .tech-pill:hover {
+      background: #00f2ff;
+      transform: translateY(-2px);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      background: #00f2ff;
+      border: 2px solid #000;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .feature-card {
+      background: #f8fafc;
+      border: 1.5px solid #000;
+      padding: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 4px 4px 0 #00f2ff;
+    }
+  </style>
+</head>
+
+<body class="p-4 md:p-8">
+  <!-- Sidebar -->
+  <script>
+    window.SIDEBAR_BASE = '../';
+    window.SIDEBAR_ACTIVE = 'about';
+  </script>
+  <script src="assets/js/sidebar.js"></script>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Header -->
+      <header class="p-8 mb-10 text-center shadow-sm cyber-header">
+        <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">
+          WEBSITE <span style="color:#00f2ff">HAQIDA</span>
+        </h1>
+        <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">
+          math.yolnoma.uz | Sonli Usullar Loyihasi
+        </p>
+      </header>
+
+      <!-- Hero description -->
+      <div class="cyber-card p-8 mb-8">
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+          <div class="flex-1">
+            <h2 class="text-2xl font-black mb-4" style="font-family:'Orbitron',sans-serif">
+              ⚡ LOYIHA MAQSADI
+            </h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Ushbu loyiha <strong>QarDU (Qarshi Davlat Universiteti)</strong> Amaliy Matematika yo'nalishi talabalari
+              uchun sonli usullar fanini interaktiv tarzda o'rganish platformasi sifatida yaratilgan.
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Har bir usul — iteratsiya, bisection, grafik kesishish va Gauss-Seydel — alohida interaktiv
+              sahifada tushuntirilgan va real hisoblash imkoniyati bilan jihozlangan.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              Loyiha faqat <strong>HTML, CSS va JavaScript</strong> bilan, hech qanday backend
+              texnologiyalarsiz ishlaydi — bu uning istalgan brauzerda darhol ochilishini ta'minlaydi.
+            </p>
+          </div>
+          <div class="text-center" style="min-width: 180px;">
+            <div class="text-6xl font-black" style="font-family:'Orbitron',sans-serif; color:#00f2ff">v2.1</div>
+            <div class="text-sm font-bold text-gray-500 mt-2">JORIY VERSIYA</div>
+            <div class="mt-4 text-xs font-mono text-gray-400">
+              <div>Yaratilgan: 2026-03-16</div>
+              <div>Yangilangan: 2026-03-23</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Creator -->
+      <div class="cyber-card p-8 mb-8">
+        <h2 class="text-2xl font-black mb-6 border-b-2 border-black pb-3" style="font-family:'Orbitron',sans-serif">
+          👤 MUALLIF
+        </h2>
+        <div class="flex flex-col md:flex-row gap-6 items-center">
+          <div class="w-24 h-24 rounded-full border-4 border-black flex items-center justify-center text-4xl"
+            style="background: linear-gradient(135deg, #00f2ff, #ff00ea); flex-shrink:0;">
+            🎓
+          </div>
+          <div>
+            <h3 class="text-2xl font-black">HAYDAROV JASURBEK</h3>
+            <p class="text-cyan-600 font-bold text-sm mt-1">QarDU · 023-40 guruh · Amaliy Matematika</p>
+            <p class="text-gray-600 mt-3 text-sm leading-relaxed max-w-lg">
+              Qarshi Davlat Universiteti Amaliy Matematika yo'nalishining talabasiman.
+              Ushbu platform sonli usullar fanini o'rganish va amaliy mashg'ulotlar uchun yaratilgan.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-3 py-1 text-xs font-bold bg-black text-white">JavaScript</span>
+              <span class="px-3 py-1 text-xs font-bold border border-black">Matematika</span>
+              <span class="px-3 py-1 text-xs font-bold border border-black">Web Design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="cyber-card p-8 mb-8">
+        <h2 class="text-2xl font-black mb-6 border-b-2 border-black pb-3" style="font-family:'Orbitron',sans-serif">
+          🚀 IMKONIYATLAR
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="feature-card">
+            <div class="text-2xl mb-2">🔄</div>
+            <div class="font-black text-sm mb-1">ITERATSIYA USULI</div>
+            <div class="text-xs text-gray-600">Kiritilgan funksiya uchun M koeffitsient va iteratsiya bosqichlari</div>
+          </div>
+          <div class="feature-card">
+            <div class="text-2xl mb-2">✂️</div>
+            <div class="font-black text-sm mb-1">BISECTION USULI</div>
+            <div class="text-xs text-gray-600">Oraliqni teng ikkiga bo'lish orqali ildizni aniqlash</div>
+          </div>
+          <div class="feature-card">
+            <div class="text-2xl mb-2">📈</div>
+            <div class="font-black text-sm mb-1">GRAFIK ENGINE</div>
+            <div class="text-xs text-gray-600">Interaktiv grafik, zoom & pan, ildiz koordinatalari</div>
+          </div>
+          <div class="feature-card">
+            <div class="text-2xl mb-2">🧮</div>
+            <div class="font-black text-sm mb-1">GAUSS-SEYDEL</div>
+            <div class="text-xs text-gray-600">Nochiziqli sistema uchun iterativ yechim</div>
+          </div>
+          <div class="feature-card">
+            <div class="text-2xl mb-2">📐</div>
+            <div class="font-black text-sm mb-1">KATEX RENDER</div>
+            <div class="text-xs text-gray-600">Matematik formulalar chiroyli LaTeX uslubida</div>
+          </div>
+          <div class="feature-card">
+            <div class="text-2xl mb-2">📱</div>
+            <div class="font-black text-sm mb-1">RESPONSIVE</div>
+            <div class="text-xs text-gray-600">Barcha qurilmalar uchun moslashuvchan dizayn</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="cyber-card p-8 mb-8">
+        <h2 class="text-2xl font-black mb-6 border-b-2 border-black pb-3" style="font-family:'Orbitron',sans-serif">
+          🔧 TEXNOLOGIYALAR
+        </h2>
+        <div class="flex flex-wrap gap-3">
+          <span class="tech-pill" style="background:#fff3e0">🌐 HTML5</span>
+          <span class="tech-pill" style="background:#e3f2fd">🎨 CSS3</span>
+          <span class="tech-pill" style="background:#fff9c4">⚡ JavaScript (ES6+)</span>
+          <span class="tech-pill" style="background:#e8f5e9">🌀 Tailwind CSS (CDN)</span>
+          <span class="tech-pill" style="background:#f3e5f5">∑ KaTeX v0.16.8</span>
+          <span class="tech-pill" style="background:#e0f7fa">🔢 Math.js v11.8</span>
+          <span class="tech-pill" style="background:#fce4ec">🖼️ Canvas API</span>
+          <span class="tech-pill" style="background:#000; color:#00f2ff">🔤 Orbitron Font</span>
+          <span class="tech-pill" style="background:#1e293b; color:#e2e8f0">💻 JetBrains Mono</span>
+        </div>
+      </div>
+
+      <!-- Timeline / Changelog -->
+      <div class="cyber-card p-8 mb-8">
+        <h2 class="text-2xl font-black mb-6 border-b-2 border-black pb-3" style="font-family:'Orbitron',sans-serif">
+          📅 TARIX
+        </h2>
+        <div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#ff00ea"></div>
+            <div>
+              <div class="font-bold text-sm">v2.1 — 2026-03-23</div>
+              <div class="text-xs text-gray-600 mt-1">DRY sidebar komponenti, "Website haqida" sahifasi, ticker bar, kreativ qo'shimchalar, mobil moslashuv yaxshilandi</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="font-bold text-sm">v2.0 — 2026-03-18</div>
+              <div class="text-xs text-gray-600 mt-1">Grafik Engine v3.0 qo'shildi, Gauss-Seydel usuli, responsive dizayn</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="font-bold text-sm">v1.0 — 2026-03-16</div>
+              <div class="text-xs text-gray-600 mt-1">Dastlabki versiya: Iteratsiya, Bisection, cyber UI dizayni</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- License -->
+      <div class="cyber-card p-6 mb-8">
+        <h2 class="font-black text-lg mb-3" style="font-family:'Orbitron',sans-serif">📜 LITSENZIYA</h2>
+        <!-- <p class="text-sm text-gray-600">
+          Ushbu loyiha <strong>CC BY-SA 4.0</strong> litsenziyasi ostida tarqatiladi.
+          Manbani ko'rsatgan holda erkin foydalanishingiz mumkin.
+        </p> -->
+        <p class="text-sm text-gray-600">
+          Ushbu loyiha <strong>GitHub</strong> platformasida private ko'rinishda saqlanmoqda.
+      </div>
+
+      <footer class="mt-4 text-center">
+        <div class="inline-block px-10 pt-4 border-t-2 border-black">
+          <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+            © 2026 Qarshi Davlat Universiteti talabasi | Haydarov Jasurbek
+          </p>
+        </div>
+      </footer>
+    </div><!-- /max-w -->
+  </div><!-- /main-content -->
+</body>
+</html>
