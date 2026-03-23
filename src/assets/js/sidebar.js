@@ -33,22 +33,34 @@
       href: base + 'src/about.html',
     },
     {
+      id: 'funksiya',
+      label: 'FUNKSIYA KESISHISH',
+      icon: '📈',
+      href: base + 'src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html',
+    },
+    {
       id: 'iteratsiya',
       label: 'ITERATSIYA USULI',
       icon: '🔄',
       href: base + 'src/Sonli-Usullar/Iteratsiya-Usuli.html',
     },
     {
+      id: 'newton',
+      label: 'URINMA (NYUTON) USULI',
+      icon: '📐',
+      href: base + 'src/Sonli-Usullar/Urinma-Usuli.html',
+    },
+    {
+      id: 'vatar',
+      label: 'VATAR (SEKANT) USULI',
+      icon: '📏',
+      href: base + 'src/Sonli-Usullar/Vatar-Usuli.html',
+    },
+    {
       id: 'kesma',
       label: "KESMANI TENG IKKIGA BO'LISH",
       icon: '✂️',
       href: base + "src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html",
-    },
-    {
-      id: 'funksiya',
-      label: 'FUNKSIYA KESISHISH',
-      icon: '📈',
-      href: base + 'src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html',
     },
     {
       id: 'gauss',
@@ -70,6 +82,8 @@
     const path = window.location.pathname;
     if (path.endsWith('index.html') || path === '/' || path.endsWith('/')) return 'home';
     if (path.includes('Iteratsiya')) return 'iteratsiya';
+    if (path.includes('Urinma') || path.includes('Newton') || path.includes('newton')) return 'newton';
+    if (path.includes('Vatar') || path.includes('Secant') || path.includes('vatar')) return 'vatar';
     if (path.includes('KesmaniTeng') || path.includes('kesmani') || path.includes('Bisect')) return 'kesma';
     if (path.includes('FunksiyaKesish') || path.includes('funksiya') || path.includes('Graph')) return 'funksiya';
     if (path.includes('Gauss') || path.includes('gauss') || path.includes('Zeydel')) return 'gauss';

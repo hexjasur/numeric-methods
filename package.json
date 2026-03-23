@@ -32,6 +32,14 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "npx serve . -p 3000"
+    "start": "npx serve . -p 3000",
+    "dev": "concurrently -n \"serve\",\"tailwindcss\" -c \"green\",\"blue\" \"npx serve . -p 3000\" \"npx @tailwindcss/cli -i ./src/assets/css/input.css -o ./src/assets/css/output.css --watch\""
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

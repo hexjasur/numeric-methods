@@ -4,7 +4,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Funksiya Kesishish Nuqtasi | Sonli Usullar</title>
+  <title>Funksiya Grafik Engine — Ildiz Aniqlash | Sonli Usullar — sonli-usullar.uz</title>
+
+  <!-- Primary SEO -->
+  <meta name="description" content="Interaktiv grafik engine — ixtiyoriy funksiyani chizib, kesishish nuqtalarini (ildizlarini) vizual aniqlash. Zoom, pan, bisection ildiz qidiruvi, KaTeX formula preview. QarDU.">
+  <meta name="keywords" content="funksiya grafigi, ildiz aniqlash, kesishish nuqtasi, grafik engine, canvas, interaktiv matematika, sonli usullar, QarDU">
+  <meta name="author" content="Haydarov Jasurbek">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#00f2ff">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:title" content="Funksiya Grafik Engine v3.0 — Ildiz Aniqlash | sonli-usullar.uz">
+  <meta property="og:description" content="Ixtiyoriy funksiyani chizib, x-o'qidagi kesishish nuqtalarini (ildizlar) interaktiv vizual aniqlash. Zoom, pan, bisection qidiruv.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Grafik Engine — Ildiz Aniqlash | sonli-usullar.uz">
+  <meta name="twitter:description" content="Funksiya grafigini chizib, ildizlarni vizual toping. Zoom, pan, KaTeX preview. QarDU.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Funksiya Kesishish Nuqtasi Aniqlash — Grafik Engine v3.0",
+    "description": "Ixtiyoriy funksiya grafigini HTML Canvas orqali chizib, ildizlarini visual bisection usuli bilan aniqlash.",
+    "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html",
+    "inLanguage": "uz",
+    "educationalLevel": "University",
+    "author": { "@type": "Person", "name": "Haydarov Jasurbek" },
+    "isPartOf": { "@type": "EducationalWebsite", "name": "Sonli Usullar", "url": "https://www.sonli-usullar.uz/" }
+  }
+  </script>
 
   <!-- Shared Sidebar CSS -->
   <link rel="stylesheet" href="../assets/css/sidebar.css">
@@ -70,7 +110,8 @@
   <!-- Main Content -->
   <div class="main-content" id="main-content" style="padding: 0">
 
-    <header class="cyber-header" style="padding: 15px 40px; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 4px 10px rgba(0,0,0,.05);">
+    <header class="cyber-header"
+      style="padding: 15px 40px; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 4px 10px rgba(0,0,0,.05);">
       <div style="font-size:1.5rem; letter-spacing:2px; font-family:'Orbitron',sans-serif">
         GRAPH ENGINE <span style="color:#ff00ea">V3.0</span>
       </div>
@@ -81,7 +122,8 @@
 
       <div>
         <div class="cyber-card" style="padding:20px; margin-bottom:20px;">
-          <label style="font-weight:bold; font-size:0.8rem; display:block; margin-bottom:8px;">FUNKSIYANI KIRITING:</label>
+          <label style="font-weight:bold; font-size:0.8rem; display:block; margin-bottom:8px;">FUNKSIYANI
+            KIRITING:</label>
           <input type="text" id="eq" class="math-input" value="x-1-sin(x)/10" oninput="updateKaTeX()">
           <div id="katex-render"></div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
@@ -94,12 +136,14 @@
               <input type="number" id="xmax" class="math-input" value="10" style="padding:8px;">
             </div>
           </div>
-          <button class="cyber-button" onclick="init()" style="width:100%; margin-top:15px; padding:12px 25px; font-size:1rem;">GRAFIKNI CHIZISH</button>
+          <button class="cyber-button" onclick="init()"
+            style="width:100%; margin-top:15px; padding:12px 25px; font-size:1rem;">GRAFIKNI CHIZISH</button>
         </div>
 
         <div class="cyber-card" style="padding:20px;">
           <div class="success-badge">ILDIZLAR</div>
-          <div id="results-list" style="font-size:0.9rem; font-family:'JetBrains Mono',monospace;">Hozircha ildizlar topilmadi...</div>
+          <div id="results-list" style="font-size:0.9rem; font-family:'JetBrains Mono',monospace;">Hozircha ildizlar
+            topilmadi...</div>
         </div>
       </div>
 
@@ -113,7 +157,8 @@
 
     <footer style="margin:20px 30px; text-align:center;">
       <div style="display:inline-block; padding:12px 40px; border-top:2px solid #000;">
-        <p style="font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.3em; font-family:'JetBrains Mono',monospace;">
+        <p
+          style="font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.3em; font-family:'JetBrains Mono',monospace;">
           © 2026 Qarshi Davlat Universiteti | Haydarov Jasurbek
         </p>
       </div>
@@ -277,4 +322,5 @@
     updateKaTeX();
   </script>
 </body>
+
 </html>

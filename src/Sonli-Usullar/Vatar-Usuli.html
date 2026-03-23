@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vatar (Sekant) Usuli — Secant Method | Sonli Usullar — sonli-usullar.uz</title>
+
+  <!-- Primary SEO -->
+  <meta name="description" content="Vatar (sekant) usuli — hosila hisoblashsiz ildiz topish. Ikki nuqtadan o'tuvchi to'g'ri chiziq (vatar) yordamida: xₙ₊₁ = xₙ - f(xₙ)·(xₙ-xₙ₋₁)/(f(xₙ)-f(xₙ₋₁)). KaTeX bosqichlar. QarDU.">
+  <meta name="keywords" content="vatar usuli, sekant usuli, secant method, chord method, hosilasiz usul, sonli usullar, algebraik tenglama, QarDU, Haydarov Jasurbek">
+  <meta name="author" content="Haydarov Jasurbek">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0369a1">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:title" content="Vatar (Sekant) Usuli — Secant Method | sonli-usullar.uz">
+  <meta property="og:description" content="Hosila hisoblashsiz ildiz topish — farq kvotenti yordamida sekant usuli. Interaktiv hisob va KaTeX bosqichlar.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vatar (Sekant) Usuli | sonli-usullar.uz">
+  <meta name="twitter:description" content="Hosila kerak emas — vatar usuli bilan ildiz topish. KaTeX bosqichlar, interaktiv misолlar. QarDU.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Vatar (Sekant) Usuli",
+    "description": "Vatar usuli — hosila hisoblashsiz, farq kvotenti orqali algebraik tenglamalar ildizini iterativ topish.",
+    "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html",
+    "inLanguage": "uz",
+    "educationalLevel": "University",
+    "author": { "@type": "Person", "name": "Haydarov Jasurbek" },
+    "isPartOf": { "@type": "EducationalWebsite", "name": "Sonli Usullar", "url": "https://www.sonli-usullar.uz/" }
+  }
+  </script>
+  <!-- Shared Sidebar CSS -->
+  <link rel="stylesheet" href="../assets/css/sidebar.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Math.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+  <style>
+    .input-field {
+      border: 2px solid #000;
+      padding: 10px;
+      width: 100%;
+      outline: none;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .step-title {
+      color: #0369a1;
+      font-weight: 800;
+      border-bottom: 1px dashed #bae6fd;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+
+    .error-text {
+      color: #dc2626;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .katex-block {
+      overflow-x: auto;
+      padding: 4px 0;
+    }
+  </style>
+</head>
+
+<body class="p-4 md:p-8">
+  <!-- Sidebar -->
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'vatar';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <div class="max-w-4xl mx-auto">
+
+      <header class="p-6 mb-8 text-center bg-white cyber-card">
+        <h1 style="font-family:'Orbitron',sans-serif" class="text-2xl font-black">
+          VATAR (SEKANT) USULI
+        </h1>
+        <p class="text-[10px] font-bold text-gray-500 uppercase mt-1">QarDU | Amaliy Matematika | 023-40 guruh</p>
+      </header>
+
+      <!-- Info card -->
+      <div class="p-3 mt-3 mb-6 space-y-2 text-xs border bg-sky-50 cyber-card">
+        <div><b>📌 Vatar usuli haqida:</b></div>
+        <div>Formula: <code>x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>) · (x<sub>n</sub> - x<sub>n-1</sub>) / (f(x<sub>n</sub>) - f(x<sub>n-1</sub>))</code></div>
+        <div>Boshlanish: ikkita boshlang'ich nuqta kerak — <code>x₀ = a</code>, <code>x₁ = b</code></div>
+        <div>Hosila hisoblanmaydi — farq kvotenti ishlatiladi</div>
+        <div>To'xtash sharti: <code>|x<sub>n+1</sub> - x<sub>n</sub>| &lt; ε</code></div>
+        <div class="font-bold text-sky-700">⚡ Nyutondan sekinroq, lekin hech qanday hosila kerak emas</div>
+      </div>
+
+      <!-- Examples -->
+      <div class="p-3 pb-5 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
+        <div class="font-bold">📌 Misollar (bosib qo'llang):</div>
+        <div id="examples" class="grid grid-cols-1 gap-2"></div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <!-- Input panel -->
+        <div class="space-y-4 md:col-span-1">
+          <div class="p-5 cyber-card">
+            <h3 class="mb-4 font-black">📥 MA'LUMOTLAR</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="text-[10px] font-bold">f(x) funksiya:</label>
+                <input type="text" id="funcInput" value="x^3 + x - 1" class="input-field" oninput="renderPreview()">
+              </div>
+              <div id="math-preview" class="flex justify-center py-2 italic text-sky-600 border-b min-h-[36px]"></div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[10px] font-bold">x₀ = a (bosh):</label>
+                  <input type="number" id="aInput" value="0" step="0.1" class="text-center input-field">
+                </div>
+                <div>
+                  <label class="text-[10px] font-bold">x₁ = b (oxir):</label>
+                  <input type="number" id="bInput" value="1" step="0.1" class="text-center input-field">
+                </div>
+              </div>
+              <div>
+                <label class="text-[10px] font-bold">Epsilon (ε):</label>
+                <input type="number" id="epsInput" value="0.01" step="0.001" class="input-field">
+              </div>
+              <button onclick="calculate()"
+                class="w-full py-3 font-black text-white uppercase transition-colors bg-black hover:bg-sky-700">
+                Hisoblash
+              </button>
+            </div>
+          </div>
+
+          <!-- Formula reminder -->
+          <div class="p-4 cyber-card bg-sky-50">
+            <p class="text-[10px] font-bold text-sky-700 mb-2">VATAR FORMULASI:</p>
+            <div id="vatar-formula" class="katex-block text-sm"></div>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="space-y-4 md:col-span-2">
+          <div id="results-container" class="space-y-4">
+            <div class="p-10 italic text-center text-gray-400 cyber-card">
+              Parametrlarni kiriting va tugmani bosing...
+            </div>
+          </div>
+
+          <div id="final-verify" class="hidden p-5 cyber-card bg-green-50">
+            <h4 class="mb-2 text-sm font-black text-green-700">✅ YAKUNIY NATIJA:</h4>
+            <div id="verify-math" class="katex-block"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /max-w -->
+  </div><!-- /main-content -->
+
+  <script>
+    // ── KaTeX preview ─────────────────────────────────────────────────────
+    function renderPreview() {
+      try {
+        const node = math.parse(document.getElementById('funcInput').value);
+        katex.render("f(x) = " + node.toTex(), document.getElementById('math-preview'), { throwOnError: false });
+      } catch (e) { document.getElementById('math-preview').innerHTML = ''; }
+    }
+
+    // ── Examples ──────────────────────────────────────────────────────────
+    const examples = [
+      { func: "x^3 + x - 1",        latex: "x^3 + x - 1",                      a: 0,   b: 1,   eps: 0.01  },
+      { func: "x - 1 - sin(x)/10",  latex: "x - 1 - \\frac{\\sin(x)}{10}",     a: 0,   b: 2,   eps: 0.001 },
+      { func: "x^2 - 2",            latex: "x^2 - 2",                           a: 1,   b: 2,   eps: 0.01  },
+      { func: "exp(x) - 3*x",       latex: "e^{x} - 3x",                        a: 0,   b: 2,   eps: 0.01  },
+    ];
+
+    function applyExample(ex) {
+      document.getElementById('funcInput').value = ex.func;
+      document.getElementById('aInput').value = ex.a;
+      document.getElementById('bInput').value = ex.b;
+      document.getElementById('epsInput').value = ex.eps;
+      renderPreview();
+    }
+
+    function renderExamples() {
+      const container = document.getElementById('examples');
+      container.innerHTML = '';
+      examples.forEach((ex, i) => {
+        const el = document.createElement('div');
+        el.className = "p-2 bg-white border cursor-pointer hover:bg-sky-50";
+        el.onclick = () => applyExample(ex);
+        const mathId = `ex-${i}`;
+        el.innerHTML = `
+          <div id="${mathId}" class="text-center text-sky-600"></div>
+          <div class="text-[10px] mt-1 text-gray-500 text-center">[${ex.a}, ${ex.b}], ε = ${ex.eps}</div>
+        `;
+        container.appendChild(el);
+        setTimeout(() => katex.render(ex.latex, document.getElementById(mathId), { throwOnError: false }), 0);
+      });
+    }
+
+    window.onload = () => {
+      renderPreview();
+      renderExamples();
+      // Render vatar formula
+      katex.render(
+        "x_{n+1} = x_n - \\frac{f(x_n) \\cdot (x_n - x_{n-1})}{f(x_n) - f(x_{n-1})}",
+        document.getElementById('vatar-formula'), { throwOnError: false }
+      );
+    };
+
+    // ── Main calculation ──────────────────────────────────────────────────
+    function calculate() {
+      const funcStr = document.getElementById('funcInput').value.trim();
+      const a       = parseFloat(document.getElementById('aInput').value);
+      const b       = parseFloat(document.getElementById('bInput').value);
+      const eps     = parseFloat(document.getElementById('epsInput').value);
+
+      const resultsContainer = document.getElementById('results-container');
+      const finalVerify      = document.getElementById('final-verify');
+
+      resultsContainer.innerHTML = '';
+      finalVerify.classList.add('hidden');
+
+      try {
+        const compiled = math.compile(funcStr);
+        const f = x => compiled.evaluate({ x });
+
+        // Secant: two starting points x_prev = a, x_curr = b
+        let x_prev = a;
+        let x_curr = b;
+        let k = 0;
+        const MAX_ITER = 100;
+        let converged = false;
+
+        while (k < MAX_ITER) {
+          k++;
+          const fp = f(x_prev);
+          const fc = f(x_curr);
+          const denom = fc - fp;
+
+          if (Math.abs(denom) < 1e-15) {
+            resultsContainer.innerHTML += `<div class="p-4 cyber-card bg-red-50 text-red-700 font-bold">
+              ${k}-qadamda f(xₙ) - f(xₙ₋₁) ≈ 0 (bo'linish noli) — usul to'xtadi!
+            </div>`;
+            break;
+          }
+
+          // x_new = x_curr - f(x_curr)*(x_curr - x_prev) / (f(x_curr) - f(x_prev))
+          const x_new = x_curr - fc * (x_curr - x_prev) / denom;
+          const diff  = Math.abs(x_new - x_curr);
+
+          // Step card
+          const card = document.createElement('div');
+          card.className = 'cyber-card p-4 bg-white';
+
+          const stepId   = `step-${k}`;
+          const quotId   = `quot-${k}`;
+          const errId    = `err-${k}`;
+
+          card.innerHTML = `
+            <div class="step-title">${k}-yaqinlashish (Vatar):</div>
+            <div id="${quotId}" class="text-xs text-gray-600 mb-1 katex-block"></div>
+            <div id="${stepId}" class="mb-2 katex-block"></div>
+            <div class="error-text">Xatolik:</div>
+            <div id="${errId}" class="text-sm font-bold katex-block"></div>
+          `;
+          resultsContainer.appendChild(card);
+
+          // Farq kvotenti
+          katex.render(
+            `\\frac{f(x_{${k}}) - f(x_{${k-1}})}{x_{${k}} - x_{${k-1}}} = \\frac{${fc.toFixed(5)}}{${(x_curr - x_prev).toFixed(5)}} \\approx ${(denom / (x_curr - x_prev)).toFixed(5)}`,
+            document.getElementById(quotId), { throwOnError: false }
+          );
+          katex.render(
+            `x_{${k+1}} = ${x_curr.toFixed(5)} - \\frac{${fc.toFixed(5)} \\cdot (${(x_curr - x_prev).toFixed(5)})}{${denom.toFixed(5)}} \\approx ${x_new.toFixed(5)}`,
+            document.getElementById(stepId), { throwOnError: false }
+          );
+          const sym = diff < eps ? '<' : '>';
+          katex.render(
+            `|x_{${k+1}} - x_{${k}}| = ${diff.toFixed(6)} ${sym} \\varepsilon`,
+            document.getElementById(errId), { throwOnError: false }
+          );
+
+          x_prev = x_curr;
+          x_curr = x_new;
+
+          if (diff < eps) {
+            converged = true;
+            break;
+          }
+
+          if (!isFinite(x_new)) {
+            resultsContainer.innerHTML += `<div class="p-4 cyber-card bg-red-50 text-red-700 font-bold">
+              ${k}-qadamda son cheksizlikka o'tib ketdi — parametrlarni o'zgartiring.
+            </div>`;
+            break;
+          }
+        }
+
+        if (converged) {
+          finalVerify.classList.remove('hidden');
+          katex.render(
+            `\\xi \\approx ${x_curr.toFixed(6)},\\quad f(\\xi) = ${f(x_curr).toFixed(8)},\\quad k = ${k}`,
+            document.getElementById('verify-math'), { throwOnError: false }
+          );
+        } else if (k >= MAX_ITER) {
+          resultsContainer.innerHTML += `<div class="p-4 cyber-card bg-yellow-50 text-yellow-700 font-bold">
+            ${MAX_ITER} iteratsiyadan keyin ham yaqinlashmadi. Oraliqni yoki aniqlikni o'zgartiring.
+          </div>`;
+        }
+
+      } catch (err) {
+        resultsContainer.innerHTML = `<div class="p-4 cyber-card bg-red-50 text-red-700 font-bold">Xatolik: ${err.message}</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
