@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nyuton Usuli - To'liq Isbotli Kalkulyator - Sonli Usullar</title>
+
+  <!-- SEO -->
+  <meta name="description"
+    content="Interaktiv Nyuton usuli kalkulyatori — tenglamalarni bosqichma-bosqich yechish. Xususiy hosilalar, iteratsiyalar va natijalar. QarDU.">
+  <meta name="keywords"
+    content="Nyuton usuli, iteratsion usullar, sonli usullar, tenglama yechish, xususiy hosila, QarDU">
+  <meta name="author" content="Haydarov Jasurbek">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#00f2ff">
+  <meta name="language" content="Uzbek">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:title" content="Nyuton Usuli Kalkulyatori — Bosqichma-bosqich Yechish | sonli-usullar.uz">
+  <meta property="og:description"
+    content="Ixtiyoriy tenglamani Nyuton usuli bilan bosqichma-bosqich yechish. Xususiy hosilalar avtomatik hisoblanadi. QarDU.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html">
+  <meta name="twitter:title" content="Nyuton Usuli Kalkulyatori | sonli-usullar.uz">
+  <meta name="twitter:description" content="Nyuton usuli bilan tenglamalarni bosqichma-bosqich yechish. QarDU.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "Nyuton Usuli Kalkulyatori",
+  "headline": "Nyuton Usuli: Bosqichma-bosqich Isbotli Kalkulyator",
+  "description": "Ixtiyoriy tenglamani Nyuton usuli bilan bosqichma-bosqich yechish. Xususiy hosilalar avtomatik hisoblanadi.",
+  "image": "https://www.sonli-usullar.uz/src/assets/images/logo-dark.png",
+  "datePublished": "2026-03-25",
+  "dateModified": "2026-03-25",
+  "author": {
+    "@type": "Person",
+    "name": "Haydarov Jasurbek"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sonli Usullar",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.sonli-usullar.uz/src/assets/images/logo-dark.png"
+    }
+  },
+  "mainEntityOfPage": "https://www.sonli-usullar.uz/src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html",
+  "articleBody": "Interaktiv Nyuton usuli kalkulyatori. Tenglamalarni bosqichma-bosqich yechish, xususiy hosilalar avtomatik hisoblash, iteratsiyalar va natijalar."
+}
+</script>
+
+
+  <!-- Shared Sidebar CSS -->
+  <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="/src/assets/css/output.css">
+
+  <!-- Katex -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+  <!-- Mathjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+
+  <style>
+    .cyber-example {
+      background: white;
+      border: 2px solid #000;
+      box-shadow: 4px 4px 0px #00f2ff;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+      cursor: pointer;
+      padding: 12px;
+      transition: all 0.2s;
+    }
+
+    .cyber-example:hover {
+      box-shadow: 6px 6px 0px #ff00ea;
+      transform: translateY(-2px);
+    }
+
+    .cyber-example-title {
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: #0f172a;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #cbd5e1;
+      padding-bottom: 4px;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100 p-4 md:p-10">
+  <!-- Sidebar -->
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'oddiyNyuton';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <div class="max-w-5xl mx-auto space-y-8">
+      <div class="bg-white p-8 rounded-3xl shadow-xl border-b-8 border-blue-600">
+        <h1 class="text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+          <span class="bg-blue-600 text-white p-2 rounded-lg text-sm">PRO</span>
+          Nyuton Usuli: Bosqichma-bosqich Isbot
+        </h1>
+
+        <div class="p-4 mb-8 bg-slate-50 relative" style="border: 2px solid #000; box-shadow: 4px 4px 0 #00f2ff;">
+          <div class="font-bold text-base mb-3 flex items-center gap-2">📌 Misollar (test qilib ko'rish uchun):
+          </div>
+          <div id="examples" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <div class="group">
+              <label class="block text-xs font-black text-blue-600 mb-1 ml-1 tracking-widest">F(X, Y) IFODA</label>
+              <input type="text" id="f1" value="cos(x-1) + y - 0.5"
+                class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:border-blue-500 outline-none font-mono text-lg transition-all">
+            </div>
+            <div class="group">
+              <label class="block text-xs font-black text-blue-600 mb-1 ml-1 tracking-widest">G(X, Y) IFODA</label>
+              <input type="text" id="f2" value="x - cos(y) - 3"
+                class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:border-blue-500 outline-none font-mono text-lg transition-all">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-black text-slate-400 mb-1">X₀ QIYMATI</label>
+              <input type="number" id="x0" value="3.3" step="any"
+                class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:border-blue-500 outline-none font-bold">
+            </div>
+            <div>
+              <label class="block text-xs font-black text-slate-400 mb-1">Y₀ QIYMATI</label>
+              <input type="number" id="y0" value="1.2" step="any"
+                class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:border-blue-500 outline-none font-bold">
+            </div>
+            <div class="col-span-2">
+              <label class="block text-xs font-black text-slate-400 mb-1">EPSILON (ε)</label>
+              <input type="number" id="eps" value="0.001" step="any"
+                class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:border-blue-500 outline-none font-bold">
+            </div>
+          </div>
+        </div>
+        <button onclick="solve()"
+          class="w-full mt-8 bg-blue-600 text-white font-black py-5 rounded-2xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-[0.98]">
+          HISOBLASH
+        </button>
+      </div>
+
+      <div id="deriv-box" class="hidden bg-white p-8 rounded-3xl shadow-lg border-l-8 border-amber-500">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">📂 1. Xususiy hosilalarni aniqlash</h2>
+        <div id="deriv-latex"></div>
+      </div>
+
+      <div id="steps" class="space-y-8"></div>
+    </div>
+  </div>
+
+  <script>
+    const examplesList = [
+      {
+        title: "Misol 1",
+        f1: "cos(x-1) + y - 0.5",
+        f2: "x - cos(y) - 3",
+        latex: "\\begin{cases} \\cos(x-1) + y - 0.5 = 0 \\\\ x - \\cos(y) - 3 = 0 \\end{cases}",
+        x0: 3.3,
+        y0: 1.2
+      },
+      {
+        title: "Misol 2",
+        f1: "sin(y-1) + x - 1.3",
+        f2: "y - sin(x+1) - 0.8",
+        latex: "\\begin{cases} \\sin(y-1) + x - 1.3 = 0 \\\\ y - \\sin(x+1) - 0.8 = 0 \\end{cases}",
+        x0: 0.6,
+        y0: 1.8
+      }
+    ];
+
+    function applyExampleObj(ex) {
+      document.getElementById('f1').value = ex.f1;
+      document.getElementById('f2').value = ex.f2;
+      document.getElementById('x0').value = ex.x0;
+      document.getElementById('y0').value = ex.y0;
+    }
+
+    function renderExamples() {
+      const container = document.getElementById('examples');
+      container.innerHTML = '';
+      examplesList.forEach((ex, i) => {
+        const el = document.createElement('div');
+        el.className = "cyber-example";
+        el.onclick = () => applyExampleObj(ex);
+        const mathId = `example-math-${i}`;
+        el.innerHTML = `
+          <div class="cyber-example-title text-blue-600">${ex.title}</div>
+          <div id="${mathId}" class="text-center font-bold mb-2"></div>
+          <div class="text-xs text-gray-500 text-center font-bold font-mono">x₀ = ${ex.x0}, y₀ = ${ex.y0}</div>
+        `;
+        container.appendChild(el);
+        katex.render(ex.latex, document.getElementById(mathId), { displayMode: true, throwOnError: false });
+      });
+    }
+
+    window.onload = () => {
+      renderExamples();
+    };
+
+    function loadExample(n) {
+      if (n === 1) applyExampleObj(examplesList[0]);
+      else applyExampleObj(examplesList[1]);
+    }
+
+    function tex(el, str) {
+      katex.render(str, el, { displayMode: true, throwOnError: false });
+    }
+
+    function solve() {
+      const f1_str = document.getElementById('f1').value;
+      const f2_str = document.getElementById('f2').value;
+      let x = parseFloat(document.getElementById('x0').value);
+      let y = parseFloat(document.getElementById('y0').value);
+      const eps = parseFloat(document.getElementById('eps').value);
+
+      const stepsDiv = document.getElementById('steps');
+      stepsDiv.innerHTML = "";
+      document.getElementById('deriv-box').classList.remove('hidden');
+
+      try {
+        const f = math.parse(f1_str);
+        const g = math.parse(f2_str);
+
+        const dfdx = math.derivative(f, 'x');
+        const dfdy = math.derivative(f, 'y');
+        const dgdx = math.derivative(g, 'x');
+        const dgdy = math.derivative(g, 'y');
+
+        // 1. Hosilalar
+        tex(document.getElementById('deriv-latex'), `\\begin{aligned} 
+                    \\frac{\\partial f}{\\partial x} &= ${dfdx.toTex()} & \\frac{\\partial f}{\\partial y} &= ${dfdy.toTex()} \\\\ 
+                    \\frac{\\partial g}{\\partial x} &= ${dgdx.toTex()} & \\frac{\\partial g}{\\partial y} &= ${dgdy.toTex()} 
+                \\end{aligned}`);
+
+        let k = 0;
+        let error = 1;
+
+        while (error > eps && k < 5) {
+          let scope = { x, y };
+          let f_val = f.evaluate(scope);
+          let g_val = g.evaluate(scope);
+          let a11 = dfdx.evaluate(scope), a12 = dfdy.evaluate(scope);
+          let a21 = dgdx.evaluate(scope), a22 = dgdy.evaluate(scope);
+
+          let b1 = -f_val, b2 = -g_val;
+
+          // --- ALGEBRAIK QO'SHISH USULI (ELIMINATSIYA) ---
+          // 1. Delta x ni yo'qotish uchun koeffitsiyent topamiz: m * a21 + a11 = 0 => m = -a11 / a21
+          let m = -a11 / a21;
+          
+          // 2. Yangi koeffitsiyentlar (2-tenglamani m ga ko'paytirilgandagi holati)
+          let m_a22 = m * a22;
+          let m_b2 = m * b2;
+
+          // 3. Tenglamalarni qo'shish: (a12 + m_a22) * dy = b1 + m_b2
+          let sum_a22 = a12 + m_a22;
+          let sum_b = b1 + m_b2;
+
+          // 4. Noma'lumlarni ketma-ket topish
+          let dy = sum_b / sum_a22;
+          let dx = (b2 - a22 * dy) / a21; // 2-tenglamadan dx ni ajratib olish
+
+          const card = document.createElement('div');
+          card.className = "bg-white p-8 rounded-3xl shadow-xl border-t-4 border-blue-500 relative overflow-hidden";
+          card.innerHTML = `
+                <div class="absolute top-0 right-0 bg-blue-500 text-white px-6 py-1 rounded-bl-2xl font-black italic">Iteratsiya - ${k + 1}</div>
+                <h3 class="text-xl font-black text-slate-700 mb-6 underline decoration-blue-200">Bosqich ${k + 1}: Nuqta (${x.toFixed(4)}; ${y.toFixed(4)})</h3>
+                
+                <div class="space-y-8">
+                    <div>
+                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">1. Chiziqli sistema (Sonlar o'rniga qo'yilganda):</p>
+                        <div class="step-1 bg-slate-50 p-4 rounded-xl"></div>
+                    </div>
+
+                    <div>
+                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">2. Algebraik qo'shish (O'zgaruvchini yo'qotish):</p>
+                        <div class="step-2 bg-amber-50 p-4 rounded-xl border-l-4 border-amber-400 space-y-2"></div>
+                    </div>
+
+                    <div>
+                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">3. Noma'lumlarni topish (Isboti):</p>
+                        <div class="step-3 flex flex-wrap gap-10 items-center"></div>
+                    </div>
+
+                    <div class="pt-6 border-t border-dashed">
+                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">4. Yangi yaqinlashish va Xatolikni tekshirish:</p>
+                        <div class="step-4 space-y-4"></div>
+                    </div>
+                </div>
+            `;
+          stepsDiv.appendChild(card);
+
+          // Render Step 1: System
+          tex(card.querySelector('.step-1'), `\\begin{cases} 
+                (${a11.toFixed(5)}) \\Delta x + (${a12.toFixed(5)}) \\Delta y = ${b1.toFixed(5)} \\\\ 
+                (${a21.toFixed(5)}) \\Delta x + (${a22.toFixed(5)}) \\Delta y = ${b2.toFixed(5)} 
+            \\end{cases}`);
+
+          // Render Step 2: Elimination Process (Rasmdagi kabi m koeffitsiyent bilan)
+          const step2Div = card.querySelector('.step-2');
+          const m_text = document.createElement('div');
+          m_text.className = "text-sm text-amber-800 font-medium";
+          m_text.innerHTML = `<b>Mantiq:</b> Δx ni yo'qotish uchun 2-tenglamani <span class="underline font-bold">${Math.abs(m).toFixed(5)}</span> ga ko'paytirib, 1-tenglamaga qo'shamiz:`;
+          
+          const sum_equation = document.createElement('div');
+          tex(sum_equation, `(${a12.toFixed(5)} + ${m_a22.toFixed(5)}) \\Delta y = ${b1.toFixed(5)} + ${m_b2.toFixed(5)} \\implies ${sum_a22.toFixed(5)} \\Delta y = ${sum_b.toFixed(5)}`);
+          step2Div.append(m_text, sum_equation);
+
+          // Render Step 3: Deltas in RED BOXES (Rasmdagi qizil aylanaga o'xshash)
+          const deltaResult = card.querySelector('.step-3');
+          const dyBox = document.createElement('div');
+          dyBox.className = "border-4 border-red-500 p-4 rounded-xl bg-red-50";
+          tex(dyBox, `\\Delta y_{${k}} = \\frac{${sum_b.toFixed(5)}}{${sum_a22.toFixed(5)}} = ${dy.toFixed(6)}`);
+
+          const dxBox = document.createElement('div');
+          dxBox.className = "border-4 border-red-500 p-4 rounded-xl bg-red-50";
+          tex(dxBox, `\\Delta x_{${k}} = \\frac{${b2.toFixed(5)} - (${a22.toFixed(5)} \\cdot ${dy.toFixed(6)})}{${a21.toFixed(5)}} = ${dx.toFixed(6)}`);
+          deltaResult.append(dyBox, dxBox);
+
+          // Render Step 4: Verification
+          let nextX = x + dx;
+          let nextY = y + dy;
+          let diffX = Math.abs(nextX - x);
+          let diffY = Math.abs(nextY - y);
+
+          const verifyDiv = card.querySelector('.step-4');
+          const v1 = document.createElement('div');
+          tex(v1, `\\begin{aligned} x_{${k + 1}} &= x_{${k}} + \\Delta x = ${x.toFixed(4)} + (${dx.toFixed(6)}) = ${nextX.toFixed(6)} \\\\ y_{${k + 1}} &= y_{${k}} + \\Delta y = ${y.toFixed(4)} + (${dy.toFixed(6)}) = ${nextY.toFixed(6)} \\end{aligned}`);
+
+          const v2 = document.createElement('div');
+          v2.className = "font-bold text-blue-700 bg-blue-50 p-3 rounded-lg inline-block text-sm";
+          tex(v2, `|x_{${k + 1}} - x_{${k}}| = ${diffX.toFixed(6)} \\quad ; \\quad |y_{${k + 1}} - y_{${k}}| = ${diffY.toFixed(6)}`);
+
+          verifyDiv.append(v1, v2);
+
+          error = Math.max(diffX, diffY);
+          x = nextX; y = nextY;
+          k++;
+
+          if (error <= eps) {
+            const win = document.createElement('div');
+            win.className = "bg-emerald-500 text-white p-6 rounded-2xl text-center font-black text-2xl animate-bounce shadow-xl";
+            win.innerText = `YECHIM TOPILDI: x ≈ ${x.toFixed(6)}, y ≈ ${y.toFixed(6)}`;
+            stepsDiv.appendChild(win);
+            break;
+          }
+        }
+      } catch (e) {
+        alert("Xatolik! Matematik ifodani tekshiring (masalan, cos(x-1) deb yozing)");
+      }
+    }
+  </script>
+</body>
+
+</html>

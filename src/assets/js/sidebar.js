@@ -51,6 +51,12 @@
       href: base + 'src/Sonli-Usullar/Urinma-Usuli.html',
     },
     {
+      id: 'oddiyNyuton',
+      label: 'ODDIY NYUTON USULI',
+      icon: '📐',
+      href: base + 'src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html',
+    },
+    {
       id: 'vatar',
       label: 'VATAR (SEKANT) USULI',
       icon: '📏',

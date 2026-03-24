@@ -7,8 +7,10 @@
   <title>Funksiya Grafik Engine — Ildiz Aniqlash | Sonli Usullar — sonli-usullar.uz</title>
 
   <!-- Primary SEO -->
-  <meta name="description" content="Interaktiv grafik engine — ixtiyoriy funksiyani chizib, kesishish nuqtalarini (ildizlarini) vizual aniqlash. Zoom, pan, bisection ildiz qidiruvi, KaTeX formula preview. QarDU.">
-  <meta name="keywords" content="funksiya grafigi, ildiz aniqlash, kesishish nuqtasi, grafik engine, canvas, interaktiv matematika, sonli usullar, QarDU">
+  <meta name="description"
+    content="Interaktiv grafik engine — ixtiyoriy funksiyani chizib, kesishish nuqtalarini (ildizlarini) vizual aniqlash. Zoom, pan, bisection ildiz qidiruvi, KaTeX formula preview. QarDU.">
+  <meta name="keywords"
+    content="funksiya grafigi, ildiz aniqlash, kesishish nuqtasi, grafik engine, canvas, interaktiv matematika, sonli usullar, QarDU">
   <meta name="author" content="Haydarov Jasurbek">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#00f2ff">
@@ -18,17 +20,20 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html">
+  <meta property="og:url"
+    content="https://www.sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html">
   <meta property="og:site_name" content="Sonli Usullar">
   <meta property="og:locale" content="uz_UZ">
   <meta property="og:title" content="Funksiya Grafik Engine v3.0 — Ildiz Aniqlash | sonli-usullar.uz">
-  <meta property="og:description" content="Ixtiyoriy funksiyani chizib, x-o'qidagi kesishish nuqtalarini (ildizlar) interaktiv vizual aniqlash. Zoom, pan, bisection qidiruv.">
+  <meta property="og:description"
+    content="Ixtiyoriy funksiyani chizib, x-o'qidagi kesishish nuqtalarini (ildizlar) interaktiv vizual aniqlash. Zoom, pan, bisection qidiruv.">
   <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Grafik Engine — Ildiz Aniqlash | sonli-usullar.uz">
-  <meta name="twitter:description" content="Funksiya grafigini chizib, ildizlarni vizual toping. Zoom, pan, KaTeX preview. QarDU.">
+  <meta name="twitter:description"
+    content="Funksiya grafigini chizib, ildizlarni vizual toping. Zoom, pan, KaTeX preview. QarDU.">
   <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
 
   <!-- JSON-LD -->
@@ -125,6 +130,13 @@
           <label style="font-weight:bold; font-size:0.8rem; display:block; margin-bottom:8px;">FUNKSIYANI
             KIRITING:</label>
           <input type="text" id="eq" class="math-input" value="x-1-sin(x)/10" oninput="updateKaTeX()">
+
+          <label
+            style="font-weight:bold; font-size:0.8rem; display:block; margin-top:10px; margin-bottom:8px;">2-FUNKSIYA
+            (IXTIYORIY):</label>
+          <input type="text" id="eq2" class="math-input" placeholder="masalan: x - cos(y) - 3 = 0 yoki y = x^2"
+            oninput="updateKaTeX()">
+
           <div id="katex-render"></div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
             <div>
@@ -141,8 +153,8 @@
         </div>
 
         <div class="cyber-card" style="padding:20px;">
-          <div class="success-badge">ILDIZLAR</div>
-          <div id="results-list" style="font-size:0.9rem; font-family:'JetBrains Mono',monospace;">Hozircha ildizlar
+          <div class="success-badge" id="results-badge">ILDIZLAR / KESISHISHLAR</div>
+          <div id="results-list" style="font-size:0.9rem; font-family:'JetBrains Mono',monospace;">Hozircha natijalar
             topilmadi...</div>
         </div>
       </div>
@@ -172,16 +184,38 @@
 
     let W, H;
     let viewX = -10, viewY = -6, viewW = 20, viewH = 12;
-    let fFunc = null;
-    let roots = [];
+    let fFunc1 = null, fFunc2 = null;
+    let isImplicit1 = false, isImplicit2 = false;
+    let resultsData = [];
+
+    function normalizeEq(eq) {
+      if (!eq) return "";
+      let parts = eq.split('=');
+      if (parts.length > 1) {
+        return `(${parts[0]}) - (${parts[1]})`;
+      }
+      return eq;
+    }
+
+    function detectImplicit(eq) {
+      return eq.includes('y');
+    }
 
     function updateKaTeX() {
-      const input = document.getElementById('eq').value;
+      const input1 = document.getElementById('eq').value;
+      const input2 = document.getElementById('eq2').value;
       const renderArea = document.getElementById('katex-render');
       try {
-        const node = math.parse(input);
-        const latex = node.toTex({ parenthesis: 'keep', implicit: 'hide' });
-        katex.render("f(x) = " + latex, renderArea, { throwOnError: false });
+        let latex = "";
+        if (input1) {
+          const node1 = math.parse(normalizeEq(input1));
+          latex += "f_1(x,y) = " + node1.toTex({ parenthesis: 'keep', implicit: 'hide' });
+        }
+        if (input2) {
+          const node2 = math.parse(normalizeEq(input2));
+          latex += "\\\\ f_2(x,y) = " + node2.toTex({ parenthesis: 'keep', implicit: 'hide' });
+        }
+        katex.render(latex, renderArea, { throwOnError: false });
       } catch (e) {
         renderArea.innerHTML = "<span style='color:red; font-size:0.8rem'>Xato kiritildi...</span>";
       }
@@ -197,6 +231,42 @@
 
     function toScreen(wx, wy) { return { x: (wx - viewX) / viewW * W, y: H - (wy - viewY) / viewH * H }; }
     function toWorld(sx, sy) { return { x: viewX + sx / W * viewW, y: viewY + (H - sy) / H * viewH }; }
+
+    function drawImplicit(func, color) {
+      ctx.fillStyle = color;
+      let stepX = viewW / W;
+      let stepY = viewH / H;
+      for (let sx = 0; sx < W; sx += 2) {
+        for (let sy = 0; sy < H; sy += 2) {
+          let wx = viewX + sx * stepX;
+          let wy = viewY + (H - sy) * stepY;
+          let val = func(wx, wy);
+          if (Math.abs(val) < 0.1) {
+            ctx.fillRect(sx, sy, 2, 2);
+          }
+        }
+      }
+    }
+
+    function drawExplicit(func, color) {
+      ctx.strokeStyle = color; ctx.lineWidth = 3;
+      ctx.shadowBlur = 5; ctx.shadowColor = color;
+      ctx.beginPath();
+      let started = false;
+      for (let i = 0; i <= W; i++) {
+        let wx = viewX + (i / W) * viewW;
+        try {
+          let wy = func(wx, 0); // y parameter ignored for explicit
+          let p = toScreen(wx, wy);
+          if (p.y >= -100 && p.y <= H + 100) {
+            if (!started) { ctx.moveTo(p.x, p.y); started = true; }
+            else ctx.lineTo(p.x, p.y);
+          } else { started = false; }
+        } catch (e) { started = false; }
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
 
     function draw() {
       if (!W) return;
@@ -231,28 +301,17 @@
       ctx.beginPath(); ctx.moveTo(0, origin.y); ctx.lineTo(W, origin.y); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(origin.x, 0); ctx.lineTo(origin.x, H); ctx.stroke();
 
-      if (fFunc) {
-        ctx.strokeStyle = '#00f2ff'; ctx.lineWidth = 3;
-        ctx.shadowBlur = 5; ctx.shadowColor = '#00f2ff';
-        ctx.beginPath();
-        let started = false;
-        for (let i = 0; i <= W; i++) {
-          let wx = viewX + (i / W) * viewW;
-          try {
-            let wy = fFunc(wx);
-            let p = toScreen(wx, wy);
-            if (p.y >= -100 && p.y <= H + 100) {
-              if (!started) { ctx.moveTo(p.x, p.y); started = true; }
-              else ctx.lineTo(p.x, p.y);
-            } else { started = false; }
-          } catch (e) { started = false; }
-        }
-        ctx.stroke();
-        ctx.shadowBlur = 0;
+      if (fFunc1) {
+        if (isImplicit1) drawImplicit(fFunc1, '#00f2ff');
+        else drawExplicit(fFunc1, '#00f2ff');
+      }
+      if (fFunc2) {
+        if (isImplicit2) drawImplicit(fFunc2, '#ff00ea');
+        else drawExplicit(fFunc2, '#ff00ea');
       }
 
-      roots.forEach(r => {
-        let p = toScreen(r, 0);
+      resultsData.forEach(r => {
+        let p = toScreen(r.x, r.y || 0);
         ctx.fillStyle = '#ff00ea';
         ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke();
@@ -267,37 +326,106 @@
     }
 
     function init() {
-      const expr = document.getElementById('eq').value;
+      const expr1 = document.getElementById('eq').value;
+      const expr2 = document.getElementById('eq2').value;
       const xmin = parseFloat(document.getElementById('xmin').value);
       const xmax = parseFloat(document.getElementById('xmax').value);
+
       try {
-        const node = math.parse(expr);
-        const code = node.compile();
-        fFunc = (x) => code.evaluate({ x });
-        roots = [];
-        const searchStep = (xmax - xmin) / 200;
-        for (let x = xmin; x <= xmax; x += searchStep) {
-          if (fFunc(x) * fFunc(x + searchStep) < 0) roots.push(bisect(fFunc, x, x + searchStep));
+        fFunc1 = null; fFunc2 = null; resultsData = [];
+        const norm1 = normalizeEq(expr1);
+        const norm2 = normalizeEq(expr2);
+
+        if (norm1) {
+          const code1 = math.compile(norm1);
+          fFunc1 = (x, y) => code1.evaluate({ x, y: y || 0 });
+          isImplicit1 = detectImplicit(norm1);
         }
+        if (norm2) {
+          const code2 = math.compile(norm2);
+          fFunc2 = (x, y) => code2.evaluate({ x, y: y || 0 });
+          isImplicit2 = detectImplicit(norm2);
+        }
+
+        const searchStep = (xmax - xmin) / 200;
+
+        // Single function root detection
+        if (fFunc1 && !fFunc2 && !isImplicit1) {
+          for (let x = xmin; x <= xmax; x += searchStep) {
+            let y1 = fFunc1(x, 0);
+            let y2 = fFunc1(x + searchStep, 0);
+            if (y1 * y2 <= 0) {
+              let rootX = bisect(fFunc1, x, x + searchStep);
+              resultsData.push({ type: 'root', x: rootX, y: 0, a: x, b: x + searchStep });
+            }
+          }
+        }
+        // Two explicit functions intersection detection
+        else if (fFunc1 && fFunc2 && !isImplicit1 && !isImplicit2) {
+          let diffFunc = (x) => fFunc1(x, 0) - fFunc2(x, 0);
+          for (let x = xmin; x <= xmax; x += searchStep) {
+            let d1 = diffFunc(x);
+            let d2 = diffFunc(x + searchStep);
+            if (d1 * d2 <= 0) {
+              let rootX = bisect(diffFunc, x, x + searchStep);
+              let rootY = fFunc1(rootX, 0);
+              resultsData.push({ type: 'intersect', x: rootX, y: rootY, a: x, b: x + searchStep });
+            }
+          }
+        }
+        // Systems (Implicit) intersection point finder via grid search
+        else if (fFunc1 && fFunc2) {
+          // Basic grid search for intersections
+          for (let x = xmin; x <= xmax; x += searchStep * 2) {
+            for (let y = -10; y <= 10; y += searchStep * 2) {
+              let val1 = Math.abs(fFunc1(x, y));
+              let val2 = Math.abs(fFunc2(x, y));
+              if (val1 < 0.2 && val2 < 0.2) {
+                // refine
+                let bX = x, bY = y, minE = 999;
+                for (let rx = x - 0.2; rx <= x + 0.2; rx += 0.05) {
+                  for (let ry = y - 0.2; ry <= y + 0.2; ry += 0.05) {
+                    let e = Math.abs(fFunc1(rx, ry)) + Math.abs(fFunc2(rx, ry));
+                    if (e < minE) { minE = e; bX = rx; bY = ry; }
+                  }
+                }
+                if (minE < 0.1) {
+                  let exists = resultsData.find(r => Math.abs(r.x - bX) < 0.5 && Math.abs(r.y - bY) < 0.5);
+                  if (!exists) resultsData.push({ type: 'system', x: bX, y: bY });
+                }
+              }
+            }
+          }
+        }
+
         viewX = xmin; viewW = xmax - xmin; viewY = -viewW / 3; viewH = viewW * (H / W);
         renderResults(); draw();
       } catch (e) { alert("Xatolik: " + e.message); }
     }
 
     function bisect(f, a, b) {
-      for (let i = 0; i < 25; i++) { let m = (a + b) / 2; if (f(a) * f(m) < 0) b = m; else a = m; }
+      for (let i = 0; i < 25; i++) { let m = (a + b) / 2; if (f(a, 0) * f(m, 0) < 0) b = m; else a = m; }
       return (a + b) / 2;
     }
 
     function renderResults() {
       const list = document.getElementById('results-list');
       list.innerHTML = '';
-      roots.forEach((r, i) => {
-        list.innerHTML += `<div style="padding:5px 0; border-bottom:1px solid #f1f5f9;">
-          <span style="color:#ff00ea; font-weight:bold;">x${i + 1}</span> ≈ ${r.toFixed(6)}
-        </div>`;
+      resultsData.forEach((r, i) => {
+        if (r.type === 'root') {
+          list.innerHTML += `<div style="padding:10px; margin-bottom:5px; background:#f8fafc; border-left:4px solid #00f2ff;">
+            <div style="font-size:10px; color:#64748b; font-weight:bold;">ORALIQ (Kesishish): [${r.a.toFixed(2)} ; ${r.b.toFixed(2)}]</div>
+            <span style="color:#00f2ff; font-weight:bold;">x${i + 1}</span> ≈ ${r.x.toFixed(4)}
+          </div>`;
+        } else if (r.type === 'intersect' || r.type === 'system') {
+          list.innerHTML += `<div style="padding:10px; margin-bottom:5px; background:#f8fafc; border-left:4px solid #ff00ea;">
+            <div style="font-size:10px; color:#64748b; font-weight:bold;">KESISHISH NUQTASI (x, y):</div>
+            <span style="color:#ff00ea; font-weight:bold;">x</span> ≈ ${r.x.toFixed(4)}, 
+            <span style="color:#ff00ea; font-weight:bold;">y</span> ≈ ${r.y.toFixed(4)}
+          </div>`;
+        }
       });
-      if (roots.length === 0) list.innerHTML = 'Ildiz topilmadi.';
+      if (resultsData.length === 0) list.innerHTML = '<div style="color:#ef4444; font-weight:bold; font-size:12px;">Hech qanday natija topilmadi yoki oraliqni o\'zgartiring.</div>';
     }
 
     wrap.addEventListener('wheel', e => {
