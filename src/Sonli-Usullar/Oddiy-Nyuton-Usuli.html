@@ -102,7 +102,7 @@
   </style>
 </head>
 
-<body class="bg-slate-100 p-4 md:p-10">
+<body class="bg-slate-100 p-2 md:p-10">
   <!-- Sidebar -->
   <script>
     window.SIDEBAR_BASE = '../../';
@@ -112,8 +112,8 @@
 
   <!-- Main Content -->
   <div class="main-content" id="main-content">
-    <div class="max-w-5xl mx-auto space-y-8">
-      <div class="bg-white p-8 rounded-3xl shadow-xl border-b-8 border-blue-600">
+    <div class="max-w-5xl mx-auto space-y-6 md:space-y-8">
+      <div class="bg-white p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-xl border-b-8 border-blue-600">
         <h1 class="text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
           <span class="bg-blue-600 text-white p-2 rounded-lg text-sm">PRO</span>
           Nyuton Usuli: Bosqichma-bosqich Isbot
@@ -162,7 +162,7 @@
         </button>
       </div>
 
-      <div id="deriv-box" class="hidden bg-white p-8 rounded-3xl shadow-lg border-l-8 border-amber-500">
+      <div id="deriv-box" class="hidden bg-white p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-lg border-l-8 border-amber-500">
         <h2 class="text-xl font-bold mb-4 flex items-center gap-2">📂 1. Xususiy hosilalarni aniqlash</h2>
         <div id="deriv-latex"></div>
       </div>
@@ -284,29 +284,29 @@
           let dx = (b2 - a22 * dy) / a21; // 2-tenglamadan dx ni ajratib olish
 
           const card = document.createElement('div');
-          card.className = "bg-white p-8 rounded-3xl shadow-xl border-t-4 border-blue-500 relative overflow-hidden";
+          card.className = "bg-white p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-xl border-t-4 border-blue-500 relative overflow-hidden";
           card.innerHTML = `
-                <div class="absolute top-0 right-0 bg-blue-500 text-white px-6 py-1 rounded-bl-2xl font-black italic">Iteratsiya - ${k + 1}</div>
-                <h3 class="text-xl font-black text-slate-700 mb-6 underline decoration-blue-200">Bosqich ${k + 1}: Nuqta (${x.toFixed(4)}; ${y.toFixed(4)})</h3>
+                <div class="absolute top-0 right-0 bg-blue-500 text-white px-3 md:px-6 py-1 rounded-bl-xl md:rounded-bl-2xl font-black italic text-xs md:text-base">Iteratsiya - ${k + 1}</div>
+                <h3 class="text-lg md:text-xl font-black text-slate-700 mb-4 md:mb-6 underline decoration-blue-200">Bosqich ${k + 1}: Nuqta (${x.toFixed(4)}; ${y.toFixed(4)})</h3>
                 
-                <div class="space-y-8">
+                <div class="space-y-6 md:space-y-8">
                     <div>
-                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">1. Chiziqli sistema (Sonlar o'rniga qo'yilganda):</p>
-                        <div class="step-1 bg-slate-50 p-4 rounded-xl"></div>
+                        <p class="text-[10px] md:text-sm font-bold text-slate-400 uppercase mb-2">1. Chiziqli sistema (Sonlar o'rniga qo'yilganda):</p>
+                        <div class="step-1 bg-slate-50 p-3 md:p-4 rounded-xl"></div>
                     </div>
-
+ 
                     <div>
-                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">2. Algebraik qo'shish (O'zgaruvchini yo'qotish):</p>
-                        <div class="step-2 bg-amber-50 p-4 rounded-xl border-l-4 border-amber-400 space-y-2"></div>
+                        <p class="text-[10px] md:text-sm font-bold text-slate-400 uppercase mb-2">2. Algebraik qo'shish (O'zgaruvchini yo'qotish):</p>
+                        <div class="step-2 bg-amber-50 p-3 md:p-4 rounded-xl border-l-4 border-amber-400 space-y-2"></div>
                     </div>
-
+ 
                     <div>
-                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">3. Noma'lumlarni topish (Isboti):</p>
-                        <div class="step-3 flex flex-wrap gap-10 items-center"></div>
+                        <p class="text-[10px] md:text-sm font-bold text-slate-400 uppercase mb-2">3. Noma'lumlarni topish (Isboti):</p>
+                        <div class="step-3 flex flex-wrap gap-4 md:gap-10 items-center"></div>
                     </div>
-
+ 
                     <div class="pt-6 border-t border-dashed">
-                        <p class="text-sm font-bold text-slate-400 uppercase mb-2">4. Yangi yaqinlashish va Xatolikni tekshirish:</p>
+                        <p class="text-[10px] md:text-sm font-bold text-slate-400 uppercase mb-2">4. Yangi yaqinlashish va Xatolikni tekshirish:</p>
                         <div class="step-4 space-y-4"></div>
                     </div>
                 </div>

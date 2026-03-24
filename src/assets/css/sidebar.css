@@ -281,3 +281,53 @@ body {
 #back-to-top.visible {
   display: flex;
 }
+
+/* ============================================================
+   RESPONSIVE MATH & FORMULAS (KaTeX)
+   ============================================================ */
+
+/* Global KaTeX display mode overflow handling */
+.katex-display {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  max-width: 100% !important;
+  padding: 12px 0;
+  /* Custom scrollbar for better mobile UX */
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.katex-display::-webkit-scrollbar {
+  height: 4px;
+}
+
+.katex-display::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* Common containers for formulas in Sonli Usullar pages */
+.step-1, .step-2, .step-3, .step-4, 
+#deriv-latex, #math-preview, .formula-container {
+  overflow-x: auto !important;
+  max-width: 100% !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent entire page horizontal scroll due to long equations */
+.main-content {
+  overflow-x: hidden;
+}
+
+/* Specific fix for Newton Method red boxes */
+.step-3 > div {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 640px) {
+  .katex {
+    font-size: 0.9em !important; /* Scale down slightly on very small screens */
+  }
+}
