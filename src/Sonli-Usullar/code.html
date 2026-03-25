@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Hightlightjs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<body>
+  <div>
+    <h2>Oddiy Nyuton Usuli bo'yicha python kodi:</h2>
+    <pre>
+          <code> 
+import numpy as np
+
+# F(x, y) funksiyalarini aniqlaymiz
+def F(x):
+    # Misol uchun fayldagi sistema:
+    # 2*sin(x-1) - y - 1 = 0
+    # 10*cos(y-1) + x - 4 = 0
+    f1 = np.cos(x[0]) +2*x[1] - 1.5
+    f2 = x[0]-np.sin(x[1] - 0.5) -1
+    return np.array([f1, f2])
+
+
+# hosilalar
+def J(x):
+    df1_dx = -np.sin(x[0])
+    df1_dy = 2
+
+    df2_dx = 1
+    df2_dy = -np.cos(x[1] - 0.5)
+
+    return np.array([
+        [df1_dx, df1_dy],
+        [df2_dx, df2_dy]
+    ])
+
+
+# Nyuton usuli
+def nyuton(x0, eps=1e-3, max_iter=100):
+    x = np.array(x0, dtype=float)
+
+    for i in range(max_iter):
+        Fx = F(x)
+        Jx = J(x)
+
+        # Δx ni topamiz
+        delta = np.linalg.solve(Jx, -Fx)
+        # print(delta)
+        x = x + delta
+        # print(x)
+        # to'xtash sharti
+        if np.linalg.norm(delta, ord=np.inf) < eps:
+            print(f"Iteratsiya soni: {i+1}")
+            return x
+
+    print("Yechim topilmadi")
+    return x
+
+
+# Boshlang‘ich yaqinlashish
+x0 = [1, 0.5]
+
+
+solution = nyuton(x0)
+print("Yechim:", solution)
+          </code>
+        </pre>
+  </div>
+  <script>
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>

@@ -17,6 +17,8 @@
 
   // ── Yo'llarni aniqlash ──────────────────────────────────────────────
   const base = window.SIDEBAR_BASE ?? '/';
+  const scr = window.SIDEBAR_BASE ?? '/src';
+  const srcSU = window.SIDEBAR_BASE ?? '/src/Sonli-Usullar'
 
   // Sidebar menyusidagi sahifalar
   const MENU_ITEMS = [
@@ -34,33 +36,9 @@
     },
     {
       id: 'funksiya',
-      label: 'FUNKSIYA KESISHISH',
+      label: 'FUNKSIYA KESISHISH NUQTASINI ANIQLASH',
       icon: '📈',
       href: base + 'src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html',
-    },
-    {
-      id: 'iteratsiya',
-      label: 'ITERATSIYA USULI',
-      icon: '🔄',
-      href: base + 'src/Sonli-Usullar/Iteratsiya-Usuli.html',
-    },
-    {
-      id: 'newton',
-      label: 'URINMA (NYUTON) USULI',
-      icon: '📐',
-      href: base + 'src/Sonli-Usullar/Urinma-Usuli.html',
-    },
-    {
-      id: 'oddiyNyuton',
-      label: 'ODDIY NYUTON USULI',
-      icon: '📐',
-      href: base + 'src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html',
-    },
-    {
-      id: 'vatar',
-      label: 'VATAR (SEKANT) USULI',
-      icon: '📏',
-      href: base + 'src/Sonli-Usullar/Vatar-Usuli.html',
     },
     {
       id: 'kesma',
@@ -69,10 +47,34 @@
       href: base + "src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html",
     },
     {
-      id: 'gauss',
-      label: 'GAUSS-SEYDEL USULI',
+      id: 'newton',
+      label: 'URINMA (NYUTON) USULI',
+      icon: '📐',
+      href: base + 'src/Sonli-Usullar/Urinma-Usuli.html',
+    },
+    {
+      id: 'vatar',
+      label: 'VATAR USULI',
+      icon: '📏',
+      href: base + 'src/Sonli-Usullar/Vatar-Usuli.html',
+    },
+    {
+      id: 'iteratsiya',
+      label: 'ITERATSIYA USULI',
+      icon: '🔄',
+      href: base + 'src/Sonli-Usullar/Iteratsiya-Usuli.html',
+    },
+    {
+      id: 'zeydel',
+      label: 'ZEYDEL USULI',
       icon: '🧮',
-      href: base + 'src/Sonli-Usullar/Gauss-Seydel-usuli.html',
+      href: base + 'src/Sonli-Usullar/Zeydel-usuli.html',
+    },
+    {
+      id: 'oddiyNyuton',
+      label: 'ODDIY NYUTON USULI',
+      icon: '📐',
+      href: base + 'src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html',
     },
     {
       id: 'nazariya',
