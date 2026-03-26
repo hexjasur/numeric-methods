@@ -11,10 +11,12 @@
     content="Interaktiv Nyuton usuli kalkulyatori — tenglamalarni bosqichma-bosqich yechish. Xususiy hosilalar, iteratsiyalar va natijalar. QarDU.">
   <meta name="keywords"
     content="Nyuton usuli, iteratsion usullar, sonli usullar, tenglama yechish, xususiy hosila, QarDU">
-  <meta name="author" content="Haydarov Jasurbek">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#00f2ff">
-  <meta name="language" content="Uzbek">
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
@@ -61,12 +63,6 @@
 }
 </script>
 
-
-  <!-- Shared Sidebar CSS -->
-  <link rel="stylesheet" href="../assets/css/sidebar.css">
-
-  <!-- Tailwind CSS -->
-  <link rel="stylesheet" href="/src/assets/css/output.css">
 
   <!-- Katex -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">

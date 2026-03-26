@@ -7,11 +7,15 @@
   <title>Urinma (Nyuton) Usuli — Newton Method | Sonli Usullar — sonli-usullar.uz</title>
 
   <!-- Primary SEO -->
-  <meta name="description" content="Nyuton urinma usuli — xₙ₊₁ = xₙ - f(xₙ)/f'(xₙ) formulasi orqali kvadratik yaqinlashuv. Raqamli hosila, boshlang'ich nuqta tanlash sharti f(x₀)·f''(x₀)>0, KaTeX bosqichlar. QarDU.">
-  <meta name="keywords" content="nyuton usuli, urinma usuli, newton method, tangent method, kvadratik yaqinlashuv, raqamli hosila, sonli usullar, QarDU">
-  <meta name="author" content="Haydarov Jasurbek">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#7c3aed">
+  <meta name="description"
+    content="Nyuton urinma usuli — xₙ₊₁ = xₙ - f(xₙ)/f'(xₙ) formulasi orqali kvadratik yaqinlashuv. Raqamli hosila, boshlang'ich nuqta tanlash sharti f(x₀)·f''(x₀)>0, KaTeX bosqichlar. QarDU.">
+  <meta name="keywords"
+    content="nyuton usuli, urinma usuli, newton method, tangent method, kvadratik yaqinlashuv, raqamli hosila, sonli usullar, QarDU">
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
 
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Urinma-Usuli.html">
@@ -22,13 +26,15 @@
   <meta property="og:site_name" content="Sonli Usullar">
   <meta property="og:locale" content="uz_UZ">
   <meta property="og:title" content="Urinma (Nyuton) Usuli — Newton Method | sonli-usullar.uz">
-  <meta property="og:description" content="Nyuton metodi: xₙ₊₁ = xₙ - f(xₙ)/f'(xₙ). Kvadratik yaqinlashuv, raqamli hosila, KaTeX bosqichlar. Interaktiv hisob-kitob.">
+  <meta property="og:description"
+    content="Nyuton metodi: xₙ₊₁ = xₙ - f(xₙ)/f'(xₙ). Kvadratik yaqinlashuv, raqamli hosila, KaTeX bosqichlar. Interaktiv hisob-kitob.">
   <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Urinma (Nyuton) Usuli | sonli-usullar.uz">
-  <meta name="twitter:description" content="Nyuton usuli — kvadratik yaqinlashuv, raqamli hosila, bosqichma-bosqich KaTeX. QarDU.">
+  <meta name="twitter:description"
+    content="Nyuton usuli — kvadratik yaqinlashuv, raqamli hosila, bosqichma-bosqich KaTeX. QarDU.">
   <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
 
   <!-- JSON-LD -->
@@ -45,15 +51,6 @@
     "isPartOf": { "@type": "EducationalWebsite", "name": "Sonli Usullar", "url": "https://www.sonli-usullar.uz/" }
   }
   </script>
-  <!-- Shared Sidebar CSS -->
-  <link rel="stylesheet" href="../assets/css/sidebar.css">
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Math.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
-  <!-- KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 
   <style>
     .input-field {
@@ -130,7 +127,8 @@
                 <label class="text-[10px] font-bold">f(x) funksiya:</label>
                 <input type="text" id="funcInput" value="x^3 + x - 1" class="input-field" oninput="renderPreview()">
               </div>
-              <div id="math-preview" class="flex justify-center py-2 italic text-purple-600 border-b min-h-[36px]"></div>
+              <div id="math-preview" class="flex justify-center py-2 italic text-purple-600 border-b min-h-[36px]">
+              </div>
               <div class="grid grid-cols-2 gap-2">
                 <div>
                   <label class="text-[10px] font-bold">a (bosh):</label>
@@ -197,10 +195,10 @@
 
     // ── Examples ──────────────────────────────────────────────────────────
     const examples = [
-      { func: "x^3 + x - 1",        latex: "x^3 + x - 1",                      a: 0,   b: 1,   eps: 0.01  },
-      { func: "x - 1 - sin(x)/10",  latex: "x - 1 - \\frac{\\sin(x)}{10}",     a: 0,   b: 2,   eps: 0.001 },
-      { func: "x^2 - 2",            latex: "x^2 - 2",                           a: 1,   b: 2,   eps: 0.01  },
-      { func: "exp(x) - 3*x",       latex: "e^{x} - 3x",                        a: 0,   b: 2,   eps: 0.01  },
+      { func: "x^3 + x - 1", latex: "x^3 + x - 1", a: 0, b: 1, eps: 0.01 },
+      { func: "x - 1 - sin(x)/10", latex: "x - 1 - \\frac{\\sin(x)}{10}", a: 0, b: 2, eps: 0.001 },
+      { func: "x^2 - 2", latex: "x^2 - 2", a: 1, b: 2, eps: 0.01 },
+      { func: "exp(x) - 3*x", latex: "e^{x} - 3x", a: 0, b: 2, eps: 0.01 },
     ];
 
     function applyExample(ex) {
@@ -234,13 +232,13 @@
     // ── Main calculation ──────────────────────────────────────────────────
     function calculate() {
       const funcStr = document.getElementById('funcInput').value.trim();
-      const a      = parseFloat(document.getElementById('aInput').value);
-      const b      = parseFloat(document.getElementById('bInput').value);
-      const eps    = parseFloat(document.getElementById('epsInput').value);
+      const a = parseFloat(document.getElementById('aInput').value);
+      const b = parseFloat(document.getElementById('bInput').value);
+      const eps = parseFloat(document.getElementById('epsInput').value);
 
       const resultsContainer = document.getElementById('results-container');
-      const finalVerify      = document.getElementById('final-verify');
-      const x0Info           = document.getElementById('x0-info');
+      const finalVerify = document.getElementById('final-verify');
+      const x0Info = document.getElementById('x0-info');
 
       resultsContainer.innerHTML = '';
       finalVerify.classList.add('hidden');
@@ -248,11 +246,11 @@
 
       try {
         const compiled = math.compile(funcStr);
-        const f  = x => compiled.evaluate({ x });
+        const f = x => compiled.evaluate({ x });
 
         // 1. Boshlang'ich nuqta: f(x₀)·f''(x₀) > 0
         const fa2 = f(a) * secondDerivative(f, a);
-        const x0  = fa2 > 0 ? a : b;
+        const x0 = fa2 > 0 ? a : b;
 
         // Show x0 info
         x0Info.classList.remove('hidden');
@@ -261,7 +259,7 @@
           `f(x₀) = ${f(x0).toFixed(6)}, f''(x₀) = ${secondDerivative(f, x0).toFixed(6)}`;
 
         let xn = x0;
-        let k  = 0;
+        let k = 0;
         const MAX_ITER = 100;
         let converged = false;
 
@@ -278,14 +276,14 @@
           }
 
           const x_new = xn - fxn / dfxn;
-          const diff  = Math.abs(x_new - xn);
+          const diff = Math.abs(x_new - xn);
 
           // Step card
           const card = document.createElement('div');
           card.className = 'cyber-card p-4 bg-white';
 
-          const stepId  = `step-${k}`;
-          const errId   = `err-${k}`;
+          const stepId = `step-${k}`;
+          const errId = `err-${k}`;
           const derivId = `deriv-${k}`;
 
           card.innerHTML = `
@@ -298,7 +296,7 @@
           resultsContainer.appendChild(card);
 
           katex.render(
-            `f'(x_{${k-1}}) \\approx ${dfxn.toFixed(6)}`,
+            `f'(x_{${k - 1}}) \\approx ${dfxn.toFixed(6)}`,
             document.getElementById(derivId), { throwOnError: false }
           );
           katex.render(
@@ -307,7 +305,7 @@
           );
           const sym = diff < eps ? '<' : '>';
           katex.render(
-            `|x_{${k}} - x_{${k-1}}| = ${diff.toFixed(6)} ${sym} \\varepsilon`,
+            `|x_{${k}} - x_{${k - 1}}| = ${diff.toFixed(6)} ${sym} \\varepsilon`,
             document.getElementById(errId), { throwOnError: false }
           );
 
@@ -337,4 +335,5 @@
     }
   </script>
 </body>
+
 </html>

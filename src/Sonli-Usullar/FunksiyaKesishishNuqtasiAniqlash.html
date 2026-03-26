@@ -11,9 +11,11 @@
     content="Interaktiv grafik engine — ixtiyoriy funksiyani chizib, kesishish nuqtalarini (ildizlarini) vizual aniqlash. Zoom, pan, bisection ildiz qidiruvi, KaTeX formula preview. QarDU.">
   <meta name="keywords"
     content="funksiya grafigi, ildiz aniqlash, kesishish nuqtasi, grafik engine, canvas, interaktiv matematika, sonli usullar, QarDU">
-  <meta name="author" content="Haydarov Jasurbek">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#00f2ff">
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
 
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html">
@@ -50,14 +52,11 @@
     "isPartOf": { "@type": "EducationalWebsite", "name": "Sonli Usullar", "url": "https://www.sonli-usullar.uz/" }
   }
   </script>
-
-  <!-- Shared Sidebar CSS -->
-  <link rel="stylesheet" href="../assets/css/sidebar.css">
   <!-- Math.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
   <!-- KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 
   <style>
     .math-input {

@@ -65,8 +65,14 @@
       href: base + 'src/Sonli-Usullar/Iteratsiya-Usuli.html',
     },
     {
+      id: '3-talik-oddiyIteratsiya',
+      label: '3-TALIK ODDİY ITERATSIYA USULI',
+      icon: '🔄',
+      href: base + 'src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html',
+    },
+    {
       id: 'zeydel',
-      label: 'ZEYDEL USULI',
+      label: '(jarayonda)ZEYDEL USULI',
       icon: '🧮',
       href: base + 'src/Sonli-Usullar/Zeydel-usuli.html',
     },

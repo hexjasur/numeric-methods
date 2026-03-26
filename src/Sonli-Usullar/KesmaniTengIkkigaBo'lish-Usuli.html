@@ -9,9 +9,12 @@
   <!-- Primary SEO -->
   <meta name="description" content="Bisection (kesmani teng ikkiga bo'lish) usuli — f(a)·f(b)<0 shartida oraliqni yarmilab ildizni topish. Har qadam: markaz c=(a+b)/2, f(c) belgisi tekshiruvi, KaTeX bosqichlar. QarDU.">
   <meta name="keywords" content="bisection method, kesma usuli, kesmani ikkiga bolish, dichotomy method, ildiz topish, sonli usullar, QarDU, Haydarov Jasurbek">
-  <meta name="author" content="Haydarov Jasurbek">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#06b6d4">
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
 
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html">
@@ -46,12 +49,7 @@
   }
   </script>
 
-  <!-- Shared Sidebar CSS -->
-  <link rel="stylesheet" href="../assets/css/sidebar.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono&display=swap');

@@ -9,9 +9,12 @@
   <!-- Primary SEO -->
   <meta name="description" content="Vatar (sekant) usuli — hosila hisoblashsiz ildiz topish. Ikki nuqtadan o'tuvchi to'g'ri chiziq (vatar) yordamida: xₙ₊₁ = xₙ - f(xₙ)·(xₙ-xₙ₋₁)/(f(xₙ)-f(xₙ₋₁)). KaTeX bosqichlar. QarDU.">
   <meta name="keywords" content="vatar usuli, sekant usuli, secant method, chord method, hosilasiz usul, sonli usullar, algebraik tenglama, QarDU, Haydarov Jasurbek">
-  <meta name="author" content="Haydarov Jasurbek">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0369a1">
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
 
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html">
@@ -45,15 +48,7 @@
     "isPartOf": { "@type": "EducationalWebsite", "name": "Sonli Usullar", "url": "https://www.sonli-usullar.uz/" }
   }
   </script>
-  <!-- Shared Sidebar CSS -->
-  <link rel="stylesheet" href="../assets/css/sidebar.css">
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Math.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
-  <!-- KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
 
   <style>
     .input-field {
