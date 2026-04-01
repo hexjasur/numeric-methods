@@ -1,0 +1,882 @@
+/**
+ * win2k.css — Windows 2000 / Microsoft Classic UI Theme
+ * Sonli Usullar — QarDU Amaliy Matematika
+ *
+ * Color palette:
+ *   #d4d0c8  — classic Win2k silver/gray (main bg)
+ *   #ffffff  — window content background
+ *   #000080  — title bar active blue (navy)
+ *   #0000a8  — darker navy accent
+ *   #808080  — disabled / mid-gray
+ *   #000000  — text
+ *
+ * 3D border technique (Win2k raised/sunken):
+ *   raised: border-color: #ffffff #808080 #808080 #ffffff (outer),
+ *           inner: #dfdfdf #404040 #404040 #dfdfdf
+ *   sunken: opposite
+ */
+
+/* ── Google Font fallback (Tahoma-like) ── */
+@import url('https://fonts.googleapis.com/css2?family=Tahoma:wght@400;700&display=swap');
+
+/* ─────────────────────────────────────────────────────
+   RESET / BASE
+───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --win-bg: #d4d0c8;
+  --win-white: #ffffff;
+  --win-navy: #000080;
+  --win-navy-light: #1084d0;
+  --win-dark: #000000;
+  --win-gray-mid: #808080;
+  --win-gray-light: #dfdfdf;
+  --win-gray-dark: #404040;
+  --win-highlight: #0000ff;
+  --win-text: #000000;
+  --win-disabled: #808080;
+  --win-title-start: #000080;
+  --win-title-end: #1084d0;
+  --win-border-light: #ffffff;
+  --win-border-shadow: #808080;
+  --win-border-dark: #404040;
+  --font: 'Tahoma', 'MS Sans Serif', 'Arial', sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 11px;
+  background-color: var(--win-bg);
+  color: var(--win-text);
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────
+   CLASSIC WIN2K BORDER MIXINS (utility classes)
+───────────────────────────────────────────────────── */
+
+/* Raised button / panel border */
+.w-raised {
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-dark) var(--win-border-dark) var(--win-border-light);
+  outline: 1px solid var(--win-bg);
+}
+
+/* Sunken / inset border */
+.w-sunken {
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+  outline: 1px solid var(--win-border-shadow);
+}
+
+/* Standard Win2k window panel */
+.w-panel {
+  background: var(--win-bg);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+}
+
+/* Window container */
+.win-window {
+  background: var(--win-white);
+  border: 2px solid var(--win-bg);
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+  box-shadow: 2px 2px 0 var(--win-border-dark);
+}
+
+/* ─────────────────────────────────────────────────────
+   TITLE BAR
+───────────────────────────────────────────────────── */
+.win-titlebar {
+  background: linear-gradient(to right, var(--win-title-start), var(--win-title-end));
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 3px 4px 3px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  letter-spacing: 0;
+}
+
+.win-titlebar-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.win-titlebar-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* Window control buttons */
+.win-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.win-ctrl-btn {
+  width: 16px;
+  height: 14px;
+  background: var(--win-bg);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-dark) var(--win-border-dark) var(--win-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  font-family: 'Marlett', var(--font);
+  cursor: pointer;
+  color: var(--win-dark);
+  line-height: 1;
+  padding: 0;
+}
+
+.win-ctrl-btn:hover {
+  background: #c0bdb4;
+}
+
+.win-ctrl-btn:active {
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+}
+
+.win-ctrl-btn.close-btn {
+  background: var(--win-bg);
+}
+
+/* ─────────────────────────────────────────────────────
+   MENU BAR
+───────────────────────────────────────────────────── */
+.win-menubar {
+  background: var(--win-bg);
+  border-bottom: 1px solid var(--win-border-shadow);
+  padding: 2px 4px;
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.win-menu-item {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-family: var(--font);
+  cursor: default;
+  text-decoration: none;
+  color: var(--win-dark);
+  display: inline-block;
+}
+
+.win-menu-item:hover,
+.win-menu-item.active {
+  background: var(--win-navy);
+  color: #fff;
+}
+
+/* ─────────────────────────────────────────────────────
+   TOOLBAR
+───────────────────────────────────────────────────── */
+.win-toolbar {
+  background: var(--win-bg);
+  border-bottom: 1px solid var(--win-border-shadow);
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.win-toolbar-sep {
+  width: 1px;
+  height: 22px;
+  background: var(--win-border-shadow);
+  margin: 0 3px;
+  box-shadow: 1px 0 0 var(--win-border-light);
+}
+
+.win-toolbar-btn {
+  min-width: 24px;
+  height: 24px;
+  padding: 2px 6px;
+  background: var(--win-bg);
+  border: 2px solid transparent;
+  font-size: 11px;
+  font-family: var(--font);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  color: var(--win-dark);
+  text-decoration: none;
+}
+
+.win-toolbar-btn:hover {
+  border-color: var(--win-border-light) var(--win-border-dark) var(--win-border-dark) var(--win-border-light);
+  background: var(--win-bg);
+}
+
+.win-toolbar-btn:active {
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+}
+
+/* ─────────────────────────────────────────────────────
+   STATUS BAR
+───────────────────────────────────────────────────── */
+.win-statusbar {
+  background: var(--win-bg);
+  border-top: 1px solid var(--win-border-shadow);
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.win-statusbar-panel {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+  padding: 1px 6px;
+  font-size: 11px;
+  color: var(--win-dark);
+}
+
+/* ─────────────────────────────────────────────────────
+   WIN2K BUTTON (push button)
+───────────────────────────────────────────────────── */
+.win-btn {
+  background: var(--win-bg);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+  outline: 1px solid var(--win-gray-dark);
+  padding: 3px 12px;
+  font-size: 11px;
+  font-family: var(--font);
+  cursor: pointer;
+  color: var(--win-dark);
+  text-decoration: none;
+  display: inline-block;
+  min-width: 75px;
+  text-align: center;
+}
+
+.win-btn:hover {
+  background: #c8c5be;
+}
+
+.win-btn:active {
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+  padding: 4px 11px 2px 13px;
+}
+
+.win-btn-default {
+  outline: 2px solid var(--win-dark);
+}
+
+/* ─────────────────────────────────────────────────────
+   GROUPBOX / FIELDSET style
+───────────────────────────────────────────────────── */
+.win-groupbox {
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+  padding: 12px 10px 8px;
+  margin: 0;
+  background: var(--win-bg);
+  position: relative;
+}
+
+.win-groupbox-title {
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  background: var(--win-bg);
+  padding: 0 4px;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--win-dark);
+}
+
+/* ─────────────────────────────────────────────────────
+   STAT / INFO PANELS (Win2k dialog box style)
+───────────────────────────────────────────────────── */
+.win-stat-card {
+  background: var(--win-white);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+  padding: 8px;
+  text-align: center;
+}
+
+.win-stat-number {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--win-navy);
+  line-height: 1.2;
+}
+
+.win-stat-label {
+  font-size: 10px;
+  color: var(--win-gray-mid);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─────────────────────────────────────────────────────
+   MODULE / ICON ITEMS (like My Computer icons)
+───────────────────────────────────────────────────── */
+.win-module-card {
+  background: var(--win-white);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+  padding: 10px;
+  text-decoration: none;
+  color: var(--win-dark);
+  display: block;
+  cursor: pointer;
+  transition: none;
+}
+
+.win-module-card:hover {
+  background: #d0e4f8;
+  border-color: var(--win-navy-light) var(--win-navy-light) var(--win-navy-light) var(--win-navy-light);
+}
+
+.win-module-card:active {
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+  background: #b8d4f0;
+}
+
+.win-module-card .win-badge {
+  display: inline-block;
+  background: var(--win-navy);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 1px 6px;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+
+.win-module-card .win-card-icon {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.win-module-card h4 {
+  font-size: 11px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+  color: var(--win-dark);
+}
+
+.win-module-card p {
+  font-size: 10px;
+  color: var(--win-gray-mid);
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+}
+
+.win-module-card .win-detail-link {
+  font-size: 10px;
+  color: var(--win-navy);
+  text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────────────
+   TICKER / MARQUEE (like an old IE status bar / marquee tag)
+───────────────────────────────────────────────────── */
+.win-marquee-bar {
+  background: var(--win-bg);
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+  color: var(--win-dark);
+  font-size: 11px;
+  font-family: var(--font);
+  padding: 3px 0;
+  overflow: hidden;
+}
+
+.win-marquee-inner {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: win-scroll 30s linear infinite;
+}
+
+.win-marquee-inner span {
+  padding: 0 20px;
+}
+
+@keyframes win-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─────────────────────────────────────────────────────
+   ADDRESS BAR (like IE address bar)
+───────────────────────────────────────────────────── */
+.win-address-bar {
+  background: var(--win-bg);
+  border-bottom: 2px solid var(--win-border-shadow);
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.win-address-label {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.win-address-input {
+  flex: 1;
+  background: var(--win-white);
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--win-border-dark) var(--win-border-light) var(--win-border-light) var(--win-border-dark);
+  padding: 1px 4px;
+  font-size: 11px;
+  font-family: var(--font);
+  height: 20px;
+  outline: none;
+  color: var(--win-dark);
+}
+
+/* ─────────────────────────────────────────────────────
+   TECH TAG BADGE
+───────────────────────────────────────────────────── */
+.win-tech-tag {
+  display: inline-block;
+  background: var(--win-bg);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--win-dark);
+  font-family: var(--font);
+}
+
+/* ─────────────────────────────────────────────────────
+   SPLASH SCREEN (Win2k boot style)
+───────────────────────────────────────────────────── */
+#app-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000080;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#app-splash.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.splash-title {
+  font-family: var(--font);
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.splash-subtitle {
+  font-size: 11px;
+  color: #a0b8d8;
+  letter-spacing: 0.02em;
+}
+
+.splash-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-ring::before {
+  content: none;
+}
+
+/* Win2k progress bar */
+.win-splash-progress {
+  width: 200px;
+  height: 16px;
+  background: #000040;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.win-splash-fill {
+  height: 100%;
+  background: #0000c0;
+  animation: splash-fill 1.5s steps(10, end) forwards;
+  width: 0%;
+}
+
+@keyframes splash-fill {
+  0%   { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* ─────────────────────────────────────────────────────
+   PAGE LOADER
+───────────────────────────────────────────────────── */
+#app-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 8888;
+  background: rgba(212, 208, 200, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#app-loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-ring {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 4px solid var(--win-border-shadow);
+  border-top-color: var(--win-navy);
+  animation: loader-spin 0.8s linear infinite;
+}
+
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─────────────────────────────────────────────────────
+   OFFLINE OVERLAY
+───────────────────────────────────────────────────── */
+#offline-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--win-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+#offline-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.offline-box {
+  text-align: center;
+  padding: 40px 24px;
+  max-width: 320px;
+  background: var(--win-white);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+}
+
+.offline-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--win-dark);
+  margin-bottom: 8px;
+}
+
+.offline-msg {
+  font-size: 11px;
+  color: var(--win-gray-mid);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.offline-retry-btn {
+  display: inline-block;
+  padding: 4px 16px;
+  background: var(--win-bg);
+  color: var(--win-dark);
+  font-size: 11px;
+  font-family: var(--font);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+  cursor: pointer;
+  min-width: 75px;
+}
+
+.offline-retry-btn:active {
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+}
+
+/* ─────────────────────────────────────────────────────
+   SHARE FAB (Win2k toolbar style)
+───────────────────────────────────────────────────── */
+#share-fab {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  background: var(--win-bg);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#share-fab:hover {
+  background: #c8c5be;
+}
+
+#share-fab:active {
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+}
+
+/* ─────────────────────────────────────────────────────
+   BACK TO TOP
+───────────────────────────────────────────────────── */
+#back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 200;
+  width: 22px;
+  height: 22px;
+  background: var(--win-bg);
+  color: var(--win-dark);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light);
+  font-size: 9px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#back-to-top:active {
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow);
+}
+
+#back-to-top.visible {
+  display: flex;
+}
+
+/* ─────────────────────────────────────────────────────
+   SIDEBAR OVERRIDES (Win2k Explorer-style)
+───────────────────────────────────────────────────── */
+.sidebar {
+  background: var(--win-bg) !important;
+  border-right: 2px solid var(--win-border-shadow) !important;
+  box-shadow: none !important;
+}
+
+.sidebar-header {
+  background: linear-gradient(to right, var(--win-title-start), var(--win-title-end)) !important;
+  clip-path: none !important;
+  border-bottom: 2px solid var(--win-border-shadow) !important;
+  padding: 6px 10px !important;
+}
+
+.sidebar-logo {
+  color: #ffffff !important;
+  font-family: var(--font) !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  letter-spacing: 0 !important;
+}
+
+.sidebar-subtitle {
+  color: #a0b8d8 !important;
+  font-family: var(--font) !important;
+  font-size: 10px !important;
+}
+
+.sidebar-section-label {
+  background: var(--win-navy) !important;
+  color: #ffffff !important;
+  font-size: 10px !important;
+  font-weight: bold !important;
+  padding: 3px 10px !important;
+  letter-spacing: 0 !important;
+  margin: 0 !important;
+  text-transform: none !important;
+}
+
+.sidebar-item {
+  background: var(--win-white) !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: transparent !important;
+  clip-path: none !important;
+  font-family: var(--font) !important;
+  font-size: 11px !important;
+  font-weight: normal !important;
+  padding: 4px 8px !important;
+  margin-bottom: 1px !important;
+  color: var(--win-dark) !important;
+  letter-spacing: 0 !important;
+}
+
+.sidebar-item:hover {
+  background: #d0e4f8 !important;
+  border-color: var(--win-navy-light) !important;
+  transform: none !important;
+  color: var(--win-dark) !important;
+}
+
+.sidebar-item.active {
+  background: var(--win-navy) !important;
+  color: #ffffff !important;
+  border-color: var(--win-navy) !important;
+}
+
+.sidebar-item.active:hover {
+  background: #0000a0 !important;
+  transform: none !important;
+}
+
+.sidebar-footer {
+  font-family: var(--font) !important;
+  font-size: 10px !important;
+  color: var(--win-gray-mid) !important;
+}
+
+/* Toggle button */
+.sidebar-toggle-btn {
+  background: var(--win-bg) !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light) !important;
+  box-shadow: none !important;
+}
+
+.sidebar-toggle-btn:hover {
+  background: #c0bdb4 !important;
+}
+
+.sidebar-toggle-btn span {
+  background: var(--win-dark) !important;
+}
+
+/* ─────────────────────────────────────────────────────
+   CYBER → WIN2K OVERRIDES
+───────────────────────────────────────────────────── */
+.cyber-header {
+  background: var(--win-bg) !important;
+  clip-path: none !important;
+  border-bottom: 2px solid var(--win-border-shadow) !important;
+}
+
+.cyber-card {
+  background: var(--win-white) !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow) !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+}
+
+.cyber-button {
+  background: var(--win-bg) !important;
+  clip-path: none !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  border-color: var(--win-border-light) var(--win-border-shadow) var(--win-border-shadow) var(--win-border-light) !important;
+  color: var(--win-dark) !important;
+  font-family: var(--font) !important;
+  font-size: 11px !important;
+  font-weight: normal !important;
+  box-shadow: none !important;
+}
+
+.cyber-button:hover {
+  background: #c8c5be !important;
+  color: var(--win-dark) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.cyber-button:active {
+  border-color: var(--win-border-shadow) var(--win-border-light) var(--win-border-light) var(--win-border-shadow) !important;
+}
+
+/* ─────────────────────────────────────────────────────
+   MAIN CONTENT
+───────────────────────────────────────────────────── */
+.main-content {
+  background: var(--win-bg) !important;
+  overflow-x: hidden !important;
+}
+
+/* ─────────────────────────────────────────────────────
+   KATEX / MATH
+───────────────────────────────────────────────────── */
+.katex-display {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  max-width: 100% !important;
+  padding: 8px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--win-border-shadow) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .katex {
+    font-size: 0.88em !important;
+  }
+}

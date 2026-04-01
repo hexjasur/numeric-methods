@@ -15,7 +15,6 @@
   </script>
   <script src="src/assets/js/head-manager.js"></script>
 
-
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/" />
 
@@ -28,8 +27,6 @@
   <meta property="og:description"
     content="Iteratsiya, Bisection, Nyuton, Vatar, Gauss-Seydel usullari — bosqichma-bosqich KaTeX formulalar va interaktiv hisob-kitob bilan. QarDU Amaliy Matematika.">
   <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -40,8 +37,6 @@
     content="Iteratsiya, Bisection, Nyuton, Vatar, Gauss-Seydel — barcha sonli usullar interaktiv tarzda. QarDU.">
   <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo.png">
 
-
-
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
@@ -50,23 +45,10 @@
     "name": "Sonli Usullar",
     "alternateName": "sonli-usullar.uz",
     "url": "https://www.sonli-usullar.uz/",
-    "description": "O'zbek tilida sonli usullar fanini interaktiv o'rganish platformasi. Iteratsiya, Bisection, Nyuton, Vatar, Gauss-Seydel usullari.",
+    "description": "O'zbek tilida sonli usullar fanini interaktiv o'rganish platformasi.",
     "inLanguage": "uz",
     "educationalLevel": "University",
-    "audience": { "@type": "EducationalAudience", "educationalRole": "student" },
-    "author": { "@type": "Person", "name": "Haydarov Jasurbek", "affiliation": "Qarshi Davlat Universiteti" },
-    "publisher": { "@type": "Organization", "name": "QarDU Amaliy Matematika", "url": "https://www.sonli-usullar.uz/" },
-    "keywords": ["sonli usullar", "iteratsiya", "bisection", "nyuton", "vatar", "gauss seydel"],
-    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "dateCreated": "2026-03-16",
-    "dateModified": "2026-03-23",
-    "hasPart": [
-      { "@type": "WebPage", "name": "Iteratsiya Usuli", "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html" },
-      { "@type": "WebPage", "name": "Urinma (Nyuton) Usuli", "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/Urinma-Usuli.html" },
-      { "@type": "WebPage", "name": "Vatar (Sekant) Usuli", "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html" },
-      { "@type": "WebPage", "name": "Bisection Usuli", "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html" },
-      { "@type": "WebPage", "name": "Gauss-Seydel Usuli", "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/Gauss-Seydel-usuli.html" }
-    ]
+    "author": { "@type": "Person", "name": "Haydarov Jasurbek", "affiliation": "Qarshi Davlat Universiteti" }
   }
   </script>
 
@@ -78,98 +60,486 @@
       for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
       k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
     })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=108219942', 'ym');
-
     ym(108219942, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
   </script>
   <noscript>
     <div><img src="https://mc.yandex.ru/watch/108219942" style="position:absolute; left:-9999px;" alt="" /></div>
   </noscript>
-  <!-- /Yandex.Metrika counter -->
 
   <style>
-    /* Page-specific styles for index.html */
-    .hero-counter {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: #00f2ff;
+    /* ── Page-level Win2k window chrome ── */
+    body {
+      font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+      font-size: 11px;
+      background: #008080; /* classic Win2k teal desktop */
+      overflow-x: hidden;
+    }
+
+    /* The outer "browser window" wrapper */
+    #win-browser-chrome {
+      max-width: 1100px;
+      margin: 8px auto;
+      border-style: solid;
+      border-width: 2px;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      outline: 1px solid #404040;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      background: #d4d0c8;
+    }
+
+    /* ── IE-style toolbar row ── */
+    #ie-toolbar {
+      background: #d4d0c8;
+      border-bottom: 1px solid #808080;
+      padding: 2px 4px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
+
+    .ie-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      min-width: 44px;
+      padding: 2px 4px;
+      background: transparent;
+      border: 2px solid transparent;
+      font-size: 9px;
+      font-family: 'Tahoma', Arial, sans-serif;
+      cursor: pointer;
+      color: #000;
+      text-decoration: none;
+    }
+
+    .ie-btn:hover {
+      border-color: #ffffff #808080 #808080 #ffffff;
+      background: #d4d0c8;
+    }
+
+    .ie-btn:active {
+      border-color: #808080 #ffffff #ffffff #808080;
+    }
+
+    .ie-btn-icon {
+      font-size: 18px;
       line-height: 1;
     }
 
+    .ie-btn-label {
+      font-size: 9px;
+      white-space: nowrap;
+    }
+
+    .ie-sep {
+      width: 1px;
+      height: 36px;
+      background: #808080;
+      margin: 0 3px;
+      box-shadow: 1px 0 0 #fff;
+    }
+
+    /* Address bar */
+    #ie-address {
+      background: #d4d0c8;
+      border-bottom: 2px solid #808080;
+      padding: 2px 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    #ie-address-label {
+      font-weight: bold;
+      white-space: nowrap;
+      font-size: 11px;
+    }
+
+    #ie-address-input {
+      flex: 1;
+      background: #fff;
+      border: 1px solid;
+      border-color: #808080 #fff #fff #808080;
+      padding: 1px 4px;
+      font-size: 11px;
+      font-family: 'Tahoma', Arial, sans-serif;
+      height: 20px;
+      outline: none;
+      color: #000;
+    }
+
+    .ie-go-btn {
+      background: #d4d0c8;
+      border: 2px solid;
+      border-color: #fff #808080 #808080 #fff;
+      padding: 1px 8px;
+      font-size: 11px;
+      font-family: 'Tahoma', Arial, sans-serif;
+      cursor: pointer;
+      height: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ie-go-btn:active {
+      border-color: #808080 #fff #fff #808080;
+    }
+
+    /* ── Main browser content area ── */
+    #browser-content {
+      background: #d4d0c8;
+      flex: 1;
+    }
+
+    /* ── Status bar ── */
+    #ie-statusbar {
+      background: #d4d0c8;
+      border-top: 1px solid #808080;
+      padding: 1px 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+    }
+
+    .ie-status-panel {
+      border: 1px solid;
+      border-color: #808080 #fff #fff #808080;
+      padding: 0 6px;
+      font-size: 10px;
+      color: #000;
+      height: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ie-status-main {
+      flex: 1;
+    }
+
+    /* ── Main page content padding ── */
+    .main-content {
+      padding: 8px;
+      background: #d4d0c8;
+      transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
+    }
+
+    /* ── Win2k "window" wrapper for sections ── */
+    .win-section {
+      background: #ffffff;
+      border: 2px solid;
+      border-color: #fff #808080 #808080 #fff;
+      margin-bottom: 8px;
+    }
+
+    /* Stat cards in Win2k style */
     .stat-card {
-      background: white;
-      border: 2px solid #000;
-      box-shadow: 4px 4px 0 #00f2ff;
-      padding: 18px;
+      background: #ffffff;
+      border: 2px solid;
+      border-color: #808080 #ffffff #ffffff #808080;
+      padding: 10px 8px;
       text-align: center;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 6px 6px 0 #ff00ea;
+      background: #d0e4f8;
+      border-color: #1084d0;
     }
 
+    .hero-counter {
+      font-family: 'Tahoma', Arial, sans-serif;
+      font-size: 22px;
+      font-weight: bold;
+      color: #000080;
+      line-height: 1.2;
+    }
+
+    /* Module cards */
     .module-card {
-      background: white;
-      border: 2px solid #000;
-      box-shadow: 6px 6px 0px #00f2ff;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+      background: #ffffff;
+      border: 2px solid;
+      border-color: #808080 #ffffff #ffffff #808080;
       text-decoration: none;
-      color: #0f172a;
+      color: #000;
       display: block;
-      padding: 24px;
-      transition: box-shadow 0.25s, transform 0.25s;
+      padding: 10px;
+      transition: none;
     }
 
     .module-card:hover {
-      box-shadow: 8px 8px 0px #ff00ea;
-      transform: translateY(-4px);
+      background: #d0e4f8;
+      border-color: #1084d0;
+    }
+
+    .module-card:active {
+      border-color: #404040 #ffffff #ffffff #404040;
     }
 
     .module-card .badge {
       display: inline-block;
-      background: #00f2ff;
-      color: #000;
-      font-size: 0.65rem;
-      font-weight: 900;
-      padding: 3px 10px;
-      letter-spacing: 0.08em;
-      clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
-      margin-bottom: 10px;
+      background: #000080;
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: bold;
+      padding: 1px 6px;
+      clip-path: none;
+      margin-bottom: 5px;
+      letter-spacing: 0.02em;
     }
 
+    .module-card:hover .badge {
+      background: #1084d0;
+    }
+
+    /* Ticker */
     .ticker-wrap {
       overflow: hidden;
-      background: #000;
-      color: #00f2ff;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      padding: 8px 0;
-      border-top: 2px solid #00f2ff;
-      border-bottom: 2px solid #00f2ff;
+      background: #d4d0c8;
+      color: #000;
+      font-family: 'Tahoma', Arial, sans-serif;
+      font-size: 10px;
+      padding: 2px 0;
+      border-top: 1px solid #808080;
+      border-bottom: 1px solid #ffffff;
     }
 
     .ticker-inner {
       display: inline-flex;
       white-space: nowrap;
-      animation: ticker 22s linear infinite;
+      animation: ticker 30s linear infinite;
     }
 
     .ticker-inner span {
-      padding: 0 32px;
+      padding: 0 20px;
     }
 
     @keyframes ticker {
-      from {
-        transform: translateX(0);
-      }
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
 
-      to {
-        transform: translateX(-50%);
+    /* Override cyber styles for Win2k */
+    .cyber-header {
+      background: #d4d0c8 !important;
+      clip-path: none !important;
+      border-bottom: 2px solid #808080 !important;
+      border-top: none !important;
+      padding: 0 !important;
+    }
+
+    .cyber-card {
+      background: #ffffff !important;
+      border: 2px solid !important;
+      border-color: #808080 #ffffff #ffffff #808080 !important;
+      box-shadow: none !important;
+      clip-path: none !important;
+    }
+
+    .cyber-button {
+      background: #d4d0c8 !important;
+      clip-path: none !important;
+      border: 2px solid !important;
+      border-color: #ffffff #808080 #808080 #ffffff !important;
+      color: #000 !important;
+      font-family: 'Tahoma', Arial, sans-serif !important;
+      font-size: 11px !important;
+      font-weight: normal !important;
+      box-shadow: none !important;
+      padding: 3px 14px !important;
+      min-width: 75px !important;
+    }
+
+    .cyber-button:hover {
+      background: #c8c5be !important;
+      color: #000 !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    .cyber-button:active {
+      border-color: #808080 #ffffff #ffffff #808080 !important;
+    }
+
+    /* Override Orbitron headings with Tahoma */
+    h1, h2, h3, h4 {
+      font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif !important;
+    }
+
+    /* Tech tags */
+    .tech-tag {
+      display: inline-block;
+      background: #d4d0c8;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-family: 'Tahoma', Arial, sans-serif;
+      color: #000;
+      font-weight: normal;
+    }
+
+    /* Win2k title bar for inner panels */
+    .win-panel-titlebar {
+      background: linear-gradient(to right, #000080, #1084d0);
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 11px;
+      padding: 3px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .win-panel-titlebar-title {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .win-panel-ctrl {
+      width: 14px;
+      height: 12px;
+      background: #d4d0c8;
+      border: 2px solid;
+      border-color: #ffffff #404040 #404040 #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+      line-height: 1;
+      margin-left: 2px;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 16px;
+      height: 16px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #d4d0c8;
+      border: 1px solid #808080;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d4d0c8;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #c0bdb4;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: #d4d0c8;
+    }
+
+    ::-webkit-scrollbar-button {
+      background: #d4d0c8;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Desktop taskbar */
+    #win-taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background: #d4d0c8;
+      border-top: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 0 4px;
+      z-index: 9000;
+      box-shadow: 0 -2px 0 #ffffff;
+    }
+
+    #win-start-btn {
+      background: #d4d0c8;
+      border: 2px solid;
+      border-color: #ffffff #404040 #404040 #ffffff;
+      padding: 2px 8px 2px 4px;
+      font-family: 'Tahoma', Arial, sans-serif;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 22px;
+    }
+
+    #win-start-btn:active {
+      border-color: #404040 #ffffff #ffffff #404040;
+    }
+
+    #win-start-logo {
+      font-size: 14px;
+    }
+
+    .taskbar-sep {
+      width: 1px;
+      height: 20px;
+      background: #808080;
+      box-shadow: 1px 0 0 #fff;
+      margin: 0 3px;
+    }
+
+    .taskbar-task {
+      background: #d4d0c8;
+      border: 2px solid;
+      border-color: #404040 #ffffff #ffffff #404040;
+      padding: 1px 10px;
+      font-size: 10px;
+      font-family: 'Tahoma', Arial, sans-serif;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 100px;
+      cursor: pointer;
+    }
+
+    #win-clock {
+      margin-left: auto;
+      background: #d4d0c8;
+      border: 1px solid;
+      border-color: #808080 #ffffff #ffffff #808080;
+      padding: 1px 8px;
+      font-size: 10px;
+      font-family: 'Tahoma', Arial, sans-serif;
+      height: 22px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Page bottom padding for taskbar */
+    #main-content {
+      padding-bottom: 40px;
+    }
+
+    /* Desktop icons overlay (shown before main loads) */
+    @media (min-width: 1024px) {
+      #win-browser-chrome {
+        margin: 8px auto 36px;
       }
     }
   </style>
@@ -178,20 +548,24 @@
 <body>
 
   <!-- ═══════════════════════════════════════
-       SPLASH SCREEN (shown until page loads)
+       SPLASH SCREEN (Windows 2000 boot style)
        ═══════════════════════════════════════ -->
   <div id="app-splash" role="status" aria-label="Yuklanmoqda">
     <div class="splash-ring">
       <img src="src/assets/images/logo-glass.png" alt="Sonli Usullar" class="splash-logo">
     </div>
-    <div class="splash-title">SONLI USULLAR</div>
-    <div class="splash-subtitle">QarDU · Amaliy Matematika · 2026</div>
+    <div class="splash-title">Sonli Usullar</div>
+    <div class="splash-subtitle">QarDU &middot; Amaliy Matematika &middot; 2026</div>
+    <div class="win-splash-progress" role="progressbar" aria-label="Yuklanmoqda">
+      <div class="win-splash-fill"></div>
+    </div>
   </div>
 
-  <!-- PAGE LOADER (every navigation) -->
+  <!-- PAGE LOADER -->
   <div id="app-loader" role="status" aria-label="Yuklanmoqda">
     <div class="loader-ring"></div>
   </div>
+
   <!-- Sidebar injected by sidebar.js -->
   <script>
     window.SIDEBAR_BASE = '';
@@ -199,202 +573,431 @@
   </script>
   <script src="src/assets/js/sidebar.js"></script>
 
+  <!-- ══════════════════════════════════════════════════
+       WINDOWS TASKBAR
+       ══════════════════════════════════════════════════ -->
+  <div id="win-taskbar" role="complementary" aria-label="Taskbar">
+    <button id="win-start-btn" aria-label="Start Menu">
+      <span id="win-start-logo">🪟</span>
+      <strong>Start</strong>
+    </button>
+    <div class="taskbar-sep"></div>
+    <div class="taskbar-task">
+      <span>🧮</span>
+      <span>Sonli Usullar v2.2</span>
+    </div>
+    <div id="win-clock" aria-live="polite" aria-label="Hozirgi vaqt" id="win-clock-display">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
   <!-- Main Content -->
-  <div class="main-content p-4 md:p-8" id="main-content">
+  <div class="main-content p-2 md:p-4" id="main-content">
 
-    <!-- Ticker / Breaking News Bar -->
-    <div class="ticker-wrap mb-6">
-      <div class="ticker-inner">
-        <span>⚡ SONLI USULLAR v2.2</span>
-        <span>//</span>
-        <span>🔄 ITERATSIYA USULI</span>
-        <span>//</span>
-        <span>✂️ BISECTION METHOD</span>
-        <span>//</span>
-        <span>📈 GRAFIK ENGINE v3.0</span>
-        <span>//</span>
-        <span>🧮 GAUSS-SEYDEL USULI</span>
-        <span>//</span>
-        <span>QarDU · Amaliy Matematika · 023-40 guruh · 2026</span>
-        <span>//</span>
-        <!-- Repeat for seamless loop -->
-        <span>⚡ SONLI USULLAR v2.2</span>
-        <span>//</span>
-        <span>🔄 ITERATSIYA USULI</span>
-        <span>//</span>
-        <span>✂️ BISECTION METHOD</span>
-        <span>//</span>
-        <span>📈 GRAFIK ENGINE v3.0</span>
-        <span>//</span>
-        <span>🧮 GAUSS-SEYDEL USULI</span>
-        <span>//</span>
-        <span>QarDU · Amaliy Matematika · 023-40 guruh · 2026</span>
-        <span>//</span>
-      </div>
-    </div>
+    <!-- ══════════════════════════════════════════════════
+         INTERNET EXPLORER-STYLE BROWSER CHROME WRAPPER
+         ══════════════════════════════════════════════════ -->
+    <div id="win-browser-chrome" role="main">
 
-    <!-- Header -->
-    <header class="p-8 mb-10 text-center shadow-sm cyber-header">
-      <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">SONLI USULLAR
-        <span style="color:#00f2ff">v2.2</span>
-      </h1>
-      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Amaliy
-        Matematika | 023-40 guruh</p>
-    </header>
-
-    <!-- Stats row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-      <div class="stat-card">
-        <div class="hero-counter" id="cnt-modules">5+</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Modullar</div>
-      </div>
-      <div class="stat-card">
-        <div class="hero-counter">∞</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Hisoblar</div>
-      </div>
-      <div class="stat-card">
-        <div class="hero-counter">0.01</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Aniqlik (ε)</div>
-      </div>
-      <div class="stat-card">
-        <div class="hero-counter">2026</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Yil</div>
-      </div>
-    </div>
-
-    <!-- Info cards -->
-    <div class="grid grid-cols-1 gap-8 mb-10 lg:grid-cols-3">
-      <div class="p-6 cyber-card">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
-          <span class="mr-2">⚡</span> LOYIHA
-        </h3>
-        <div class="space-y-2 text-sm font-bold">
-          <p class="flex justify-between"><span>Maqsad:</span> <span class="text-cyan-600">Sonli usullarni
-              o'rganish</span></p>
-          <p class="flex justify-between"><span>Yaratuvchi:</span> <span style="color:#ff00ea">Haydarov Jasurbek</span>
-          </p>
-          <p class="flex justify-between"><span>Guruh:</span> <span class="text-cyan-600">023-40</span></p>
-          <p class="flex justify-between"><span>Yil:</span> <span style="color:#ff00ea">2026</span></p>
+      <!-- Title Bar -->
+      <div class="win-titlebar" role="banner">
+        <div class="win-titlebar-title">
+          <img src="src/assets/images/logo-glass.png" alt="Logo" class="win-titlebar-icon">
+          Sonli Usullar v2.2 — Internet Explorer
+        </div>
+        <div class="win-controls" aria-hidden="true">
+          <button class="win-ctrl-btn" title="Minimize" aria-label="Minimize">&#8211;</button>
+          <button class="win-ctrl-btn" title="Restore" aria-label="Restore">&#9633;</button>
+          <button class="win-ctrl-btn close-btn" title="Close" aria-label="Close" onclick="void(0)">&#10005;</button>
         </div>
       </div>
 
-      <div class="p-6 cyber-card lg:col-span-2">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
-          <span class="mr-2">👤</span> BOSHQARUV PANELI
-        </h3>
-        <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-          <div>
-            <p class="text-2xl font-black text-black">JASURBEK HAYDAROV</p>
-            <p class="text-sm font-bold text-gray-500">Sonli usullar faniga qo'shgan hissasi</p>
-            <p class="max-w-md mt-3 text-xs leading-relaxed">
-              Ushbu loyiha QarDU talabasi tomonidan sonli usullar fanini o'rganish va amaliyot
-              qilish maqsadida yaratildi. Har bir usul alohida HTML faylda bajarilgan va interaktiv
-              hisoblash imkoniyati mavjud.
-            </p>
+      <!-- Menu Bar -->
+      <nav class="win-menubar" role="menubar" aria-label="Menu Bar">
+        <a href="#" class="win-menu-item" role="menuitem">Fayl</a>
+        <a href="#" class="win-menu-item" role="menuitem">Tahrirlash</a>
+        <a href="#" class="win-menu-item" role="menuitem">Ko'rish</a>
+        <a href="#" class="win-menu-item" role="menuitem">Sevimlilar</a>
+        <a href="#" class="win-menu-item" role="menuitem">Vositalar</a>
+        <a href="src/about.html" class="win-menu-item" role="menuitem">Yordam</a>
+      </nav>
+
+      <!-- IE Toolbar -->
+      <div id="ie-toolbar" role="toolbar" aria-label="Navigation Toolbar">
+        <a href="javascript:history.back()" class="ie-btn" aria-label="Ortga">
+          <span class="ie-btn-icon">&#9664;</span>
+          <span class="ie-btn-label">Ortga</span>
+        </a>
+        <a href="javascript:history.forward()" class="ie-btn" aria-label="Oldinga">
+          <span class="ie-btn-icon">&#9654;</span>
+          <span class="ie-btn-label">Oldinga</span>
+        </a>
+        <a href="javascript:location.reload()" class="ie-btn" aria-label="Yangilash">
+          <span class="ie-btn-icon">&#8635;</span>
+          <span class="ie-btn-label">Yangilash</span>
+        </a>
+        <a href="index.html" class="ie-btn" aria-label="Asosiy">
+          <span class="ie-btn-icon">🏠</span>
+          <span class="ie-btn-label">Asosiy</span>
+        </a>
+        <div class="ie-sep" aria-hidden="true"></div>
+        <a href="#" class="ie-btn" aria-label="Qidirish">
+          <span class="ie-btn-icon">🔍</span>
+          <span class="ie-btn-label">Qidirish</span>
+        </a>
+        <a href="#" class="ie-btn" aria-label="Sevimlilar">
+          <span class="ie-btn-icon">⭐</span>
+          <span class="ie-btn-label">Sevimlilar</span>
+        </a>
+        <a href="src/about.html" class="ie-btn" aria-label="Tarix">
+          <span class="ie-btn-icon">📋</span>
+          <span class="ie-btn-label">Tarix</span>
+        </a>
+        <div class="ie-sep" aria-hidden="true"></div>
+        <a href="#" class="ie-btn" aria-label="Chop etish">
+          <span class="ie-btn-icon">🖨️</span>
+          <span class="ie-btn-label">Chop etish</span>
+        </a>
+      </div>
+
+      <!-- Address Bar -->
+      <div id="ie-address" role="search" aria-label="Address Bar">
+        <label id="ie-address-label" for="ie-address-input">Manzil:</label>
+        <input
+          id="ie-address-input"
+          type="text"
+          value="https://www.sonli-usullar.uz/"
+          readonly
+          aria-label="Hozirgi manzil"
+          title="Hozirgi manzil"
+        >
+        <button class="ie-go-btn" aria-label="O'tish">O'tish</button>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════
+           BROWSER PAGE CONTENT
+           ══════════════════════════════════════════════════ -->
+      <div id="browser-content">
+
+        <!-- Ticker / Marquee (like classic IE marquee tag) -->
+        <div class="ticker-wrap" aria-label="Yangiliklar">
+          <div class="ticker-inner" aria-hidden="true">
+            <span>&#9658; SONLI USULLAR v2.2</span>
+            <span>|</span>
+            <span>ITERATSIYA USULI</span>
+            <span>|</span>
+            <span>BISECTION METHOD</span>
+            <span>|</span>
+            <span>GRAFIK ENGINE v3.0</span>
+            <span>|</span>
+            <span>GAUSS-SEYDEL USULI</span>
+            <span>|</span>
+            <span>QarDU &middot; Amaliy Matematika &middot; 023-40 guruh &middot; 2026</span>
+            <span>|</span>
+            <!-- Repeat for seamless loop -->
+            <span>&#9658; SONLI USULLAR v2.2</span>
+            <span>|</span>
+            <span>ITERATSIYA USULI</span>
+            <span>|</span>
+            <span>BISECTION METHOD</span>
+            <span>|</span>
+            <span>GRAFIK ENGINE v3.0</span>
+            <span>|</span>
+            <span>GAUSS-SEYDEL USULI</span>
+            <span>|</span>
+            <span>QarDU &middot; Amaliy Matematika &middot; 023-40 guruh &middot; 2026</span>
+            <span>|</span>
           </div>
-          <button onclick="toggleSidebar()" class="px-12 py-4 text-lg font-black cyber-button">MENU</button>
         </div>
+
+        <!-- ── PAGE CONTENT AREA ── -->
+        <div style="padding: 8px; background: #d4d0c8;">
+
+          <!-- ── HEADER (Win2k dialog box style) ── -->
+          <div class="win-section mb-2" style="margin-bottom: 8px;">
+            <div class="win-panel-titlebar">
+              <div class="win-panel-titlebar-title">
+                <img src="src/assets/images/logo-glass.png" alt="Logo" style="width:14px;height:14px;object-fit:contain;">
+                Sonli Usullar — Asosiy Sahifa
+              </div>
+              <div aria-hidden="true">
+                <span class="win-panel-ctrl">&#8211;</span>
+                <span class="win-panel-ctrl">&#9633;</span>
+              </div>
+            </div>
+            <div style="padding: 12px 14px; background: #d4d0c8; border-top: 1px solid #fff;">
+              <table style="width:100%;" role="presentation">
+                <tr>
+                  <td style="vertical-align:middle; padding-right:12px;">
+                    <img src="src/assets/images/logo-glass.png" alt="Sonli Usullar Logo" style="width:48px;height:48px;object-fit:contain;">
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <div style="font-size:18px; font-weight:bold; color:#000080; font-family:Tahoma,Arial,sans-serif;">
+                      SONLI USULLAR <span style="color:#808080; font-size:13px;">v2.2</span>
+                    </div>
+                    <div style="font-size:10px; color:#808080; margin-top:2px;">
+                      Qarshi Davlat Universiteti &nbsp;|&nbsp; Amaliy Matematika &nbsp;|&nbsp; 023-40 guruh
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- ── STATS ROW ── -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-2" role="region" aria-label="Statistika">
+            <div class="stat-card" role="status">
+              <div class="hero-counter" id="cnt-modules">5+</div>
+              <div style="font-size:9px; color:#808080; margin-top:2px; text-transform:uppercase; letter-spacing:0.04em;">Modullar</div>
+            </div>
+            <div class="stat-card" role="status">
+              <div class="hero-counter">&infin;</div>
+              <div style="font-size:9px; color:#808080; margin-top:2px; text-transform:uppercase; letter-spacing:0.04em;">Hisoblar</div>
+            </div>
+            <div class="stat-card" role="status">
+              <div class="hero-counter">0.01</div>
+              <div style="font-size:9px; color:#808080; margin-top:2px; text-transform:uppercase; letter-spacing:0.04em;">Aniqlik (&epsilon;)</div>
+            </div>
+            <div class="stat-card" role="status">
+              <div class="hero-counter">2026</div>
+              <div style="font-size:9px; color:#808080; margin-top:2px; text-transform:uppercase; letter-spacing:0.04em;">Yil</div>
+            </div>
+          </div>
+
+          <!-- ── INFO CARDS ── -->
+          <div class="grid grid-cols-1 gap-2 mb-2 lg:grid-cols-3">
+
+            <!-- Loyiha card -->
+            <div class="win-section">
+              <div class="win-panel-titlebar">
+                <div class="win-panel-titlebar-title">
+                  <span>&#9658;</span> Loyiha Ma'lumotlari
+                </div>
+                <div aria-hidden="true">
+                  <span class="win-panel-ctrl">&#8211;</span>
+                </div>
+              </div>
+              <div style="padding: 10px; background: #ffffff;">
+                <table style="width:100%; border-collapse:collapse; font-size:11px;" role="presentation">
+                  <tr>
+                    <td style="padding:2px 0; color:#000080; font-weight:bold; width:50%;">Maqsad:</td>
+                    <td style="padding:2px 0;">Sonli usullarni o'rganish</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:2px 0; color:#000080; font-weight:bold;">Yaratuvchi:</td>
+                    <td style="padding:2px 0;">Haydarov Jasurbek</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:2px 0; color:#000080; font-weight:bold;">Guruh:</td>
+                    <td style="padding:2px 0;">023-40</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:2px 0; color:#000080; font-weight:bold;">Yil:</td>
+                    <td style="padding:2px 0;">2026</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:2px 0; color:#000080; font-weight:bold;">Universitet:</td>
+                    <td style="padding:2px 0;">QarDU</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- Dashboard card -->
+            <div class="win-section lg:col-span-2">
+              <div class="win-panel-titlebar">
+                <div class="win-panel-titlebar-title">
+                  <span>👤</span> Foydalanuvchi Paneli
+                </div>
+                <div aria-hidden="true">
+                  <span class="win-panel-ctrl">&#8211;</span>
+                  <span class="win-panel-ctrl">&#9633;</span>
+                </div>
+              </div>
+              <div style="padding: 10px; background: #ffffff;">
+                <div class="flex flex-col justify-between gap-3 md:flex-row md:items-start">
+                  <div>
+                    <div style="font-size:14px; font-weight:bold; color:#000;">JASURBEK HAYDAROV</div>
+                    <div style="font-size:10px; color:#808080; margin-top:2px;">Sonli usullar faniga qo'shgan hissasi</div>
+                    <div style="font-size:10px; color:#000; margin-top:6px; max-width:420px; line-height:1.6;">
+                      Ushbu loyiha QarDU talabasi tomonidan sonli usullar fanini o'rganish va amaliyot
+                      qilish maqsadida yaratildi. Har bir usul alohida HTML faylda bajarilgan va interaktiv
+                      hisoblash imkoniyati mavjud.
+                    </div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:4px; min-width: 90px;">
+                    <button onclick="toggleSidebar()" class="cyber-button" aria-label="Menyuni ochish">
+                      Menu
+                    </button>
+                    <a href="src/about.html" class="cyber-button" style="display:block; text-align:center;">
+                      Haqida
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ── MODULES (file manager / explorer grid style) ── -->
+          <div class="win-section mb-2">
+            <div class="win-panel-titlebar">
+              <div class="win-panel-titlebar-title">
+                <span>📦</span> Modullar — (C:\SonliUsullar\)
+              </div>
+              <div aria-hidden="true">
+                <span class="win-panel-ctrl">&#8211;</span>
+                <span class="win-panel-ctrl">&#9633;</span>
+              </div>
+            </div>
+            <!-- Explorer-style toolbar inside window -->
+            <div style="background:#d4d0c8; border-bottom:1px solid #808080; padding:2px 6px; display:flex; gap:2px; flex-wrap:wrap; align-items:center; font-size:10px;">
+              <span style="font-weight:bold; margin-right:4px;">Ko'rinish:</span>
+              <button style="background:#d4d0c8; border:2px solid transparent; padding:1px 6px; font-size:10px; cursor:pointer; font-family:Tahoma,Arial,sans-serif;" onmouseenter="this.style.borderColor='#fff #808080 #808080 #fff'" onmouseleave="this.style.borderColor='transparent'">Kichik Ikonkalar</button>
+              <button style="background:#d4d0c8; border:2px solid; border-color:#808080 #fff #fff #808080; padding:1px 6px; font-size:10px; font-family:Tahoma,Arial,sans-serif; cursor:pointer;" disabled>Ro'yxat</button>
+              <button style="background:#d4d0c8; border:2px solid transparent; padding:1px 6px; font-size:10px; cursor:pointer; font-family:Tahoma,Arial,sans-serif;" onmouseenter="this.style.borderColor='#fff #808080 #808080 #fff'" onmouseleave="this.style.borderColor='transparent'">Batafsil</button>
+            </div>
+            <div class="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 p-2" style="background:#ffffff;">
+
+              <a href="src/Sonli-Usullar/Iteratsiya-Usuli.html" class="module-card">
+                <div class="badge">01 / USUL</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">🔄</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Iteratsiya Usuli</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ochish</div>
+              </a>
+
+              <a href="src/Sonli-Usullar/Vatar-Usuli.html" class="module-card">
+                <div class="badge">02 / USUL</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">📏</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Vatar Usuli</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Funksiya grafigidagi ikki nuqtadan o'tuvchi vatar orqali ildizni yaqinlashtirish.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ochish</div>
+              </a>
+
+              <a href="src/Sonli-Usullar/Urinma-Usuli.html" class="module-card">
+                <div class="badge">03 / USUL</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">📐</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Urinma Usuli</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ochish</div>
+              </a>
+
+              <a href="src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="module-card">
+                <div class="badge">04 / USUL</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">✂️</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Kesmani Ikkiga Bo'lish</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Ildiz joylashgan oraliqni har safar teng ikkiga bo'lish orqali aniqlikni oshirish.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ochish</div>
+              </a>
+
+              <a href="src/Sonli-Usullar/Gauss-Seydel-usuli.html" class="module-card">
+                <div class="badge">05 / USUL</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">🧮</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Gauss-Seydel Usuli</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Chiziqli tenglamalar sistemasini (SLAU) iterativ yechish usuli.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ochish</div>
+              </a>
+
+              <a href="src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" class="module-card">
+                <div class="badge">GRAFIK</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">📈</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Funksiya Kesishish</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Grafik usulda kesishish nuqtalarini aniqlash. Zoom &amp; Pan qo'llab-quvvatlash.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ochish</div>
+              </a>
+
+              <a href="src/Sonli-Usullar/Nazariya.html" class="module-card">
+                <div class="badge">NAZARIYA</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">📋</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Nazariya</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Sonli usullar faniga oid nazariy materiallar.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ko'rish</div>
+              </a>
+
+              <a href="src/about.html" class="module-card">
+                <div class="badge">HAQIDA</div>
+                <div style="font-size:22px; margin-bottom:4px;" aria-hidden="true">ℹ️</div>
+                <h4 style="font-size:11px; font-weight:bold; margin:0 0 3px 0; color:#000;">Website Haqida</h4>
+                <p style="font-size:10px; color:#808080; margin:0 0 5px 0; line-height:1.4;">Loyiha haqida batafsil ma'lumot, texnologiyalar va muallif.</p>
+                <div style="font-size:10px; color:#000080; text-decoration:underline;">Ochish</div>
+              </a>
+
+            </div>
+            <!-- Explorer status bar inside panel -->
+            <div style="background:#d4d0c8; border-top:1px solid #808080; padding:1px 8px; font-size:10px; color:#000; display:flex; gap:8px;">
+              <span>8 ob'ekt</span>
+              <span style="border-left:1px solid #808080; padding-left:8px;">Umumiy hajm: N/A</span>
+            </div>
+          </div>
+
+          <!-- ── TECH STACK (Properties dialog style) ── -->
+          <div class="win-section mb-2">
+            <div class="win-panel-titlebar">
+              <div class="win-panel-titlebar-title">
+                <span>🔧</span> Xususiyatlar — Texnologiyalar
+              </div>
+              <div aria-hidden="true">
+                <span class="win-panel-ctrl">&#8211;</span>
+              </div>
+            </div>
+            <div style="padding: 8px; background: #d4d0c8;">
+              <div class="flex flex-wrap gap-1">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">KaTeX</span>
+                <span class="tech-tag">Math.js</span>
+                <span class="tech-tag">Canvas API</span>
+                <span class="tech-tag">Tahoma Font</span>
+                <span class="tech-tag">JetBrains Mono</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FOOTER ── -->
+          <div style="text-align:center; padding: 6px 0 4px; font-size:10px; color:#808080;">
+            &copy; 2026 Qarshi Davlat Universiteti talabasi | Haydarov Jasurbek
+          </div>
+
+        </div><!-- /page-content-area -->
+
+      </div><!-- /browser-content -->
+
+      <!-- IE Status Bar -->
+      <div id="ie-statusbar" role="status" aria-live="polite">
+        <div class="ie-status-panel ie-status-main" id="ie-status-text">Tayyor</div>
+        <div class="ie-status-panel">sonli-usullar.uz</div>
+        <div class="ie-status-panel">Internet</div>
       </div>
-    </div>
 
-    <!-- Module cards -->
-    <h2 class="text-xl font-black mb-6 tracking-wider" style="font-family:'Orbitron',sans-serif">
-      📦 MODULLAR
-    </h2>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-
-      <a href="src/Sonli-Usullar/Iteratsiya-Usuli.html" class="module-card">
-        <div class="badge">01 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Vatar-Usuli.html" class="module-card">
-        <div class="badge">02 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">VATAR USULI</h4>
-        <p class="text-sm text-gray-600">Funksiya grafigidagi ikki nuqtadan o'tuvchi vatar orqali ildizni
-          yaqinlashtirish (Secant Method).</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Urinma-Usuli.html" class="module-card">
-        <div class="badge">03 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">URINMA USULI</h4>
-        <p class="text-sm text-gray-600">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="module-card">
-        <div class="badge">04 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">KESMANI TENG IKKIGA BO'LISH</h4>
-        <p class="text-sm text-gray-600">Ildiz joylashgan oraliqni har safar teng ikkiga bo'lish orqali aniqlikni
-          oshirish.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Gauss-Seydel-usuli.html" class="module-card">
-        <div class="badge">05 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">GAUSS-SEYDEL USULI</h4>
-        <p class="text-sm text-gray-600">Chiziqli tenglamalar sistemasini (SLAU) iterativ yechish usuli.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" class="module-card">
-        <div class="badge">01 / ANIQLIK</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">FUNKSIYA KESISHISH NUQTA</h4>
-        <p class="text-sm text-gray-600">Grafik usulda kesishish nuqtalarini aniqlash. Zoom & Pan qo'llab-quvvatlash.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Nazariya.html" class="module-card">
-        <div class="badge">05 / NAZARIYA</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">NAZARIYA</h4>
-        <p class="text-sm text-gray-600">Sonli usullar faniga oid nazariy materiallar.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">KO'RISH →</div>
-      </a>
-
-      <a href="src/about.html" class="module-card">
-        <div class="badge">ℹ️ / HAQIDA</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">WEBSITE HAQIDA</h4>
-        <p class="text-sm text-gray-600">Loyiha haqida batafsil ma'lumot, texnologiyalar va muallif.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-    </div>
-
-    <!-- Tech stack -->
-    <div class="p-5 cyber-card mb-12">
-      <h3 class="font-black mb-3 text-sm tracking-wider" style="font-family:'Orbitron',sans-serif">🔧 TEXNOLOGIYALAR
-      </h3>
-      <div class="flex flex-wrap gap-2">
-        <span class="px-3 py-1 text-xs font-bold bg-black text-white border border-black">HTML5</span>
-        <span class="px-3 py-1 text-xs font-bold bg-cyan-100 text-black border border-black">CSS3</span>
-        <span class="px-3 py-1 text-xs font-bold bg-yellow-100 text-black border border-black">JavaScript</span>
-        <span class="px-3 py-1 text-xs font-bold bg-blue-100 text-black border border-black">Tailwind CSS</span>
-        <span class="px-3 py-1 text-xs font-bold bg-purple-100 text-black border border-black">KaTeX</span>
-        <span class="px-3 py-1 text-xs font-bold bg-green-100 text-black border border-black">Math.js</span>
-        <span class="px-3 py-1 text-xs font-bold bg-orange-100 text-black border border-black">Canvas API</span>
-        <span class="px-3 py-1 text-xs font-bold" style="background:#00f2ff; border:1px solid #000">Orbitron Font</span>
-        <span class="px-3 py-1 text-xs font-bold"
-          style="background:#ff00ea; color:white; border:1px solid #000">JetBrains Mono</span>
-      </div>
-    </div>
-
-    <footer class="mt-4 text-center">
-      <div class="inline-block px-10 pt-4 border-t-2 border-black">
-        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-          © 2026 Qarshi Davlat Universiteti talabasi | Haydarov Jasurbek
-        </p>
-      </div>
-    </footer>
+    </div><!-- /win-browser-chrome -->
 
   </div><!-- /main-content -->
-  <!-- Native enhancements: loader, offline, back-btn, share FAB -->
+
+  <!-- Native enhancements -->
   <script src="src/assets/js/capacitor-app.js"></script>
+
+  <!-- Clock + status bar update -->
+  <script>
+    function updateClock() {
+      const el = document.getElementById('win-clock');
+      if (!el) return;
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      el.textContent = h + ':' + m;
+    }
+    updateClock();
+    setInterval(updateClock, 10000);
+
+    // Simulate IE "Done" status
+    window.addEventListener('load', function () {
+      const status = document.getElementById('ie-status-text');
+      if (status) status.textContent = 'Tayyor';
+    });
+  </script>
 
   <!-- PWA Service Worker Registration -->
   <script>
