@@ -18,8 +18,8 @@
 
   const elements = [
     // 1. Favicons
-    { tag: 'link', rel: 'icon', href: base + 'src/assets/images/logo-dark.png', media: '(prefers-color-scheme: light)' },
-    { tag: 'link', rel: 'icon', href: base + 'src/assets/images/logo-light.png', media: '(prefers-color-scheme: dark)' },
+    { tag: 'link', rel: 'icon', href: base + 'src/assets/images/logo-glass.png', media: '(prefers-color-scheme: light)' },
+    { tag: 'link', rel: 'icon', href: base + 'src/assets/images/logo-glass.png', media: '(prefers-color-scheme: dark)' },
 
     // 2. Shared Stylesheets
     { tag: 'link', rel: 'stylesheet', href: base + 'src/assets/css/sidebar.css' },

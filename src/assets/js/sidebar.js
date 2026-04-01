@@ -1,15 +1,18 @@
 /**
- * sidebar.js — math.yolnoma.uz uchun umumiy sidebar komponenti
+ * sidebar.js — sonli-usullar.uz uchun umumiy sidebar komponenti
  * DRY tamoyiliga amal qilgan holda barcha sahifalar uchun bitta sidebar
  *
  * Foydalanish:
- *   <script src="/src/assets/js/sidebar.js"></script>
- *   yoki nisbiy yo'l bilan:
- *   <script src="../../assets/js/sidebar.js"></script>
+      <!-- Sidebar -->
+      <script>
+        window.SIDEBAR_BASE = '../../'; // sonli-usullar papkasiga nisbatan yo'l
+        window.SIDEBAR_ACTIVE = 'funksiya'; // sahifa id'si
+      </script>
+      <script src="../assets/js/sidebar.js"></script> <!-- sidebar.js faylini yuklash -->
  *
  * Konfiguratsiya (ixtiyoriy, skriptdan oldin o'rnating):
- *   window.SIDEBAR_BASE = '../../'; // fayl joylashuviga qarab
- *   window.SIDEBAR_ACTIVE = 'iteratsiya'; // aktiv bo'lim nomi
+ *   window.SIDEBAR_BASE = '../../'; // sonli-usullar papkasiga nisbatan yo'l
+ *   window.SIDEBAR_ACTIVE = 'iteratsiya'; // aktiv bo'lim id'si
  */
 
 (function () {
@@ -17,8 +20,6 @@
 
   // ── Yo'llarni aniqlash ──────────────────────────────────────────────
   const base = window.SIDEBAR_BASE ?? '/';
-  const scr = window.SIDEBAR_BASE ?? '/src';
-  const srcSU = window.SIDEBAR_BASE ?? '/src/Sonli-Usullar'
 
   // Sidebar menyusidagi sahifalar
   const MENU_ITEMS = [
@@ -84,9 +85,15 @@
     },
     {
       id: 'nazariya',
-      label: 'NAZARIYA (PROMPT)',
+      label: '(demo) NAZARIYA (PROMPT)',
       icon: '📋',
       href: base + 'src/Sonli-Usullar/Nazariya.html',
+    },
+    {
+      id: 'privacy',
+      label: 'MAXFIYLIK SIOYOSATI',
+      icon: '📋',
+      href: base + 'src/privacy.html',
     },
   ];
 
@@ -98,9 +105,9 @@
     if (path.includes('Iteratsiya')) return 'iteratsiya';
     if (path.includes('Urinma') || path.includes('Newton') || path.includes('newton')) return 'newton';
     if (path.includes('Vatar') || path.includes('Secant') || path.includes('vatar')) return 'vatar';
-    if (path.includes('KesmaniTeng') || path.includes('kesmani') || path.includes('Bisect')) return 'kesma';
+    if (path.includes('KesmaniTeng') || path.includes('kesman') || path.includes('Bisect')) return 'kesma';
     if (path.includes('FunksiyaKesish') || path.includes('funksiya') || path.includes('Graph')) return 'funksiya';
-    if (path.includes('Gauss') || path.includes('gauss') || path.includes('Zeydel')) return 'gauss';
+    if (path.includes('Zeydel') || path.includes('zeydel') || path.includes('Zeydel')) return 'zeydel';
     if (path.includes('Nazariya') || path.includes('nazariya') || path.includes('Prompt')) return 'nazariya';
     if (path.includes('about')) return 'about';
     return '';
@@ -121,7 +128,14 @@
     const sidebarHTML = `
       <div class="sidebar" id="sidebar" role="navigation" aria-label="Asosiy menyu">
         <div class="sidebar-header">
+        <div class="flex items-center">
+          <a href="/" class="sidebar-logo">
+            <img src="/src/assets/images/logo-glass.png" alt="Logo" class="sidebar-logo-img" width="50" height="50">
+          </a>
+          <a href="/">
           <div class="sidebar-logo">SONLI USULLAR</div>
+          </a>
+          </div>
           <div class="sidebar-subtitle">QarDU · Amaliy Matematika · 2026</div>
         </div>
         <div class="sidebar-section-label">Navigatsiya</div>
