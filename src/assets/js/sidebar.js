@@ -72,7 +72,7 @@
     },
     {
       id: 'zeydel',
-      label: '(jarayonda)ZEYDEL USULI',
+      label: 'ZEYDEL USULI N',
       icon: '🧮',
       href: base + 'src/Sonli-Usullar/Zeydel-usuli.html',
     },

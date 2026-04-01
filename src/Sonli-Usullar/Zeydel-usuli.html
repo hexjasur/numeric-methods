@@ -93,285 +93,304 @@
   <script src="../assets/js/sidebar.js"></script>
 
   <div class="main-content" id="main-content">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-6xl mx-auto">
 
-      <header class="p-8 mb-10 text-center cyber-header">
+      <header class="p-8 mb-10 text-center cyber-header bg-white border-b-4 border-black">
         <h1 class="text-3xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">
-          ZEYDEL <span style="color:#0891b2">USULI</span>
+          ZEYDEL <span style="color:#0891b2">USULI</span> <span class="text-xs align-top">v3.1</span>
         </h1>
-        <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">
+        <!-- <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">
           QarDU | Amaliy Matematika | Haydarov Jasurbek
-        </p>
+        </p> -->
       </header>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="md:col-span-1">
-          <h3 class="font-black mb-3 uppercase text-xs text-gray-500">Misollar tanlash</h3>
-          <div class="space-y-3">
-            <button onclick="loadExample(1)" class="w-full text-left p-3 cyber-card hover:bg-cyan-50 text-sm font-bold">
-              1-Misol (Rasmda): <br>
-              <span class="text-[10px] text-gray-500">sin(y)+2x=2, cos(x-1)+y=0.5</span>
-            </button>
-            <button onclick="loadExample(2)" class="w-full text-left p-3 cyber-card hover:bg-cyan-50 text-sm font-bold">
-              2-Misol (Matnda): <br>
-              <span class="text-[10px] text-gray-500">sin(y)+2x=2, cos(x-1)+y=0</span>
-            </button>
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+        <div class="lg:col-span-1 space-y-4">
+          <div class="cyber-card p-4 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <h3 class="font-black mb-3 uppercase text-xs text-gray-500">Sistema o'lchami</h3>
+            <div class="flex items-center justify-between bg-black p-2 rounded">
+              <button onclick="changeSize(-1)"
+                class="text-cyan-400 font-bold px-3 hover:bg-cyan-900 transition-colors">-</button>
+              <span id="n-display" class="text-white font-mono font-bold text-lg">3</span>
+              <button onclick="changeSize(1)"
+                class="text-cyan-400 font-bold px-3 hover:bg-cyan-900 transition-colors">+</button>
+            </div>
+            <p class="text-[9px] text-gray-400 mt-2 uppercase text-center tracking-widest font-bold">Limit: 2 - 10</p>
+          </div>
+
+          <div class="cyber-card p-4 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <h3 class="font-black mb-3 uppercase text-xs text-gray-500">Parametrlar</h3>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-[10px] font-bold text-cyan-600 uppercase">Aniqlik (ε)</label>
+                <input type="number" id="eps" value="0.001" step="0.0001"
+                  class="w-full bg-gray-50 border-2 border-black p-2 font-mono text-sm outline-none focus:border-cyan-500">
+              </div>
+              <button onclick="solveZeydel()"
+                class="w-full cursor-pointer bg-black text-cyan-400 py-3 text-xs font-black uppercase tracking-widest hover:bg-cyan-500 hover:text-black transition-all">
+                Hisoblash
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="md:col-span-2 cyber-card p-6">
+        <div
+          class="lg:col-span-3 cyber-card p-6 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-x-auto">
           <h3 class="font-black mb-4 border-b-2 border-black pb-2 uppercase text-sm"
             style="font-family:'Orbitron',sans-serif">
-            📥 Parametrlar va Tenglama
+            📥 Noma'lumlarni kiriting (Ax = B)
           </h3>
-          <div class="mb-6 space-y-4">
-            <div>
-              <label class="block text-[10px] font-bold text-cyan-600 mb-1 uppercase tracking-widest">1-tenglama: f₁(x,
-                y)
-                = 0</label>
-              <input type="text" id="func1" value="sin(y) + 2*x - 2"
-                class="w-full bg-black text-cyan-400 p-3 font-mono border-2 border-black outline-none focus:border-cyan-500"
-                placeholder="Masalan: sin(y) + 2*x - 2">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-cyan-600 mb-1 uppercase tracking-widest">2-tenglama: f₂(x,
-                y)
-                = 0</label>
-              <input type="text" id="func2" value="cos(x - 1) + y - 0.5"
-                class="w-full bg-black text-cyan-400 p-3 font-mono border-2 border-black outline-none focus:border-cyan-500"
-                placeholder="Masalan: cos(x - 1) + y - 0.5">
-            </div>
+          <div id="matrix-container" class="min-w-max">
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-            <div>
-              <label class="block text-[10px] font-bold text-gray-400 mb-1">x₀</label>
-              <input type="number" id="x0" value="1" step="0.1"
-                class="w-full border-2 border-black px-2 py-1 outline-none focus:border-cyan-500 font-mono">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-gray-400 mb-1">y₀</label>
-              <input type="number" id="y0" value="-0.3" step="0.1"
-                class="w-full border-2 border-black px-2 py-1 outline-none focus:border-cyan-500 font-mono">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-gray-400 mb-1">EPS (ε)</label>
-              <input type="number" id="eps" value="0.01" step="0.001"
-                class="w-full border-2 border-black px-2 py-1 outline-none focus:border-cyan-500 font-mono">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-gray-400 mb-1">M₁</label>
-              <input type="number" id="m1" value="2"
-                class="w-full border-2 border-black px-2 py-1 outline-none focus:border-cyan-500 font-mono">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-gray-400 mb-1">M₂</label>
-              <input type="number" id="m2" value="3"
-                class="w-full border-2 border-black px-2 py-1 outline-none focus:border-cyan-500 font-mono">
-            </div>
-          </div>
-          <button onclick="solve()" class="cyber-button px-12 py-3 text-sm font-black w-full uppercase">
-            Hisoblashni boshlash
-          </button>
         </div>
       </div>
 
       <div id="solutionWrapper" class="hidden space-y-8">
 
-        <div class="cyber-card p-6">
-          <h3 class="font-black mb-4 border-b-2 border-black pb-2 text-sm uppercase">1. Yaqinlashish sharti va Formulasi
-          </h3>
-
-          <div id="derivativesContainer" class="mb-4"></div>
+        <div class="cyber-card p-6 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <h3 class="font-black mb-4 border-b-2 border-black pb-2 text-sm uppercase">1. Iteratsiya formulalari</h3>
+          <div id="formulaContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-sm"></div>
         </div>
 
-        <div class="cyber-card p-6">
-          <h3 class="font-black mb-4 border-b-2 border-black pb-2 text-sm uppercase">2. Batafsil Iteratsiyalar</h3>
-          <div id="stepsContainer"></div>
+        <div class="cyber-card p-6 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <h3 class="font-black mb-4 border-b-2 border-black pb-2 text-sm uppercase">2. Batafsil hisob-kitob</h3>
+          <div id="stepsContainer" class="space-y-4"></div>
         </div>
 
-        <div class="cyber-card p-6">
+        <div class="cyber-card p-6 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
           <h3 class="font-black mb-4 border-b-2 border-black pb-2 text-sm uppercase">3. Natijalar Jadvali</h3>
           <div class="overflow-x-auto">
             <table class="w-full text-left">
-              <thead class="bg-gray-50 border-b text-gray-400 text-[10px] font-black uppercase">
-                <tr>
+              <thead class="bg-black text-white text-[10px] font-black uppercase">
+                <tr id="tableHead">
                   <th class="px-4 py-3">№</th>
-                  <th class="px-4 py-3">x<sub>n</sub></th>
-                  <th class="px-4 py-3">y<sub>n</sub></th>
-                  <th class="px-4 py-3">|x<sub>n</sub> - x<sub>n-1</sub>|</th>
-                  <th class="px-4 py-3">Holat</th>
                 </tr>
               </thead>
-              <tbody id="tableBody" class="font-mono text-sm"></tbody>
+              <tbody id="tableBody" class="font-mono text-sm border-x border-b"></tbody>
             </table>
           </div>
-          <div id="finalNote"
-            class="mt-6 p-4 bg-green-50 border-2 border-green-400 text-green-800 text-center font-black rounded"></div>
+        </div>
+
+        <div id="finalVerification"
+          class="cyber-card p-6 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <h3 class="font-black mb-4 border-b-2 border-black pb-2 text-sm uppercase">4. Shart tekshiruv ( $|x^{(n)} -
+            x^{(n-1)}| < \epsilon$ )</h3>
+              <div id="verificationContent" class="space-y-2"></div>
         </div>
 
       </div>
 
-      <footer class="mt-12 text-center pb-8">
-        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-          © 2026 QarDU Amaliy Matematika | Dasturchi: Haydarov Jasurbek
+      <footer class="mt-12 text-center pb-8 opacity-50">
+        <p class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+          © 2026 QarDU Amaliy Matematika | Haydarov Jasurbek
         </p>
       </footer>
     </div>
   </div>
 
-  <script>
-    let currentConst = 0.5;
+  <style>
+    /* Matritsa qatorlari uchun konteyner */
+    .matrix-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 12px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dashed #ddd;
+    }
 
-    function loadExample(id) {
-      if (id === 1) {
-        document.getElementById('equationDisplay').innerHTML = "{ sin(y) + 2x = 2 <br> { cos(x-1) + y = 0.5";
-        document.getElementById('y0').value = "-0.3";
-        document.getElementById('m2').value = "3";
-        currentConst = 0.5;
-      } else {
-        document.getElementById('equationDisplay').innerHTML = "{ sin(y) + 2x = 2 <br> { cos(x-1) + y = 0";
-        document.getElementById('y0').value = "-0.3";
-        document.getElementById('m2').value = "1";
-        currentConst = 0;
-      }
+    /* Har bir x_i bloki */
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .matrix-input {
+      width: 60px;
+      text-align: center;
+      border: 2px solid #000;
+      padding: 4px;
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .equal-sign {
+      font-weight: 900;
+      color: #0891b2;
+      padding: 0 10px;
+    }
+
+    .b-column {
+      background-color: #f8fafc;
+      border-left: 2px solid #000;
+      padding-left: 10px;
+    }
+  </style>
+
+  <script>
+    let N = 3;
+
+    window.onload = () => buildMatrix();
+
+    function changeSize(delta) {
+      N = Math.max(2, Math.min(10, N + delta));
+      document.getElementById('n-display').innerText = N;
+      buildMatrix();
       document.getElementById('solutionWrapper').classList.add('hidden');
     }
 
-    function solve() {
-      const x0 = parseFloat(document.getElementById('x0').value);
-      const y0 = parseFloat(document.getElementById('y0').value);
-      const eps = parseFloat(document.getElementById('eps').value);
-      const m1 = parseFloat(document.getElementById('m1').value);
-      const m2 = parseFloat(document.getElementById('m2').value);
+    function buildMatrix() {
+      const container = document.getElementById('matrix-container');
+      container.innerHTML = ''; // Tozalash
 
-      const f1_str = document.getElementById('func1').value;
-      const f2_str = document.getElementById('func2').value;
+      // Daftardagi misol qiymatlari
+      const defaultA = [[5, 1, 1], [1, 4, 1], [1, 1, 8]];
+      const defaultB = [-7, -6, -10];
 
-      const stepsContainer = document.getElementById('stepsContainer');
-      const tbody = document.getElementById('tableBody');
-      const wrapper = document.getElementById('solutionWrapper');
+      for (let i = 0; i < N; i++) {
+        const row = document.createElement('div');
+        row.className = 'matrix-row';
 
-      // Hosila hisblash
-      try {
-        const df1_dx = math.derivative(f1_str, 'x').toTex();
-        const df1_dy = math.derivative(f1_str, 'y').toTex();
-        const df2_dx = math.derivative(f2_str, 'x').toTex();
-        const df2_dy = math.derivative(f2_str, 'y').toTex();
-
-        const derivativesContainer = document.getElementById('derivativesContainer');
-        derivativesContainer.innerHTML = `
-            <div class="bg-blue-50 p-4 rounded border border-blue-200 mb-4">
-              <h4 class="font-bold text-blue-800 mb-3 text-xs uppercase tracking-widest">Xususiy hosilalar:</h4>
-              <div class="grid grid-cols-2 gap-4 font-mono text-sm">
-                  <div>$f'_{1x} = ${df1_dx}$</div>
-                  <div>$f'_{1y} = ${df1_dy}$</div>
-                  <div>$f'_{2x} = ${df2_dx}$</div>
-                  <div>$f'_{2y} = ${df2_dy}$</div>
-              </div>
-            </div>
-          `;
-
-        // Hosilalarni KaTeX orqali render qilish
-        renderMathInElement(derivativesContainer, {
-          delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "$$", right: "$$", display: true }
-          ],
-          throwOnError: false
-        });
-      } catch (err) {
-        console.log("Hosila olishda xatolik:", err);
-      }
-      // =======================================
-
-      stepsContainer.innerHTML = '';
-      tbody.innerHTML = '';
-      wrapper.classList.remove('hidden');
-
-      let x = x0;
-      let y = y0;
-      let iteration = 0;
-      let diff = 100;
-
-      try {
-        while (diff > eps && iteration < 20) {
-          iteration++;
-          let xOld = x;
-          let yOld = y;
-
-          let f1_val = math.evaluate(f1_str, { x: xOld, y: yOld });
-          let xNew = xOld - (f1_val / m1);
-          let f2_val = math.evaluate(f2_str, { x: xNew, y: yOld });
-          let yNew = yOld - (f2_val / m2);
-
-          // Ikkala ayirmani tekshiramiz
-          let diffX = Math.abs(xNew - xOld);
-          let diffY = Math.abs(yNew - yOld);
-          diff = Math.max(diffX, diffY); // Eng kattasini olamiz
-
-          const stepDiv = document.createElement('div');
-          stepDiv.className = 'step-box';
-          stepDiv.innerHTML = `
-            <h4 class="font-black text-cyan-600 mb-2">${iteration}-yaqinlashish:</h4>
-            <div class="math-font text-sm space-y-4">
-                <div>
-                    $x_{${iteration}} = ${xOld.toFixed(6)} - \\frac{f_1(${xOld.toFixed(6)}, ${yOld.toFixed(6)})}{${m1}}$ <br>
-                    $x_{${iteration}} = ${xNew.toFixed(6)}$
-                </div>
-                <div>
-                    $y_{${iteration}} = ${yOld.toFixed(6)} - \\frac{f_2(${xNew.toFixed(6)}, ${yOld.toFixed(6)})}{${m2}}$ <br>
-                    $y_{${iteration}} = ${yNew.toFixed(6)}$
-                </div>
-                <p class="text-gray-400 text-[10px] border-t pt-1">
-                    Farq: $\\Delta x = ${diffX.toFixed(6)}, \\Delta y = ${diffY.toFixed(6)}$ <br>
-                    <b>Max $\\Delta$: ${diff.toFixed(6)}</b>
-                </p>
-            </div>
-        `;
-          stepsContainer.appendChild(stepDiv);
-
-          const row = `
-                <tr class="border-b border-gray-100 ${diff <= eps ? 'bg-green-50' : ''}">
-                    <td class="px-4 py-3 text-gray-400">${iteration}</td>
-                    <td class="px-4 py-3">${xNew.toFixed(6)}</td>
-                    <td class="px-4 py-3">${yNew.toFixed(6)}</td>
-                    <td class="px-4 py-3 font-bold text-cyan-600">${diff.toFixed(6)}</td>
-                    <td class="px-4 py-3">${diff <= eps ? '✅ TAMOM' : '...'}</td>
-                </tr>
-            `;
-          tbody.insertAdjacentHTML('beforeend', row);
-
-          x = xNew;
-          y = yNew;
+        let rowHtml = '';
+        // A koeffitsiyentlari (x1, x2, x3...)
+        for (let j = 0; j < N; j++) {
+          let val = (N === 3) ? defaultA[i][j] : (i === j ? 10 : 1);
+          rowHtml += `
+        <div class="input-group">
+          <input type="number" id="a-${i}-${j}" value="${val}" class="matrix-input">
+          <span class="text-xs font-black">x<sub>${j + 1}</sub></span>
+          ${j < N - 1 ? '<span class="text-gray-400 font-bold">+</span>' : ''}
+        </div>`;
         }
-        document.getElementById('finalNote').innerText = `Natija: x ≈ ${x.toFixed(6)}, y ≈ ${y.toFixed(6)} (${iteration} qadam)`;
 
-        // MUHIM: KaTeX-ni aynan mana shu yerda chaqiramiz
-        renderMathInElement(stepsContainer, {
-          delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "$$", right: "$$", display: true }
-          ],
-          throwOnError: false
-        });
+        // Tenglik va B ustuni
+        let bVal = (N === 3) ? defaultB[i] : 20;
+        rowHtml += `
+      <div class="input-group b-column">
+        <span class="equal-sign">=</span>
+        <input type="number" id="b-${i}" value="${bVal}" class="matrix-input bg-cyan-50">
+      </div>`;
 
-      } catch (error) {
-        alert("Xatolik! Formulani tekshiring.");
-        console.error(error);
+        row.innerHTML = rowHtml;
+        container.appendChild(row);
       }
-      window.scrollTo({ top: wrapper.offsetTop - 20, behavior: 'smooth' });
     }
 
-    // Sahifa birinchi marta ochilganda hamma statik formulalarni render qilish
-    document.addEventListener("DOMContentLoaded", function () {
-      renderMathInElement(document.body, {
+    function solveZeydel() {
+      const eps = parseFloat(document.getElementById('eps').value);
+      const wrapper = document.getElementById('solutionWrapper');
+      const formulaContainer = document.getElementById('formulaContainer');
+      const stepsContainer = document.getElementById('stepsContainer');
+      const tbody = document.getElementById('tableBody');
+      const thead = document.getElementById('tableHead');
+      const verificationContent = document.getElementById('verificationContent');
+
+      let A = [], B = [];
+      for (let i = 0; i < N; i++) {
+        A[i] = [];
+        for (let j = 0; j < N; j++) A[i][j] = parseFloat(document.getElementById(`a-${i}-${j}`).value);
+        B[i] = parseFloat(document.getElementById(`b-${i}`).value);
+      }
+
+      // Jadval sarlavhasi
+      let headHtml = `<th class="px-4 py-3">№</th>`;
+      for (let i = 1; i <= N; i++) headHtml += `<th class="px-4 py-3 text-cyan-600">x<sub>${i}</sub></th>`;
+      headHtml += `<th class="px-4 py-3">Max Δ</th>`;
+      thead.innerHTML = headHtml;
+
+      // 1. Formulalar
+      let formulaHtml = "";
+      for (let i = 0; i < N; i++) {
+        let others = [];
+        for (let j = 0; j < N; j++) {
+          if (i !== j) {
+            let sign = A[i][j] >= 0 ? '-' : '+';
+            others.push(`${sign} (${Math.abs(A[i][j])}x_{${j + 1}})`);
+          }
+        }
+        formulaHtml += `<div class="p-2 border rounded">$x_{${i + 1}} = \\frac{1}{${A[i][i]}} [ ${B[i]} ${others.join(' ')} ]$</div>`;
+      }
+      formulaContainer.innerHTML = formulaHtml;
+
+      // 2. Iteratsiyalar
+      stepsContainer.innerHTML = '';
+      tbody.innerHTML = '';
+      verificationContent.innerHTML = '';
+      wrapper.classList.remove('hidden');
+
+      let X = new Array(N).fill(0);
+      let iteration = 0;
+      let maxDiff = 1;
+      let lastDifferences = [];
+
+      while (maxDiff > eps && iteration < 40) {
+        iteration++;
+        let X_old = [...X];
+        let stepDiv = document.createElement('div');
+        stepDiv.className = 'step-box';
+        let stepHtml = `<h4 class="font-black text-black mb-3">Qadam №${iteration}</h4><div class="space-y-2">`;
+
+        lastDifferences = [];
+
+        for (let i = 0; i < N; i++) {
+          let sum = 0;
+          let calcPath = `${B[i]}`;
+          for (let j = 0; j < N; j++) {
+            if (i !== j) {
+              sum += A[i][j] * X[j];
+              let sign = A[i][j] >= 0 ? '-' : '+';
+              calcPath += ` ${sign} (${Math.abs(A[i][j])} \\cdot ${X[j].toFixed(4)})`;
+            }
+          }
+          X[i] = (B[i] - sum) / A[i][i];
+          stepHtml += `<div class="text-[12px]">$x_{${i + 1}}^{(${iteration})} = \\frac{1}{${A[i][i]}} [ ${calcPath} ] = ${X[i].toFixed(6)}$</div>`;
+        }
+
+        maxDiff = 0;
+        let rowHtml = `<tr class="border-b hover:bg-gray-50"><td class="px-4 py-2 font-bold">${iteration}</td>`;
+        for (let i = 0; i < N; i++) {
+          let diff = Math.abs(X[i] - X_old[i]);
+          lastDifferences.push(diff);
+          maxDiff = Math.max(maxDiff, diff);
+          rowHtml += `<td class="px-4 py-2">${X[i].toFixed(6)}</td>`;
+        }
+        rowHtml += `<td class="px-4 py-2 font-bold ${maxDiff <= eps ? 'text-green-600' : 'text-red-500'}">${maxDiff.toFixed(6)}</td></tr>`;
+
+        stepHtml += `</div>`;
+        stepDiv.innerHTML = stepHtml;
+        stepsContainer.appendChild(stepDiv);
+        tbody.insertAdjacentHTML('beforeend', rowHtml);
+      }
+
+      // 4. Oxirgi tekshiruv (Yashil rangda)
+      let verifHtml = "";
+      lastDifferences.forEach((d, idx) => {
+        let isOk = d <= eps;
+        // Formula qismini $ belgisi bilan o'raymiz
+        verifHtml += `
+    <div class="flex items-center gap-4 p-3 ${isOk ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded">
+      <span class="font-mono text-sm">$|x_{${idx + 1}}^{(${iteration})} - x_{${idx + 1}}^{(${iteration - 1})}| = ${d.toFixed(6)}$</span>
+      <span class="font-black ${isOk ? 'delta-success' : 'text-red-600'}"> 
+        ${isOk ? ' < ' : ' > '} ε (${eps}) ${isOk ? '✅ QANOATLANTIRADI' : '❌'}
+      </span>
+    </div>`;
+      });
+      verificationContent.innerHTML = verifHtml;
+
+      // KaTeX render
+      renderMathInElement(wrapper, {
         delimiters: [
           { left: "$$", right: "$$", display: true },
           { left: "$", right: "$", display: false }
         ],
         throwOnError: false
       });
-    });
+
+      window.scrollTo({ top: wrapper.offsetTop - 50, behavior: 'smooth' });
+    }
   </script>
 </body>
 
