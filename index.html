@@ -176,6 +176,22 @@
 </head>
 
 <body>
+
+  <!-- ═══════════════════════════════════════
+       SPLASH SCREEN (shown until page loads)
+       ═══════════════════════════════════════ -->
+  <div id="app-splash" role="status" aria-label="Yuklanmoqda">
+    <div class="splash-ring">
+      <img src="src/assets/images/logo-glass.png" alt="Sonli Usullar" class="splash-logo">
+    </div>
+    <div class="splash-title">SONLI USULLAR</div>
+    <div class="splash-subtitle">QarDU · Amaliy Matematika · 2026</div>
+  </div>
+
+  <!-- PAGE LOADER (every navigation) -->
+  <div id="app-loader" role="status" aria-label="Yuklanmoqda">
+    <div class="loader-ring"></div>
+  </div>
   <!-- Sidebar injected by sidebar.js -->
   <script>
     window.SIDEBAR_BASE = '';
@@ -377,6 +393,19 @@
     </footer>
 
   </div><!-- /main-content -->
+  <!-- Native enhancements: loader, offline, back-btn, share FAB -->
+  <script src="src/assets/js/capacitor-app.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./public/sw.js', { scope: './' })
+          .catch(err => console.warn('[SW] Registration failed:', err));
+      });
+    }
+  </script>
+
 </body>
 
 </html>

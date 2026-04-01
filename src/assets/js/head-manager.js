@@ -24,6 +24,7 @@
     // 2. Shared Stylesheets
     { tag: 'link', rel: 'stylesheet', href: base + 'src/assets/css/sidebar.css' },
     { tag: 'link', rel: 'stylesheet', href: base + 'src/assets/css/output.css' },
+    { tag: 'link', rel: 'stylesheet', href: base + 'src/assets/css/native.css' },
 
     // 3. Font Awesome
     { tag: 'link', rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/al l.min.css' },
