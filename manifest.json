@@ -1,0 +1,87 @@
+{
+  "name": "Sonli Usullar - Numerical Methods Calculator",
+  "short_name": "Sonli Usullar",
+  "description": "Interactive educational platform for learning numerical methods with step-by-step calculators, visualizations, and tutorials",
+  "start_url": "https://sonli-usullar.uz/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#1a1a2e",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "src/assets/images/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "src/assets/images/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "src/assets/images/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "src/assets/images/screenshot-540x720.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "src/assets/images/screenshot-1280x720.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": [
+    "education",
+    "productivity"
+  ],
+  "shortcuts": [
+    {
+      "name": "Newton's Method Calculator",
+      "short_name": "Newton's Method",
+      "description": "Solve equations using Newton's method with step-by-step visualization",
+      "url": "src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html",
+      "icons": [
+        {
+          "src": "src/assets/images/favicon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Bisection Method Solver",
+      "short_name": "Bisection Method",
+      "description": "Find roots using the bisection algorithm",
+      "url": "src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html",
+      "icons": [
+        {
+          "src": "src/assets/images/favicon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "prefer_related_applications": false,
+  "related_applications": []
+}

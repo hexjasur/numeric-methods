@@ -1,0 +1,465 @@
+<!-- 
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    OPTIMIZED HEAD SECTION - 2025 STANDARD                     ║
+║                  Replace entire <head> with this section                      ║
+│                                                                              │
+│  This head section includes:                                                 │
+│  ✓ Core SEO tags          ✓ Performance optimization                         │
+│  ✓ Structured data (JSON-LD)  ✓ Language variants (hreflang)                │
+│  ✓ Open Graph / Twitter   ✓ Mobile optimization                             │
+│  ✓ Core Web Vitals        ✓ Security & Accessibility                        │
+╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+
+<head>
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 1. CRITICAL META TAGS (MUST BE IN <head>, REQUIRED FOR ALL PAGES) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 2. SEARCH ENGINE OPTIMIZATION (CORE SEO) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Page Title: 60 chars max (Google shows 50-60 on desktop, 50 on mobile) -->
+  <!-- PRIMARY KEYWORD: "Sonli Usullar Calculator" + secondary keywords -->
+  <title>Sonli Usullar Calculator | Iteratsiya, Nyuton, Bisection Solver</title>
+
+  <!-- Meta Description: 155 characters max (Google shows 155-160 chars) -->
+  <!-- CTR-optimized with action words and value proposition -->
+  <meta name="description"
+    content="Free numerical methods solver with visual step-by-step calculations: Newton's method, bisection, secant, and iteration algorithms. Interactive education.">
+
+  <!-- Search Engines: Allow crawling, indexing, and rich previews -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- Theme color for browser UI -->
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="msapplication-TileColor" content="#1a1a2e">
+
+  <!-- Canonical: Prevent duplicate content penalties (use absolute URL) -->
+  <link rel="canonical" href="https://sonli-usullar.uz/">
+
+  <!-- Language variants (hreflang): Tell Google about language versions -->
+  <!-- Enables country-specific ranking and avoids duplicate content penalties -->
+  <link rel="alternate" hreflang="en" href="https://sonli-usullar.uz/">
+  <link rel="alternate" hreflang="uz" href="https://sonli-usullar.uz/uz/">
+  <link rel="alternate" hreflang="x-default" href="https://sonli-usullar.uz/">
+
+  <!-- Format detection: Mobile-friendly optimizations -->
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sonli Usullar">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 3. OPEN GRAPH (OG) TAGS - SOCIAL MEDIA OPTIMIZATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 
+    Why: 3-5x better CTR on social shares. Required for:
+    - Facebook, LinkedIn, WhatsApp previews
+    - Pinterest rich pins (massive traffic source)
+    - Telegram, Slack, Discord embeds
+  -->
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:title" content="Sonli Usullar — Numerical Methods Solver & Calculator">
+  <meta property="og:description"
+    content="Interactive educational platform for learning numerical methods. Newton's method, bisection, secant, and fixed-point iteration with step-by-step calculations and visualizations.">
+  <meta property="og:url" content="https://sonli-usullar.uz/">
+
+  <!-- OG Image: 1200x630px (Facebook/LinkedIn standard) -->
+  <!-- IMPORTANT: Create actual image file at: /src/assets/images/og-image-1200x630.jpg -->
+  <meta property="og:image" content="https://sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Sonli Usullar - Interactive Numerical Methods Calculator">
+  <meta property="og:image:type" content="image/jpeg">
+
+  <!-- Localized versions for international reach -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="uz_UZ">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 4. TWITTER CARD TAGS - TWITTER/X OPTIMIZATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 
+    Why: Improves CTR on X/Twitter by 5-10x
+    Types: 
+    - summary_large_image (recommended for educational content)
+    - summary
+    - app
+  -->
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@sonli_usullar">
+  <meta name="twitter:creator" content="@haydarov_jasurbek">
+  <meta name="twitter:title" content="Sonli Usullar — Numerical Methods Calculator">
+  <meta name="twitter:description"
+    content="Free interactive solver for numerical analysis. Learn Newton's method, bisection, and more with step-by-step solutions.">
+  <meta name="twitter:image" content="https://sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg">
+  <meta name="twitter:image:alt" content="Numerical Methods Calculator Interface">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 5. PERFORMANCE & CORE WEB VITALS OPTIMIZATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 
+    Why: #1 ranking factor in 2025
+    Metrics:
+    - LCP (Largest Contentful Paint): < 2.5s
+    - INP (Interaction to Next Paint): < 200ms  
+    - CLS (Cumulative Layout Shift): < 0.1
+  -->
+
+  <!-- Preconnect to external domains (reduces DNS lookup time) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://polyfill.io">
+
+  <!-- DNS prefetch for non-critical third-party services -->
+  <link rel="dns-prefetch" href="https://mc.yandex.ru">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+  <!-- Preload critical resources (fastest path to interactivity) -->
+  <link rel="preload" as="script" href="src/assets/js/head-manager.js">
+  <link rel="preload" as="style" href="src/assets/css/output.css">
+  <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap"
+    type="font/css">
+
+  <!-- Prefetch next likely pages (for internal navigation) -->
+  <link rel="prefetch" href="src/Sonli-Usullar/Iteratsiya-Usuli.html">
+  <link rel="prefetch" href="src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 6. STRUCTURED DATA - JSON-LD (SCHEMA.ORG) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 
+    Why: Enables rich snippets, rich results, and Google's knowledge panel
+    Results in:
+    - Bigger search result snippets
+    - Star ratings and reviews
+    - Special result types (FAQ, HowTo, etc.)
+    - 2-3x higher CTR
+  -->
+
+  <!-- 6A. ORGANIZATION SCHEMA -->
+  <!-- Tells Google about your website/organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Sonli Usullar",
+    "alternateName": "Numerical Methods Calculator",
+    "url": "https://sonli-usullar.uz",
+    "logo": "https://sonli-usullar.uz/src/assets/images/logo-192x192.png",
+    "description": "Interactive educational platform for learning numerical methods with interactive calculators",
+    "sameAs": [
+      "https://www.facebook.com/sonli-usullar",
+      "https://twitter.com/sonli_usullar",
+      "https://github.com/jas-kha/math.yolnoma"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+998-90-123-4567",
+      "contactType": "Customer Service",
+      "contactOption": "TollFree",
+      "areaServed": ["US", "UZ", "Global"]
+    }
+  }
+  </script>
+
+  <!-- 6B. EDUCATIONAL WEBSITE SCHEMA -->
+  <!-- Tells Google this is an educational resource -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalWebsite",
+    "name": "Sonli Usullar",
+    "url": "https://sonli-usullar.uz",
+    "description": "Interactive numerical methods learning platform with step-by-step calculators",
+    "inLanguage": ["en", "uz"],
+    "educationalLevel": "University",
+    "learningResourceType": [
+      "Interactive Educational Tool",
+      "Calculator",
+      "Tutorial"
+    ],
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": ["student", "teacher", "researcher"]
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Jasurbek Haydarov",
+      "affiliation": "Qarshi State University"
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "Sonli Usullar",
+      "url": "https://sonli-usullar.uz"
+    }
+  }
+  </script>
+
+  <!-- 6C. BREADCRUMB SCHEMA -->
+  <!-- Improves navigation in search results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://sonli-usullar.uz/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Methods",
+        "item": "https://sonli-usullar.uz/methods"
+      }
+    ]
+  }
+  </script>
+
+  <!-- 6D. WEBSITE SCHEMA (WITH SEARCH ACTION) -->
+  <!-- Enables sitelinks search box in Google search results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Sonli Usullar",
+    "url": "https://sonli-usullar.uz",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://sonli-usullar.uz/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 7. STYLESHEETS & FONTS -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Google Fonts (with display=swap for LCP optimization) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="src/assets/css/output.css">
+  <link rel="stylesheet" href="src/assets/css/sidebar.css">
+  <link rel="stylesheet" href="src/assets/css/native.css">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 8. ACCESSIBILITY & SEMANITC HTML -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Skip to main content link (accessibility) -->
+  <link rel="skip-to-main" href="#main-content">
+
+  <!-- Manifest for PWA (Progressive Web App) -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Favicon variants (for all devices) -->
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="src/assets/images/logo-192x192.png">
+  <link rel="apple-touch-icon" href="src/assets/images/apple-touch-icon-180x180.png">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 9. ANALYTICS & TRACKING -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Yandex.Metrika counter (for Uzbek/Russian audience analytics) -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+      m[i].l = 1 * new Date();
+      for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=108219942', 'ym');
+
+    ym(108219942, 'init', {
+      ssr: true,
+      webvisor: true,
+      clickmap: true,
+      trackLinks: true,
+      trackHash: true,
+      ecommerce: "dataLayer"
+    });
+  </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/108219942" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+
+  <!-- Google Analytics 4 (optional - add your property ID) -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX', { 'page_path': window.location.pathname });
+  </script> -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 10. SECURITY & PERFORMANCE HEADERS -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Referrer Policy: Protect user privacy, help with analytics -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Permission-Policy: Control browser features -->
+  <meta http-equiv="permissions-policy" content="accelerometer=(), camera=(), microphone=(), payment=()">
+
+  <!-- CSP (Content Security Policy): Prevent XSS attacks -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://polyfill.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mc.yandex.ru">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 11. SPLASH SCREEN & LOADING STATE (INLINED TO PREVENT FOUC) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <style>
+    /* Splash screen prevents Flash Of Unstyled Content (FOUC) */
+    #app-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #app-splash.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: splash-pulse 1.6s ease-in-out infinite;
+    }
+
+    .splash-title {
+      font-family: 'Orbitron', 'Segoe UI', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: #0f172a;
+    }
+
+    .splash-subtitle {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .splash-ring {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .splash-ring::before {
+      content: '';
+      position: absolute;
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #00f2ff;
+      border-right-color: #00f2ff;
+      animation: splash-spin 1.2s linear infinite;
+    }
+
+    @keyframes splash-pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    @keyframes splash-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- 12. HEAD MANAGER (Manages <head> for dynamic pages) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <script>
+    window.HEAD_BASE = '';
+    // This script loads after head section for dynamic page meta updates
+  </script>
+  <script src="src/assets/js/head-manager.js" defer></script>
+
+</head>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════ -->
+<!-- DOCUMENTATION -->
+<!-- ════════════════════════════════════════════════════════════════════════════════ -->
+<!--
+
+CRITICAL CHECKLIST - Before Publishing:
+
+✋ IMAGES TO CREATE:
+  [ ] og-image-1200x630.jpg (Facebook/LinkedIn preview)
+  [ ] og-image-1000x1500.jpg (Pinterest preview)
+  [ ] logo-192x192.png (app icon)
+  [ ] apple-touch-icon-180x180.png (iOS home screen)
+  [ ] favicon.svg (browser tab icon)
+
+📄 FILES TO CREATE IN ROOT DIRECTORY:
+  [ ] robots.txt (see robots.txt example below)
+  [ ] sitemap.xml (see sitemap.xml example below)
+  [ ] manifest.json (PWA manifest - optional but recommended)
+  [ ] .htaccess or nginx rewrite rules (for clean URLs)
+
+🔍 PER-PAGE UPDATES NEEDED:
+  [ ] Update <title> for each page (unique, 60 chars max)
+  [ ] Update <meta name="description"> (unique, 155 chars max)
+  [ ] Update <meta property="og:url"> for each page
+  [ ] Update <meta property="og:image"> if different per page
+  [ ] Update JSON-LD schemas for specific content types
+
+🧪 TESTING REQUIRED:
+  [ ] Google Rich Results Test: https://search.google.com/test/rich-results
+  [ ] Mobile-Friendly Test: https://search.google.com/test/mobile-friendly
+  [ ] PageSpeed Insights: https://pagespeed.web.dev/
+  [ ] Search Console: https://search.google.com/search-console/
+
+📊 AFTER DEPLOYMENT:
+  [ ] Submit sitemap to Google Search Console
+  [ ] Request indexing for homepage
+  [ ] Monitor crawl errors in GSC
+  [ ] Check Core Web Vitals in GSC
+  [ ] Set up Google Analytics
+
+-->

@@ -2,47 +2,61 @@
 <html lang="uz">
 
 <head>
+  <!-- 1. BASIC -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sonli Usullar — Iteratsiya, Nyuton, Bisection | O'zbek Matematika Platformasi</title>
+  <meta http-equiv="content-language" content="uz">
 
-  <!-- Primary SEO -->
+  <title>Sonli Usullar — Iteratsiya, Nyuton, Bisection</title>
+
+  <!-- 2. TITLE + DESCRIPTION (ENG MUHIM) -->
+  <title>Sonli usullar kalkulyatori | Iteratsiya, Nyuton, Bisection</title>
   <meta name="description"
-    content="Sonli usullarni interaktiv o'rganing: iteratsiya, Bisection, Nyuton usullari, formulalar, hisob-kitob va grafik vizualizatsiya bilan.">
-  <!-- Head Manager (DRY) -->
-  <script>
-    window.HEAD_BASE = '';
-  </script>
-  <script src="src/assets/js/head-manager.js"></script>
+    content="Sonli usullarni online hisoblang: Iteratsiya, Nyuton, Bisection va boshqa metodlar. Grafik, formulalar va misollar bilan bepul kalkulyator.">
 
+  <!-- 3. CANONICAL -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/">
 
-  <!-- Canonical -->
-  <link rel="canonical" href="https://www.sonli-usullar.uz/" />
+  <!-- 4. PRECONNECT (SPEED) -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 
-  <!-- Open Graph -->
+  <!-- 5. FAVICON -->
+  <link rel="icon" href="src/assets/images/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="src/assets/favicon.png">
+  <link rel="apple-touch-icon" href="src/assets/images/apple-touch-icon-180x180.png">
+
+  <!-- 6. OPEN GRAPH -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.sonli-usullar.uz/">
   <meta property="og:site_name" content="Sonli Usullar">
   <meta property="og:locale" content="uz_UZ">
   <meta property="og:title" content="Sonli Usullar — O'zbek Matematika Platformasi">
   <meta property="og:description"
-    content="Iteratsiya, Bisection, Nyuton, Vatar, Gauss-Seydel usullari — bosqichma-bosqich KaTeX formulalar va interaktiv hisob-kitob bilan. QarDU Amaliy Matematika.">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo.png">
+    content="Iteratsiya, Bisection, Nyuton va boshqa usullar — interaktiv hisoblash va grafik bilan.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
 
-  <!-- Twitter Card -->
+  <!-- 7. TWITTER -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@haydarov_jasurbek">
-  <meta name="twitter:creator" content="@haydarov_jasurbek">
-  <meta name="twitter:title" content="Sonli Usullar — O'zbek Matematika Platformasi">
-  <meta name="twitter:description"
-    content="Iteratsiya, Bisection, Nyuton, Vatar, Gauss-Seydel — barcha sonli usullar interaktiv tarzda. QarDU.">
-  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo.png">
+  <meta name="twitter:title" content="Sonli Usullar">
+  <meta name="twitter:description" content="Sonli usullarni online o'rganing va hisoblang">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg">
 
+  <!-- 8. ROBOTS -->
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
 
+  <!-- 9. HREFLANG -->
+  <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/">
 
-  <!-- JSON-LD Structured Data -->
+  <!-- 10. MANIFEST -->
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- 11. STRUCTURED DATA -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -70,6 +84,12 @@
   }
   </script>
 
+  <!-- 12. HEAD MANAGER (JS) -->
+  <script>
+    window.HEAD_BASE = '';
+  </script>
+  <script src="src/assets/js/head-manager.js"></script>
+
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
     (function (m, e, t, r, i, k, a) {
@@ -90,15 +110,83 @@
     /* ══════════════════════════════════════════════
        SPLASH SCREEN (Inlined to prevent FOUC)
        ══════════════════════════════════════════════ */
-    #app-splash { position: fixed; inset: 0; z-index: 9999; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity 0.6s ease, visibility 0.6s ease; }
-    #app-splash.fade-out { opacity: 0; visibility: hidden; }
-    .splash-logo { width: 120px; height: 120px; object-fit: contain; animation: splash-pulse 1.6s ease-in-out infinite; }
-    .splash-title { font-family: 'Orbitron', 'Segoe UI', sans-serif; font-size: 1.4rem; font-weight: 900; letter-spacing: 0.12em; color: #0f172a; }
-    .splash-subtitle { font-size: 0.75rem; font-weight: 600; color: #64748b; letter-spacing: 0.08em; text-transform: uppercase; }
-    .splash-ring { position: relative; display: flex; align-items: center; justify-content: center; }
-    .splash-ring::before { content: ''; position: absolute; width: 148px; height: 148px; border-radius: 50%; border: 3px solid transparent; border-top-color: #00f2ff; border-right-color: #00f2ff; animation: splash-spin 1.2s linear infinite; }
-    @keyframes splash-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-    @keyframes splash-spin { to { transform: rotate(360deg); } }
+    #app-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #app-splash.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: splash-pulse 1.6s ease-in-out infinite;
+    }
+
+    .splash-title {
+      font-family: 'Orbitron', 'Segoe UI', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: #0f172a;
+    }
+
+    .splash-subtitle {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .splash-ring {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .splash-ring::before {
+      content: '';
+      position: absolute;
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #00f2ff;
+      border-right-color: #00f2ff;
+      animation: splash-spin 1.2s linear infinite;
+    }
+
+    @keyframes splash-pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    @keyframes splash-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* Page-specific styles for index.html */
     .hero-counter {
@@ -248,9 +336,13 @@
 
     <!-- Header -->
     <header class="p-8 mb-10 text-center shadow-sm cyber-header">
-      <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">SONLI USULLAR
-        <span style="color:#00f2ff">v2.2</span>
-      </h1>
+      <div>
+        <img src="/src/assets/images/logo-glass.png" alt="Sonli Usullar Logosi" class="mx-auto mb-4 w-24 h-24">
+        <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">SONLI
+          USULLAR
+          <span style="color:#00f2ff">v2.2</span>
+        </h1>
+      </div>
       <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Amaliy
         Matematika | 023-40 guruh</p>
     </header>
@@ -406,18 +498,9 @@
     </footer>
 
   </div><!-- /main-content -->
-  <!-- Native enhancements: loader, offline, back-btn, share FAB -->
-  <script src="src/assets/js/capacitor-app.js"></script>
 
-  <!-- PWA Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./public/sw.js', { scope: './' })
-          .catch(err => console.warn('[SW] Registration failed:', err));
-      });
-    }
-  </script>
+  <!-- Native enhancements: loader, share FAB -->
+  <script src="src/assets/js/capacitor-app.js"></script>
 
 </body>
 

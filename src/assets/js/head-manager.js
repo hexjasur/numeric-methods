@@ -18,8 +18,16 @@
 
   const elements = [
     // 1. Favicons
-    { tag: 'link', rel: 'icon', href: base + 'src/assets/images/logo-glass.png', media: '(prefers-color-scheme: light)' },
-    { tag: 'link', rel: 'icon', href: base + 'src/assets/images/logo-glass.png', media: '(prefers-color-scheme: dark)' },
+    { tag: 'link', rel: 'icon', href: base + 'favicon.ico', sizes: 'any' },
+    { tag: 'link', rel: 'icon', type: 'image/png', href: base + 'favicon.png' },
+
+    // 1.1 PWA Manifest
+    { tag: 'link', rel: 'manifest' , href: base + 'manifest.json' },
+
+    // 1.2 Open Graph (OG) Tags for better social media sharing
+    { tag: 'meta', property: 'og:title', content: 'Sonli Usullar - Matematik usullar va algoritmlar to\'plami' },
+    { tag: 'meta', property: 'og:description', content: 'Sonli usullar haqida maqolalar, algoritmlar va amaliy misollar. Matematik muammolarni yechish uchun eng yaxshi resurs.' },
+    { tag: 'meta', property: 'og:image', content: 'https://www.sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg' },
 
     // 2. Shared Stylesheets
     { tag: 'link', rel: 'stylesheet', href: base + 'src/assets/css/sidebar.css' },
@@ -27,7 +35,7 @@
     { tag: 'link', rel: 'stylesheet', href: base + 'src/assets/css/native.css' },
 
     // 3. Font Awesome
-    { tag: 'link', rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/al l.min.css' },
+    { tag: 'link', rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css' },
 
     // 4. Math.js
     { tag: 'script', src: 'https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js' },
@@ -48,7 +56,6 @@
 
     { tag: 'meta', name: 'author', content: 'Haydarov Jasurbek' },
     { tag: 'meta', name: 'robots', content: 'index, follow' },
-    { tag: 'meta', name: 'language', content: 'Uzbek' },
     { tag: 'meta', name: 'theme-color', content: '#00f2ff' },
   ];
 

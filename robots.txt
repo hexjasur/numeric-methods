@@ -1,0 +1,126 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# ROBOTS.TXT - SEARCH ENGINE CRAWLING DIRECTIVES
+# ═══════════════════════════════════════════════════════════════════════════════
+# 
+# Purpose: Guide search engines on what to crawl and how to crawl your site
+# Location: Place at https://sonli-usullar.uz/robots.txt (root directory)
+# 
+# WHY THIS MATTERS:
+# - Saves crawl budget (Google allocates limited crawl requests per site)
+# - Prevents indexing of duplicate/private pages
+# - Improves crawl efficiency
+# - Can increase ranking velocity
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Allow all crawlers to access the entire site (default behavior)
+User-agent: *
+Allow: /
+
+# Disallow private directories
+Disallow: /admin/
+Disallow: /private/
+Disallow: /draft/
+Disallow: /temp/
+Disallow: /test/
+
+# Disallow session IDs and tracking parameters (prevent duplicate content)
+Disallow: /?session=
+Disallow: /?utm_
+Disallow: /?fbclid=
+Disallow: /?gclid=
+
+# Disallow duplicate URL parameters
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*page=*&*sort=
+
+# Crawl delay: Time to wait between requests (in seconds)
+# Recommended: 1 second for large sites, 0.5 for small sites
+Crawl-delay: 1
+
+# Request rate: Maximum pages per second
+Request-rate: 1/1s
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SPECIAL RULES FOR GOOGLEBOT (Faster crawling is okay for Google)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+Request-rate: 2/1s
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SPECIAL RULES FOR BINGBOT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DISALLOW BAD/AGGRESSIVE BOTS (Reduce spam crawling)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SITEMAPS - Tell Google where to find all pages
+# ═══════════════════════════════════════════════════════════════════════════════
+# Primary sitemap
+Sitemap: https://sonli-usullar.uz/sitemap.xml
+
+# Mobile sitemap (if you have separate mobile pages)
+Sitemap: https://sonli-usullar.uz/sitemap-mobile.xml
+
+# News sitemap (if you publish blog/news)
+# Sitemap: https://sonli-usullar.uz/sitemap-news.xml
+
+# Image sitemap (if you have many images)
+# Sitemap: https://sonli-usullar.uz/sitemap-images.xml
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NOTES:
+# 
+# 1. IMPORTANCE: robots.txt is NOT a security measure
+#    - It's purely a crawling guideline
+#    - Malicious users can still access disallowed URLs
+#    - Use actual .htaccess or server security for sensitive data
+#
+# 2. CRAWL BUDGET implications:
+#    - Each disallow wastes crawl budget
+#    - Only block what you NEED to block
+#    - Let Google crawl everything that's public
+#
+# 3. TESTING:
+#    - Test robots.txt in Google Search Console
+#    - URL: https://search.google.com/search-console/
+#    - Go to Settings → Crawl › Robots.txt tester
+#
+# 4. COMMON MISTAKES:
+#    ❌ Blocking important pages (kills indexing)
+#    ❌ Blocking .html or .css files
+#    ❌ Too strict crawl delays (slows discovery)
+#    ❌ Using comment syntax incorrectly
+#
+# 5. SITEMAP RULES:
+#    - Max 50,000 URLs per sitemap file
+#    - Max 50 MB per file (uncompressed)
+#    - Use multiple sitemaps if you exceed these limits
+#
+# ═══════════════════════════════════════════════════════════════════════════════
