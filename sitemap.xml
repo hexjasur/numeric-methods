@@ -1,68 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-  ═══════════════════════════════════════════════════════════════════════════════
-  SITEMAP.XML - COMPLETE SITE STRUCTURE FOR SEARCH ENGINES
-  ═══════════════════════════════════════════════════════════════════════════════
-  
-  Purpose: Tell Google about all pages on your site, including:
-    - Page location (URL)
-    - Last update date (helps with content freshness indexing)
-    - Change frequency (how often Google should recrawl)
-    - Priority (relative importance within your site)
-  
-  Location: https://sonli-usullar.uz/sitemap.xml
-  
-  WHY THIS MATTERS:
-    - Faster discovery of new pages (within 24 hours)
-    - Better coverage of site structure
-    - Helps Google understand page hierarchy
-    - Improves indexing speed by 20-50%
-    - Can improve ranking velocity
-  
-  ═══════════════════════════════════════════════════════════════════════════════
--->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- HOMEPAGE - HIGHEST PRIORITY -->
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
+  <!-- Homepage -->
   <url>
     <loc>https://sonli-usullar.uz/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <!-- Language alternative links -->
-    <xhtml:link rel="alternate" hreflang="uz" href="https://sonli-usullar.uz/">
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://sonli-usullar.uz/">
   </url>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- MAIN CONTENT PAGES - HIGH PRIORITY -->
-<!-- Priority Strategy:
-     - 1.0 = Homepage
-     - 0.9 = Core collection pages
-     - 0.8 = Main methods/articles
-     - 0.7 = Secondary content
-     - 0.6 = Support pages
-     - 0.5 = Archive/less important
--->
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
-  <!-- ITERATSIYA USULI (Iteration Method) -->
-  <url>
-    <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="uz" href="https://sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html">
-  </url>
-
-  <!-- ODDIY NYUTON USULI (Newton's Method) -->
+  <!-- Main pages -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html</loc>
     <lastmod>2026-03-24</lastmod>
@@ -70,7 +17,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- URINMA USULI (Tangent Method) -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Urinma-Usuli.html</loc>
     <lastmod>2026-03-23</lastmod>
@@ -78,7 +24,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- VATAR USULI (Secant Method) -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html</loc>
     <lastmod>2026-03-22</lastmod>
@@ -86,7 +31,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- KESMANI TENGI IKKIGA BO'LISH (Bisection Method) -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html</loc>
     <lastmod>2026-03-21</lastmod>
@@ -94,7 +38,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- 3-ODDIY ITERATSIYA USULI (3-Point Iteration Method) -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html</loc>
     <lastmod>2026-03-20</lastmod>
@@ -102,7 +45,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ZEYDEL USULI (Zeidel Method / Gauss-Seidel) -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Zeydel-usuli.html</loc>
     <lastmod>2026-03-19</lastmod>
@@ -110,7 +52,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- FUNKSIYA KESISHISHI NUQTASI ANIQLASH (Find Function Intersection Points) -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html</loc>
     <lastmod>2026-03-18</lastmod>
@@ -118,7 +59,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- NAZARIYA (Theory / Documentation) -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Nazariya.html</loc>
     <lastmod>2026-03-20</lastmod>
@@ -126,7 +66,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- CODE EXAMPLES -->
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/code.html</loc>
     <lastmod>2026-03-15</lastmod>
@@ -134,11 +73,7 @@
     <priority>0.7</priority>
   </url>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- SUPPORT PAGES -->
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
-  <!-- ABOUT PAGE -->
+  <!-- Support -->
   <url>
     <loc>https://sonli-usullar.uz/src/about.html</loc>
     <lastmod>2026-04-02</lastmod>
@@ -146,170 +81,11 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- PRIVACY POLICY -->
   <url>
     <loc>https://sonli-usullar.uz/src/privacy.html</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-
-  <!-- TERMS OF SERVICE (if applicable) -->
-  <!-- <url>
-    <loc>https://sonli-usullar.uz/terms/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url> -->
-
-  <!-- CONTACT PAGE -->
-  <!-- <url>
-    <loc>https://sonli-usullar.uz/contact/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url> -->
-
-  <!-- FAQ PAGE (if you have one) -->
-  <!-- <url>
-    <loc>https://sonli-usullar.uz/faq/</loc>
-    <lastmod>2026-04-01</lastmod>
-    <changefreq>quarterly</changefreq>
-    <priority>0.7</priority>
-  </url> -->
-
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- UZEK LANGUAGE VERSIONS (Hreflang for international SEO) -->
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
-  <!-- UZ HOMEPAGE -->
-  <url>
-    <loc>https://sonli-usullar.uz/</loc>
-    <lastmod>2026-04-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="uz" href="https://sonli-usullar.uz/">
-  </url>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- NOTES & BEST PRACTICES -->
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!--
-
-1. PRIORITY SCORING:
-   - 1.0 = Homepage (most important)
-   - 0.9 = High-traffic pages (main methods)
-   - 0.7 = Medium-traffic pages
-   - 0.5 = Lower-traffic pages
-   - 0.3 = Legal/meta pages
-   
-   NOTE: Priority is relative WITHIN your site only
-              It does NOT guarantee better ranking overall
-
-2. CHANGEFREQ GUIDE:
-   - always: Updates multiple times per day
-   - hourly: Major news/real-time data
-   - daily: Frequently updated content
-   - weekly: Regular content updates
-   - monthly: Seasonal/periodic updates
-   - yearly: Wikipedia-style articles
-   - never: Static/archived content
-   
-   TIP: Google ignores this value; use it only as a hint
-
-3. LASTMOD (Last Modified Date):
-   - IMPORTANT for ranking "fresh" content
-   - Only include if you actually update the page
-   - Google weights recent updates more heavily
-   - Must be in ISO 8601 format: YYYY-MM-DD
-   
-   SEO BENEFIT: Pages with recent lastmod = 10-20% higher ranking
-
-4. HREFLANG (Language/Region Alternatives):
-   - Tells Google about language versions
-   - Prevents duplicate content penalties
-   - Lets Google show right version per locale
-   - CRITICAL for international SEO
-   
-   EXAMPLE:
-   <xhtml:link rel="alternate" hreflang="en" href="..."/>
-   <xhtml:link rel="alternate" hreflang="uz" href="..."/>
-   <xhtml:link rel="alternate" hreflang="x-default" href="..."/>
-
-5. SITEMAP SIZE LIMITS:
-   - Max 50,000 URLs per file
-   - Max 50 MB uncompressed
-   - If you exceed: Create multiple sitemaps
-   
-   EXAMPLE FOR LARGE SITES:
-   sitemap-1.xml (URLs 1-50,000)
-   sitemap-2.xml (URLs 50,001-100,000)
-   sitemap-index.xml (references both)
-
-6. IMAGE SITEMAPS (if needed):
-   Use <image:image> tags for important images
-   Helps Google index and rank images properly
-   
-   EXAMPLE:
-   <image:image>
-     <image:loc>https://sonli-usullar.uz/image.jpg</image:loc>
-     <image:title>Method Visualization</image:title>
-   </image:image>
-
-7. NEWS SITEMAPS (if you publish articles):
-   Use <news:news> tags for recent articles
-   Helps Google News index content faster
-   
-   EXAMPLE:
-   <news:news>
-     <news:publication>
-       <news:name>Sonli Usullar Blog</news:name>
-       <news:language>en</news:language>
-     </news:publication>
-     <news:publication_date>2026-04-02</news:publication_date>
-     <news:title>Article Title</news:title>
-   </news:news>
-
-8. TESTING & SUBMISSION:
-   a) Validate XML: Go to https://xmlsitemaps.com/validate-xml-sitemap.html
-   
-   b) Submit to Google Search Console:
-      - Settings › Sitemaps › Add Sitemap
-      - Paste: https://sonli-usullar.uz/sitemap.xml
-   
-   c) Submit to Bing Webmaster Tools:
-      - https://www.bing.com/webmasters/tools/
-   
-   d) Monitor in GSC:
-      - Sitemaps › Sitemap Report
-      - Check: Submitted, Discovered, Indexed counts
-
-9. AUTOMATIC SITEMAP GENERATION:
-   For WordPress: Use Yoast SEO, Rank Math, or All in One SEO
-   For Static Sites: Use screaming-frog.com (free version)
-   For Node.js: Use sitemap npm package
-   For Python: Use sitemap library
-
-10. COMMON MISTAKES TO AVOID:
-    ❌ URLs not matching actual pages (404 errors)
-    ❌ Including canonicalized/noindexed pages
-    ❌ Incorrect date format (not ISO 8601)
-    ❌ Too many URLs (50K+ in single file)
-    ❌ Not submitting to Google Search Console
-    ❌ Not updating lastmod when pages change
-    ❌ Including parameters in URLs (session IDs, etc.)
-
-11. MONITORING:
-    Check Google Search Console WEEKLY:
-    - Requested Indexing: Have pages been crawled?
-    - Coverage: How many pages indexed?
-    - Enhancements: Any structured data issues?
-    
-    Optimal metrics:
-    ✅ Submitted = Indexed (100% coverage desired)
-    ✅ No crawl errors
-    ✅ No enhanced content issues
-
--->
 
 </urlset>
