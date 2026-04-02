@@ -42,7 +42,8 @@
     {
       tag: 'script', src: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js'
     },
-
+    
+    { tag: 'script', src: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js' },
     // 5. Common Meta Tags (that are the same everywhere)
 
     { tag: 'meta', name: 'author', content: 'Haydarov Jasurbek' },
