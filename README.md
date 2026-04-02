@@ -1,6 +1,6 @@
 # Matematika YO'LNOMA
 
-![Math Yolnoma Logo](src/assets/images/logo-dark.png)
+![Math Yolnoma Logo](src/assets/images/logo.png)
 
 **Elementar Matematika va Sonli Usullar bo'yicha O'quv Qo'llanma**
 
