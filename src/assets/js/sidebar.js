@@ -84,6 +84,24 @@
       href: base + 'src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html',
     },
     {
+      id: 'haydashUsuli',
+      label: '(demo) HAYDASH USULI',
+      icon: '🚗',
+      href: base + 'src/Sonli-Usullar/Haydash-Usuli.html',
+    },
+    {
+      id: 'chatIteratsiya',
+      label: '(demo) CHAT\'s Oddiy Iteratsiya Usuli',
+      icon: '💬',
+      href: base + 'src/Sonli-Usullar/Chat-Oddiy-Iteratsiya-Usuli.html',
+    },
+    {
+      id: 'chatZeydel',
+      label: '(demo) CHAT\'s Zeydel Usuli',
+      icon: '💬',
+      href: base + 'src/Sonli-Usullar/Chat-Zeydel-Usuli.html',
+    },
+    {
       id: 'nazariya',
       label: '(demo) NAZARIYA (PROMPT)',
       icon: '📋',

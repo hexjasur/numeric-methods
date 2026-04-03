@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Sonli Usullar",
+    "slug": "sonli-usullar",
+    "version": "2.0.3",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo-glass.png",
+    "scheme": "app",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff",
+        "foregroundImage": "./assets/images/logo-glass.png",
+        "backgroundImage": "./assets/images/logo-glass.png",
+        "monochromeImage": "./assets/images/logo-glass.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.jksoftware.sonliusullar"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/logo-glass.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#fff",
+          "image": "./assets/images/logo-glass.png",
+          "imageWidth": 200,
+          "resizeMode": "cover",
+          "statusBar": {
+            "backgroundColor": "#fff",
+            "barStyle": "light-content"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "26865bd3-aae7-4af4-a74a-b40d3f679ef0"
+      }
+    }
+  }
+}
