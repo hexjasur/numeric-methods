@@ -39,6 +39,13 @@
   </url>
 
   <url>
+    <loc>https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html</loc>
+    <lastmod>2026-03-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html</loc>
     <lastmod>2026-03-20</lastmod>
     <changefreq>monthly</changefreq>
@@ -55,6 +62,13 @@
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html</loc>
     <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Haydash-Usuli.html</loc>
+    <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
