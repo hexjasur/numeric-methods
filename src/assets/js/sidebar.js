@@ -85,28 +85,28 @@
     },
     {
       id: 'haydashUsuli',
-      label: '(demo) HAYDASH USULI',
+      label: 'HAYDASH USULI',
       icon: '🚗',
       href: base + 'src/Sonli-Usullar/Haydash-Usuli.html',
     },
-    {
-      id: 'chatIteratsiya',
-      label: '(demo) CHAT\'s Oddiy Iteratsiya Usuli',
-      icon: '💬',
-      href: base + 'src/Sonli-Usullar/Chat-Oddiy-Iteratsiya-Usuli.html',
-    },
-    {
-      id: 'chatZeydel',
-      label: '(demo) CHAT\'s Zeydel Usuli',
-      icon: '💬',
-      href: base + 'src/Sonli-Usullar/Chat-Zeydel-Usuli.html',
-    },
-    {
-      id: 'nazariya',
-      label: '(demo) NAZARIYA (PROMPT)',
-      icon: '📋',
-      href: base + 'src/Sonli-Usullar/Nazariya.html',
-    },
+    // {
+    //   id: 'chatsIteratsiya',
+    //   label: '(demo) CHAT\'s Oddiy Iteratsiya Usuli',
+    //   icon: '💬',
+    //   href: base + 'src/Sonli-Usullar/Chats-Oddiy-Iteratsiya-Usuli.html',
+    // },
+    // {
+    //   id: 'chatsZeydel',
+    //   label: '(demo) CHAT\'s Zeydel Usuli',
+    //   icon: '💬',
+    //   href: base + 'src/Sonli-Usullar/Chats-Zeydel-Usuli.html',
+    // },
+    // {
+    //   id: 'nazariya',
+    //   label: '(demo) NAZARIYA (PROMPT)',
+    //   icon: '📋',
+    //   href: base + 'src/Sonli-Usullar/Nazariya.html',
+    // },
     {
       id: 'privacy',
       label: 'MAXFIYLIK SIOYOSATI',

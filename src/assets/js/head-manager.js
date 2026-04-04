@@ -35,23 +35,23 @@
     { tag: 'link', rel: 'manifest', href: base + 'manifest.json' },
 
     // 1.2 Open Graph (OG) Tags for better social media sharing
-    {
-      tag: 'meta',
-      property: 'og:title',
-      content: "Sonli Usullar - Matematik usullar va algoritmlar to'plami",
-    },
-    {
-      tag: 'meta',
-      property: 'og:description',
-      content:
-        'Sonli usullar haqida maqolalar, algoritmlar va amaliy misollar. Matematik muammolarni yechish uchun eng yaxshi resurs.',
-    },
-    {
-      tag: 'meta',
-      property: 'og:image',
-      content:
-        'https://www.sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg',
-    },
+    // {
+    //   tag: 'meta',
+    //   property: 'og:title',
+    //   content: "Sonli Usullar - Matematik usullar va algoritmlar to'plami",
+    // },
+    // {
+    //   tag: 'meta',
+    //   property: 'og:description',
+    //   content:
+    //     'Sonli usullar haqida maqolalar, algoritmlar va amaliy misollar. Matematik muammolarni yechish uchun eng yaxshi resurs.',
+    // },
+    // {
+    //   tag: 'meta',
+    //   property: 'og:image',
+    //   content:
+    //     'https://www.sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg',
+    // },
 
     // 2. Shared Stylesheets
     {
@@ -80,6 +80,7 @@
     // 4. Math.js
     {
       tag: 'script',
+      defer: true,
       src: 'https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js',
     },
 
@@ -91,18 +92,22 @@
     },
     {
       tag: 'script',
+      defer: true,
       src: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js',
     },
     {
       tag: 'script',
+      defer: true,
       src: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js',
     },
 
+    // 5.1 html2canvas 
     {
       tag: 'script',
+      defer: true,
       src: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
     },
-    // 5. Common Meta Tags (that are the same everywhere)
+    // 5. Common Meta Tags
 
     { tag: 'meta', name: 'author', content: 'Haydarov Jasurbek' },
     { tag: 'meta', name: 'robots', content: 'index, follow' },

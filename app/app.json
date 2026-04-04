@@ -2,8 +2,8 @@
   "expo": {
     "name": "Sonli Usullar",
     "slug": "sonli-usullar",
-    "version": "2.0.3",
-    "orientation": "portrait",
+    "version": "2.4.2",
+    "orientation": "default",
     "icon": "./assets/images/logo-glass.png",
     "scheme": "app",
     "userInterfaceStyle": "automatic",

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <!-- 1. Basics -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-language" content="uz">
+
+  <!-- 2. TITLE + DESCRIPTION (ENG MUHIM) -->
+  <title>
+    Метод прогонки (Haydash usuli) — TDMA | sonli-usullar.uz
+  </title>
+  <meta name="description"
+    content="Метод прогонки (Haydash usuli, TDMA) haqida to‘liq tushuntirish, formulalar va online hisoblash vositasi.">
+
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
+  <!-- 6. OPEN GRAPH -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Haydash-Usuli">
+  <meta property="og:site_name" content="Sonli Usullar ">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:title" content="Метод прогонки (Haydash usuli) — TDMA | sonli-usullar.uz">
+  <meta property="og:description"
+    content="Метод прогонки (Haydash usuli, TDMA) haqida to‘liq tushuntirish, formulalar va online hisoblash vositasi.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-haydash-usuli.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+
+  <!-- 7. TWITTER -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Метод прогонки (Haydash usuli) — TDMA | sonli-usullar.uz">
+  <meta name="twitter:description"
+    content="Метод прогонки (Haydash usuli, TDMA) haqida to‘liq tushuntirish, formulalar va online hisoblash vositasi.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-haydash-usuli.jpg">
+
+  <!-- 8. ROBOTS -->
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+
+  <!-- 9. HREFLANG -->
+  <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Haydash-Usuli">
+
+  <!-- 10. MANIFEST -->
+  <link rel="manifest" href="/manifest.json">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    .btn-cyber {
+      background: #00ffff;
+      border: 2px solid black;
+      box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 1);
+      transition: all 0.2s;
+    }
+
+    .btn-cyber:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+    }
+
+    /* Steps Design Improvements */
+    .steps-container {
+      background: linear-gradient(135deg, #f0f9ff 0%, #ecf8ff 100%);
+      border-left: 4px solid #06b6d4;
+      padding: 1.5rem;
+      border-radius: 4px;
+    }
+
+    .step-section {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: white;
+      border: 2px solid #e0e7ff;
+      border-left: 4px solid #06b6d4;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .step-section:hover {
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+      border-left-color: #0891b2;
+    }
+
+    .step-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #06b6d4;
+    }
+
+    .step-title::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: #06b6d4;
+      border-radius: 50%;
+    }
+
+    .step-formula {
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      background: #f8fafc;
+      border-left: 3px solid #06b6d4;
+      border-radius: 2px;
+      overflow-x: auto;
+    }
+
+    .step-formula-group {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: #f0f4f8;
+      border-left: 4px solid #0891b2;
+      border-radius: 2px;
+      margin: 0.5rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .step-formula-group {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .step-result {
+      padding: 0.75rem;
+      margin: 0.75rem 0;
+      background: #ecfdf5;
+      border-left: 4px solid #10b981;
+      border-radius: 2px;
+      font-weight: 600;
+      color: #047857;
+    }
+  </style>
+</head>
+
+<body class="p-4 md:p-8">
+
+  <!-- Sidebar -->
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'haydashUsuli';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <div class="max-w-5xl mx-auto px-4">
+      <!-- Header -->
+      <div class="text-center mb-10">
+        <h1 style="font-family:'Orbitron',sans-serif"
+          class="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-tight">
+          Haydash Usuli
+          <span class="block text-base md:text-lg font-medium normal-case text-red-500 mt-2">
+            Метод прогонки · Tridiagonal Matrix Algorithm (TDMA)
+          </span>
+        </h1>
+
+        <p class="mt-4 text-xs md:text-sm font-semibold text-gray-600 border-b border-gray-300 inline-block px-4 pb-1">
+          Qarshi Davlat Universiteti · Amaliy Matematika
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+
+        <div class="bg-white rounded-2xl shadow-md p-5 text-center hover:shadow-xl transition">
+          <h3 id="top-size" class="text-2xl font-bold text-cyan-600">4×4</h3>
+          <p class="text-xs uppercase font-semibold text-gray-500 mt-1">O‘lcham</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-5 text-center hover:shadow-xl transition">
+          <h3 class="text-2xl font-bold text-cyan-600">∞</h3>
+          <p class="text-xs uppercase font-semibold text-gray-500 mt-1">Hisoblar</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-5 text-center hover:shadow-xl transition">
+          <h3 id="top-eps" class="text-2xl font-bold text-cyan-600">0.001</h3>
+          <p class="text-xs uppercase font-semibold text-gray-500 mt-1">Aniqlik (ε)</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-5 text-center hover:shadow-xl transition">
+          <h3 class="text-2xl font-bold text-cyan-600">2026</h3>
+          <p class="text-xs uppercase font-semibold text-gray-500 mt-1">Yil</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <div class="lg:col-span-1 space-y-6">
+        <div class="cyber-card p-6">
+          <h2 class="font-bold uppercase mb-4 flex items-center">
+            <span class="w-2 h-6 bg-cyan-400 mr-2"></span> Loyiha: Haydash Usuli
+          </h2>
+          <div class="space-y-4 text-sm">
+            <p><b>Maqsad:</b> Uch diagonalli tenglamalar sistemasini yechish.</p>
+            <hr class="border-black">
+
+            <label class="block font-bold mb-1">
+              Sistema o‘lchami (n): 4 dan 10 gacha bo‘lishi kerak
+            </label>
+            <input type="number" id="size" value="4" min="4" max="10"
+              class="w-full p-2 border-2 border-black focus:outline-none focus:bg-cyan-50">
+
+            <label class="block font-bold mb-1 mt-3">ANIQLIK (Epsilon):</label>
+            <input type="text" id="epsilon" value="0.001" placeholder="Masalan: 0.001 yoki 10^-4"
+              class="w-full p-2 border-2 border-black focus:outline-none focus:bg-cyan-50">
+
+            <button onclick="generateTable()"
+              class="btn-cyber cursor-pointer w-full py-2 font-bold uppercase mt-4 text-sm">Jadvalni
+              yangilash</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2">
+        <div class="cyber-card p-6 min-h-[400px]">
+          <h2 class="font-bold uppercase mb-4 flex items-center justify-between">
+            <span><span class="w-2 h-6 bg-black mr-2 inline-block align-middle"></span> Boshqaruv Paneli</span>
+            <span class="text-xs bg-black text-white px-2 py-1">MATRIX INPUT</span>
+          </h2>
+
+          <div class="overflow-x-auto">
+            <table id="matrixTable" class="w-full border-collapse">
+            </table>
+          </div>
+
+          <div class="mt-8 flex justify-end">
+            <button onclick="solveSweep()"
+              class="btn-cyber cursor-pointer px-8 py-3 font-bold uppercase flex items-center">
+              Hisoblash <span class="ml-2">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="results" class="mt-8 space-y-6 hidden">
+          <div class="cyber-card p-6">
+            <h2 class="font-bold uppercase mb-4 flex items-center">
+              <span class="w-2 h-6 bg-cyan-500 mr-2"></span>
+              <span class="text-slate-800">Bosqichma-bosqich yechim:</span>
+            </h2>
+            <div id="steps" class="steps-container"></div>
+          </div>
+
+          <div class="cyber-card p-6">
+            <h2 class="font-bold uppercase mb-4 border-b-2 border-black inline-block">Yakuniy Natija:</h2>
+            <div id="finalX" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generateTable() {
+      let n = parseInt(document.getElementById('size').value);
+
+      // Limitlarni tekshirish
+      if (n < 4) { n = 4; document.getElementById('size').value = 4; }
+      if (n > 10) { n = 10; document.getElementById('size').value = 10; }
+
+      document.getElementById('top-size').innerText = `${n}x${n}`;
+
+      const table = document.getElementById('matrixTable');
+      table.innerHTML = '';
+
+      let header = `<tr class="text-xs font-bold uppercase text-gray-500">
+                <th class="p-2">i</th><th class="p-2">a[i]</th><th class="p-2">b[i]</th><th class="p-2">c[i]</th><th class="p-2">d[i]</th>
+            </tr>`;
+      table.innerHTML += header;
+
+      // Siz yuborgan rasmdagi misol qiymatlari (4x4 uchun default)
+      const defaultValues = {
+        a: [0, -2, -0.1, 1],
+        b: [10, 9, 4, 8],
+        c: [1, 1, -1, 0],
+        d: [5, -1, -5, 40]
+      };
+
+      for (let i = 1; i <= n; i++) {
+        let va = (n === 4) ? defaultValues.a[i - 1] : (i === 1 ? 0 : -1);
+        let vb = (n === 4) ? defaultValues.b[i - 1] : 4;
+        let vc = (n === 4) ? defaultValues.c[i - 1] : (i === n ? 0 : -1);
+        let vd = (n === 4) ? defaultValues.d[i - 1] : (i === 1 || i === n ? 5 : 10);
+
+        table.innerHTML += `
+                    <tr>
+                        <td class="p-2 border border-gray-200 text-center font-bold bg-gray-50">${i}</td>
+                        <td class="p-1 border border-gray-200">
+                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none a-val" value="${va}" ${i === 1 ? 'disabled bg-gray-100' : ''}>
+                        </td>
+                        <td class="p-1 border border-gray-200">
+                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none b-val" value="${vb}">
+                        </td>
+                        <td class="p-1 border border-gray-200">
+                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none c-val" value="${vc}" ${i === n ? 'disabled bg-gray-100' : ''}>
+                        </td>
+                        <td class="p-1 border border-gray-200">
+                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none d-val" value="${vd}">
+                        </td>
+                    </tr>
+                `;
+      }
+    }
+
+    function solveSweep() {
+      const n = parseInt(document.getElementById('size').value);
+      const a = Array.from(document.querySelectorAll('.a-val')).map(el => parseFloat(el.value) || 0);
+      const b = Array.from(document.querySelectorAll('.b-val')).map(el => parseFloat(el.value) || 0);
+      const c = Array.from(document.querySelectorAll('.c-val')).map(el => parseFloat(el.value) || 0);
+      const d = Array.from(document.querySelectorAll('.d-val')).map(el => parseFloat(el.value) || 0);
+
+      // Epsilonni aniqlash
+      const epsInput = document.getElementById('epsilon').value;
+      let eps = 0.001;
+      try {
+        eps = math.evaluate(epsInput);
+        if (isNaN(eps) || eps <= 0) eps = 0.001;
+      } catch (e) {
+        eps = 0.001;
+      }
+
+      // Yuqoridagi paneldagi epsilonni yangilash
+      document.getElementById('top-eps').innerText = eps;
+
+      // Xonalar sonini aniqlash (Epsilonga qarab)
+      let decimals = Math.max(0, Math.round(-Math.log10(eps)));
+      if (decimals > 10) decimals = 10; // Xavfsizlik uchun limit
+
+      let u = new Array(n);
+      let v = new Array(n);
+      let x = new Array(n);
+      let stepsHtml = "";
+
+      // To'g'ri yurish (Forward Elimination)
+      stepsHtml += `<div class="step-section">
+        <div class="step-title">1. To'g'ri yurish - Koeffitsiyentlar Hisoblash</div>`;
+
+      u[0] = -c[0] / b[0];
+      v[0] = d[0] / b[0];
+
+      stepsHtml += `<div class="step-formula">$$u_1 = -\\frac{c_1}{b_1} = -\\frac{${c[0].toFixed(6)}}{${b[0].toFixed(6)}} = ${u[0].toFixed(decimals)}$$</div>`;
+      stepsHtml += `<div class="step-formula">$$v_1 = \\frac{d_1}{b_1} = \\frac{${d[0].toFixed(6)}}{${b[0].toFixed(6)}} = ${v[0].toFixed(decimals)}$$</div>`;
+
+      for (let i = 1; i < n; i++) {
+        let den = a[i] * u[i - 1] + b[i];
+        u[i] = (i === n - 1) ? 0 : -c[i] / den;
+        v[i] = (d[i] - a[i] * v[i - 1]) / den;
+
+        stepsHtml += `<div class="step-formula-group">
+                    <div class="step-formula">$$u_{${i + 1}} = \\frac{-c_{${i + 1}}}{a_{${i + 1}}u_{${i}} + b_{${i + 1}}} = ${u[i].toFixed(decimals)}$$</div>
+                    <div class="step-formula">$$v_{${i + 1}} = \\frac{d_{${i + 1}} - a_{${i + 1}}v_{${i}}}{a_{${i + 1}}u_{${i}} + b_{${i + 1}}} = ${v[i].toFixed(decimals)}$$</div>
+                </div>`;
+      }
+
+      stepsHtml += `</div>`;
+
+      // Teskari yurish (Back Substitution)
+      stepsHtml += `<div class="step-section">
+        <div class="step-title">2. Teskari yurish - Yechimlarni Topish</div>`;
+
+      x[n - 1] = v[n - 1];
+      stepsHtml += `<div class="step-result">$$x_{${n}} = v_{${n}} = ${x[n - 1].toFixed(decimals)}$$</div>`;
+
+      for (let i = n - 2; i >= 0; i--) {
+        x[i] = u[i] * x[i + 1] + v[i];
+        stepsHtml += `<div class="step-formula">$$x_{${i + 1}} = u_{${i + 1}} \\cdot x_{${i + 2}} + v_{${i + 1}} = ${x[i].toFixed(decimals)}$$</div>`;
+      }
+
+      stepsHtml += `</div>`;
+
+      document.getElementById('steps').innerHTML = stepsHtml;
+      const finalXDiv = document.getElementById('finalX');
+      finalXDiv.innerHTML = x.map((val, idx) => `
+                <div class="cyber-border bg-cyan-50 p-2">
+                    <span class="text-xs font-bold block border-b border-black mb-1 text-gray-500">X${idx + 1}</span>
+                    <span class="text-lg font-bold">${val.toFixed(decimals)}</span>
+                </div>
+            `).join('');
+
+      document.getElementById('results').classList.remove('hidden');
+      renderMathInElement(document.getElementById('steps'), {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false }
+        ],
+        throwOnError: false
+      });
+    }
+
+    window.onload = generateTable;
+  </script>
+</body>
+
+</html>
