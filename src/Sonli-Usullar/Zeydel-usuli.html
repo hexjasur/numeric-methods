@@ -2,9 +2,48 @@
 <html lang="uz">
 
 <head>
+  <!-- 1. BASIC -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zeydel Usuli — Batafsil Yechim | Sonli Usullar</title>
+  <meta http-equiv="content-language" content="uz">
+
+  <!-- 2. TITLE + DESCRIPTION (ENG MUHIM) -->
+  <title>Метод Гаусса — Зейделя, Gauss-Seidel Method - Zeydel usuli</title>
+  <meta name="description"
+    content="Zeydel Usuli, Метод Гаусса — Зейделя, Gauss-Seidel Method haqida to'liq tushuntirish, formulalar va online hisoblash.">
+
+  <!-- 3. CANONICAL -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Zeydel-usuli.html">
+
+  <!-- 6. OPEN GRAPH -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Zeydel-usuli.html">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:title" content="Zeydel Usuli — Gauss Seidel, Метод Гаусса — Зейделя Batafsil Yechim | Sonli Usullar">
+  <meta property="og:description"
+    content="Zeydel Usuli, Метод Гаусса — Зейделя, Gauss-Seidel Method haqida to'liq tushuntirish, formulalar va online hisoblash.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-zeydel-usuli.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+
+  <!-- 7. TWITTER -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zeydel Usuli | sonli-usullar.uz">
+  <meta name="twitter:description"
+    content="Zeydel usuli - Gauss-Seidel, Метод Гаусса — Зейделя haqida to'liq tushuntirish, formulalar va online hisoblash vositasi. QarDU Amaliy Matematika.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-zeydel-usuli.jpg">
+
+  <!-- 8. ROBOTS -->
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+
+  <!-- 9. HREFLANG -->
+  <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Zeydel-usuli.html">
+
+  <!-- 10. MANIFEST -->
+  <link rel="manifest" href="/manifest.json">
 
   <!-- Head Manager (DRY) -->
   <script>
@@ -12,40 +51,10 @@
   </script>
   <script src="../assets/js/head-manager.js"></script>
 
-
-  <!-- Math JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
-
   <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-
-  <!-- SEO -->
-  <meta name="description"
-    content="Zeydel usuli — f(x)=0 tenglamasini xₙ₊₁ = φ(xₙ) formulasi orqali bosqichma-bosqich yechish. M konstantani topish, yaqinlashish sharti va to'liq KaTeX ishlanish. QarDU Amaliy Matematika.">
-  <meta name="keywords"
-    content="iteratsiya usuli, oddiy iteratsiya, fixed point iteration, M konstanta, yaqinlashish sharti, sonli usullar, QarDU, Haydarov Jasurbek">
-  <meta name="author" content="Haydarov Jasurbek">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#00f2ff">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Zeydel-usuli.html">
-  <meta property="og:title" content="Zeydel Usuli — Batafsil Yechim | Sonli Usullar">
-  <meta property="og:description"
-    content="Zeydel usuli — f(x)=0 tenglamasini xₙ₊₁ = φ(xₙ) formulasi orqali bosqichma-bosqich yechish. M konstantani topish, yaqinlashish sharti va to'liq KaTeX ishlanish. QarDU Amaliy Matematika.">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Zeydel-usuli.html">
-  <meta property="twitter:title" content="Zeydel Usuli | sonli-usullar.uz">
-  <meta property="twitter:description"
-    content="Zeydel usuli — f(x)=0 tenglamasini xₙ₊₁ = φ(xₙ) formulasi orqali bosqichma-bosqich yechish. M konstantani topish, yaqinlashish sharti, KaTeX ishlanish. QarDU.">
-  <meta property="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
-
 
   <style>
     .cyber-header {
@@ -96,7 +105,7 @@
 
       <header class="p-8 mb-10 text-center cyber-header bg-white border-b-4 border-black">
         <h1 class="text-3xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">
-          ZEYDEL <span style="color:#0891b2">USULI</span> <span class="text-xs align-top">v3.1</span>
+          ZEYDEL <span style="color:#0891b2">USULI</span> <span class="text-xs align-top">v3.2</span> <span class="text-xl">Метод Гаусса — Зейделя</span>
         </h1>
         <!-- <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">
           QarDU | Amaliy Matematika | Haydarov Jasurbek
@@ -174,7 +183,7 @@
           class="cyber-card p-6 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
           <h3 class="font-black mb-4 border-b-2 border-black pb-2 text-sm uppercase">4. Shart tekshiruv ( $|x^{(n)} -
             x^{(n-1)}| &lt; \epsilon$ )</h3>
-              <div id="verificationContent" class="space-y-2"></div>
+          <div id="verificationContent" class="space-y-2"></div>
         </div>
 
       </div>
@@ -246,8 +255,8 @@
       container.innerHTML = ''; // Tozalash
 
       // Daftardagi misol qiymatlari
-      const defaultA = [[5, 1, 1], [1, 4, 1], [1, 1, 8]];
-      const defaultB = [-7, -6, -10];
+      const defaultA = [[5, -1, 1], [1, 4, -1], [1, -1, 8]];
+      const defaultB = [7, 6, 10];
 
       for (let i = 0; i < N; i++) {
         const row = document.createElement('div');
@@ -300,17 +309,19 @@
       headHtml += `<th class="px-4 py-3">Max Δ</th>`;
       thead.innerHTML = headHtml;
 
-      // 1. Formulalar
+      // 1. Formulalar (Kasr ko'rinishida, rasmga mos)
       let formulaHtml = "";
       for (let i = 0; i < N; i++) {
         let others = [];
         for (let j = 0; j < N; j++) {
           if (i !== j) {
             let sign = A[i][j] >= 0 ? '-' : '+';
-            others.push(`${sign} (${Math.abs(A[i][j])}x_{${j + 1}})`);
+            // Gauss-Zeydel mantiqi: o'zidan oldingilar yangi (k+1), keyingilar eski (k) qadamdan olinadi
+            let k_str = j < i ? "^{(k+1)}" : "^{(k)}";
+            others.push(`${sign} ${Math.abs(A[i][j])}x_{${j + 1}}${k_str}`);
           }
         }
-        formulaHtml += `<div class="p-2 border rounded">$x_{${i + 1}} = \\frac{1}{${A[i][i]}} [ ${B[i]} ${others.join(' ')} ]$</div>`;
+        formulaHtml += `<div class="p-3 border-2 border-black rounded bg-cyan-50 shadow-[2px_2px_0px_#000]">$x_{${i + 1}}^{(k+1)} = \\frac{${B[i]} ${others.join(' ')}}{${A[i][i]}}$</div>`;
       }
       formulaContainer.innerHTML = formulaHtml;
 
@@ -320,8 +331,36 @@
       verificationContent.innerHTML = '';
       wrapper.classList.remove('hidden');
 
+      // ---------------- YANGILANGAN QISM ----------------
+      // Boshlang'ich yaqinlashishni (0-qadam) hisoblash: X_i = B_i / A_ii
       let X = new Array(N).fill(0);
+      for(let i = 0; i < N; i++) {
+        X[i] = B[i] / A[i][i];
+      }
+      
       let iteration = 0;
+
+      // Batafsil hisob-kitoblar boshida 0-qadamni formulasi bilan ko'rsatish
+      let step0Div = document.createElement('div');
+      step0Div.className = 'step-box bg-gray-50 p-3 rounded';
+      let x0_str = [];
+      for (let i = 0; i < N; i++) {
+        // x_i^(0) = B_i / A_ii formulasini chiqarish
+        x0_str.push(`x_{${i + 1}}^{(0)} = \\frac{${B[i]}}{${A[i][i]}} = ${X[i].toFixed(4)}`);
+      }
+      step0Div.innerHTML = `<h4 class="font-black text-gray-500 mb-2 border-b border-dashed border-gray-300 inline-block">Qadam №0 (Boshlang'ich yaqinlashish)</h4>
+                            <div class="text-[14px] font-bold text-cyan-700 flex flex-wrap gap-4">$${x0_str.join(', \\quad ')}$</div>`;
+      stepsContainer.appendChild(step0Div);
+      // --------------------------------------------------------
+
+      // 0-qadamni jadvalga qo'shish
+      let initialRow = `<tr class="border-b bg-gray-100"><td class="px-4 py-2 font-bold">0</td>`;
+      for (let i = 0; i < N; i++) {
+        initialRow += `<td class="px-4 py-2">${X[i].toFixed(6)}</td>`;
+      }
+      initialRow += `<td class="px-4 py-2">-</td></tr>`;
+      tbody.innerHTML = initialRow;
+
       let maxDiff = 1;
       let lastDifferences = [];
 
@@ -330,22 +369,32 @@
         let X_old = [...X];
         let stepDiv = document.createElement('div');
         stepDiv.className = 'step-box';
-        let stepHtml = `<h4 class="font-black text-black mb-3">Qadam №${iteration}</h4><div class="space-y-2">`;
+        let stepHtml = `<h4 class="font-black text-black mb-3 border-b border-dashed border-gray-300 inline-block">Qadam №${iteration}</h4><div class="space-y-4">`;
 
         lastDifferences = [];
 
         for (let i = 0; i < N; i++) {
           let sum = 0;
-          let calcPath = `${B[i]}`;
+          let formulaPath = `${B[i]}`;
+          let valuePath = `${B[i]}`;
+
           for (let j = 0; j < N; j++) {
             if (i !== j) {
               sum += A[i][j] * X[j];
               let sign = A[i][j] >= 0 ? '-' : '+';
-              calcPath += ` ${sign} (${Math.abs(A[i][j])} \\cdot ${X[j].toFixed(4)})`;
+
+              // Qaysi qadamdagi x ishlatilayotganini aniqlash
+              let iterIdx = j < i ? iteration : iteration - 1;
+
+              formulaPath += ` ${sign} ${Math.abs(A[i][j])}x_{${j + 1}}^{(${iterIdx})}`;
+              valuePath += ` ${sign} ${Math.abs(A[i][j])}(${X[j].toFixed(4)})`;
             }
           }
+
           X[i] = (B[i] - sum) / A[i][i];
-          stepHtml += `<div class="text-[12px]">$x_{${i + 1}}^{(${iteration})} = \\frac{1}{${A[i][i]}} [ ${calcPath} ] = ${X[i].toFixed(6)}$</div>`;
+
+          // Batafsil hisoblash qatori: formula harflar bilan -> qiymatlar bilan -> natija
+          stepHtml += `<div class="text-[14px] overflow-x-auto">$x_{${i + 1}}^{(${iteration})} = \\frac{${formulaPath}}{${A[i][i]}} = \\frac{${valuePath}}{${A[i][i]}} = ${X[i].toFixed(6)}$</div>`;
         }
 
         maxDiff = 0;
@@ -364,18 +413,17 @@
         tbody.insertAdjacentHTML('beforeend', rowHtml);
       }
 
-      // 4. Oxirgi tekshiruv (Yashil rangda)
+      // 4. Oxirgi tekshiruv
       let verifHtml = "";
       lastDifferences.forEach((d, idx) => {
         let isOk = d <= eps;
-        // Formula qismini $ belgisi bilan o'raymiz
         verifHtml += `
-    <div class="flex items-center gap-4 p-3 ${isOk ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded">
-      <span class="font-mono text-sm">$|x_{${idx + 1}}^{(${iteration})} - x_{${idx + 1}}^{(${iteration - 1})}| = ${d.toFixed(6)}$</span>
-      <span class="font-black ${isOk ? 'delta-success' : 'text-red-600'}"> 
-        ${isOk ? ' < ' : ' > '} ε (${eps}) ${isOk ? '✅ QANOATLANTIRADI' : '❌'}
-      </span>
-    </div>`;
+          <div class="flex flex-wrap items-center gap-4 p-3 ${isOk ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded">
+            <span class="font-mono text-sm">$|x_{${idx + 1}}^{(${iteration})} - x_{${idx + 1}}^{(${iteration - 1})}| = ${d.toFixed(6)}$</span>
+            <span class="font-black ${isOk ? 'text-green-600' : 'text-red-600'}"> 
+              ${isOk ? ' < ' : ' > '} ε (${eps}) ${isOk ? '✅' : '❌'}
+            </span>
+          </div>`;
       });
       verificationContent.innerHTML = verifHtml;
 

@@ -67,13 +67,13 @@
     },
     {
       id: '3-talik-oddiyIteratsiya',
-      label: '3-TALIK ODDİY ITERATSIYA USULI',
+      label: 'ODDİY ITERATSIYA USULI',
       icon: '🔄',
       href: base + 'src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html',
     },
     {
       id: 'zeydel',
-      label: 'ZEYDEL USULI N',
+      label: 'ZEYDEL USULI',
       icon: '🧮',
       href: base + 'src/Sonli-Usullar/Zeydel-usuli.html',
     },
@@ -107,12 +107,12 @@
     //   icon: '📋',
     //   href: base + 'src/Sonli-Usullar/Nazariya.html',
     // },
-    {
-      id: 'privacy',
-      label: 'MAXFIYLIK SIOYOSATI',
-      icon: '📋',
-      href: base + 'src/privacy.html',
-    },
+    // {
+    //   id: 'privacy',
+    //   label: 'MAXFIYLIK SIOYOSATI',
+    //   icon: '📋',
+    //   href: base + 'src/privacy.html',
+    // },
   ];
 
   // ── Aktiv sahifani aniqlash ─────────────────────────────────────────
