@@ -273,6 +273,9 @@
   .fixed {
     position: fixed;
   }
+  .fixed\! {
+    position: fixed !important;
+  }
   .relative {
     position: relative;
   }
@@ -290,6 +293,9 @@
   }
   .right-0 {
     right: calc(var(--spacing) * 0);
+  }
+  .isolate {
+    isolation: isolate;
   }
   .col-span-2 {
     grid-column: span 2 / span 2;
@@ -1138,6 +1144,10 @@
   }
   .opacity-60 {
     opacity: 60%;
+  }
+  .shadow {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-\[2px_2px_0px_\#000\] {
     --tw-shadow: 2px 2px 0px var(--tw-shadow-color, #000);

@@ -1,0 +1,238 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   DARK MODE QUICK REFERENCE GUIDE                          ║
+║                        Sonli Usullar v2.3                                   ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 QUICK START (30 SECONDS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Add these 2 lines to the <head> of any HTML page:
+
+  <link rel="stylesheet" href="path/to/dark-mode.css">
+  <script src="path/to/dark-mode.js"></script>
+
+Done! The 🌙 toggle button appears automatically.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 FILE PATHS FOR DIFFERENT LOCATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FROM index.html (root directory):
+  <link rel="stylesheet" href="src/assets/css/dark-mode.css">
+  <script src="src/assets/js/dark-mode.js"></script>
+
+FROM src/about.html:
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <script src="assets/js/dark-mode.js"></script>
+
+FROM src/privacy.html:
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <script src="assets/js/dark-mode.js"></script>
+
+FROM src/Sonli-Usullar/Iteratsiya-Usuli.html:
+  <link rel="stylesheet" href="../../src/assets/css/dark-mode.css">
+  <script src="../../src/assets/js/dark-mode.js"></script>
+
+(Rule: Always go up directories until you reach "src/assets/css/dark-mode.css")
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 CSS VARIABLES (Use in Your Styles)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BACKGROUNDS:
+  --bg-primary              Main background color
+  --bg-secondary            Hover/secondary backgrounds
+  --bg-tertiary             Tertiary backgrounds
+  --card-bg                 Card/container background
+  --input-bg                Input field background
+  --button-bg               Button background
+
+TEXT COLORS:
+  --text-primary            Main text color
+  --text-secondary          Secondary/lighter text
+  --text-tertiary           Muted/very light text
+  --button-text             Button text
+  --input-text              Input text
+
+ACCENTS & BORDERS:
+  --accent-primary          Cyan (#00f2ff) - main accent
+  --accent-secondary        Magenta (#ff00ea) - secondary accent
+  --border-color            General border color
+  --border-dark             Dark borders
+  --card-border             Card border
+  --input-border            Input border
+  --button-border           Button border
+
+OTHER:
+  --transition-speed        Transition duration (0.3s ease)
+  --card-shadow             Box shadow for cards
+  --loader-border           Loading spinner border
+  --loader-accent           Loading spinner accent
+
+EXAMPLE USAGE:
+  .my-element {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+    transition: all var(--transition-speed);
+  }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💻 JAVASCRIPT API (Advanced)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Get current theme:
+  window.DarkMode.get()  // Returns: 'light' or 'dark'
+
+Set theme:
+  window.DarkMode.set('dark', true)   // true = animate transition
+  window.DarkMode.set('light', true)
+
+Toggle theme:
+  window.DarkMode.toggle()
+
+Inject toggle button manually:
+  window.DarkMode.injectToggle()
+
+Listen for theme changes:
+  window.addEventListener('theme-changed', (e) => {
+    console.log('Theme:', e.detail.theme);  // 'light' or 'dark'
+  });
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 KEY FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ No Flickering        — Theme applied before page renders (in <head>)
+✅ Persistent           — Saved to localStorage, survives page refresh
+✅ System Aware         — Respects prefers-color-scheme automatically
+✅ Smooth Transitions   — 0.3s ease when toggling themes
+✅ Accessible           — ARIA labels, keyboard support
+✅ Mobile Optimized     — Responsive toggle button
+✅ Works Everywhere     — All elements, cards, inputs automatically styled
+✅ Premium Design       — Proper contrast, not just inverted colors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧪 TESTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Test persistence:
+  1. Toggle dark mode (click 🌙 button)
+  2. Refresh page (Ctrl+R)
+  3. Should stay in dark mode
+
+Test system preference:
+  1. Open DevTools (F12)
+  2. Run: window.DarkMode.set('light', true)
+  3. Clear localStorage: localStorage.clear()
+  4. System will auto-detect your OS theme
+
+Test no flickering:
+  1. Open DevTools Throttling (Slow 3G)
+  2. Refresh page
+  3. Should not flash light before dark
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 PAGES THAT HAVE DARK MODE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ index.html
+✅ src/Sonli-Usullar/Iteratsiya-Usuli.html
+
+📝 Still need dark mode added:
+  - src/Sonli-Usullar/*.html (all other method pages)
+  - src/about.html
+  - src/privacy.html
+  - Any other HTML pages
+
+(Just add the 2-line snippet above to each one)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem: Toggle button not showing
+Solution: 
+  • Check DevTools (F12) → Network tab → dark-mode.js loaded?
+  • Check Console for JavaScript errors
+  • Verify file paths are correct
+
+Problem: Colors not changing when toggling
+Solution:
+  • Check DevTools → Elements → <html> tag has data-theme="dark"?
+  • Check dark-mode.css is loaded in Network tab
+  • Check for CSS that overrides the variables
+
+Problem: Page flickers when loading
+Solution:
+  • Ensure dark-mode.js is in <head>, not at end of <body>
+  • It must run early before other content loads
+
+Problem: Theme not saved after refresh
+Solution:
+  • Check if browser allows localStorage (not private window)
+  • Check DevTools Console for storage errors
+  • Safari private mode: localStorage disabled (expected)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📂 FILES INCLUDED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+src/assets/css/dark-mode.css        → All theme variables and styles
+src/assets/js/dark-mode.js          → Toggle logic, localStorage, API
+src/assets/js/inject-dark-mode.js   → Auto-inject (optional utility)
+
+DOCUMENTATION:
+DARK_MODE_SETUP.md                  → Complete setup guide (read first)
+DARK_MODE_EXAMPLE.html              → Live example with demo
+DARK_MODE_QUICK_REFERENCE.txt       → This file
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 COLOR PALETTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LIGHT MODE:
+  Background:   #ffffff (pure white)
+  Text:         #0f172a (dark blue-gray)
+  Accent:       #00f2ff (cyan)
+  Secondary:    #ff00ea (magenta)
+  Border:       #cbd5e1 (light gray)
+
+DARK MODE:
+  Background:   #0f172a (dark blue-gray) - not pure black!
+  Text:         #f1f5f9 (light gray-white)
+  Accent:       #00f2ff (cyan - unchanged)
+  Secondary:    #ff00ea (magenta - unchanged)
+  Border:       #334155 (medium gray)
+
+This provides good contrast and comfortable reading in both modes.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ PRO TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Always add dark mode CSS/JS in the <head>, not at end of <body>
+2. Use var(--text-primary) instead of hardcoding colors
+3. The toggle button is auto-injected, you don't need to add it
+4. localStorage key is 'theme-preference' (don't use it for other things)
+5. Tab to the toggle button and press Space to toggle (keyboard accessible)
+6. Dark mode CSS file is ~10KB, JS is ~4KB (minimal overhead)
+7. To customize colors, edit the :root variables in dark-mode.css
+8. The system respects user's OS dark mode preference automatically
+9. Dark mode persists across all pages (global preference)
+10. No frameworks needed - pure CSS and vanilla JavaScript
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📞 SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For detailed documentation, see: DARK_MODE_SETUP.md
+For live examples, open: DARK_MODE_EXAMPLE.html
+For implementation help, check the troubleshooting section above.
+
+Questions? Check the DevTools Console (F12) for error messages.
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                        HAPPY DARK MODE CODING! 🌙                         ║
+╚════════════════════════════════════════════════════════════════════════════╝

@@ -1,0 +1,327 @@
+/**
+ * dark-mode.css — Production-level dark mode system for Sonli Usullar
+ * Features: CSS variables, smooth transitions, localStorage persistence
+ * No flickering on load (theme applied before render)
+ */
+
+/* ══════════════════════════════════════════════
+   THEME VARIABLES (Light & Dark)
+   ══════════════════════════════════════════════ */
+
+:root {
+  /* Light Theme (Default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e9ecef;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  
+  --border-color: #cbd5e1;
+  --border-dark: #000000;
+  
+  --accent-primary: #00f2ff;
+  --accent-secondary: #ff00ea;
+  --accent-tertiary: #64748b;
+  
+  --card-bg: #ffffff;
+  --card-border: #000000;
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  
+  --input-bg: #ffffff;
+  --input-border: #000000;
+  --input-text: #0f172a;
+  
+  --button-bg: #ffffff;
+  --button-text: #0f172a;
+  --button-border: #000000;
+  
+  --loader-border: #e2e8f0;
+  --loader-accent: #00f2ff;
+  
+  --transition-speed: 0.3s ease;
+}
+
+/* Dark Theme */
+:root[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1a2332;
+  --bg-tertiary: #222f3e;
+  
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  
+  --border-color: #334155;
+  --border-dark: #1a2332;
+  
+  --accent-primary: #00f2ff;
+  --accent-secondary: #ff00ea;
+  --accent-tertiary: #64748b;
+  
+  --card-bg: #1a2332;
+  --card-border: #334155;
+  --card-shadow: rgba(0, 0, 0, 0.5);
+  
+  --input-bg: #222f3e;
+  --input-border: #334155;
+  --input-text: #f1f5f9;
+  
+  --button-bg: #1a2332;
+  --button-text: #f1f5f9;
+  --button-border: #334155;
+  
+  --loader-border: #334155;
+  --loader-accent: #00f2ff;
+}
+
+/* ══════════════════════════════════════════════
+   SMOOTH TRANSITIONS
+   ══════════════════════════════════════════════ */
+
+html, body, * {
+  transition: background-color var(--transition-speed), 
+              color var(--transition-speed),
+              border-color var(--transition-speed),
+              box-shadow var(--transition-speed);
+}
+
+/* Prevent transition on initial page load */
+html.no-transition,
+html.no-transition * {
+  transition: none !important;
+}
+
+/* ══════════════════════════════════════════════
+   GLOBAL ELEMENT STYLING
+   ══════════════════════════════════════════════ */
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* All text and headings */
+h1, h2, h3, h4, h5, h6, p, span, a, div {
+  color: var(--text-primary);
+}
+
+/* Links */
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Cards and containers */
+.cyber-card, .module-card, .stat-card {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+  box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+.module-card {
+  color: var(--text-primary);
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+.module-card:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Stat cards */
+.stat-card {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+.stat-card:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Input fields */
+input, textarea, select {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-primary);
+  opacity: 0.3;
+}
+
+/* Buttons */
+.cyber-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border-color: var(--button-border);
+}
+
+.cyber-button:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Badges */
+.badge {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* Headers */
+.cyber-header {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+/* Ticker wrap */
+.ticker-wrap {
+  background-color: var(--bg-tertiary);
+  color: var(--accent-primary);
+  border-color: var(--border-dark);
+}
+
+/* ══════════════════════════════════════════════
+   PAGE LOADER (dark mode support)
+   ══════════════════════════════════════════════ */
+
+#app-loader {
+  background: var(--bg-primary);
+}
+
+.loader-ring {
+  border-color: var(--loader-border);
+  border-top-color: var(--loader-accent);
+}
+
+/* ══════════════════════════════════════════════
+   SPLASH SCREEN (light mode default)
+   ══════════════════════════════════════════════ */
+
+#app-splash {
+  background: var(--bg-primary);
+}
+
+.splash-title {
+  color: var(--text-primary);
+}
+
+.splash-subtitle {
+  color: var(--text-tertiary);
+}
+
+.splash-ring::before {
+  border-top-color: var(--accent-primary);
+  border-right-color: var(--accent-primary);
+}
+
+/* ══════════════════════════════════════════════
+   SIDEBAR (dark mode support)
+   ══════════════════════════════════════════════ */
+
+.sidebar {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+.sidebar-item {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  background-color: var(--bg-secondary);
+  color: var(--accent-primary);
+}
+
+.sidebar-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ══════════════════════════════════════════════
+   DARK MODE TOGGLE BUTTON
+   ══════════════════════════════════════════════ */
+
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--button-bg);
+  border: 2px solid var(--button-border);
+  color: var(--text-primary);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, 
+              background-color var(--transition-speed),
+              color var(--transition-speed),
+              border-color var(--transition-speed);
+  box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+  background-color: var(--bg-secondary);
+}
+
+.dark-mode-toggle:active {
+  transform: scale(0.95);
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE: Mobile adjustments
+   ══════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .dark-mode-toggle {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    top: 12px;
+    right: 12px;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   UTILITY CLASSES for forced light/dark
+   ══════════════════════════════════════════════ */
+
+.force-light {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.force-dark {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* ══════════════════════════════════════════════
+   PRINT MEDIA (always light)
+   ══════════════════════════════════════════════ */
+
+@media print {
+  :root {
+    --bg-primary: #ffffff;
+    --text-primary: #000000;
+  }
+}

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Mode Setup Example — Sonli Usullar</title>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       STEP 1: ADD DARK MODE CSS AND JS IN THE HEAD
+       These should be added EARLY in the head, before other stylesheets
+       ════════════════════════════════════════════════════════════════ -->
+  <link rel="stylesheet" href="src/assets/css/dark-mode.css">
+  <script src="src/assets/js/dark-mode.js"></script>
+  <!-- ════════════════════════════════════════════════════════════════ -->
+
+  <!-- Example: Tailwind or other stylesheets can go here -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p, li {
+      margin-bottom: 0.75rem;
+      line-height: 1.8;
+    }
+
+    code {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .example-box {
+      background-color: var(--card-bg);
+      border: 2px solid var(--border-dark);
+      padding: 20px;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+    }
+
+    .step {
+      background-color: var(--bg-secondary);
+      padding: 15px;
+      margin: 1rem 0;
+      border-left: 4px solid var(--accent-primary);
+      border-radius: 4px;
+    }
+
+    .highlight {
+      background-color: var(--accent-primary);
+      color: #000;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 2rem 0;
+    }
+
+    .demo-card {
+      background-color: var(--card-bg);
+      border: 2px solid var(--card-border);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px var(--card-shadow);
+    }
+
+    .demo-card h3 {
+      margin-top: 0;
+      color: var(--accent-primary);
+    }
+
+    .button {
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: 2px solid var(--button-border);
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: var(--bg-secondary);
+      transform: translateY(-2px);
+    }
+
+    .input-demo {
+      background-color: var(--input-bg);
+      color: var(--input-text);
+      border: 2px solid var(--input-border);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 0.5rem 0;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .note {
+      background-color: var(--bg-secondary);
+      border-left: 4px solid var(--accent-secondary);
+      padding: 15px;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    .success {
+      background-color: var(--bg-secondary);
+      border-left: 4px solid #10b981;
+      padding: 15px;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ════════════════════════════════════════════════════════════════
+       THAT'S IT! The toggle button is automatically injected.
+       The rest is just your normal HTML content.
+       ════════════════════════════════════════════════════════════════ -->
+
+  <div class="container">
+    <h1>🌙 Dark Mode Setup — Complete Example</h1>
+    <p style="font-size: 1.2rem; color: var(--text-secondary);">
+      Click the <span class="highlight">🌙</span> button in the top-right corner to toggle dark mode.
+    </p>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>✨ What You Get</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <div class="example-box">
+      <ul>
+        <li>🎨 <strong>Automatic theme switching</strong> — All colors change automatically</li>
+        <li>💾 <strong>Persistent preference</strong> — Your choice is saved and remembered</li>
+        <li>🌍 <strong>System aware</strong> — Respects your OS dark/light mode preference</li>
+        <li>⚡ <strong>No flickering</strong> — Theme applied before page renders</li>
+        <li>📱 <strong>Mobile optimized</strong> — Works perfectly on all devices</li>
+        <li>♿ <strong>Accessible</strong> — Full keyboard and screen reader support</li>
+      </ul>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>🚀 How to Add Dark Mode to Your Pages</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <div class="step">
+      <h3>Step 1: Add to Your HTML Head (2 lines)</h3>
+      <p>Add these lines to the <code>&lt;head&gt;</code> section of your HTML file:</p>
+      <pre><code>&lt;head&gt;
+  &lt;!-- Your other meta tags and styles --&gt;
+  
+  &lt;!-- DARK MODE --&gt;
+  &lt;link rel="stylesheet" href="path/to/dark-mode.css"&gt;
+  &lt;script src="path/to/dark-mode.js"&lt;/script&gt;
+&lt;/head&gt;</code></pre>
+    </div>
+
+    <div class="step">
+      <h3>Step 2: Use CSS Variables (Optional)</h3>
+      <p>Your CSS automatically uses the theme variables. But if you want custom styling:</p>
+      <pre><code>/* Light mode (default) */
+.my-element {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* Automatically switches in dark mode! */</code></pre>
+    </div>
+
+    <div class="step">
+      <h3>Step 3: Done!</h3>
+      <p>
+        That's it! The dark mode toggle button appears automatically in the top-right corner.
+        All your elements automatically theme themselves.
+      </p>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>📁 File Paths for Different Locations</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <div class="demo-section">
+      <div class="demo-card">
+        <h3>📄 index.html (root)</h3>
+        <pre><code>&lt;link rel="stylesheet" 
+  href="src/assets/css/dark-mode.css"&gt;
+&lt;script src="src/assets/js/dark-mode.js"&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="demo-card">
+        <h3>📄 src/about.html</h3>
+        <pre><code>&lt;link rel="stylesheet" 
+  href="assets/css/dark-mode.css"&gt;
+&lt;script src="assets/js/dark-mode.js"&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="demo-card">
+        <h3>📄 src/Sonli-Usullar/method.html</h3>
+        <pre><code>&lt;link rel="stylesheet" 
+  href="../../src/assets/css/dark-mode.css"&gt;
+&lt;script src="../../src/assets/js/dark-mode.js"&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>🎨 CSS Variables Available</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <div class="note">
+      <strong>All CSS variables update automatically when dark mode is toggled.</strong>
+    </div>
+
+    <h3>Background Colors</h3>
+    <ul>
+      <li><code>--bg-primary</code> — Main background color</li>
+      <li><code>--bg-secondary</code> — Secondary background (hover states)</li>
+      <li><code>--bg-tertiary</code> — Tertiary background</li>
+      <li><code>--card-bg</code> — Card/container background</li>
+      <li><code>--input-bg</code> — Input field background</li>
+      <li><code>--button-bg</code> — Button background</li>
+    </ul>
+
+    <h3>Text Colors</h3>
+    <ul>
+      <li><code>--text-primary</code> — Main text color</li>
+      <li><code>--text-secondary</code> — Secondary text (lighter)</li>
+      <li><code>--text-tertiary</code> — Tertiary text (even lighter)</li>
+      <li><code>--button-text</code> — Button text color</li>
+      <li><code>--input-text</code> — Input text color</li>
+    </ul>
+
+    <h3>Accent & Border Colors</h3>
+    <ul>
+      <li><code>--accent-primary</code> — Primary accent (#00f2ff cyan)</li>
+      <li><code>--accent-secondary</code> — Secondary accent (#ff00ea magenta)</li>
+      <li><code>--border-color</code> — General border color</li>
+      <li><code>--border-dark</code> — Dark border color</li>
+      <li><code>--card-border</code> — Card border color</li>
+      <li><code>--input-border</code> — Input border color</li>
+      <li><code>--button-border</code> — Button border color</li>
+    </ul>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>🧪 Live Demo</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <p>Try these interactive elements — they automatically theme with dark mode:</p>
+
+    <div class="demo-section">
+      <div class="demo-card">
+        <h3>Text Inputs</h3>
+        <input type="text" class="input-demo" placeholder="Enter text here...">
+        <input type="email" class="input-demo" placeholder="your@email.com">
+        <input type="number" class="input-demo" placeholder="42">
+      </div>
+
+      <div class="demo-card">
+        <h3>Buttons</h3>
+        <button class="button">Normal Button</button>
+        <button class="button" style="margin-top: 0.5rem;">Another Button</button>
+      </div>
+
+      <div class="demo-card">
+        <h3>Styled Elements</h3>
+        <p><span style="background-color: var(--accent-primary); color: #000; padding: 2px 8px; border-radius: 3px;">Accent Badge</span></p>
+        <p><span style="background-color: var(--bg-secondary); padding: 2px 8px; border-radius: 3px;">Secondary Element</span></p>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>💻 JavaScript API (Advanced)</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <p>If you need to control dark mode programmatically:</p>
+
+    <pre><code>// Get current theme
+const theme = window.DarkMode.get(); // 'light' or 'dark'
+
+// Set to dark mode
+window.DarkMode.set('dark', true);
+
+// Set to light mode
+window.DarkMode.set('light', true);
+
+// Toggle between themes
+window.DarkMode.toggle();
+
+// Listen for theme changes
+window.addEventListener('theme-changed', (e) => {
+  console.log('Theme changed to:', e.detail.theme);
+});</code></pre>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>✅ Verification Checklist</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <div class="success">
+      <h3 style="margin-top: 0;">✓ Everything Working?</h3>
+      <ul>
+        <li>✓ Toggle button visible in top-right corner (🌙 or ☀️ icon)</li>
+        <li>✓ Clicking toggle switches between light and dark themes</li>
+        <li>✓ All text, buttons, and inputs change colors</li>
+        <li>✓ Background colors change appropriately</li>
+        <li>✓ Theme preference persists after refresh</li>
+        <li>✓ No flickering on page load</li>
+        <li>✓ Smooth 0.3s transitions when toggling</li>
+      </ul>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>📞 Troubleshooting</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <h3>Toggle button not appearing?</h3>
+    <div class="step">
+      <ul>
+        <li>Check that <code>dark-mode.js</code> is loaded (Open DevTools → Network tab)</li>
+        <li>Check browser console (F12) for JavaScript errors</li>
+        <li>Ensure the file path is correct relative to your HTML file</li>
+      </ul>
+    </div>
+
+    <h3>Colors not changing?</h3>
+    <div class="step">
+      <ul>
+        <li>Check that <code>dark-mode.css</code> is loaded (DevTools → Network)</li>
+        <li>Verify <code>data-theme="dark"</code> is set on <code>&lt;html&gt;</code> element</li>
+        <li>Make sure no other CSS is overriding the colors</li>
+      </ul>
+    </div>
+
+    <h3>Flickering on page load?</h3>
+    <div class="step">
+      <ul>
+        <li>Ensure dark-mode JS is in the <code>&lt;head&gt;</code>, not at the end of <code>&lt;body&gt;</code></li>
+        <li>It should be one of the first scripts to run</li>
+      </ul>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>📚 Files Included</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <pre><code>src/assets/css/dark-mode.css          → Theme variables & styling
+src/assets/js/dark-mode.js            → Core toggle logic
+src/assets/js/inject-dark-mode.js     → Auto-inject (optional)
+DARK_MODE_SETUP.md                    → Complete documentation
+DARK_MODE_EXAMPLE.html                → This file (example)</code></pre>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <h2>🎉 You're All Set!</h2>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+
+    <div class="success">
+      <p style="font-size: 1.1rem;">
+        Your dark mode system is ready to use. 
+        Just add the 2 lines to each HTML page and you're done!
+      </p>
+      <p>
+        <strong>For complete documentation:</strong> See <code>DARK_MODE_SETUP.md</code>
+      </p>
+    </div>
+
+  </div><!-- /container -->
+</body>
+</html>

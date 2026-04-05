@@ -1,0 +1,467 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║            DARK MODE SYSTEM ARCHITECTURE & DATA FLOW                       ║
+║                    Sonli Usullar v2.3                                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 COMPONENT STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                         HTML PAGE                                    │
+│                    (index.html, etc.)                               │
+│                                                                      │
+│  <head>                                                             │
+│    ┌───────────────────────────────────────────────────────────┐  │
+│    │  DARK MODE CSS + JS INJECTED HERE                        │  │
+│    │  ┌─────────────────────────────────────────────────────┐ │  │
+│    │  │ <link rel="stylesheet" href="dark-mode.css">       │ │  │
+│    │  │ <script src="dark-mode.js"></script>               │ │  │
+│    │  │                                                     │ │  │
+│    │  │ These run FIRST, before page renders               │ │  │
+│    │  │ Prevents Flash of Unstyled Content (FOUC)         │ │  │
+│    │  └─────────────────────────────────────────────────────┘ │  │
+│    └───────────────────────────────────────────────────────────┘  │
+│  </head>                                                            │
+│                                                                      │
+│  <body>                                                             │
+│    ┌───────────────────────────────────────────────────────────┐  │
+│    │ Page Content (colors auto-theme via CSS variables)       │  │
+│    │                                                            │  │
+│    │ ┌─────────────────────────────────────────────────────┐  │  │
+│    │ │ TOGGLE BUTTON (Injected by dark-mode.js)           │  │  │
+│    │ │ Position: top-right fixed                           │  │  │
+│    │ │ Icon: 🌙 (light mode) or ☀️ (dark mode)           │  │  │
+│    │ │ Click handler: window.DarkMode.toggle()             │  │  │
+│    │ └─────────────────────────────────────────────────────┘  │  │
+│    └───────────────────────────────────────────────────────────┘  │
+│  </body>                                                            │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 DATA FLOW DIAGRAM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAGE LOAD SEQUENCE (No Flickering)
+──────────────────────────────────
+
+1. User visits page
+   │
+   ├─→ Browser loads HTML
+   │
+   ├─→ <head> is parsed
+   │   │
+   │   └─→ dark-mode.css is loaded (CSS variables defined)
+   │   │
+   │   └─→ dark-mode.js starts executing
+   │       │
+   │       ├─→ Check localStorage for 'theme-preference'
+   │       │   ├─ If found → use saved theme (e.g., 'dark')
+   │       │   └─ If not found → check system preference
+   │       │
+   │       ├─→ Get system preference via matchMedia API
+   │       │   └─ window.matchMedia('(prefers-color-scheme: dark)').matches
+   │       │
+   │       └─→ Set data-theme on <html> element
+   │           └─ document.documentElement.setAttribute('data-theme', 'dark')
+   │
+   ├─→ CSS applies variable values based on [data-theme] selector
+   │
+   ├─→ Page renders with CORRECT colors (no flash!)
+   │
+   └─→ Rest of page loads normally
+
+
+TOGGLE BUTTON INTERACTION
+─────────────────────────
+
+User clicks toggle button
+   │
+   └─→ dark-mode.js click handler fires
+       │
+       ├─→ Get current theme: current = document.documentElement.getAttribute('data-theme')
+       │
+       ├─→ Calculate new theme: newTheme = (current === 'light') ? 'dark' : 'light'
+       │
+       ├─→ Enable CSS transitions: remove 'no-transition' class
+       │
+       ├─→ Set new theme: document.documentElement.setAttribute('data-theme', newTheme)
+       │
+       ├─→ Save to localStorage: localStorage.setItem('theme-preference', newTheme)
+       │
+       ├─→ Update toggle icon: button.textContent = newTheme === 'dark' ? '☀️' : '🌙'
+       │
+       └─→ Dispatch custom event: window.dispatchEvent(new CustomEvent('theme-changed', ...))
+
+
+SYSTEM PREFERENCE CHANGE
+───────────────────────
+
+User changes OS theme (e.g., Windows dark mode toggle)
+   │
+   └─→ Browser detects via matchMedia listener
+       │
+       ├─→ Check if user has saved preference in localStorage
+       │   ├─ If yes → don't change (user's choice takes priority)
+       │   └─ If no → auto-update to new system preference
+       │
+       └─→ Apply new theme (or ignore if user has saved preference)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 CSS VARIABLE RESOLUTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LIGHT MODE (Default)
+───────────────────
+
+<html>                          <!-- No data-theme attribute or data-theme="light" -->
+  <body style="background-color: var(--bg-primary)">
+    │
+    └─→ CSS cascades down from :root
+        │
+        └─→ :root { --bg-primary: #ffffff; }
+            │
+            └─→ Resolved: background-color = #ffffff (WHITE)
+
+
+DARK MODE
+───────────
+
+<html data-theme="dark">        <!-- Set by dark-mode.js -->
+  <body style="background-color: var(--bg-primary)">
+    │
+    └─→ CSS cascades down from :root[data-theme="dark"]
+        │
+        └─→ :root[data-theme="dark"] { --bg-primary: #0f172a; }
+            │
+            └─→ Resolved: background-color = #0f172a (DARK)
+
+
+ALL ELEMENTS AUTOMATICALLY THEME
+─────────────────────────────────
+
+<div class="card">              <!-- Your existing HTML, unchanged -->
+  <h1>Title</h1>
+</div>
+
+CSS:
+  .card {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+  }
+
+Light mode: var(--card-bg) → #ffffff
+Dark mode:  var(--card-bg) → #1a2332
+
+Result: No changes to HTML needed! Pure CSS theming.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💾 STORAGE & PERSISTENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+localStorage Key: 'theme-preference'
+────────────────────────────────────
+
+┌─────────────────────────────┐
+│    Browser Storage          │
+├─────────────────────────────┤
+│ Key    | Value              │
+├────────┼────────────────────┤
+│ theme- │ 'light' or 'dark'  │
+│preference                   │
+└─────────────────────────────┘
+
+Lifetime: Persistent (survives browser restart)
+Scope:    Per origin (per domain)
+Access:   Via JavaScript API
+Size:     Very small (< 1KB)
+
+JavaScript API:
+  └─→ localStorage.getItem('theme-preference')     // Get value
+  └─→ localStorage.setItem('theme-preference', 'dark')  // Set value
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 THEME VARIABLE HIERARCHY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BACKGROUNDS (5 levels)
+──────────────────────
+
+--bg-primary (darkest/lightest)
+  ├─ Main page background
+  ├ Used in: <body>, main containers
+  └─ Light: #ffffff, Dark: #0f172a
+
+--bg-secondary (medium)
+  ├─ Hover states, secondary sections
+  ├─ Used in: :hover, secondary panels
+  └─ Light: #f5f5f5, Dark: #1a2332
+
+--bg-tertiary (lightest/medium-dark)
+  ├─ Subtle backgrounds, less prominent
+  ├─ Used in: borders, subtle backgrounds
+  └─ Light: #e9ecef, Dark: #222f3e
+
+
+COMPONENT BACKGROUNDS (Specific)
+─────────────────────────────────
+
+--card-bg
+  ├─ Cards, containers, panels
+  └─ Light: #ffffff, Dark: #1a2332
+
+--input-bg
+  ├─ Input fields, text areas
+  └─ Light: #ffffff, Dark: #222f3e
+
+--button-bg
+  ├─ Buttons
+  └─ Light: #ffffff, Dark: #1a2332
+
+
+TEXT COLORS (3 levels)
+──────────────────────
+
+--text-primary (strongest)
+  ├─ Main body text, headings
+  └─ Light: #0f172a (dark), Dark: #f1f5f9 (light)
+
+--text-secondary (medium)
+  ├─ Secondary text, lighter emphasis
+  └─ Light: #475569 (medium gray), Dark: #cbd5e1 (light gray)
+
+--text-tertiary (weakest)
+  ├─ Muted text, placeholders, helper text
+  └─ Light: #94a3b8 (light gray), Dark: #94a3b8 (medium gray)
+
+
+BORDER COLORS (2 types)
+───────────────────────
+
+--border-color (standard)
+  ├─ Most borders
+  └─ Light: #cbd5e1, Dark: #334155
+
+--border-dark (prominent)
+  ├─ Important borders, outlines
+  └─ Light: #000000, Dark: #1a2332
+
+
+ACCENT COLORS (Fixed - same in both modes)
+───────────────────────────────────────────
+
+--accent-primary = #00f2ff (Cyan)
+  ├─ Main accent color
+  └─ Used in: highlights, important elements
+
+--accent-secondary = #ff00ea (Magenta)
+  ├─ Secondary accent
+  └─ Used in: alternative highlights
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ TRANSITION MECHANISM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SMOOTH COLOR TRANSITIONS
+────────────────────────
+
+* {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+When theme changes:
+  ├─ CSS variables are updated
+  ├─ All properties using those variables update
+  ├─ Transition CSS rule smoothly animates changes
+  └─ Takes 0.3s (customizable via --transition-speed)
+
+Timeline:
+  0.0s  → User clicks toggle
+  0.0s  → data-theme attribute changes
+  0.0s  → CSS variables update
+  0.0s  → Transitions start
+  0.3s  → Transitions complete
+  ✓     → Theme fully changed
+
+
+NO-TRANSITION CLASS (on initial load)
+──────────────────────────────────────
+
+html.no-transition,
+html.no-transition * {
+  transition: none !important;
+}
+
+Purpose: Prevent flickering on initial page load
+  ├─ Added by dark-mode.js before applying theme
+  ├─ Theme is applied without transition
+  ├─ Then class is removed
+  └─ Future toggles use smooth 0.3s transition
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔐 PREFERENCE PRIORITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When determining theme on page load:
+
+Priority Level 1 (Highest)
+  └─→ localStorage.getItem('theme-preference')
+      ├─ User has manually set preference
+      └─ Always respected, even if system theme changes
+
+Priority Level 2 (Medium)
+  └─→ window.matchMedia('(prefers-color-scheme: dark)').matches
+      ├─ System/OS theme preference
+      ├─ Windows: Settings → Personalization → Colors
+      ├─ macOS: System Preferences → General → Appearance
+      └─ Used only if user hasn't set preference
+
+Priority Level 3 (Lowest)
+  └─→ Default to 'light' mode
+      └─ Fallback if all else fails
+
+
+Example Decision Tree:
+──────────────────────
+
+localStorage has 'dark'?
+  ├─ YES → Use 'dark' (ignore system preference)
+  └─ NO  → Check system preference
+           ├─ System is dark? → Use 'dark'
+           ├─ System is light? → Use 'light'
+           └─ Unknown? → Use 'light' (default)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 EVENT FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CUSTOM EVENT: 'theme-changed'
+─────────────────────────────
+
+When theme changes:
+  │
+  └─→ window.dispatchEvent(new CustomEvent('theme-changed', {
+      detail: { theme: 'dark' }
+      }))
+
+Listening for theme changes:
+  │
+  └─→ window.addEventListener('theme-changed', (e) => {
+      console.log('New theme:', e.detail.theme);  // 'light' or 'dark'
+      // Your custom code here (e.g., update analytics, refresh UI, etc.)
+      });
+
+Use cases:
+  ├─ Chart libraries need to re-render in new colors
+  ├─ Analytics tracking theme preference
+  ├─ Update server-side user preference
+  └─ Sync theme across multiple windows
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 PUBLIC API
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+window.DarkMode Object
+──────────────────────
+
+window.DarkMode.get()
+  ├─ Returns: 'light' or 'dark'
+  ├─ Example: const current = window.DarkMode.get();
+  └─ Read-only function
+
+window.DarkMode.set(theme, shouldTransition)
+  ├─ Parameters:
+  │   ├─ theme: 'light' or 'dark'
+  │   └─ shouldTransition: true (animate) or false (instant)
+  ├─ Example: window.DarkMode.set('dark', true);
+  └─ Saves to localStorage
+
+window.DarkMode.toggle()
+  ├─ No parameters
+  ├─ Switches between light ↔ dark
+  ├─ Example: window.DarkMode.toggle();
+  └─ Smooth 0.3s transition
+
+window.DarkMode.injectToggle()
+  ├─ No parameters
+  ├─ Manually injects toggle button
+  ├─ Example: window.DarkMode.injectToggle();
+  └─ Already called automatically
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 FILE RELATIONSHIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+dark-mode.css
+├─ Defines all CSS variables (light & dark)
+├─ Styles all elements using variables
+├─ Loaded in <head>
+└─ ~10KB uncompressed, ~6KB gzipped
+
+dark-mode.js
+├─ Reads/writes localStorage
+├─ Sets data-theme attribute
+├─ Injects toggle button
+├─ Provides window.DarkMode API
+├─ Runs synchronously in <head>
+└─ ~4KB uncompressed, ~2KB gzipped
+
+HTML Pages
+├─ Include both CSS and JS in <head>
+├─ No other changes needed
+└─ CSS variables automatically apply to all elements
+
+Toggle Button
+├─ Auto-injected by dark-mode.js
+├─ Fixed position: top-right
+├─ Click handler calls window.DarkMode.toggle()
+└─ Icon updates dynamically
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ VERIFICATION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+System is working correctly if:
+
+✓ Toggle button appears in top-right corner
+✓ Clicking toggle switches between light (🌙) and dark (☀️)
+✓ All backgrounds change color smoothly
+✓ All text changes color smoothly
+✓ Buttons, inputs, cards all update colors
+✓ Transitions take 0.3 seconds (not instant, not slow)
+✓ No flickering or flashing on page load
+✓ Theme preference saved (toggle, refresh, stays toggled)
+✓ DevTools Console shows no errors
+✓ DevTools → Elements → <html> has data-theme="dark" when dark mode on
+✓ System theme changes are detected (if no localStorage preference)
+✓ Keyboard accessible (Tab to button, Space/Enter to toggle)
+✓ Works on mobile (toggle visible and clickable)
+
+✗ If any of above fails, check:
+  ├─ File paths (DevTools Network tab)
+  ├─ JavaScript errors (DevTools Console)
+  ├─ localStorage enabled (DevTools Application tab)
+  └─ data-theme attribute present on <html>
+
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                     END ARCHITECTURE DIAGRAM                              ║
+║                                                                            ║
+║  For questions or issues, refer to:                                       ║
+║  - DARK_MODE_SETUP.md (complete guide)                                    ║
+║  - DARK_MODE_QUICK_REFERENCE.txt (quick lookup)                           ║
+║  - DARK_MODE_EXAMPLE.html (interactive demo)                              ║
+╚════════════════════════════════════════════════════════════════════════════╝
