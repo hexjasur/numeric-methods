@@ -52,8 +52,18 @@
   <!-- 9. HREFLANG -->
   <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/">
 
-  <!-- 10. MANIFEST -->
+  <!-- 10. MANIFEST & PWA -->
   <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sonli Usullar">
+  <meta name="application-name" content="Sonli Usullar">
+  <meta name="msapplication-TileColor" content="#0f172a">
+  <meta name="msapplication-TileImage" content="/src/assets/images/favicon-192x192.png">
+  <meta name="theme-color" content="#00f2ff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f172a"  media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-startup-image" href="/src/assets/images/favicon-512x512.png">
 
   <!-- 11. STRUCTURED DATA -->
   <script type="application/ld+json">
@@ -422,8 +432,10 @@
 
   </div><!-- /main-content -->
 
-  <!-- Native enhancements: loader, share FAB -->
+  <!-- Native enhancements: loader, share FAB, SW reload -->
   <script src="src/assets/js/capacitor-app.js"></script>
+  <!-- PWA: Service Worker registration, install prompt, offline badge -->
+  <script src="src/assets/js/pwa-install.js"></script>
 
 </body>
 

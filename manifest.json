@@ -1,87 +1,96 @@
 {
-  "name": "Sonli Usullar - Numerical Methods Calculator",
+  "name": "Sonli Usullar — Numerical Methods",
   "short_name": "Sonli Usullar",
-  "description": "Interactive educational platform for learning numerical methods with step-by-step calculators, visualizations, and tutorials",
-  "start_url": "https://sonli-usullar.uz/",
+  "description": "O'zbek tilida sonli usullar fanini interaktiv o'rganish platformasi. Iteratsiya, Bisection, Nyuton, Vatar, Gauss-Seydel usullari.",
+  "start_url": "/",
+  "id": "/",
   "scope": "/",
   "display": "standalone",
-  "theme_color": "#1a1a2e",
-  "background_color": "#ffffff",
-  "orientation": "portrait-primary",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
+  "theme_color": "#00f2ff",
+  "background_color": "#0f172a",
+  "orientation": "any",
+  "lang": "uz",
+  "dir": "ltr",
   "icons": [
     {
-      "src": "src/assets/images/favicon-192x192.png",
+      "src": "/src/assets/images/favicon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "src/assets/images/favicon-512x512.png",
+      "src": "/src/assets/images/favicon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "src/assets/images/favicon-192x192.png",
+      "src": "/src/assets/images/favicon-192x192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/src/assets/images/favicon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "src/assets/images/screenshot-540x720.png",
-      "sizes": "540x720",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "src/assets/images/screenshot-1280x720.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
+      "src": "/src/assets/images/og-image-1200x630.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Sonli Usullar — Asosiy sahifa"
     }
   ],
-  "categories": [
-    "education",
-    "productivity"
-  ],
+  "categories": ["education", "productivity", "utilities"],
   "shortcuts": [
     {
-      "name": "Newton's Method Calculator",
-      "short_name": "Newton's Method",
-      "description": "Solve equations using Newton's method with step-by-step visualization",
-      "url": "src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html",
-      "icons": [
-        {
-          "src": "src/assets/images/favicon-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
+      "name": "Iteratsiya Usuli",
+      "short_name": "Iteratsiya",
+      "description": "Iteratsiya usuli bilan tenglamani yechish",
+      "url": "/src/Sonli-Usullar/Iteratsiya-Usuli.html",
+      "icons": [{ "src": "/src/assets/images/favicon-192x192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Bisection Method Solver",
-      "short_name": "Bisection Method",
-      "description": "Find roots using the bisection algorithm",
-      "url": "src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html",
-      "icons": [
-        {
-          "src": "src/assets/images/favicon-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
+      "name": "Urinma (Nyuton) Usuli",
+      "short_name": "Nyuton",
+      "description": "Nyuton usuli bilan tenglamani yechish",
+      "url": "/src/Sonli-Usullar/Urinma-Usuli.html",
+      "icons": [{ "src": "/src/assets/images/favicon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Bisection Usuli",
+      "short_name": "Bisection",
+      "description": "Kesmani teng ikkiga bo'lish usuli",
+      "url": "/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html",
+      "icons": [{ "src": "/src/assets/images/favicon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Vatar Usuli",
+      "short_name": "Vatar",
+      "description": "Vatar (Secant) usuli bilan tenglamani yechish",
+      "url": "/src/Sonli-Usullar/Vatar-Usuli.html",
+      "icons": [{ "src": "/src/assets/images/favicon-192x192.png", "sizes": "192x192" }]
     }
   ],
+  "prefer_related_applications": false,
+  "related_applications": [],
   "share_target": {
-    "action": "/share",
-    "method": "POST",
-    "enctype": "application/x-www-form-urlencoded",
+    "action": "/",
+    "method": "GET",
     "params": {
       "title": "title",
       "text": "text",
       "url": "url"
     }
   },
-  "prefer_related_applications": false,
-  "related_applications": []
+  "protocol_handlers": [],
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
 }

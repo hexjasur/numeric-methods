@@ -31,8 +31,13 @@
       href: '/src/assets/images/favicon.ico',
     },
 
-    // 1.1 PWA Manifest
-    { tag: 'link', rel: 'manifest', href: base + 'manifest.json' },
+    // 1.1 PWA Manifest & meta
+    { tag: 'link', rel: 'manifest', href: '/manifest.json' },
+    { tag: 'meta', name: 'mobile-web-app-capable', content: 'yes' },
+    { tag: 'meta', name: 'apple-mobile-web-app-capable', content: 'yes' },
+    { tag: 'meta', name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+    { tag: 'meta', name: 'apple-mobile-web-app-title', content: 'Sonli Usullar' },
+    { tag: 'meta', name: 'application-name', content: 'Sonli Usullar' },
 
     // 1.2 Open Graph (OG) Tags for better social media sharing
     // {
@@ -123,10 +128,28 @@
     document.head.appendChild(tag);
   });
 
-  // 5. Google Fonts (Orbitron & JetBrains Mono) - Agar kerak bo'lsa
+  // 5. Google Fonts (Orbitron & JetBrains Mono)
   const fontLink = document.createElement('link');
   fontLink.rel = 'stylesheet';
   fontLink.href =
     'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap';
   document.head.appendChild(fontLink);
+
+  // 6. PWA — inject pwa-install.js once per page (skip if already on index.html which loads it directly)
+  // We append it to body end so it runs after DOM is ready.
+  // Guard against double-injection.
+  if (!document.getElementById('pwa-install-script')) {
+    function injectPWAScript() {
+      if (document.getElementById('pwa-install-script')) return;
+      const s = document.createElement('script');
+      s.id  = 'pwa-install-script';
+      s.src = '/src/assets/js/pwa-install.js';
+      document.body.appendChild(s);
+    }
+    if (document.body) {
+      injectPWAScript();
+    } else {
+      document.addEventListener('DOMContentLoaded', injectPWAScript);
+    }
+  }
 })();

@@ -1,12 +1,12 @@
 /**
- * capacitor-app.js — Native-like enhancements for Sonli Usullar Android App
+ * capacitor-app.js — Native-like enhancements for Sonli Usullar PWA
  *
  * Features:
  *  1. Page loader overlay (shows until DOM is ready, then fades out)
- *  2. Offline detection (shows styled "No Internet" screen)
- *  3. Android back-button navigation via Capacitor App plugin
- *  4. Share FAB button using Web Share API
- *  5. Splash screen fade-out trigger
+ *  2. Offline detection banner (non-blocking, syncs with SW cache)
+ *  3. Share FAB button using Web Share API
+ *  4. Splash screen fade-out trigger
+ *  5. SW controller change → auto reload on update
  */
 
 (function () {
@@ -84,12 +84,27 @@
   }
 
   /* ─────────────────────────────────────────────
+   * SW CONTROLLER CHANGE → auto reload on update
+   * ───────────────────────────────────────────── */
+  function initSWUpdateReload() {
+    if (!('serviceWorker' in navigator)) return;
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
+  }
+
+  /* ─────────────────────────────────────────────
    * INIT ALL
    * ───────────────────────────────────────────── */
   function init() {
     initLoader();
     initSplash();
     initShareFab();
+    initSWUpdateReload();
   }
 
   if (document.readyState === 'loading') {
