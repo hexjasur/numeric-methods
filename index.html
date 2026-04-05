@@ -23,7 +23,7 @@
 
   <!-- 5. FAVICON -->
   <link rel="icon" href="src/assets/images/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="src/assets/favicon.png">
+  <link rel="icon" type="image/png" href="src/assets/images/favicon.ico">
   <link rel="apple-touch-icon" href="src/assets/images/apple-touch-icon-180x180.png">
 
   <!-- 6. OPEN GRAPH -->
@@ -109,83 +109,7 @@
     /* ══════════════════════════════════════════════
        SPLASH SCREEN (Inlined to prevent FOUC)
        ══════════════════════════════════════════════ */
-    #app-splash {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
-
-    #app-splash.fade-out {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .splash-logo {
-      width: 120px;
-      height: 120px;
-      object-fit: contain;
-      animation: splash-pulse 1.6s ease-in-out infinite;
-    }
-
-    .splash-title {
-      font-family: 'Orbitron', 'Segoe UI', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      color: #0f172a;
-    }
-
-    .splash-subtitle {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #64748b;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .splash-ring {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .splash-ring::before {
-      content: '';
-      position: absolute;
-      width: 148px;
-      height: 148px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #00f2ff;
-      border-right-color: #00f2ff;
-      animation: splash-spin 1.2s linear infinite;
-    }
-
-    @keyframes splash-pulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.06);
-      }
-    }
-
-    @keyframes splash-spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+    #app-splash{position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}#app-splash.fade-out{opacity:0;visibility:hidden}.splash-logo{width:120px;height:120px;object-fit:contain;animation:1.6s ease-in-out infinite splash-pulse}.splash-title{font-family:Orbitron,'Segoe UI',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:.12em;color:#0f172a}.splash-subtitle{font-size:.75rem;font-weight:600;color:#64748b;letter-spacing:.08em;text-transform:uppercase}.splash-ring{position:relative;display:flex;align-items:center;justify-content:center}.splash-ring::before{content:'';position:absolute;width:148px;height:148px;border-radius:50%;border:3px solid transparent;border-top-color:#00f2ff;border-right-color:#00f2ff;animation:1.2s linear infinite splash-spin}@keyframes splash-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}@keyframes splash-spin{to{transform:rotate(360deg)}}
 
     /* Page-specific styles for index.html */
     .hero-counter {
@@ -282,7 +206,7 @@
        ═══════════════════════════════════════ -->
   <div id="app-splash" role="status" aria-label="Yuklanmoqda">
     <div class="splash-ring">
-      <img src="src/assets/images/logo-glass.png" alt="Sonli Usullar" class="splash-logo">
+      <img src="src/assets/images/logo-glass-optimazed.png" alt="Sonli Usullar" class="splash-logo">
     </div>
     <div class="splash-title">SONLI USULLAR</div>
     <div class="splash-subtitle">QarDU · Amaliy Matematika · 2026</div>
