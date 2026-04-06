@@ -2,12 +2,15 @@
 <html lang="uz">
 
 <head>
+  <!-- 1. Basics -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kesmani Teng Ikkiga Bo'lish (Bisection) Usuli | Sonli Usullar — sonli-usullar.uz</title>
+  <meta http-equiv="content-language" content="uz">
 
-  <!-- <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon"> -->
-
+  <!-- 2. TITLE + DESCRIPTION (ENG MUHIM) -->
+  <title>Kesmani Teng Ikkiga Bo'lish - Метод дихотомии - (Bisection) Usuli | Sonli Usullar</title>
+  <meta name="description"
+    content="Kesmani teng ikkiga bo'lish - Метод дихотомии, (bisection) usuli — algebraik tenglamalar ildizini topishning ishonchli va oddiy usuli. f(a)·f(b)<0 shartida oraliqni yarmilab, bosqichma-bosqich ildizga yaqinlashamiz. KaTeX bilan formulalar, interaktiv hisoblash va batafsil tushuntirishlar.">
 
   <!-- Head Manager (DRY) -->
   <script>
@@ -15,9 +18,13 @@
   </script>
   <script src="../assets/js/head-manager.js"></script>
 
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html">
+
+  <!-- 9. HREFLANG -->
+  <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html">
 
   <!-- 6. OPEN GRAPH -->
   <meta property="og:type" content="website">
@@ -25,35 +32,20 @@
     content="https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html">
   <meta property="og:site_name" content="Sonli Usullar">
   <meta property="og:locale" content="uz_UZ">
-  <meta property="og:title" content="Bisection Usuli — Kesmani Teng Ikkiga Bo'lish | sonli-usullar.uz">
+  <meta property="og:title" content="Метод дихотомии, Bisection Usuli — Kesmani Teng Ikkiga Bo'lish | sonli-usullar.uz">
   <meta property="og:description"
-    content="Oraliqni yarmilab ildiz topish — bisection usuli bosqichma-bosqich KaTeX va interaktiv hisob. f(a)·f(b)<0 shart, c=(a+b)/2.">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-kesmani-teng-ikkiga-bo'lish-usuli.jpg">
+    content="Метод дихотомии. Oraliqni yarmilab ildiz topish — bisection usuli bosqichma-bosqich KaTeX va interaktiv hisob. f(a)·f(b)<0 shart, c=(a+b)/2.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-bisection-method.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:type" content="image/png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Bisection Usuli | sonli-usullar.uz">
+  <meta name="twitter:title" content="Метод дихотомии, Bisection Usuli | sonli-usullar.uz">
   <meta name="twitter:description"
-    content="Kesmani teng ikkiga bo'lish — ishonchli ildiz topish usuli. KaTeX bosqichlar, interaktiv hisob. QarDU.">
-  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
-
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LearningResource",
-    "name": "Kesmani Teng Ikkiga Bo'lish (Bisection) Usuli",
-    "description": "Bisection usuli — f(a)·f(b)<0 shartida oraliqni yarmilab, algebraik tenglamalar ildizini bosqichma-bosqich topish.",
-    "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html",
-    "inLanguage": "uz",
-    "educationalLevel": "University",
-    "author": { "@type": "Person", "name": "Haydarov Jasurbek" },
-    "isPartOf": { "@type": "EducationalWebsite", "name": "Sonli Usullar", "url": "https://www.sonli-usullar.uz/" }
-  }
-  </script>
+    content="Метод дихотомии, Kesmani teng ikkiga bo'lish — ishonchli ildiz topish usuli. KaTeX bosqichlar, interaktiv hisob.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-bisection-method.png">
 
 
 
@@ -80,7 +72,7 @@
     }
 
     .step-card {
-      border-left: 4px solid #06b6d4;
+      border-left: 6px solid #06b6d4 !important;
       transition: transform 0.2s;
     }
 
@@ -128,10 +120,74 @@
     <div class="max-w-6xl mx-auto">
       <header class="p-6 mb-8 text-center cyber-card bg-white">
         <h1 class="text-3xl font-black tracking-tighter uppercase" style="font-family:'Orbitron'">
-          Kesmani teng ikkiga bo'lish: <span class="text-cyan-500">Bisection Method</span>
+          Kesmani teng ikkiga bo'lish: <br> <span class="text-purple-500 font-sans">Метод дихотомии / Bisection
+            Method</span>
         </h1>
-        <p class="text-xs mt-2 font-mono text-gray-500">Qarshi DU | Amaliy Matematika yo'nalishi uchun maxsus</p>
+        <!-- <p class="text-xs mt-2 font-mono text-gray-500">Qarshi DU | Amaliy Matematika yo'nalishi uchun maxsus</p> -->
       </header>
+
+      <div class="mb-8 p-6 cyber-card bg-yellow-100 border-l-8 border-cyan-500 shadow-lg">
+        <div
+          class="font-black text-cyan-700 mb-4 uppercase text-xs tracking-[0.2em] flex items-center border-b border-cyan-200 pb-2">
+          <span class="mr-2 text-lg">💡</span> FOYDALANUVCHI UCHUN QO'LLANMA
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-700">
+
+          <div class="space-y-3">
+            <div class="flex items-start">
+              <span class="font-bold text-cyan-600 mr-2 w-4">f(x)</span>
+              <div>
+                <p class="font-bold">Asosiy qoida:</p>
+                <p class="text-xs text-red-500 font-mono italic">sin x ❌ → sin(x) ✅</p>
+                <p class="text-[11px] text-gray-500">Argumentlarni doim qavs ichida yozing!</p>
+              </div>
+            </div>
+
+            <div class="flex items-center">
+              <span class="text-cyan-600 mr-2">📐</span>
+              <span class="font-mono bg-white px-2 py-1 rounded border shadow-sm">sin(x), cos(x), tan(x)</span>
+            </div>
+
+            <div class="flex items-center">
+              <span class="text-cyan-600 mr-2">⚡</span>
+              <span class="font-mono bg-white px-2 py-1 rounded border shadow-sm">x^2, x^(n+1), exp(x)</span>
+            </div>
+          </div>
+
+          <div class="space-y-3 border-l-0 md:border-l md:pl-6 border-gray-200">
+            <div class="flex items-center">
+              <span class="text-cyan-600 mr-2">🪵</span>
+              <div>
+                <span class="font-mono bg-white px-2 py-1 rounded border shadow-sm">log(x)</span>
+                <span class="text-[10px] text-gray-400 ml-1">(Natural log: ln)</span>
+              </div>
+            </div>
+
+            <div class="flex items-center">
+              <span class="text-cyan-600 mr-2">🔢</span>
+              <div>
+                <span class="font-mono bg-white px-2 py-1 rounded border shadow-sm">log10(x), log2(x)</span>
+              </div>
+            </div>
+
+            <div class="flex items-center">
+              <span class="text-cyan-600 mr-2">🔭</span>
+              <span class="font-mono bg-white px-2 py-1 rounded border shadow-sm">sqrt(x), cbrt(x)</span>
+            </div>
+
+            <div class="flex items-center">
+              <span class="text-cyan-600 mr-2">π</span>
+              <span class="font-mono bg-white px-2 py-1 rounded border shadow-sm">pi, e</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 p-2 bg-cyan-900 text-cyan-100 rounded-md font-mono text-[11px] text-center opacity-80">
+          Masalan: log2(x) - x^2 + pi
+        </div>
+      </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-1 space-y-6">
@@ -232,13 +288,12 @@
         let b = b_init;
         let iter = 0;
 
-        // Boshlang'ich tekshiruv
         let fa = f(a);
         let fb = f(b);
 
         if (fa * fb > 0) {
           logBox.innerHTML = `
-            <div class="p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
+            <div class="p-4 bg-white border border-gray-200 step-card rounded-lg shadow-sm text-sm">
               <strong>Xatolik!</strong> f(a) va f(b) ishoralari bir xil. 
               Oraliqning chetki nuqtalarida f(a)·f(b) < 0 sharti bajarilishi shart. <br>
               f(${a}) = ${fa.toFixed(4)}, f(${b}) = ${fb.toFixed(4)}
@@ -246,10 +301,15 @@
           return;
         }
 
-        while ((b - a) > eps) {
+        // Siklni while(true) qilamizki, oxirgi yashil qadamni ham logga qo'sha olsin
+        while (true) {
           iter++;
           let c = (a + b) / 2;
           let fc = f(c);
+          let currentDiff = b - a; // Hozirgi oraliq uzunligi
+
+          // Epsilon shartini tekshiramiz
+          const isDone = currentDiff <= eps;
 
           const stepDiv = document.createElement('div');
           stepDiv.className = "p-4 bg-white border border-gray-200 step-card rounded-lg shadow-sm text-sm";
@@ -259,9 +319,11 @@
             `f(c)·f(b) < 0 bo'lgani uchun yangi oraliq [c, b]`;
 
           stepDiv.innerHTML = `
-            <div class="flex justify-between font-bold text-cyan-600 mb-1">
-                <span>QADAM #${iter}</span>
-                <span>Oraliq uzunligi: ${(b - a).toFixed(6)}</span>
+            <div class="flex justify-between font-bold mb-1">
+                <span class="text-cyan-600">QADAM #${iter}</span>
+                <span class="${isDone ? 'text-green-600 font-black' : 'text-cyan-600'}">
+                  Oraliq uzunligi |b - a| = ${currentDiff.toFixed(6)} ${isDone ? '< ε ✓' : '> ε'}
+                </span>
             </div>
             <div class="grid grid-cols-2 gap-2 font-mono">
                 <div>a = ${a.toFixed(6)} → f(a) = <span class="${fa < 0 ? 'is-negative' : 'is-positive'}">${fa.toFixed(6)}</span></div>
@@ -271,11 +333,12 @@
                 <strong>Markaz:</strong> c = (a + b)/2 = <b>${c.toFixed(6)}</b><br>
                 <strong>Qiymat:</strong> f(c) = <span class="${fc < 0 ? 'is-negative' : 'is-positive'}">${fc.toFixed(8)}</span>
             </div>
-            <div class="text-xs text-gray-500 italic">Qaror: ${signCheck}</div>
+            <div class="text-xs text-gray-500 italic">Qaror: ${isDone ? 'Aniqlikka erishildi.' : signCheck}</div>
           `;
           logBox.appendChild(stepDiv);
 
-          if (Math.abs(fc) < 1e-15) break;
+          // To'xtash shartlari
+          if (isDone || Math.abs(fc) < 1e-15 || iter > 100) break;
 
           if (fa * fc < 0) {
             b = c;
@@ -284,17 +347,13 @@
             a = c;
             fa = fc;
           }
-
-          if (iter > 100) break; // Cheksiz sikldan himoya
         }
 
-        // Yakuniy natija
         const finalX = (a + b) / 2;
         document.getElementById('finalX').innerText = finalX.toFixed(Math.abs(Math.log10(eps)));
         document.getElementById('iterCount').innerText = iter;
         resultCard.classList.remove('hidden');
-
-        logBox.scrollTop = 0;
+        logBox.scrollTop = logBox.scrollHeight;
 
       } catch (err) {
         logBox.innerHTML = `<div class="p-4 bg-red-100 text-red-700 rounded">Xato: ${err.message}</div>`;

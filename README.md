@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/assets/images/logo-glass.png" width="130" alt="Sonli Usullar Logo"/>
+  <img src="src/assets/images/logo-glass-optimazed.png" width="130" alt="Sonli Usullar Logo"/>
 </p>
 
 <h1 align="center">📊 Sonli Usullar</h1>

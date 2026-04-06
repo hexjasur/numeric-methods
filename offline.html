@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline — Sonli Usullar</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #ecf0f1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .offline-container {
+      text-align: center;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .offline-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: rgba(255, 107, 107, 0.1);
+      border: 2px solid #ff6b6b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .offline-subtitle {
+      font-size: 14px;
+      color: #bdc3c7;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .status-info {
+      background: rgba(52, 152, 219, 0.1);
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 30px;
+      text-align: left;
+      font-size: 13px;
+      color: #ecf0f1;
+    }
+
+    .status-info strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #3498db;
+    }
+
+    .offline-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(149, 165, 166, 0.2);
+      color: #ecf0f1;
+      border: 1px solid rgba(149, 165, 166, 0.5);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(149, 165, 166, 0.3);
+      border-color: rgba(149, 165, 166, 0.7);
+    }
+
+    .offline-links {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+    }
+
+    .offline-links a {
+      color: #3498db;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .offline-links a:hover {
+      color: #2980b9;
+      text-decoration: underline;
+    }
+
+    .cached-pages {
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(46, 204, 113, 0.05);
+      border: 1px solid rgba(46, 204, 113, 0.2);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .cached-pages strong {
+      color: #2ecc71;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .cached-pages-list {
+      list-style: none;
+      font-size: 12px;
+    }
+
+    .cached-pages-list li {
+      padding: 4px 0;
+    }
+
+    .cached-pages-list a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .cached-pages-list a:hover {
+      text-decoration: underline;
+    }
+
+    .offline-tips {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(241, 196, 15, 0.05);
+      border: 1px solid rgba(241, 196, 15, 0.2);
+      border-radius: 8px;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    .offline-tips strong {
+      color: #f39c12;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .offline-tips-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .offline-tips-list li {
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .offline-tips-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #f39c12;
+    }
+
+    @media (max-width: 480px) {
+      .offline-container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .offline-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">📡</div>
+    <h1>Offline Rejimida</h1>
+    <p class="offline-subtitle">
+      Siz offline rejimida: Internet ulanmangan. Ammo allaqachon yuklab olingan sahifalarni o'qishingiz mumkin.
+    </p>
+
+    <div class="status-info">
+      <strong>💾 Kesh holatı:</strong>
+      Sizning qurilmangizda saqlangan ma'lumotlar mavjud. Quyidagi sahifalarni offline rejimida o'qishingiz mumkin.
+    </div>
+
+    <div class="offline-actions">
+      <button class="btn-primary" onclick="checkConnection()">🔄 Ulanishni qayta tekshirish</button>
+      <button class="btn-secondary" onclick="goHome()">🏠 Bosh sahifaga qaytish</button>
+    </div>
+
+    <div class="cached-pages">
+      <strong>✅ Offline da mavjud sahifalar:</strong>
+      <ul class="cached-pages-list">
+        <li><a href="/">Bosh sahifa</a></li>
+        <li><a href="/src/about.html">Biz haqimizda</a></li>
+        <li><a href="/src/privacy.html">Shaxsiylik siyosati</a></li>
+        <li><a href="/src/Sonli-Usullar/Nazariya.html">Nazariya</a></li>
+        <li><a href="/src/Sonli-Usullar/Iteratsiya-Usuli.html">Iteratsiya Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html">Oddiy Nyuton Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/Chats-Oddiy-Iteratsiya-Usuli.html">Chats Oddiy Iteratsiya Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html">3-Oddiy Iteratsiya Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/Zeydel-usuli.html">Zeydel Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/Chats-Zeydel-Usuli.html">Chats Zeydel Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/Haydash-Usuli.html">Haydash Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html">Kesma Bo'lish Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/Urinma-Usuli.html">Urinma Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/Vatar-Usuli.html">Vatar Usuli</a></li>
+        <li><a href="/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html">Funksiya Kesishishi</a></li>
+        <li><a href="/src/Sonli-Usullar/code.html">Kod</a></li>
+      </ul>
+    </div>
+
+    <div class="offline-tips">
+      <strong>💡 Foydali ma'lumot:</strong>
+      <ul class="offline-tips-list">
+        <li>Internet qayta ulanganida, yangi sahifalar avtomatik keshlanadi</li>
+        <li>Hisoblash funktsiyalar to'liq ishlaydi offline rejimida</li>
+        <li>Barcha grafiklar va formulalar saqlangan keshdan yuklanadi</li>
+        <li>Ilovani smartfoniga o'rnatishingiz mumkin (PWA)</li>
+      </ul>
+    </div>
+
+    <div class="offline-links">
+      <p>Muammo? <a href="javascript:void(0)" onclick="reportIssue()">Muammoni bildirish</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Check if connection is restored
+    function checkConnection() {
+      if (navigator.onLine) {
+        alert('✅ Internet ulanmagan! Bosh sahifaga o\'tish...');
+        window.location.href = '/';
+      } else {
+        alert('❌ Hali ham offline rejimdasiz. Internet ulanishini tekshiring.');
+      }
+    }
+
+    // Go to home page
+    function goHome() {
+      window.location.href = '/';
+    }
+
+    // Report issue
+    function reportIssue() {
+      alert('Muammoni bildirish uchun, internetga ulanganida contact sahifasidan yozing.');
+    }
+
+    // Notify when back online
+    window.addEventListener('online', () => {
+      console.log('[Offline Page] Connection restored!');
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #2ecc71;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+      `;
+      notification.textContent = '✅ Internet ulanmagan! Bosh sahifaga qaytarish...';
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
+    });
+
+    // Add animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+
+</html>
