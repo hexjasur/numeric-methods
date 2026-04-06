@@ -2,11 +2,11 @@
   "name": "Sonli Usullar - Numerical Methods Calculator",
   "short_name": "Sonli Usullar",
   "description": "Interactive educational platform for learning numerical methods with step-by-step calculators, visualizations, and tutorials",
-  "start_url": "https://sonli-usullar.uz/",
+  "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
   "theme_color": "#1a1a2e",
-  "background_color": "#ffffff",
+  "background_color": "#0a0a0a",
   "orientation": "portrait-primary",
   "icons": [
     {
