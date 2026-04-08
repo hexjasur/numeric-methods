@@ -151,6 +151,114 @@
         min-width: 30px;
         text-align: center;
       }
+
+      body {
+        padding: 0.5rem !important;
+      }
+
+      .main-content {
+        max-width: 100% !important;
+      }
+
+      .grid {
+        gap: 1rem !important;
+      }
+
+      .p-6,
+      .md\:p-8 {
+        padding: 1rem !important;
+      }
+
+      header {
+        padding: 1rem !important;
+      }
+
+      h1 {
+        font-size: 1.5rem !important;
+        line-height: 1.2 !important;
+      }
+
+      h2 {
+        font-size: 1rem !important;
+      }
+
+      .cyber-card {
+        padding: 1rem !important;
+      }
+
+      .text-[10px] {
+        font-size: 9px !important;
+      }
+
+      .text-[12px] {
+        font-size: 10px !important;
+      }
+
+      .text-lg {
+        font-size: 1.125rem !important;
+      }
+
+      /* Katex font size adjustment */
+      .katex {
+        font-size: 0.95em !important;
+      }
+
+      .katex-display {
+        margin: 0.5em 0 !important;
+      }
+
+      /* Better spacing for mobile */
+      .space-y-4 {
+        row-gap: 1rem !important;
+      }
+
+      .gap-4 {
+        gap: 0.75rem !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .flex-wrap.items-center.gap-2.min-w-max {
+        flex-wrap: wrap !important;
+        min-width: auto !important;
+      }
+
+      .flex.flex-wrap.items-center.gap-1 {
+        justify-content: center !important;
+      }
+
+      /* Smaller padding on tablets */
+      .p-4 {
+        padding: 0.75rem !important;
+      }
+
+      .p-6 {
+        padding: 1rem !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      /* Extra small screens */
+      .text-3xl {
+        font-size: 1.25rem !important;
+      }
+
+      .text-xl {
+        font-size: 1rem !important;
+      }
+
+      .text-xs {
+        font-size: 0.7rem !important;
+      }
+
+      .gap-2 {
+        gap: 0.25rem !important;
+      }
+
+      header {
+        margin-bottom: 1rem !important;
+      }
     }
   </style>
 </head>
@@ -195,7 +303,7 @@
             </div>
           </div>
 
-          <div id="matrix-container" class="space-y-4 overflow-x-auto pb-4">
+          <div id="matrix-container" class="space-y-4 pb-4">
           </div>
 
           <div class="mt-8 p-4 bg-gray-50 border-2 border-black border-dashed">
@@ -254,13 +362,14 @@
 
     <style>
       .input-box {
-        width: 60px;
+        width: 55px;
         text-align: center;
         border: 2px solid #000;
         padding: 4px;
         font-family: monospace;
         font-weight: bold;
         outline: none;
+        min-width: 45px;
       }
 
       .input-box:focus {
@@ -269,6 +378,14 @@
 
       .b-col {
         background-color: #eff6ff;
+      }
+
+      @media (max-width: 640px) {
+        .input-box {
+          width: 48px;
+          padding: 3px;
+          font-size: 12px;
+        }
       }
     </style>
 
@@ -317,7 +434,7 @@
 
         for (let i = 0; i < N; i++) {
           let row = document.createElement('div');
-          row.className = 'flex items-center gap-2 min-w-max p-2 hover:bg-gray-50';
+          row.className = 'flex flex-wrap items-center gap-1 md:gap-2 p-2 hover:bg-gray-50 w-full';
 
           let rowHtml = `<span class="text-xs font-black text-gray-400 w-6">(${i + 1})</span>`;
 
@@ -388,11 +505,11 @@
         let X = new Array(N).fill(0);
         let step0Html = `<div class="p-4 bg-gray-100 border-2 border-dashed border-gray-400 mb-6">
                         <div class="text-[12px] font-black uppercase text-gray-600 mb-3">Qadam №0 (Boshlang'ich yaqinlashish)</div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">`;
+                        <div class="grid grid-cols-1 gap-2 md:gap-3 lg:gap-4 md:grid-cols-2 lg:grid-cols-3">`;
 
         for (let i = 0; i < N; i++) {
           X[i] = B[i] / A[i][i];
-          step0Html += `<div class="bg-white p-2 border-l-4 border-black shadow-sm">
+          step0Html += `<div class="bg-white p-2 border-l-4 border-black shadow-sm text-sm md:text-base">
                         $$x_{${i + 1}}^{(0)} = \\frac{${B[i]}}{${A[i][i]}} = ${X[i].toFixed(6)}$$
                       </div>`;
         }
@@ -411,9 +528,9 @@
 
           let cardHtml = `<div class="p-4 border-2 border-black bg-white mb-4">
                           <div class="flex items-center justify-between border-b-2 border-black pb-2 mb-3">
-                            <span class="font-black uppercase tracking-widest bg-black text-white px-3 py-1">Iteratsiya №${iter}</span>
+                            <span class="font-black uppercase tracking-widest bg-black text-white px-3 py-1 text-xs md:text-sm">Iteratsiya №${iter}</span>
                           </div>
-                          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">`;
+                          <div class="grid grid-cols-1 gap-2 md:gap-3 lg:gap-4 md:grid-cols-2 lg:grid-cols-3">`;
 
           for (let i = 0; i < N; i++) {
             let sum = 0;
@@ -445,13 +562,28 @@
 
           if (maxErr < epsilon) converged = true;
 
-          cardHtml += `</div>
-                     <div class="mt-3 pt-2 border-t border-dashed border-gray-300 text-right">
-                       <span class="text-[11px] font-black uppercase ${converged ? 'text-green-600' : 'text-amber-600'}">
-                         MAX XATOLIK: ${maxErr.toFixed(6)} ${converged ? ' < ε (Yaqinlashdi ✅)' : ''}
-                       </span>
-                     </div>
-                   </div>`;
+          // Belgini aniqlaymiz (kichik yoki katta)
+          const sign = maxErr < epsilon ? '<' : '>';
+          const statusText = maxErr < epsilon ? 'Yaqinlashdi ✅' : 'Davom etmoqda... ⏳';
+
+          cardHtml += `
+            </div>
+            <div class="mt-4 p-3 border-t-2 border-double border-gray-400 bg-white/50">
+                <div class="flex flex-col gap-1">
+                    <div class="text-[12px] font-bold text-gray-700 italic">
+                        Yaqinlashish sharti:
+                    </div>
+                    <div class="text-[14px] font-mono bg-gray-100 p-2 rounded border border-gray-200">
+                        $$\\max |x_{i}^{(k+1)} - x_{i}^{(k)}| = ${maxErr.toFixed(6)} \\quad ${sign} \\quad \\epsilon (${epsilon})$$
+                    </div>
+                    <div class="text-[11px] font-black uppercase mt-2 ${converged ? 'text-green-600' : 'text-amber-600'} flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full ${converged ? 'bg-green-600' : 'bg-amber-600'} animate-pulse"></span>
+                        Status: ${statusText}
+                    </div>
+                </div>
+            </div>
+        </div>
+          `;
 
           resultsHtml += cardHtml;
           X = [...X_new];
@@ -479,17 +611,17 @@
 
         let finalCards = '';
         for (let i = 0; i < N; i++) {
-          finalCards += `<div class="bg-white p-4 border-2 border-black text-center">
-                         <div class="text-[12px] font-black uppercase opacity-60 mb-2 font-mono">X${i + 1}</div>
-                         <div class="text-xl font-black">${X[i].toFixed(6)}</div>
+          finalCards += `<div class="bg-white p-3 md:p-4 border-2 border-black text-center">
+                         <div class="text-[10px] md:text-xs font-black uppercase opacity-60 mb-2 font-mono">X${i + 1}</div>
+                         <div class="text-lg md:text-xl font-black">${X[i].toFixed(6)}</div>
                        </div>`;
         }
 
         finalContent.innerHTML = `
-        <p class="text-xs uppercase font-black opacity-60 mb-6 tracking-widest font-mono text-black">
+        <p class="text-xs uppercase font-black opacity-60 mb-4 md:mb-6 tracking-widest font-mono text-black">
           ${converged ? 'Muvaffaqiyatli topildi' : 'Max iteratsiyaga yetdi'} | ε: ${epsilon} | Iteratsiyalar: ${iter}
         </p>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-black">
+        <div class="grid grid-cols-2 gap-2 md:gap-3 lg:gap-4 sm:grid-cols-3 md:grid-cols-4 text-black">
           ${finalCards}
         </div>
       `;

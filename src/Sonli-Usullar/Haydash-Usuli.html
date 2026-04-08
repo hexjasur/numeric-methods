@@ -12,7 +12,10 @@
     Метод прогонки (Haydash usuli) — TDMA | sonli-usullar.uz
   </title>
   <meta name="description"
-    content="Метод прогонки (Haydash usuli, TDMA) haqida to‘liq tushuntirish, formulalar va online hisoblash vositasi.">
+    content="Метод прогонки (Haydash usuli, TDMA) haqida to'liq tushuntirish, formulalar va online hisoblash vositasi.">
+
+  <!-- 3. CANONICAL -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Haydash-Usuli.html">
 
   <!-- Head Manager (DRY) -->
   <script>
@@ -50,6 +53,7 @@
   <!-- 10. MANIFEST -->
   <link rel="manifest" href="/manifest.json">
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -168,22 +172,23 @@
         <h1 style="font-family:'Orbitron',sans-serif"
           class="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-tight">
           Haydash Usuli
-          <span class="block text-base md:text-lg font-medium normal-case text-red-500 mt-2">
+          <span class="block text-base md:text-xl font-bold normal-case text-red-500 mt-2">
             Метод прогонки · Tridiagonal Matrix Algorithm (TDMA)
           </span>
         </h1>
 
-        <p class="mt-4 text-xs md:text-sm font-semibold text-gray-600 border-b border-gray-300 inline-block px-4 pb-1">
-          Qarshi Davlat Universiteti · Amaliy Matematika
-        </p>
+        <h2 class="mt-4 text-xs md:text-sm font-semibold text-gray-600 border-b border-gray-300 inline-block px-4 pb-1">
+          Qarshi Davlat Universiteti · Amaliy Matematika <br>
+          Каршинский государственный университет · Прикладная математика
+        </h2>
       </div>
 
       <!-- Stats -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
 
         <div class="bg-white rounded-2xl shadow-md p-5 text-center hover:shadow-xl transition">
-          <h3 id="top-size" class="text-2xl font-bold text-cyan-600">4×4</h3>
-          <p class="text-xs uppercase font-semibold text-gray-500 mt-1">O‘lcham</p>
+          <h3 id="top-size" class="text-2xl font-bold text-cyan-600">4x4</h3>
+          <p class="text-xs uppercase font-semibold text-gray-500 mt-1">O'lcham</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md p-5 text-center hover:shadow-xl transition">
@@ -216,7 +221,7 @@
             <hr class="border-black">
 
             <label class="block font-bold mb-1">
-              Sistema o‘lchami (n): 4 dan 10 gacha bo‘lishi kerak
+              Sistema o'lchami (n): 4 dan 10 gacha bo'lishi kerak
             </label>
             <input type="number" id="size" value="4" min="4" max="10"
               class="w-full p-2 border-2 border-black focus:outline-none focus:bg-cyan-50">
@@ -228,6 +233,14 @@
             <button onclick="generateTable()"
               class="btn-cyber cursor-pointer w-full py-2 font-bold uppercase mt-4 text-sm">Jadvalni
               yangilash</button>
+          </div>
+          <div class="mt-5">
+            <p>r - tekshirish formulasi:</p>
+            <div id="r-formula">
+              $$r_i = d_i - (a_i x_{i-1} + b_i x_i + c_i x_{i+1})$$
+            </div>
+            <p class="text-xs text-gray-500">Dasturda qiymatlar yaxlitlangani uchun qoldiqlar nolga juda yaqin chiqishi
+              kerak.</p>
           </div>
         </div>
       </div>
@@ -283,17 +296,28 @@
       const table = document.getElementById('matrixTable');
       table.innerHTML = '';
 
-      let header = `<tr class="text-xs font-bold uppercase text-gray-500">
-                <th class="p-2">i</th><th class="p-2">a[i]</th><th class="p-2">b[i]</th><th class="p-2">c[i]</th><th class="p-2">d[i]</th>
-            </tr>`;
+      let header = `
+        <tr class="text-xs font-bold uppercase text-gray-500">
+            <th class="p-2">i</th><th class="p-2">a[i]</th><th class="p-2">b[i]</th><th class="p-2">c[i]</th><th class="p-2">d[i]</th>
+        </tr>`;
       table.innerHTML += header;
 
-      // Siz yuborgan rasmdagi misol qiymatlari (4x4 uchun default)
+      // const defaultValues = {
+      //   a: [0, -2, -0.1, 1],
+      //   b: [10, 9, 4, 8],
+      //   c: [1, 1, -1, 0],
+      //   d: [5, -1, -5, 40]
+      // };
+
       const defaultValues = {
-        a: [0, -2, -0.1, 1],
-        b: [10, 9, 4, 8],
-        c: [1, 1, -1, 0],
-        d: [5, -1, -5, 40]
+        // 1,5x1 + 0.5x2 = 3.2
+        // -x1 + 2x2 - 0.4x3 = -1
+        // 2.5x2 + 5x3 - 2x4 = 4
+        // x3 + 3x4 = 7
+        a: [0, -1, 2.5, 1],
+        b: [1.5, 2, 5, 3],
+        c: [0.5, 1, -2, 0],
+        d: [3.2, -1, 4, 1]
       };
 
       for (let i = 1; i <= n; i++) {
@@ -303,22 +327,22 @@
         let vd = (n === 4) ? defaultValues.d[i - 1] : (i === 1 || i === n ? 5 : 10);
 
         table.innerHTML += `
-                    <tr>
-                        <td class="p-2 border border-gray-200 text-center font-bold bg-gray-50">${i}</td>
-                        <td class="p-1 border border-gray-200">
-                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none a-val" value="${va}" ${i === 1 ? 'disabled bg-gray-100' : ''}>
-                        </td>
-                        <td class="p-1 border border-gray-200">
-                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none b-val" value="${vb}">
-                        </td>
-                        <td class="p-1 border border-gray-200">
-                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none c-val" value="${vc}" ${i === n ? 'disabled bg-gray-100' : ''}>
-                        </td>
-                        <td class="p-1 border border-gray-200">
-                            <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none d-val" value="${vd}">
-                        </td>
-                    </tr>
-                `;
+          <tr>
+              <td class="p-2 border border-gray-200 text-center font-bold bg-gray-50">${i}</td>
+              <td class="p-1 border border-gray-200">
+                  <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none a-val" value="${va}" ${i === 1 ? 'disabled bg-gray-100' : ''}>
+              </td>
+              <td class="p-1 border border-gray-200">
+                  <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none b-val" value="${vb}">
+              </td>
+              <td class="p-1 border border-gray-200">
+                  <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none c-val" value="${vc}" ${i === n ? 'disabled bg-gray-100' : ''}>
+              </td>
+              <td class="p-1 border border-gray-200">
+                  <input type="number" step="any" class="w-full p-2 text-center focus:bg-cyan-50 outline-none d-val" value="${vd}">
+              </td>
+          </tr>
+        `;
       }
     }
 
@@ -353,7 +377,7 @@
 
       // To'g'ri yurish (Forward Elimination)
       stepsHtml += `<div class="step-section">
-        <div class="step-title">1. To'g'ri yurish - Koeffitsiyentlar Hisoblash</div>`;
+        <div class="step-title">1. To'g'ri yurish - Koeffitsiyentlar Hisoblash (Прямой ход)</div>`;
 
       u[0] = -c[0] / b[0];
       v[0] = d[0] / b[0];
@@ -366,17 +390,19 @@
         u[i] = (i === n - 1) ? 0 : -c[i] / den;
         v[i] = (d[i] - a[i] * v[i - 1]) / den;
 
-        stepsHtml += `<div class="step-formula-group">
-                    <div class="step-formula">$$u_{${i + 1}} = \\frac{-c_{${i + 1}}}{a_{${i + 1}}u_{${i}} + b_{${i + 1}}} = ${u[i].toFixed(decimals)}$$</div>
-                    <div class="step-formula">$$v_{${i + 1}} = \\frac{d_{${i + 1}} - a_{${i + 1}}v_{${i}}}{a_{${i + 1}}u_{${i}} + b_{${i + 1}}} = ${v[i].toFixed(decimals)}$$</div>
-                </div>`;
+        stepsHtml += `
+          <div class="step-formula-group">
+            <div class="step-formula">$$u_{${i + 1}} = \\frac{-c_{${i + 1}}}{a_{${i + 1}}u_{${i}} + b_{${i + 1}}} = ${u[i].toFixed(decimals)}$$</div>
+            <div class="step-formula">$$v_{${i + 1}} = \\frac{d_{${i + 1}} - a_{${i + 1}}v_{${i}}}{a_{${i + 1}}u_{${i}} + b_{${i + 1}}} = ${v[i].toFixed(decimals)}$$</div>
+          </div>
+        `;
       }
 
       stepsHtml += `</div>`;
 
       // Teskari yurish (Back Substitution)
       stepsHtml += `<div class="step-section">
-        <div class="step-title">2. Teskari yurish - Yechimlarni Topish</div>`;
+        <div class="step-title">2. Teskari yurish - Yechimlarni Topish (Обратный ход)</div>`;
 
       x[n - 1] = v[n - 1];
       stepsHtml += `<div class="step-result">$$x_{${n}} = v_{${n}} = ${x[n - 1].toFixed(decimals)}$$</div>`;
@@ -388,14 +414,67 @@
 
       stepsHtml += `</div>`;
 
+
+      // 1. R qiymatlarini saqlash uchun massiv ochamiz
+      let rValues = [];
+
+      // r ni hisoblash va tekshirish qismi
+      stepsHtml += `<div class="step-section">
+        <div class="step-title">3. Tekshiruv - Qoldiqlarni hisoblash (r)</div>`;
+
+      for (let i = 0; i < n; i++) {
+        // 1. Ekrandagi yaxlitlangan qiymatlarni o'zgaruvchiga olamiz
+        let x_prev_raw = (i === 0) ? 0 : x[i - 1];
+        let x_curr_raw = x[i];
+        let x_next_raw = (i === n - 1) ? 0 : x[i + 1];
+
+        // MUHIM: Hisobni xotiradagi cheksiz son bilan emas, 
+        // ekranda ko'rinib turgan (decimals xonali) son bilan qilamiz
+        let xp = Number(x_prev_raw.toFixed(decimals));
+        let xc = Number(x_curr_raw.toFixed(decimals));
+        let xn = Number(x_next_raw.toFixed(decimals));
+
+        // 2. Qavs ichidagi yig'indini va qoldiqni hisoblaymiz
+        let bracketSum = (a[i] * xp) + (b[i] * xc) + (c[i] * xn);
+        let qoldiq = d[i] - bracketSum;
+
+        // 3. Natijani ko'rsatish (r_val butun bo'lib qolmasligi uchun)
+        // Epsilon 0.001 bo'lsa, qoldiqni 5-6 xonagacha ko'rsatgan ma'qul
+        let r_val = Number(qoldiq.toFixed(decimals + 2));
+
+        // 2. Hisoblangan r ni massivga qo'shamiz
+        rValues.push(r_val);
+
+        stepsHtml += `<div class="step-formula">
+            $$r_{${i + 1}} = ${d[i]} - (${a[i]} \\cdot ${xp.toFixed(decimals)} + ${b[i]} \\cdot ${xc.toFixed(decimals)} + ${c[i]} \\cdot ${xn.toFixed(decimals)}) = ${r_val}$$
+        </div>`;
+      }
+
+      stepsHtml += `</div>`;
+
       document.getElementById('steps').innerHTML = stepsHtml;
+
+      // 3. FINAL NATIJANI KO'RSATISH (X va R birgalikda)
       const finalXDiv = document.getElementById('finalX');
-      finalXDiv.innerHTML = x.map((val, idx) => `
-                <div class="cyber-border bg-cyan-50 p-2">
-                    <span class="text-xs font-bold block border-b border-black mb-1 text-gray-500">X${idx + 1}</span>
-                    <span class="text-lg font-bold">${val.toFixed(decimals)}</span>
-                </div>
-            `).join('');
+
+      // X larni generatsiya qilish
+      let xCards = x.map((val, idx) => `
+          <div class="cyber-border bg-cyan-50 p-2">
+              <span class="text-xs font-bold block border-b border-black mb-1 text-gray-500">X${idx + 1}</span>
+              <span class="text-lg font-bold text-black">${val.toFixed(decimals)}</span>
+          </div>
+      `).join('');
+
+      // R larni generatsiya qilish (alohida rang bilan ajratdik)
+      let rCards = rValues.map((val, idx) => `
+          <div class="cyber-border bg-red-50 p-2">
+              <span class="text-xs font-bold block border-b border-red-200 mb-1 text-red-500">R${idx + 1}</span>
+              <span class="text-lg font-bold ${val === 0 ? 'text-green-600' : 'text-red-600'}">${val}</span>
+          </div>
+      `).join('');
+
+      // Hammasini ekranga chiqarish
+      finalXDiv.innerHTML = xCards + rCards;
 
       document.getElementById('results').classList.remove('hidden');
       renderMathInElement(document.getElementById('steps'), {
@@ -405,9 +484,23 @@
         ],
         throwOnError: false
       });
+
+      // Smooth scroll to results
+      window.scrollTo({ top: document.getElementById('results').offsetTop - 50, behavior: 'smooth' });
     }
 
-    window.onload = generateTable;
+    window.onload = function () {
+      generateTable(); // Sizning mavjud funksiyangiz
+
+      // KaTeX auto-render funksiyasi
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false }
+        ],
+        throwOnError: false
+      });
+    };
   </script>
   <script src="/sw-register.js"></script>
 </body>
