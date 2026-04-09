@@ -1,0 +1,592 @@
+/**
+ * styles.css — Consolidated Styles (DRY Principle)
+ * 
+ * Bu fayl barcha takroriy stillarni jamlab, bir joydan boshqariladi
+ * 
+ * Import order:
+ * 1. Base variables
+ * 2. Layout
+ * 3. Components
+ * 4. Utilities
+ * 5. Responsive
+ */
+
+/* ========================================
+   1. BASE VARIABLES & THEMING
+   ======================================== */
+
+:root {
+  --primary-color: #2563eb;
+  --primary-dark: #1e40af;
+  --secondary-color: #7c3aed;
+  --success-color: #059669;
+  --warning-color: #dc2626;
+  --info-color: #0891b2;
+
+  --border-radius: 0.5rem;
+  --transition: all 0.3s ease;
+
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* ========================================
+   2. FORM ELEMENTS (INPUT FIELDS)
+   ======================================== */
+
+.input-field {
+  border: 2px solid #000;
+  padding: 10px 12px;
+  width: 100%;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.input-field:invalid {
+  border-color: var(--warning-color);
+}
+
+.input-field:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   3. LABELS & FIELD GROUPS
+   ======================================== */
+
+.input-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: #374151;
+  letter-spacing: 0.5px;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group-horizontal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .input-group-horizontal {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   4. STEP TITLES & HEADERS
+   ======================================== */
+
+.step-title {
+  font-weight: 800;
+  border-bottom: 1px dashed #cbd5e1;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+/* Color Variants */
+.step-title.iteratsiya,
+.step-title.iteration {
+  color: var(--primary-color);
+  border-bottom-color: #bfdbfe;
+}
+
+.step-title.newton {
+  color: var(--secondary-color);
+  border-bottom-color: #c4b5fd;
+}
+
+.step-title.bisection {
+  color: var(--success-color);
+  border-bottom-color: #a7f3d0;
+}
+
+.step-title.secant {
+  color: #ea580c;
+  border-bottom-color: #fed7aa;
+}
+
+.step-title.gauss-seydel {
+  color: #06b6d4;
+  border-bottom-color: #a5f3fc;
+}
+
+/* ========================================
+   5. ERROR & WARNING MESSAGES
+   ======================================== */
+
+.error-text,
+.error-message {
+  color: var(--warning-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.error-text::before {
+  content: '⚠ ';
+}
+
+.warning-text {
+  color: #f97316;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.success-text {
+  color: var(--success-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ========================================
+   6. BUTTONS
+   ======================================== */
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background-color: #000;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #6d28d9;
+  transform: translateY(-2px);
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #047857;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   7. CARDS & CONTAINERS
+   ======================================== */
+
+.cyber-card {
+  border: 1px solid #e5e7eb;
+  border-radius: var(--border-radius);
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+}
+
+.cyber-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-footer {
+  padding: 20px;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+/* ========================================
+   8. MATH RENDERING (KATEX)
+   ======================================== */
+
+.math-formula,
+.katex-block {
+  overflow-x: auto;
+  padding: 8px 0;
+  line-height: 1.6;
+}
+
+.math-inline {
+  display: inline;
+}
+
+.math-display {
+  display: block;
+  padding: 12px;
+  background-color: #f3f4f6;
+  border-left: 3px solid var(--primary-color);
+  margin: 12px 0;
+  border-radius: 4px;
+}
+
+/* Fix KaTeX font size */
+.katex {
+  font-size: 1.1em;
+}
+
+/* ========================================
+   9. RESULT CONTAINERS
+   ======================================== */
+
+.results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.result-item {
+  padding: 16px;
+  background-color: #f3f4f6;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.result-header {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.result-value {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: #374151;
+  word-break: break-all;
+}
+
+/* ========================================
+   10. TABLES
+   ======================================== */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.data-table thead {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+}
+
+.data-table th {
+  padding: 12px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.data-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========================================
+   11. UTILITIES & HELPERS
+   ======================================== */
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.border {
+  border: 1px solid #e5e7eb;
+}
+
+.rounded {
+  border-radius: var(--border-radius);
+}
+
+/* ========================================
+   12. GRID LAYOUT
+   ======================================== */
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid-cols-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 1024px) {
+  .grid-cols-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   13. PAGE LAYOUT
+   ======================================== */
+
+.page-header {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  background-color: #fff;
+}
+
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.page-subtitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+}
+
+/* ========================================
+   14. ALERTS & NOTIFICATIONS
+   ======================================== */
+
+.alert {
+  padding: 12px;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.alert-info {
+  background-color: #dbeafe;
+  color: #0c4a6e;
+  border-left: 4px solid var(--info-color);
+}
+
+.alert-warning {
+  background-color: #fef3c7;
+  color: #78350f;
+  border-left: 4px solid #f59e0b;
+}
+
+.alert-error {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+  border-left: 4px solid var(--warning-color);
+}
+
+.alert-success {
+  background-color: #dcfce7;
+  color: #166534;
+  border-left: 4px solid var(--success-color);
+}
+
+/* ========================================
+   15. RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .md\:col-span-1 {
+    grid-column: span 1;
+  }
+
+  .md\:col-span-2 {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .p-4 {
+    padding: 0.5rem;
+  }
+
+  .p-8 {
+    padding: 1rem;
+  }
+
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+
+  .visible-mobile {
+    display: block !important;
+  }
+}
+
+/* ========================================
+   16. ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1f2937;
+    color: #f3f4f6;
+  }
+
+  .cyber-card {
+    background-color: #2d3748;
+    border-color: #4b5563;
+  }
+
+  .input-field {
+    background-color: #374151;
+    color: #f3f4f6;
+    border-color: #4b5563;
+  }
+
+  .data-table {
+    background-color: #2d3748;
+  }
+}
+
+/* ========================================
+   17. PRINT STYLES
+   ======================================== */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+
+  .cyber-card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}
