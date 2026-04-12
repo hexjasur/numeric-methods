@@ -26,27 +26,32 @@
   <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/krylov-matrix-vector-method.html">
   <meta property="og:site_name" content="Sonli Usullar">
   <meta property="og:locale" content="uz_UZ">
-  <meta property="og:title" content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
+  <meta property="og:title"
+    content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
   <meta property="og:description"
     content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-krylov-matrix-vector-method.png">
+  <meta property="og:image"
+    content="https://www.sonli-usullar.uz/src/assets/images/og/og-krylov-matrix-vector-method.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/png">
 
   <!-- 7. TWITTER -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
+  <meta name="twitter:title"
+    content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
   <meta name="twitter:description"
     content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
-  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-krylov-matrix-vector-method.png">
+  <meta name="twitter:image"
+    content="https://www.sonli-usullar.uz/src/assets/images/og/og-krylov-matrix-vector-method.png">
 
   <!-- 8. ROBOTS -->
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow">
 
   <!-- 9. HREFLANG -->
-  <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/krylov-matrix-vector-method.html">
+  <link rel="alternate" hreflang="uz"
+    href="https://www.sonli-usullar.uz/src/Sonli-Usullar/krylov-matrix-vector-method.html">
 
   <!-- 10. MANIFEST -->
   <link rel="manifest" href="/manifest.json">
@@ -151,6 +156,22 @@
         <p class="text-sm text-slate-500 mt-2">Matritsaning xos ko'phadini topish</p>
       </header>
 
+      <div id="special-case-warning"
+        class="hidden mx-auto max-w-4xl mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 text-blue-800 rounded-r-lg shadow-sm">
+        <div class="flex items-center">
+          <svg class="w-6 h-6 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+            </path>
+          </svg>
+          <div>
+            <p class="font-bold">Ma'lumot: Tartib pasayishi aniqlandi</p>
+            <p class="text-sm">Vektorlar chiziqli bog'liq bo'lganligi sababli, dastur hisoblashni k-qadamda to'xtatdi.
+              Xarakteristik ko'phadning minimal tartibi avtomatik ravishda aniqlandi.</p>
+          </div>
+        </div>
+      </div>
+
       <div
         class="glass-panel rounded-2xl p-6 shadow-glass border-t border-l border-white/80 relative overflow-hidden group hover:shadow-neon-cyan transition-shadow duration-500">
         <div class="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-cyber-cyan to-cyber-magenta"></div>
@@ -248,6 +269,7 @@
 
         generateMatrix(n);
         document.getElementById('output-section').classList.add('hidden');
+        document.getElementById('special-case-warning').style.display = 'none'; // Boshida ogohlantirishni yashiramiz
       }
 
       function generateMatrix(size) {
@@ -274,7 +296,8 @@
       window.addEventListener('DOMContentLoaded', () => {
         changeSize(4);
       });
-      // Matrix-Vector multiplication
+
+      // Matritsani vektorga ko'paytirish
       function multiplyMatrixVector(A, v) {
         let size = v.length;
         let res = new Array(size).fill(0);
@@ -286,8 +309,26 @@
         return res;
       }
 
-      // Gaussian Elimination to solve linear system M*x = b
-      function gaussElimination(A, b) {
+      // YORDAMCHI: Matritsani transponirlash (Kichik tizimga o'tish uchun)
+      function transpose(A) {
+        return A[0].map((_, colIndex) => A.map(row => row[colIndex]));
+      }
+
+      // YORDAMCHI: Matritsalarni ko'paytirish
+      function multiplyMatrices(A, B) {
+        let res = new Array(A.length).fill(0).map(() => new Array(B[0].length).fill(0));
+        for (let i = 0; i < A.length; i++) {
+          for (let j = 0; j < B[0].length; j++) {
+            for (let k = 0; k < A[0].length; k++) {
+              res[i][j] += A[i][k] * B[k][j];
+            }
+          }
+        }
+        return res;
+      }
+
+      // Gauss usuli (aniq hisoblash, yaxlitlashsiz oraliq qadamlar uchun)
+      function gaussEliminationStrict(A, b) {
         let n = b.length;
         let M = [];
         for (let i = 0; i < n; i++) M.push([...A[i], b[i]]);
@@ -299,7 +340,6 @@
           }
           [M[i], M[maxRow]] = [M[maxRow], M[i]];
 
-          // Avoid division by zero
           if (Math.abs(M[i][i]) < 1e-10) continue;
 
           for (let k = i + 1; k < n; k++) {
@@ -320,19 +360,17 @@
             x[i] /= M[i][i];
           }
         }
-        // Round to standard 4 decimal precision if needed, but integers should stay exact
-        return x.map(val => {
-          let rounded = Math.round(val * 10000) / 10000;
-          return rounded;
-        });
+        return x; // Yaxlitlamaymiz, chunki xatolikni aniq tekshirish kerak
       }
 
-      // LaTeX formatting helpers
+      // LaTeX helpers
       function texMatrix(M) {
         return `\\begin{pmatrix} ${M.map(row => row.join(' & ')).join(' \\\\ ')} \\end{pmatrix}`;
       }
       function texVector(v) {
-        return `\\begin{pmatrix} ${v.join(' \\\\ ')} \\end{pmatrix}`;
+        // Ko'rinish chiroyli bo'lishi uchun sonlarni yaxlitlab chiqaramiz
+        let roundedV = v.map(val => Math.round(val * 10000) / 10000);
+        return `\\begin{pmatrix} ${roundedV.join(' \\\\ ')} \\end{pmatrix}`;
       }
       function renderTex(str, elementId) {
         katex.render(str, document.getElementById(elementId), { throwOnError: false, displayMode: true });
@@ -355,85 +393,127 @@
           A.push(row);
         }
 
-        // Define c(0)
         let c0 = new Array(size).fill(0);
         c0[0] = 1;
 
         const vectors = [c0];
+        let k_degree = size;
+        let p_vals = [];
+
+        // Vektorlarni qadamba-qadam qurish va chiziqli bog'liqlikni tekshirish
         for (let k = 1; k <= size; k++) {
-          vectors.push(multiplyMatrixVector(A, vectors[k - 1]));
+          let nextVec = multiplyMatrixVector(A, vectors[k - 1]);
+          vectors.push(nextVec);
+
+          // Kichik matritsa tuzamiz: Mk = [c_{k-1}, ..., c_0]
+          let Mk = [];
+          for (let i = 0; i < size; i++) {
+            let row = [];
+            for (let j = 1; j <= k; j++) {
+              row.push(vectors[k - j][i]);
+            }
+            Mk.push(row);
+          }
+
+          // Normal tenglamalar usuli (Eng kichik kvadratlar usuli) yordamida yechim qidiramiz
+          // Mk^T * Mk * p = Mk^T * c_k
+          let Mk_T = transpose(Mk);
+          let MkT_Mk = multiplyMatrices(Mk_T, Mk);
+          let ck_col = vectors[k].map(val => [val]);
+          let MkT_ck = multiplyMatrices(Mk_T, ck_col);
+          let b = MkT_ck.map(row => row[0]);
+
+          let p = gaussEliminationStrict(MkT_Mk, b);
+
+          // Qayta tekshiramiz: topilgan p orqali Mk * p ni hisoblab, c_k ga tengligini ko'ramiz
+          let p_col = p.map(val => [val]);
+          let Mk_p = multiplyMatrices(Mk, p_col).map(row => row[0]);
+
+          let error = 0;
+          for (let i = 0; i < size; i++) {
+            error += Math.pow(Mk_p[i] - vectors[k][i], 2);
+          }
+
+          // Agar xatolik nolga yaqin bo'lsa (ya'ni yechim to'liq tushsa), demak tizim bog'liq!
+          if (error < 1e-6) {
+            k_degree = k;
+            p_vals = p;
+            break; // Siklni shu yerda to'xtatamiz, tartib pasaydi!
+          }
+
+          // Agar oxiriga yetib kelsak va haliyam topilmasa
+          if (k === size) {
+            p_vals = p;
+          }
         }
 
-        let vHtml = '';
-        vHtml += `<div class="py-2 text-center">${renderTexInline(`\\vec{c}^{(0)} = ${texVector(vectors[0])}`)}</div>`;
+        // Ogohlantirishni ko'rsatish yo'qmi (Agar k_degree < size bo'lsa, demak tartib pasaygan)
+        const warningDiv = document.getElementById('special-case-warning');
+        if (k_degree < size) {
+          warningDiv.style.display = 'block';
+        } else {
+          warningDiv.style.display = 'none';
+        }
 
-        for (let i = 1; i < vectors.length; i++) {
+        // --- 1-QADAM: Vektorlarni chiqarish ---
+        // Faqat hisoblangan joyigacha (k_degree) chiqaramiz
+        let vHtml = `<div class="py-2 text-center">${renderTexInline(`\\vec{c}^{(0)} = ${texVector(vectors[0])}`)}</div>`;
+        for (let i = 1; i <= k_degree; i++) {
           const prevVec = texVector(vectors[i - 1]);
           const currentVec = texVector(vectors[i]);
           const matrixA = texMatrix(A);
 
           vHtml += `
-        <div class="py-2 overflow-x-auto text-center">
-            ${renderTexInline(`\\vec{c}^{(${i})} = A \\cdot \\vec{c}^{(${i - 1})} = ${matrixA} \\cdot ${prevVec} = ${currentVec}`)}
-        </div>`;
+    <div class="py-2 overflow-x-auto text-center">
+        ${renderTexInline(`\\vec{c}^{(${i})} = A \\cdot \\vec{c}^{(${i - 1})} = ${matrixA} \\cdot ${prevVec} = ${currentVec}`)}
+    </div>`;
         }
-
         document.getElementById('vectors-output').innerHTML = vHtml;
 
-        // Step 2: System Setup
-        let sysA = [];
-        for (let i = 0; i < size; i++) {
-          let row = [];
-          for (let j = 1; j <= size; j++) {
-            row.push(vectors[size - j][i]);
-          }
-          sysA.push(row);
-        }
-
-        let c_n = vectors[size];
-        let p_vals = gaussElimination(sysA, c_n);
-
-        // System Eq LaTeX
+        // --- 2-QADAM: Chiziqli tenglamalar sistemasi ---
+        let c_n = vectors[k_degree];
         let termsObj = [];
-        for (let j = 1; j <= size; j++) {
-          termsObj.push(`p_${j} ${texVector(vectors[size - j])}`);
+        for (let j = 1; j <= k_degree; j++) {
+          termsObj.push(`p_${j} ${texVector(vectors[k_degree - j])}`);
         }
         let sysEq = termsObj.join(' + ') + ` = ${texVector(c_n)}`;
         renderTex(sysEq, 'system-output');
 
-        // Expanded system
+        // Kengaytirilgan sistema (barcha qatorlarni ko'rsatamiz, lekin o'zgaruvchilar k_degree ta)
         let sysExpandedLines = [];
         for (let i = 0; i < size; i++) {
           let lineStr = "";
-          for (let j = 1; j <= size; j++) {
-            let coef = vectors[size - j][i];
+          for (let j = 1; j <= k_degree; j++) {
+            let coef = vectors[k_degree - j][i];
             let sign = (j > 1 && coef >= 0) ? '+' : '';
-            lineStr += `${sign}${coef}p_${j} `;
+            lineStr += `${sign}${Math.round(coef * 10000) / 10000}p_${j} `;
           }
-          lineStr += `= ${c_n[i]}`;
+          lineStr += `= ${Math.round(c_n[i] * 10000) / 10000}`;
           sysExpandedLines.push(lineStr);
         }
         let systemMatrixExpanded = `\\begin{cases}
-                ${sysExpandedLines.join(' \\\\ \n')}
-            \\end{cases}`;
+          ${sysExpandedLines.join(' \\\\ \n')}
+      \\end{cases}`;
 
         let solHtml = `<div class="mb-2 text-center text-slate-600 text-sm">Sistema ko'rinishi:</div>`;
         solHtml += `<div class="mb-4 text-center overflow-x-auto">${renderTexInline(systemMatrixExpanded)}</div>`;
 
         let pValsStr = [];
-        for (let k = 0; k < size; k++) {
-          pValsStr.push(`p_${k + 1} = ${p_vals[k]}`);
+        for (let k = 0; k < k_degree; k++) {
+          let roundedP = Math.round(p_vals[k] * 10000) / 10000; // Ekranga chiqarish uchun yaxlitlaymiz
+          pValsStr.push(`p_${k + 1} = ${roundedP}`);
         }
         solHtml += `<div class="font-bold text-center text-cyber-magenta">${renderTexInline(pValsStr.join(', \\quad '))}</div>`;
         document.getElementById('solution-output').innerHTML = solHtml;
 
-        // Step 3: Polynomial Builder
-        let poly = `P(\\lambda) = \\lambda^{${size}}`;
+        // --- 3-QADAM: Ko'phad ---
+        let poly = `P(\\lambda) = \\lambda^{${k_degree}}`;
 
         function formatCoef(val, power) {
-          if (val === 0) return "";
-          let sign = val > 0 ? "-" : "+";
-          let num = Math.abs(val);
+          let roundedVal = Math.round(val * 10000) / 10000;
+          if (Math.abs(roundedVal) < 1e-4) return "";
+          let sign = roundedVal > 0 ? "-" : "+";
+          let num = Math.abs(roundedVal);
           let powerStr = "";
           if (power > 1) powerStr = `\\lambda^${power}`;
           else if (power === 1) powerStr = `\\lambda`;
@@ -442,13 +522,11 @@
           return ` ${sign} ${numStr}${powerStr}`;
         }
 
-        for (let j = 0; j < size; j++) {
-          poly += formatCoef(p_vals[j], size - 1 - j);
+        for (let j = 0; j < k_degree; j++) {
+          poly += formatCoef(p_vals[j], k_degree - 1 - j);
         }
 
         renderTex(poly, 'poly-output');
-
-        // Show output
         document.getElementById('output-section').classList.remove('hidden');
       }
     </script>
