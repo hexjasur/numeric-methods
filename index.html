@@ -107,7 +107,95 @@
   <!-- /Yandex.Metrika counter -->
 
   <style>
-    .module-card,.stat-card{background:#fff;border:2px solid #000}.hero-counter,.ticker-wrap{font-family:Orbitron,sans-serif}.hero-counter{font-size:2rem;font-weight:900;color:#00f2ff;line-height:1}.stat-card{box-shadow:4px 4px 0 #00f2ff;padding:18px;text-align:center;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);transition:transform .2s,box-shadow .2s}.stat-card:hover{transform:translateY(-3px);box-shadow:6px 6px 0 #ff00ea}.module-card{box-shadow:6px 6px 0 #00f2ff;clip-path:polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%);text-decoration:none;color:#0f172a;display:block;padding:24px;transition:box-shadow .25s,transform .25s}.module-card:hover{box-shadow:8px 8px 0 #ff00ea;transform:translateY(-4px)}.module-card .badge{display:inline-block;background:#00f2ff;color:#000;font-size:.65rem;font-weight:900;padding:3px 10px;letter-spacing:.08em;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);margin-bottom:10px}.ticker-wrap{overflow:hidden;background:#000;color:#00f2ff;font-size:.7rem;font-weight:700;letter-spacing:.1em;padding:8px 0;border-top:2px solid #00f2ff;border-bottom:2px solid #00f2ff}.ticker-inner{display:inline-flex;white-space:nowrap;animation:22s linear infinite ticker}.ticker-inner span{padding:0 32px}@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .module-card,
+    .stat-card {
+      background: #fff;
+      border: 2px solid #000
+    }
+
+    .hero-counter,
+    .ticker-wrap {
+      font-family: Orbitron, sans-serif
+    }
+
+    .hero-counter {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #00f2ff;
+      line-height: 1
+    }
+
+    .stat-card {
+      box-shadow: 4px 4px 0 #00f2ff;
+      padding: 18px;
+      text-align: center;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 6px 6px 0 #ff00ea
+    }
+
+    .module-card {
+      box-shadow: 6px 6px 0 #00f2ff;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+      text-decoration: none;
+      color: #0f172a;
+      display: block;
+      padding: 24px;
+      transition: box-shadow .25s, transform .25s
+    }
+
+    .module-card:hover {
+      box-shadow: 8px 8px 0 #ff00ea;
+      transform: translateY(-4px)
+    }
+
+    .module-card .badge {
+      display: inline-block;
+      background: #00f2ff;
+      color: #000;
+      font-size: .65rem;
+      font-weight: 900;
+      padding: 3px 10px;
+      letter-spacing: .08em;
+      clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+      margin-bottom: 10px
+    }
+
+    .ticker-wrap {
+      overflow: hidden;
+      background: #000;
+      color: #00f2ff;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      padding: 8px 0;
+      border-top: 2px solid #00f2ff;
+      border-bottom: 2px solid #00f2ff
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: 22s linear infinite ticker
+    }
+
+    .ticker-inner span {
+      padding: 0 32px
+    }
+
+    @keyframes ticker {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
   </style>
 </head>
 
@@ -174,10 +262,11 @@
     <!-- Header -->
     <header class="p-8 mb-10 text-center shadow-sm cyber-header">
       <div>
-        <img src="/src/assets/images/logo-glass-optimazed.png" alt="Sonli Usullar Logosi" class="mx-auto mb-4 w-24 h-24">
+        <img src="/src/assets/images/logo-glass-optimazed.png" alt="Sonli Usullar Logosi"
+          class="mx-auto mb-4 w-24 h-24">
         <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">SONLI
           USULLAR
-          <span style="color:#00f2ff">v2.4.4</span>
+          <span style="color:#00f2ff">v2.5</span>
         </h1>
       </div>
       <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Amaliy
@@ -243,94 +332,45 @@
     <h2 class="text-xl font-black mb-6 tracking-wider" style="font-family:'Orbitron',sans-serif">
       📦 MODULLAR
     </h2>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-      <a href="src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" class="module-card">
-        <div class="badge">01 / ANIQLIK</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">FUNKSIYA KESISHISH NUQTA</h4>
-        <p class="text-sm text-gray-600">Grafik usulda kesishish nuqtalarini aniqlash. Zoom & Pan qo'llab-quvvatlash.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="module-card">
-        <div class="badge">02 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">KESMANI TENG IKKIGA BO'LISH</h4>
-        <p class="text-sm text-gray-600">Ildiz joylashgan oraliqni har safar teng ikkiga bo'lish orqali aniqlikni
-          oshirish.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Iteratsiya-Usuli.html" class="module-card">
-        <div class="badge">03 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html" class="module-card">
-        <div class="badge">04 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ODDIY ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Vatar-Usuli.html" class="module-card">
-        <div class="badge">05 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">VATAR USULI</h4>
-        <p class="text-sm text-gray-600">Funksiya grafigidagi ikki nuqtadan o'tuvchi vatar orqali ildizni
-          yaqinlashtirish (Secant Method).</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Urinma-Usuli.html" class="module-card">
-        <div class="badge">06 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">URINMA USULI</h4>
-        <p class="text-sm text-gray-600">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Urinma-Usuli.html" class="module-card">
-        <div class="badge">07 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ODDIY NYUTON USULI</h4>
-        <p class="text-sm text-gray-600">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Zeydel-usuli.html" class="module-card">
-        <div class="badge">08 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ZEYDEL USULI</h4>
-        <p class="text-sm text-gray-600">Chiziqli tenglamalar sistemasini (SLAU) iterativ yechish usuli.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Haydash-Usuli.html" class="module-card">
-        <div class="badge">09 / ANIQLIK</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">HAYDASH USULI</h4>
-        <p class="text-sm text-gray-600">Tridiagonal chiziqli tenglamalar sistemasini ketma-ket hisoblash orqali yechish
-          usuli.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <!-- <a href="src/Sonli-Usullar/Nazariya.html" class="module-card">
-        <div class="badge">05 / NAZARIYA</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">NAZARIYA</h4>
-        <p class="text-sm text-gray-600">Sonli usullar faniga oid nazariy materiallar.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">KO'RISH →</div>
-      </a> -->
-
-      <a href="src/about.html" class="module-card">
-        <div class="badge">ℹ️ / HAQIDA</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">WEBSITE HAQIDA</h4>
-        <p class="text-sm text-gray-600">Loyiha haqida batafsil ma'lumot, texnologiyalar va muallif.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12" id="modules-grid">
+      <!-- Modullarning kartalari bu yerga dinamik (JavaScript orqali) generatsiya qilinadi -->
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const modules = [
+          { href: "src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html", badge: "01 / ANIQLIK", title: "FUNKSIYA KESISHISH NUQTA", desc: "Grafik usulda kesishish nuqtalarini aniqlash. Zoom & Pan qo'llab-quvvatlash.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html", badge: "02 / USUL", title: "KESMANI TENG IKKIGA BO'LISH", desc: "Ildiz joylashgan oraliqni har safar teng ikkiga bo'lish orqali aniqlikni oshirish.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/Iteratsiya-Usuli.html", badge: "03 / USUL", title: "ITERATSIYA USULI", desc: "Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html", badge: "04 / USUL", title: "ODDIY ITERATSIYA USULI", desc: "Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/Vatar-Usuli.html", badge: "05 / USUL", title: "VATAR USULI", desc: "Funksiya grafigidagi ikki nuqtadan o'tuvchi vatar orqali ildizni yaqinlashtirish (Secant Method).", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/Urinma-Usuli.html", badge: "06 / USUL", title: "URINMA USULI", desc: "Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/Urinma-Usuli.html", badge: "07 / USUL", title: "ODDIY NYUTON USULI", desc: "Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/Zeydel-usuli.html", badge: "08 / USUL", title: "ZEYDEL USULI", desc: "Chiziqli tenglamalar sistemasini (SLAU) iterativ yechish usuli.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/Haydash-Usuli.html", badge: "09 / ANIQLIK", title: "HAYDASH USULI", desc: "Tridiagonal chiziqli tenglamalar sistemasini ketma-ket hisoblash orqali yechish usuli.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/krylov-matrix-vector-method.html", badge: "10 / USUL", title: "KRYLOV USULI", desc: "Matritsa-vektor usuli: Matritsaning o'zi bilan emas, balki uning matritsa-vektor ko'paytmasi bilan ishlashga asoslangan iterativ usul.", linkText: "BATAFSIL →" },
+          { href: "src/Sonli-Usullar/Nazariya.html", badge: "11 / NAZARIYA", title: "NAZARIYA", desc: "Sonli usullar faniga oid nazariy materiallar.", linkText: "KO'RISH →" },
+          { href: "src/about.html", badge: "ℹ️ / HAQIDA", title: "WEBSITE HAQIDA", desc: "Loyiha haqida batafsil ma'lumot, texnologiyalar va muallif.", linkText: "BATAFSIL →" }
+        ];
+
+        const container = document.getElementById('modules-grid');
+        if (container) {
+          container.innerHTML = modules.map(m => `
+      <a href="${m.href}" class="module-card">
+        <div class="badge">${m.badge}</div>
+        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">${m.title}</h4>
+        <p class="text-sm text-gray-600">${m.desc}</p>
+        <div class="mt-4 text-xs font-bold text-cyan-600">${m.linkText}</div>
+      </a>`).join('');
+        }
+
+        // Statistikadagi modullar sonini avtomatik yangilash
+        const cntEl = document.getElementById('cnt-modules');
+        if (cntEl) {
+          cntEl.innerText = modules.length;
+        }
+      });
+    </script>
 
     <!-- Tech stack -->
     <div class="p-5 cyber-card mb-12">

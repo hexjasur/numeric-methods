@@ -1,0 +1,50 @@
+[
+  {
+    "version": "v2.5",
+    "date": "2026-04-12",
+    "color": "#ff00ea",
+    "description": "Nazariya qismi ustida ishlar olib borilmoqda <br>\n OG(Open Graph)lar ustida ishlar olib borilmoqda<br>\n SEO ustida ishlar olib borilmoqda<br>\n Oddiy Iteratsiya sahifasida M ni isboti bilan chiqarib beriladi shartlar to'liq visual tarzda ko'rsatiladi<br>\n Source code da tarix yani changelog dinamik qilindi<br>\n Yangi usul <a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/krylov-matrix-vector-method.html\">A. N. Krylov ning xos son va xos matritsa usuli</a> qo'shildi<br>\n "
+  },
+  {
+    "version": "v2.4.5",
+    "date": "2026-04-08",
+    "color": "",
+    "description": "Open Graphlar va SEO ustida ishlar davom etmoqda. <br>\nHaydash Usuli da r ni tekshirish formulasi hamda\nhisoblash xususiyati qo'shildi.\n<br>\n<a class=\"underline text-blue-700 font-bold\"\n  href=\"/src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html\">Oddiy Iteratsiya Usuli</a> sahifasida mobile\nresponsivligi yaxshilandi va epsilion yana ham yaxshi visual aniq ko'rsatildi."
+  },
+  {
+    "version": "v2.4.3",
+    "date": "2026-04-06",
+    "color": "",
+    "description": "Open Graph yaxshilandi. <br>Bir qancha yaxshilanishlar qilindi <a\n  class=\"underline text-blue-700 font-bold\"\n  href=\"/src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html\">Kesmani teng ikkiga bo'lish\n  usuli</a>da\nqadamlar soni yana ham aniqlashtirildi, eslatma qo'shildi. <br> PWA(Progressive Web App) qo'shish\nishlari boshlandi va ayni damda test jarayonda. PWA bu Vebsaytni offline ishlashni taminlaydi yani\nwebsite ga bir marta kirishgandan so'ng automatik keshlab olinadi va keyingi safar internetsiz kirish\nmumkun bo'ladi. <br> 404 - Sahifa qo'shildi yani mavjud bo'lmagan sahifaga kirilganda chiqadigan\nsahifa."
+  },
+  {
+    "version": "v2.3",
+    "date": "2026-04-04",
+    "color": "",
+    "description": "SEO Mukammal darajada yaxshilanmoqda, Open Graphlar ustida ishlar\n  olib borilmoqda. <br>Mobile versiya ustida ish boshlandi webview versiya. <br>Haydash Usuli qo'shildi.\n  <br>Zeydel N tartibli usuli noqulayliklar tog'irlanib yaxshilandi. <br>Oddiy iteratsiya usuli\n  takommilashtirildi endi\n  minimal 2 talik sistemadan 7 talikgacha hisoblab beradi va x1^(0) qadamni ham ko'rsatadi."
+  },
+  {
+    "version": "v2.2",
+    "date": "2026-03-23",
+    "color": "",
+    "description": "Bir qancha yangi usullar qo'shildi, grafiklar aniqlashtirildi,\nbir qancha xatoliklar tuzatildi va source kod cdn dan npm ga o'tkazish ishlari boshlandi, yangi domen\nolindi SEO qayta yozildi."
+  },
+  {
+    "version": "v2.2",
+    "date": "2026-03-23",
+    "color": "",
+    "description": "DRY sidebar komponenti, \"Website haqida\" sahifasi, ticker bar,\nkreativ qo'shimchalar, mobil moslashuv yaxshilandi"
+  },
+  {
+    "version": "v2.2",
+    "date": "2026-03-18",
+    "color": "",
+    "description": "Grafik Engine v3.0 qo'shildi, Gauss-Seydel usuli, responsive\ndizayn"
+  },
+  {
+    "version": "v1.0",
+    "date": "2026-03-16",
+    "color": "",
+    "description": "Dastlabki versiya: Iteratsiya, Bisection, cyber UI dizayni"
+  }
+]

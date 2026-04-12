@@ -2,26 +2,29 @@
 <html lang="uz">
 
 <head>
+  <!-- 1. Basics -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sayt Haqida — Muallif, Texnologiyalar, Tarix | Sonli Usullar — sonli-usullar.uz</title>
+  <meta http-equiv="content-language" content="uz">
 
-  <!-- Primary SEO -->
+
+  <!-- 2. TITLE + DESCRIPTION (ENG MUHIM) -->
+  <title>Sayt Haqida — Muallif, Texnologiyalar, Tarix | Sonli Usullar — sonli-usullar.uz</title>
   <meta name="description"
     content="sonli-usullar.uz loyihasi haqida: maqsad, muallif (Haydarov Jasurbek, QarDU 023-40), texnologiyalar (HTML, JS, KaTeX, Math.js, Canvas), versiya tarixi va litsenziya. O'zbek interaktiv matematika platformasi.">
   <meta name="keywords"
     content="sonli usullar haqida, Haydarov Jasurbek, QarDU amaliy matematika, sonli-usullar.uz, loyiha, KaTeX, Math.js, HTML Canvas, o'zbek matematika platformasi">
+
+  <!-- 3. CANONICAL -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/src/about.html">
+
   <!-- Head Manager (DRY) -->
   <script>
     window.HEAD_BASE = '../';
   </script>
   <script src="assets/js/head-manager.js"></script>
 
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://www.sonli-usullar.uz/src/about.html">
-
-  <!-- Open Graph -->
+  <!-- 5. OPEN GRAPH -->
   <meta property="og:type" content="profile">
   <meta property="og:url" content="https://www.sonli-usullar.uz/src/about.html">
   <meta property="og:site_name" content="Sonli Usullar">
@@ -29,16 +32,19 @@
   <meta property="og:title" content="Sayt Haqida — Muallif va Texnologiyalar | sonli-usullar.uz">
   <meta property="og:description"
     content="Haydarov Jasurbek (QarDU, 023-40) yaratgan o'zbek interaktiv matematika platformasi. Maqsad, texnologiyalar, versiya tarixi va CC BY-SA 4.0 litsenziya.">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-about.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
 
-  <!-- Twitter Card -->
+  <!-- 6. TWITTER -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sayt Haqida | sonli-usullar.uz">
   <meta name="twitter:description"
     content="Haydarov Jasurbek, QarDU 023-40 — sonli-usullar.uz loyihasi muallifi. Texnologiyalar va maqsad.">
-  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-about.png">
 
-  <!-- JSON-LD -->
+  <!-- 7. JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -144,11 +150,14 @@
             <p class="text-gray-700 leading-relaxed">
               Loyiha faqat <strong>HTML, CSS va JavaScript va ko'plab kutubxonalar </strong> bilan, hech qanday backend
               texnologiyalarsiz ishlaydi — bu uning istalgan brauzerda darhol ochilishini ta'minlaydi. (Ayni paytda
-              mobile dasturi ustida ish olib borilmoqda.) va undan tashqari vebsayt PWA yani (Progressive Web App) texnologiyasi ishlatilgan bu esa vebsaytni offline ishlashga imkon beradi yani bir marta vebsaytga kirilgandan so'ng avtomatik tarzda keshlab olinadi va keyingi safar internet aloqasi bo'lmasa ham ishlaydi.
+              mobile dasturi ustida ish olib borilmoqda.) va undan tashqari vebsayt PWA yani (Progressive Web App)
+              texnologiyasi ishlatilgan bu esa vebsaytni offline ishlashga imkon beradi yani bir marta vebsaytga
+              kirilgandan so'ng avtomatik tarzda keshlab olinadi va keyingi safar internet aloqasi bo'lmasa ham
+              ishlaydi.
             </p>
           </div>
           <div class="text-center" style="min-width: 180px;">
-            <div class="text-6xl font-black" style="font-family:'Orbitron',sans-serif; color:#00f2ff">v2.4.4</div>
+            <div class="text-6xl font-black" style="font-family:'Orbitron',sans-serif; color:#00f2ff">v2.5</div>
             <div class="text-sm font-bold text-gray-500 mt-2">JORIY VERSIYA</div>
             <div class="mt-4 text-xs font-mono text-gray-400">
               <div>Loyihaga asos solindi: 2026-03-16</div>
@@ -241,86 +250,50 @@
         </div>
       </div>
 
-      <!-- TODO: Timeline / Changelog -->
+      <!-- Timeline / Changelog -->
       <div class="cyber-card p-8 mb-8">
         <h2 class="text-2xl font-black mb-6 border-b-2 border-black pb-3" style="font-family:'Orbitron',sans-serif">
-          📅 TARIX
+          📅 TARIX (Changelog)
         </h2>
-        <div>
-          <div class="timeline-item">
-            <div class="timeline-dot" style="background:#ff00ea"></div>
-            <div>
-              <div class="font-bold text-sm">v2.4.4 — 2026-04-08</div>
-              <div class="text-xs text-gray-600 mt-1">
-                Open Graphlar va SEO ustida ishlar davom etmoqda. <br>
-                Haydash Usuli da r ni tekshirish formulasi hamda
-                hisoblash xususiyati qo'shildi.
-                <br>
-                  <a class="underline text-blue-700 font-bold" href="/src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html">Oddiy Iteratsiya Usuli</a> sahifasida mobile responsivligi yaxshilandi va epsilion yana ham yaxshi visual aniq ko'rsatildi.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="font-bold text-sm">v2.4.3 — 2026-04-06</div>
-            <div class="text-xs text-gray-600 mt-1">Open Graph yaxshilandi. <br>Bir qancha yaxshilanishlar qilindi <a class="underline text-blue-700 font-bold"
-                href="/src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html">Kesmani teng ikkiga bo'lish
-                usuli</a>da
-              qadamlar soni yana ham aniqlashtirildi, eslatma qo'shildi. <br> PWA(Progressive Web App) qo'shish
-              ishlari boshlandi va ayni damda test jarayonda. PWA bu Vebsaytni offline ishlashni taminlaydi yani
-              website ga bir marta kirishgandan so'ng automatik keshlab olinadi va keyingi safar internetsiz kirish
-              mumkun bo'ladi. <br> 404 - Sahifa qo'shildi yani mavjud bo'lmagan sahifaga kirilganda chiqadigan
-              sahifa.
-            </div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="font-bold text-sm">v2.3 — 2026-04-04</div>
-            <div class="text-xs text-gray-600 mt-1">SEO Mukammal darajada yaxshilanmoqda, Open Graphlar ustida ishlar
-              olib borilmoqda. <br>Mobile versiya ustida ish boshlandi webview versiya. <br>Haydash Usuli qo'shildi.
-              <br>Zeydel N tartibli usuli noqulayliklar tog'irlanib yaxshilandi. <br>Oddiy iteratsiya usuli
-              takommilashtirildi endi
-              minimal 2 talik sistemadan 7 talikgacha hisoblab beradi va x1^(0) qadamni ham ko'rsatadi.
-            </div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="font-bold text-sm">v2.2 — 2026-03-23</div>
-            <div class="text-xs text-gray-600 mt-1">Bir qancha yangi usullar qo'shildi, grafiklar aniqlashtirildi,
-              bir qancha xatoliklar tuzatildi va source kod cdn dan npm ga o'tkazish ishlari boshlandi, yangi domen
-              olindi SEO qayta yozildi.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="font-bold text-sm">v2.2 — 2026-03-23</div>
-            <div class="text-xs text-gray-600 mt-1">DRY sidebar komponenti, "Website haqida" sahifasi, ticker bar,
-              kreativ qo'shimchalar, mobil moslashuv yaxshilandi</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="font-bold text-sm">v2.2 — 2026-03-18</div>
-            <div class="text-xs text-gray-600 mt-1">Grafik Engine v3.0 qo'shildi, Gauss-Seydel usuli, responsive
-              dizayn</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div>
-            <div class="font-bold text-sm">v1.0 — 2026-03-16</div>
-            <div class="text-xs text-gray-600 mt-1">Dastlabki versiya: Iteratsiya, Bisection, cyber UI dizayni</div>
+        <div id="history-container">
+          <!-- History items will be dynamically loaded here by JavaScript -->
+          <div class="text-center py-4">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            <p class="mt-2 text-sm text-gray-500">Tarix yuklanmoqda...</p>
           </div>
         </div>
       </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          fetch('assets/data/history.json')
+            .then(res => res.json())
+            .then(data => {
+              const container = document.getElementById('history-container');
+              container.innerHTML = ''; // clear loading
+
+              data.forEach(item => {
+                const dotColorStyle = item.color ? `style="background:${item.color}"` : '';
+
+                const itemHtml = `
+                  <div class="timeline-item">
+                    <div class="timeline-dot" ${dotColorStyle}></div>
+                    <div>
+                      <div class="font-bold text-sm">${item.version} — ${item.date}</div>
+                      <div class="text-xs text-gray-600 mt-1">${item.description}</div>
+                    </div>
+                  </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHtml);
+              });
+            })
+            .catch(err => {
+              console.error('Error loading history:', err);
+              const container = document.getElementById('history-container');
+              container.innerHTML = '<p class="text-red-500 text-sm">Tarixni yuklashda xatolik yuz berdi.</p>';
+            });
+        });
+      </script>
     </div>
 
     <!-- License -->

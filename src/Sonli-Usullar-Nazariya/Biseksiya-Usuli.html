@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonli Usullar: Biseksiya Usuli Nazariyasi</title>
+
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });">
+    </script>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;800&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+      color: #1a1a1a;
+    }
+
+    .academic-font {
+      font-family: 'Libre+Baskerville', serif;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* Cyber Card Styling */
+    .cyber-card {
+      background: #fff;
+      border: 2px solid #000;
+      box-shadow: 6px 6px 0 #00f2ff;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+      transition: all 0.3s ease;
+    }
+
+    .cyber-card:hover {
+      box-shadow: 8px 8px 0 #ff00ea;
+      transform: translateY(-4px);
+    }
+
+    .step-card {
+      background: #fff;
+      border: 2px solid #000;
+      box-shadow: 4px 4px 0 #00f2ff;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+      padding: 1.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .step-card:hover {
+      box-shadow: 6px 6px 0 #ff00ea;
+      transform: translateY(-2px);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #00f2ff;
+      color: #000;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.125rem;
+      border: 2px solid #000;
+      margin-right: 1rem;
+      flex-shrink: 0;
+      box-shadow: 3px 3px 0 #ff00ea;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+    }
+
+    .math-block {
+      background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 100%);
+      border-left: 6px solid #00f2ff;
+      border-top: 3px solid #ff00ea;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+      box-shadow: 3px 3px 0 rgba(0, 242, 255, 0.3);
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+      border-left: 6px solid #00f2ff;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+      box-shadow: 3px 3px 0 rgba(255, 0, 234, 0.2);
+    }
+
+    pre {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1.5rem;
+      overflow-x: auto;
+      border-radius: 4px;
+      border: 2px solid #00f2ff;
+    }
+
+    .section-divider {
+      height: 3px;
+      background: linear-gradient(90deg, #00f2ff 0%, #ff00ea 100%);
+      margin: 2rem 0;
+      border-radius: 2px;
+    }
+
+    table {
+      border-collapse: collapse;
+      border: 2px solid #000;
+    }
+
+    table thead {
+      background: linear-gradient(90deg, #00f2ff 0%, #fbbf24 100%);
+      color: #000;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    table td,
+    table th {
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+    }
+
+    table tbody tr:nth-child(2n) {
+      background: #f9fafb;
+    }
+
+    table tbody tr:hover {
+      background: #ecfdf5;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #00f2ff 0%, #fbbf24 100%);
+      color: #000;
+      font-size: 0.65rem;
+      font-weight: 900;
+      padding: 4px 12px;
+      letter-spacing: 0.08em;
+      font-family: 'Orbitron', sans-serif;
+      clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+      margin-bottom: 1rem;
+      border: 1px solid #000;
+    }
+
+    .header-line {
+      height: 4px;
+      width: 60px;
+      background: linear-gradient(90deg, #00f2ff 0%, #ff00ea 100%);
+      margin: 1rem auto;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Header Section -->
+    <header class="text-center mb-12">
+      <div class="badge mb-4">NAZARIYA / BISEKSIYA USULI</div>
+      <h1 class="hero-title text-5xl md:text-6xl mb-6" style="color: #000;">
+        BISEKSIYA USULI
+      </h1>
+      <h2 class="hero-title text-xl mb-6" style="color: #000;">
+        KESMANI TENG IKKIGA BO'LISH USULI
+      </h2>
+      <p class="text-lg font-bold mb-2" style="color: #666;">Algebraik va transendent tenglamalarni yarim bo'lish usuli
+        bilan yechish</p>
+      <div class="header-line"></div>
+    </header>
+
+    <!-- Intro Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+      <div class="cyber-card p-8">
+        <h3 class="section-title text-xl mb-4">✂️ USUL HAQIDA</h3>
+        <p class="academic-font text-base leading-relaxed">
+          Biseksiya usuli (yarim bo'lish usuli) – ildizni o'z ichiga olgan oraliqni har safar teng ikkiga bo'lib,
+          ildizni topish usuli.
+        </p>
+      </div>
+      <div class="cyber-card p-8">
+        <h3 class="section-title text-xl mb-4">📊 AFZALLIKLARI</h3>
+        <ul class="space-y-2 text-sm">
+          <li>✓ Har doim yaqinlashuvchi</li>
+          <li>✓ Sodda algoritm</li>
+          <li>✓ Aniq ildizga yaqinlashadi</li>
+          <li>✓ Bir yoki bir nechta ildiz bor</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 1 -->
+    <section class="mb-16">
+      <h2 class="section-title text-3xl mb-8">1️⃣ MASALANING QO'YILISHI</h2>
+
+      <div class="cyber-card p-8 mb-8">
+        <div class="academic-font text-lg leading-relaxed space-y-4">
+          <p>
+            Faraz qilaylik, $[a, b]$ kesmada aniqlangan va uzluksiz bo'lgan $f(x)$ funksiya berilgan bo'lsin.
+            Biz $f(x) = 0$ ko'rinishidagi tenglamaning ildizini topishimiz kerak.
+          </p>
+          <p class="font-bold text-base">
+            Agar funksiya kesmaning chetki nuqtalarida turli ishorali qiymatlarni qabul qilsa:
+          </p>
+        </div>
+
+        <div class="math-block text-center">
+          $$f(a) \cdot f(b) < 0$$ </div>
+
+            <div class="academic-font text-lg leading-relaxed">
+              <p>
+                shart bajarilsa, <strong>Bolsano-Koshi teoremasiga</strong> ko'ra, $[a, b]$ oraliqda kamida bitta $x^*$
+                ildiz mavjud bo'ladi.
+              </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 2 - Algorithm Steps -->
+    <section class="mb-16">
+      <h2 class="section-title text-3xl mb-8">2️⃣ HISOBLASH BOSQICHLARI (ALGORITM)</h2>
+      <div class="space-y-6">
+        <div class="flex gap-4">
+          <div class="flex-none w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+            1</div>
+          <div>
+            <p class="font-bold text-lg mb-2">Oraliqni bo'lish</p>
+            <p class="academic-font text-base">Kesmaning o'rtasini topamiz:</p>
+            <div
+              style="background: #f0f9ff; padding: 0.75rem; margin-top: 0.5rem; border-left: 3px solid #00f2ff; font-family: 'Orbitron', monospace;">
+              $$c = \frac{a+b}{2}$$
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-none w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+            2</div>
+          <div>
+            <p class="font-semibold">Ildizni tekshirish:</p>
+            <p class="text-slate-600">Agar $f(c) = 0$ bo'lsa, $c$ — aniq yechim. Aks holda, $f(a) \cdot f(c) < 0$
+                shartini tekshiramiz.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-none w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+            3</div>
+          <div>
+            <p class="font-semibold">Oraliqni toraytirish:</p>
+            <ul class="list-disc list-inside text-slate-600 mt-2">
+              <li>Agar $f(a) \cdot f(c) < 0$ bo'lsa, yangi kesma $[a, c]$ bo'ladi ($b=c$).</li>
+              <li>Agar $f(a) \cdot f(c) > 0$ bo'lsa, yangi kesma $[c, b]$ bo'ladi ($a = c$).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-none w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+            4</div>
+          <div>
+            <p class="font-semibold">To'xtash sharti:</p>
+            <p class="text-slate-600 italic">Berilgan $\epsilon$ aniqlik uchun $|b - a| < \epsilon$ sharti
+                bajarilgunicha jarayon takrorlanadi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 3 - Example -->
+    <section class="mb-16">
+      <h2 class="section-title text-3xl mb-8">3️⃣ AMALIY MISOL TAHLILI</h2>
+
+      <div class="cyber-card p-8 mb-8">
+        <h3 class="font-bold text-xl mb-4" style="color: #00f2ff;">📝 Misol:</h3>
+        <p class="academic-font text-lg mb-4">
+          Ushbu funksiyani kesmani teng ikkiga bo'lish usuli yordamida yeching: $f(x) = x - 1 - \frac{\sin(x)}{10} = 0$
+        </p>
+        <p class="text-base font-bold">
+          Oraliq: $[1, 1.1]$ &nbsp;&nbsp;|&nbsp;&nbsp; Aniqlik: $\epsilon = 0.01$
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th class="p-3">Iter</th>
+              <th class="p-3">a</th>
+              <th class="p-3">b</th>
+              <th class="p-3">$c = \frac{(a+b)}{2}$</th>
+              <th class="p-3">f(c)</th>
+              <th class="p-3">|b-a|</th>
+              <th class="p-3">Holat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-3 text-center font-bold text-blue-600">1</td>
+              <td class="p-3">1.00000</td>
+              <td class="p-3">1.10000</td>
+              <td class="p-3 font-bold text-cyan-600">1.05000</td>
+              <td class="p-3">-0.03674</td>
+              <td class="p-3">0.10000</td>
+              <td class="p-3 text-xs">f(1)·f(1.05) &lt; 0 ✓</td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center font-bold text-blue-600">2</td>
+              <td class="p-3">1.05000</td>
+              <td class="p-3">1.10000</td>
+              <td class="p-3 font-bold text-cyan-600">1.07500</td>
+              <td class="p-3">-0.01296</td>
+              <td class="p-3">0.05000</td>
+              <td class="p-3 text-xs">f(1.05)·f(1.075) &lt; 0 ✓</td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center font-bold text-blue-600">3</td>
+              <td class="p-3">1.07500</td>
+              <td class="p-3">1.10000</td>
+              <td class="p-3 font-bold text-cyan-600">1.08750</td>
+              <td class="p-3">-0.00105</td>
+              <td class="p-3">0.02500</td>
+              <td class="p-3 text-xs">f(1.075)·f(1.0875) &lt; 0 ✓</td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center font-bold text-blue-600">4</td>
+              <td class="p-3">1.08750</td>
+              <td class="p-3">1.10000</td>
+              <td class="p-3 font-bold text-cyan-600">1.09375</td>
+              <td class="p-3">0.00491</td>
+              <td class="p-3">0.01250</td>
+              <td class="p-3 text-xs">f(1.0875)·f(1.09375) > 0</td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center font-bold text-magenta-600">5</td>
+              <td class="p-3">1.087500</td>
+              <td class="p-3">1.093750</td>
+              <td class="p-3 font-bold text-cyan-600">1.09063</td>
+              <td class="p-3">0.00193</td>
+              <td class="p-3 font-bold" style="background: linear-gradient(90deg, #ecfdf5, #f0fdf4); color: #059669;">
+                0.00625 < ϵ ✓</td>
+              <td class="p-3 text-xs font-bold" style="color: #10b981;">TO'XTASH!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="highlight-box mt-8">
+        <p class="font-bold mb-2">📌 Natija:</p>
+        <p class="academic-font">
+          $|b - a| = 0.00625 < \epsilon=0.01$ shart bajarilgani uchun jarayon to'xtatiladi. </p>
+            <p class="academic-font mt-2">
+              <strong>Ildiz:</strong> $x^* \approx 1.09063$
+            </p>
+            <p class="academic-font">
+              <strong>Jami iteratsiyalar:</strong> 5 ta
+            </p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 4 - Algorithm & Code -->
+    <section class="mb-16">
+      <h2 class="section-title text-3xl mb-8">4️⃣ ALGORITMIK VA DASTURIY KO'RINISH</h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Algorithm Flowchart -->
+        <div class="cyber-card p-8">
+          <h3 class="section-title text-lg mb-6">Algoritm Blok-Sxemasi</h3>
+          <div class="mermaid flex justify-center">
+            graph TD
+              Start(["Boshlash"]) --> Eps[/"ε"/]
+              Eps --> Func["f(x) = ..."]
+              Func --> Input[/"a, b"/]
+
+              Input --> Check{"f(a) * f(b) < 0"}
+
+              Check -- "Yo'q" --> Input
+              Check -- "Ha" --> Calc["c = (a + b) / 2"]
+
+              Calc --> Sign{"f(a) * f(c) < 0"}
+
+              Sign -- "Ha" --> UpdateB["b = c"]
+              Sign -- "Yo'q" --> UpdateA["a = c"]
+
+              UpdateB --> Loop{"b - a < ε"}
+              UpdateA --> Loop
+
+              Loop -- "Yo'q" --> Calc
+              Loop -- "Ha" --> Result["c"]
+
+              Result --> End(["Tamom"])
+
+              %% Dizayn
+              style Start fill:#f8fafc,stroke:#475569
+              style End fill:#f8fafc,stroke:#475569
+              style Check fill:#fff7ed,stroke:#ea580c
+              style Sign fill:#fff7ed,stroke:#ea580c
+              style Loop fill:#fff7ed,stroke:#ea580c
+              style Calc fill:#eff6ff,stroke:#2563eb
+              style Func fill:#ecfeff,stroke:#0891b2
+          </div>
+        </div>
+
+        <!-- Code Implementation -->
+        <div class="cyber-card p-0 overflow-hidden">
+          <div
+            class="bg-gradient-to-r from-slate-800 to-slate-900 px-6 py-3 flex justify-between items-center border-b-2 border-cyan-500">
+            <span class="text-cyan-400 text-xs font-mono uppercase tracking-wider">BisectionMethod.cs</span>
+            <div class="flex gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+            </div>
+          </div>
+          <pre class="p-6 text-xs md:text-sm overflow-x-auto"><code class="text-gray-100">using System;
+
+class Program
+{
+    // Misolning berilishi: f(x) = x - 1 - sin(x)/10
+    static double f(double x) => x - 1 - Math.Sin(x) / 10;
+
+    static void Main()
+    {
+        double a = 1, b = 1.1, eps = 0.01;
+        int iter = 0;
+
+        if (f(a) * f(b) >= 0) {
+            Console.WriteLine("Shart bajarilmadi!");
+            return;
+        }
+
+        Console.WriteLine("Iter | a       | b       | c       | f(c)     | |b-a|");
+
+        while ((b - a) >= eps)
+        {
+            iter++;
+            double c = (a + b) / 2;
+            double fc = f(c);
+
+            // Natijani chop etish
+            Console.WriteLine($"{iter,4} | {a,7:F5} | {b,7:F5} | {c,7:F5} | {fc,8:F5} | {b - a,7:F5}");
+
+            if (fc == 0.0) break;
+
+            if (f(a) * fc < 0)
+                b = c;
+            else
+                a = c;
+        }
+
+        // Oxirgi nuqtani (ildizni) topish
+        double ildiz = (a + b) / 2;
+        Console.WriteLine($"\nIldiz: {ildiz:F5}");
+        Console.WriteLine($"Jami iteratsiyalar: {iter}");
+    }
+}
+</code>
+</pre>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 5 - Advantages -->
+    <section class="mb-16">
+      <h2 class="section-title text-3xl mb-8">5️⃣ AFZALLIKLARI VA KAMCHILIKLARI</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="cyber-card p-8">
+          <h3 class="section-title text-xl mb-6" style="color: #10b981;">✅ AFZALLIKLARI</h3>
+          <ul class="space-y-3 academic-font text-sm">
+            <li><strong>📍 Yaqinlashish:</strong> Har doim yaqinlashuvchi (agar f(a)·f(b) &lt; 0)</li>
+            <li><strong>⚙️ Soddalik:</strong> Algoritmi juda sodda va tushunish qulay</li>
+            <li><strong>🎯 Aniqlik:</strong> Berilgan aniqlikka erishish kafolatlanadi</li>
+            <li><strong>📊 Turli ildizlar:</strong> Bir yoki bir nechta ildizga qo'llaniladi</li>
+          </ul>
+        </div>
+
+        <div class="cyber-card p-8">
+          <h3 class="section-title text-xl mb-6" style="color: #dc2626;">❌ KAMCHILIKLARI</h3>
+          <ul class="space-y-3 academic-font text-sm">
+            <li><strong>🐢 Sekinlik:</strong> Konvergensiya tezligi sekin (linear)</li>
+            <li><strong>📋 Shart:</strong> f(a)·f(b) &lt; 0 sharti zarur</li>
+            <li><strong>🔄 Iteratsiyalar:</strong> Aniqlikka erishish uchun ko'p iteratsiya kerak</li>
+            <li><strong>🎪 Kompleks ildizlar:</strong> Faqat haqiqiy ildizlarni topadi</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Footer -->
+    <footer class="text-center py-12">
+      <div class="p-6 cyber-card inline-block">
+        <p class="text-sm font-bold mb-2">© 2026 Sonli Usullar Platformasi</p>
+        <p class="academic-font text-xs" style="color: #666;">Biseksiya Usuli — Nazariya va Tatbiq</p>
+        <p class="text-xs mt-3" style="color: #00f2ff; font-family: 'Orbitron', sans-serif;">QarDU · Amaliy Matematika
+        </p>
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>
+
+</html>

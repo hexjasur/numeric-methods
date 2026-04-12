@@ -61,13 +61,13 @@
     },
     {
       id: 'iteratsiya',
-      label: 'ITERATSIYA USULI',
+      label: 'ODDIY ITERATSIYA USULI',
       icon: '🔄',
       href: base + 'src/Sonli-Usullar/Iteratsiya-Usuli.html',
     },
     {
       id: '3-talik-oddiyIteratsiya',
-      label: 'ODDİY ITERATSIYA USULI',
+      label: 'CHIZIQLI ITERATSIYA USULI',
       icon: '🔄',
       href: base + 'src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html',
     },
@@ -101,18 +101,18 @@
     //   icon: '💬',
     //   href: base + 'src/Sonli-Usullar/Chats-Zeydel-Usuli.html',
     // },
-    // {
-    //   id: 'nazariya',
-    //   label: '(demo) NAZARIYA (PROMPT)',
-    //   icon: '📋',
-    //   href: base + 'src/Sonli-Usullar/Nazariya.html',
-    // },
-    // {
-    //   id: 'privacy',
-    //   label: 'MAXFIYLIK SIOYOSATI',
-    //   icon: '📋',
-    //   href: base + 'src/privacy.html',
-    // },
+    {
+      id: 'krylov-matrix-vector-method',
+      label: 'KRYLOV USULI (MATRIX-VEKTOR)',
+      icon: '🧮',
+      href: base + 'src/Sonli-Usullar/krylov-matrix-vector-method.html',
+    },
+    {
+      id: 'nazariya',
+      label: 'NAZARIYA',
+      icon: '📋',
+      href: base + 'src/Sonli-Usullar/Nazariya.html',
+    },
   ];
 
   // ── Aktiv sahifani aniqlash ─────────────────────────────────────────

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iteratsiya (Oddiy Iteratsiya) Usuli | Sonli Usullar — sonli-usullar.uz</title>
+  <title>Метод простой итерации - Fixed-point iteration - Oddiy Iteratsiya Usuli - Sonli Usullar</title>
 
   <!-- Head Manager (DRY) -->
   <script>
@@ -32,14 +32,17 @@
   <meta property="og:title" content="Iteratsiya Usuli — Bosqichma-Bosqich Hisob | sonli-usullar.uz">
   <meta property="og:description"
     content="M konstantani topish, yaqinlashish sharti tekshiruvi, va har bir iteratsiya qadami KaTeX formulada. F(x)=0 uchun interaktiv hisob-kitob.">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-oddiy-iter-usuli.png>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Iteratsiya Usuli | sonli-usullar.uz">
   <meta name="twitter:description"
     content="Oddiy iteratsiya usuli — M konstanta, yaqinlashish sharti, KaTeX ishlanish. QarDU.">
-  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-oddiy-iter-usuli.png">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -133,13 +136,13 @@
               </div>
               <input type="number" id="epsInput" placeholder="Epsilon" value="0.01" step="0.001" class="input-field">
               <button onclick="calculate()"
-                class="w-full py-3 font-black text-white uppercase transition-colors bg-black hover:bg-blue-600">Hisoblash</button>
+                class="w-full cursor-pointer py-3 font-black text-white uppercase transition-colors bg-black hover:bg-blue-600">Hisoblash</button>
             </div>
           </div>
 
-          <div id="m-info" class="hidden p-4 cyber-card bg-yellow-50">
-            <p class="text-[10px] font-bold">HISOB-KITOB ASOSI:</p>
-            <div id="m-val-display" class="text-xs"></div>
+          <div id="m-info" class="hidden p-4 cyber-card bg-yellow-50 border-l-4 border-yellow-400">
+            <p class="text-[10px] font-bold uppercase text-yellow-700">M konstanta va yaqinlashish sharti:</p>
+            <div id="m-val-display" class="py-2"></div>
           </div>
         </div>
 
@@ -171,7 +174,7 @@
     const examples = [
       { func: "x^3 + x - 1", latex: "x^3 + x - 1", a: 0, b: 1, eps: 0.01 },
       { func: "sqrt(x+1) - 1/x", latex: "\\sqrt{x+1} - \\frac{1}{x}", a: 0.5, b: 2, eps: 0.01 },
-      { func: "x - 1 - sin(x)/10", latex: "x - 1 - \\frac{\\sin(x)}{10}", a: 0, b: 1, eps: 0.01 }
+      { func: "x - 1 - sin(x)/10", latex: "x - 1 - \\frac{\\sin(x)}{10}", a: 1, b: 1.1, eps: 0.01 }
     ];
 
     function applyExample(ex) {
@@ -219,13 +222,21 @@
         let f_prime_a = Math.abs(df.evaluate({ x: a }));
         let f_prime_b = Math.abs(df.evaluate({ x: b }));
         let max_df = Math.max(f_prime_a, f_prime_b);
+
+        // M ni hisoblash: max hosila + 1
         let M = Math.ceil(max_df) + 1;
 
-        document.getElementById('m-val-display').innerHTML = `
-          M = ${M} <br>
-          x<sub>0</sub> = ${b} (Boshlang'ich) <br>
-          Formula: x<sub>k+1</sub> = x<sub>k</sub> - f(x<sub>k</sub>)/${M}
-        `;
+        // Barcha tushuntirishni bitta renderda chiqaramiz
+        const mDisplay = document.getElementById('m-val-display');
+        katex.render(`
+            \\footnotesize
+            \\begin{aligned}
+            &\\text{Shart: } |\\phi'(x)| = |1 - \\frac{f'(x)}{M}| < 1 \\\\
+            &|f'(${a})| = ${f_prime_a.toFixed(4)}, \\quad |f'(${b})| = ${f_prime_b.toFixed(4)} \\\\
+            &M = \\lceil ${max_df.toFixed(4)} \\rceil + 1 = \\mathbf{${M}} \\\\
+            &x_{k+1} = x_k - \\frac{f(x_k)}{${M}} \\quad (x_0 = ${b})
+            \\end{aligned}
+        `, mDisplay, { throwOnError: false });
 
         let x_old = b;
         let k = 0;
@@ -239,15 +250,15 @@
           let f_new_val = Math.abs(f.evaluate({ x: x_new }));
 
           const card = document.createElement('div');
-          card.className = "cyber-card p-5 bg-white";
+          card.className = "cyber-card p-5 bg-white mb-4";
           const stepId = `step-${k}`;
           const errorId = `err-${k}`;
           card.innerHTML = `
-            <div class="step-title">${k}-yaqinlashish:</div>
-            <div id="${stepId}" class="mb-2"></div>
-            <div class="error-text">Xatolik |F(x)|:</div>
-            <div id="${errorId}" class="text-sm font-bold"></div>
-          `;
+                <div class="step-title">${k}-yaqinlashish:</div>
+                <div id="${stepId}" class="mb-2"></div>
+                <div class="error-text">Xatolik |F(x)|:</div>
+                <div id="${errorId}" class="text-sm font-bold"></div>
+            `;
           resultsContainer.appendChild(card);
 
           katex.render(`x_{${k}} = ${x_old.toFixed(4)} - \\frac{f(${x_old.toFixed(4)})}{${M}} \\approx ${x_new.toFixed(4)}`, document.getElementById(stepId));
@@ -261,7 +272,6 @@
             katex.render(`f(\\xi) = f(${x_new.toFixed(4)}) \\approx ${finalF.toFixed(4)} \\le ${eps}`, document.getElementById('verify-math'));
             isConditionMet = true;
           }
-
           x_old = x_new;
         }
       } catch (err) {

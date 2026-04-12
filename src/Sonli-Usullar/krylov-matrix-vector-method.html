@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <!-- 1. Basics -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-language" content="uz">
+
+  <!-- 2. TITLE + DESCRIPTION (ENG MUHIM) -->
+  <title>Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz</title>
+  <meta name="description"
+    content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
+
+  <!-- 3. CANONICAL -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/krylov-matrix-vector-method.html">
+
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
+  <!-- 6. OPEN GRAPH -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/krylov-matrix-vector-method.html">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:title" content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
+  <meta property="og:description"
+    content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-krylov-matrix-vector-method.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+
+  <!-- 7. TWITTER -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
+  <meta name="twitter:description"
+    content="Метод Крылова - Krylov sequence method - A.N. Krilov Xos Son va Xos Vektor Usuli | sonli-usullar.uz">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-krylov-matrix-vector-method.png">
+
+  <!-- 8. ROBOTS -->
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+
+  <!-- 9. HREFLANG -->
+  <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/krylov-matrix-vector-method.html">
+
+  <!-- 10. MANIFEST -->
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Fira Code"', 'monospace', 'ui-monospace', 'SFMono-Regular'],
+          },
+          colors: {
+            cyber: {
+              cyan: '#06b6d4',
+              magenta: '#d946ef',
+              light: '#f8fafc',
+              glass: 'rgba(255, 255, 255, 0.7)',
+            }
+          },
+          boxShadow: {
+            'neon-cyan': '0 0 10px rgba(6, 182, 212, 0.4), inset 0 0 5px rgba(6, 182, 212, 0.2)',
+            'neon-magenta': '0 0 10px rgba(217, 70, 239, 0.4), inset 0 0 5px rgba(217, 70, 239, 0.2)',
+            'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.1)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f0fdfa;
+      background-image:
+        linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .matrix-wrapper {
+      position: relative;
+      display: inline-block;
+      --matrix-rows: 4;
+    }
+
+    /* Chap qavs */
+    .matrix-wrapper::before {
+      content: "(";
+      position: absolute;
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%) scaleY(calc(var(--matrix-rows) * 1.5));
+      font-size: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    /* O‘ng qavs */
+    .matrix-wrapper::after {
+      content: ")";
+      position: absolute;
+      right: -25px;
+      top: 50%;
+      transform: translateY(-50%) scaleY(calc(var(--matrix-rows) * 1.5));
+      font-size: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Hide number input arrows */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body class="font-mono text-slate-800 min-h-screen p-6 antialiased">
+  <!-- Sidebar -->
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'krylov-matrix-vector-method';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
+
+  <div class="main-content" id="main-content">
+
+    <div class="max-w-4xl mx-auto space-y-8">
+      <header class="text-center">
+        <h1 class="text-3xl font-bold text-blue-500 border-b-4 border-cyber-cyan inline-block pb-2">
+          A.N. Krilov Usuli <br> Метод Крылова <br> Krylov sequence method
+        </h1>
+        <p class="text-sm text-slate-500 mt-2">Matritsaning xos ko'phadini topish</p>
+      </header>
+
+      <div
+        class="glass-panel rounded-2xl p-6 shadow-glass border-t border-l border-white/80 relative overflow-hidden group hover:shadow-neon-cyan transition-shadow duration-500">
+        <div class="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-cyber-cyan to-cyber-magenta"></div>
+
+        <h2 class="text-lg font-semibold mb-4 text-slate-700 flex items-center">
+          <span class="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse mr-2"></span>
+          A Matritsani kiriting (<span id="size-label">4x4</span>):
+        </h2>
+
+        <div class="flex justify-center gap-3 mb-4" id="size-buttons">
+          <button onclick="changeSize(3)"
+            class="size-btn px-4 py-2 border rounded-lg transition-colors duration-300">3x3</button>
+          <button onclick="changeSize(4)"
+            class="size-btn px-4 py-2 border rounded-lg transition-colors duration-300 bg-cyber-cyan text-white shadow-neon-cyan">4x4</button>
+          <button onclick="changeSize(5)"
+            class="size-btn px-4 py-2 border rounded-lg transition-colors duration-300">5x5</button>
+        </div>
+
+        <div class="flex items-center justify-center gap-4">
+          <div class="text-2xl font-bold mr-4">A =</div>
+
+          <div class="matrix-wrapper relative">
+            <!-- Tailwind arbitrary classes placeholder: grid-cols-3 grid-cols-4 grid-cols-5 max-w-sm max-w-md max-w-xl -->
+            <div class="grid grid-cols-4 gap-3 mb-6 max-w-md mx-auto" id="matrix-inputs">
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button onclick="calculateKrylov()"
+            class="relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-bold border-2  rounded-lg bg-linear-to-br from-cyber-cyan to-cyber-magenta hover:shadow-[0_0_20px_rgba(217,70,239,0.5)] transition-all duration-300">
+            <span class="relative">HISBLASHNI BOSHLASH</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="output-section" class="hidden space-y-6">
+
+        <div
+          class="glass-panel rounded-2xl p-6 shadow-glass relative hover:shadow-neon-cyan transition-shadow duration-300">
+          <h3 class="text-md font-bold text-cyber-cyan border-b border-slate-200 pb-2 mb-4">1-QADAM: Vektorlarni
+            hisoblash</h3>
+          <div id="vectors-output" class="text-lg space-y-4 overflow-x-auto"></div>
+        </div>
+
+        <div
+          class="glass-panel rounded-2xl p-6 shadow-glass relative hover:shadow-neon-cyan transition-shadow duration-300">
+          <h3 class="text-md font-bold text-cyber-cyan border-b border-slate-200 pb-2 mb-4">2-QADAM: Chiziqli
+            tenglamalar sistemasi</h3>
+          <div id="system-output" class="text-lg overflow-x-auto mb-4"></div>
+          <div id="solution-output" class="text-lg overflow-x-auto p-4 bg-slate-100 rounded-lg border border-slate-200">
+          </div>
+        </div>
+
+        <div
+          class="glass-panel rounded-2xl p-6 shadow-glass relative hover:shadow-neon-magenta transition-shadow duration-300 ring-2 ring-cyber-magenta/20">
+          <h3 class="text-md font-bold text-cyber-magenta border-b border-slate-200 pb-2 mb-4">3-QADAM: Xarakteristik
+            ko'phad</h3>
+          <div id="poly-output" class="text-xl font-bold text-center p-4"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      let currentSize = 4;
+
+      const defaultMatrix = [
+        [-1, 2, 2, 0],
+        [2, 1, 3, 2],
+        [2, -1, 2, 3],
+        [0, 2, 1, -2]
+      ];
+
+      function changeSize(n) {
+        currentSize = n;
+        document.getElementById('size-label').textContent = `${n}x${n}`;
+
+        document.querySelectorAll('.size-btn').forEach(btn => {
+          if (btn.textContent === `${n}x${n}`) {
+            btn.classList.add('bg-cyber-cyan', 'text-white', 'shadow-neon-cyan');
+          } else {
+            btn.classList.remove('bg-cyber-cyan', 'text-white', 'shadow-neon-cyan');
+          }
+        });
+
+        const container = document.getElementById('matrix-inputs');
+        let colsClass = '';
+        if (n === 3) colsClass = 'grid-cols-3 max-w-sm';
+        else if (n === 4) colsClass = 'grid-cols-4 max-w-md';
+        else if (n === 5) colsClass = 'grid-cols-5 max-w-xl';
+
+        container.className = `grid gap-3 mb-6 mx-auto ${colsClass}`;
+        document.querySelector('.matrix-wrapper').style.setProperty('--matrix-rows', n);
+
+        generateMatrix(n);
+        document.getElementById('output-section').classList.add('hidden');
+      }
+
+      function generateMatrix(size) {
+        const container = document.getElementById('matrix-inputs');
+        container.innerHTML = '';
+
+        for (let i = 0; i < size; i++) {
+          for (let j = 0; j < size; j++) {
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.step = 'any';
+            input.className = 'matrix-cell w-full bg-white/80 border-2 border-slate-200 focus:border-cyber-cyan rounded-lg text-center py-2 shadow-sm outline-none transition-colors duration-200';
+
+            if (defaultMatrix[i] && defaultMatrix[i][j] !== undefined) {
+              input.value = defaultMatrix[i][j];
+            } else {
+              input.value = (i === j) ? 1 : 0;
+            }
+            container.appendChild(input);
+          }
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        changeSize(4);
+      });
+      // Matrix-Vector multiplication
+      function multiplyMatrixVector(A, v) {
+        let size = v.length;
+        let res = new Array(size).fill(0);
+        for (let i = 0; i < size; i++) {
+          for (let j = 0; j < size; j++) {
+            res[i] += A[i][j] * v[j];
+          }
+        }
+        return res;
+      }
+
+      // Gaussian Elimination to solve linear system M*x = b
+      function gaussElimination(A, b) {
+        let n = b.length;
+        let M = [];
+        for (let i = 0; i < n; i++) M.push([...A[i], b[i]]);
+
+        for (let i = 0; i < n; i++) {
+          let maxRow = i;
+          for (let k = i + 1; k < n; k++) {
+            if (Math.abs(M[k][i]) > Math.abs(M[maxRow][i])) maxRow = k;
+          }
+          [M[i], M[maxRow]] = [M[maxRow], M[i]];
+
+          // Avoid division by zero
+          if (Math.abs(M[i][i]) < 1e-10) continue;
+
+          for (let k = i + 1; k < n; k++) {
+            let factor = M[k][i] / M[i][i];
+            for (let j = i; j <= n; j++) {
+              M[k][j] -= factor * M[i][j];
+            }
+          }
+        }
+
+        let x = new Array(n).fill(0);
+        for (let i = n - 1; i >= 0; i--) {
+          x[i] = M[i][n];
+          for (let k = i + 1; k < n; k++) {
+            x[i] -= M[i][k] * x[k];
+          }
+          if (Math.abs(M[i][i]) > 1e-10) {
+            x[i] /= M[i][i];
+          }
+        }
+        // Round to standard 4 decimal precision if needed, but integers should stay exact
+        return x.map(val => {
+          let rounded = Math.round(val * 10000) / 10000;
+          return rounded;
+        });
+      }
+
+      // LaTeX formatting helpers
+      function texMatrix(M) {
+        return `\\begin{pmatrix} ${M.map(row => row.join(' & ')).join(' \\\\ ')} \\end{pmatrix}`;
+      }
+      function texVector(v) {
+        return `\\begin{pmatrix} ${v.join(' \\\\ ')} \\end{pmatrix}`;
+      }
+      function renderTex(str, elementId) {
+        katex.render(str, document.getElementById(elementId), { throwOnError: false, displayMode: true });
+      }
+      function renderTexInline(str) {
+        return katex.renderToString(str, { throwOnError: false, displayMode: false });
+      }
+
+      function calculateKrylov() {
+        let size = currentSize;
+        let inputs = document.querySelectorAll('.matrix-cell');
+        let A = [];
+        let idx = 0;
+        for (let i = 0; i < size; i++) {
+          let row = [];
+          for (let j = 0; j < size; j++) {
+            row.push(parseFloat(inputs[idx].value) || 0);
+            idx++;
+          }
+          A.push(row);
+        }
+
+        // Define c(0)
+        let c0 = new Array(size).fill(0);
+        c0[0] = 1;
+
+        const vectors = [c0];
+        for (let k = 1; k <= size; k++) {
+          vectors.push(multiplyMatrixVector(A, vectors[k - 1]));
+        }
+
+        let vHtml = '';
+        vHtml += `<div class="py-2 text-center">${renderTexInline(`\\vec{c}^{(0)} = ${texVector(vectors[0])}`)}</div>`;
+
+        for (let i = 1; i < vectors.length; i++) {
+          const prevVec = texVector(vectors[i - 1]);
+          const currentVec = texVector(vectors[i]);
+          const matrixA = texMatrix(A);
+
+          vHtml += `
+        <div class="py-2 overflow-x-auto text-center">
+            ${renderTexInline(`\\vec{c}^{(${i})} = A \\cdot \\vec{c}^{(${i - 1})} = ${matrixA} \\cdot ${prevVec} = ${currentVec}`)}
+        </div>`;
+        }
+
+        document.getElementById('vectors-output').innerHTML = vHtml;
+
+        // Step 2: System Setup
+        let sysA = [];
+        for (let i = 0; i < size; i++) {
+          let row = [];
+          for (let j = 1; j <= size; j++) {
+            row.push(vectors[size - j][i]);
+          }
+          sysA.push(row);
+        }
+
+        let c_n = vectors[size];
+        let p_vals = gaussElimination(sysA, c_n);
+
+        // System Eq LaTeX
+        let termsObj = [];
+        for (let j = 1; j <= size; j++) {
+          termsObj.push(`p_${j} ${texVector(vectors[size - j])}`);
+        }
+        let sysEq = termsObj.join(' + ') + ` = ${texVector(c_n)}`;
+        renderTex(sysEq, 'system-output');
+
+        // Expanded system
+        let sysExpandedLines = [];
+        for (let i = 0; i < size; i++) {
+          let lineStr = "";
+          for (let j = 1; j <= size; j++) {
+            let coef = vectors[size - j][i];
+            let sign = (j > 1 && coef >= 0) ? '+' : '';
+            lineStr += `${sign}${coef}p_${j} `;
+          }
+          lineStr += `= ${c_n[i]}`;
+          sysExpandedLines.push(lineStr);
+        }
+        let systemMatrixExpanded = `\\begin{cases}
+                ${sysExpandedLines.join(' \\\\ \n')}
+            \\end{cases}`;
+
+        let solHtml = `<div class="mb-2 text-center text-slate-600 text-sm">Sistema ko'rinishi:</div>`;
+        solHtml += `<div class="mb-4 text-center overflow-x-auto">${renderTexInline(systemMatrixExpanded)}</div>`;
+
+        let pValsStr = [];
+        for (let k = 0; k < size; k++) {
+          pValsStr.push(`p_${k + 1} = ${p_vals[k]}`);
+        }
+        solHtml += `<div class="font-bold text-center text-cyber-magenta">${renderTexInline(pValsStr.join(', \\quad '))}</div>`;
+        document.getElementById('solution-output').innerHTML = solHtml;
+
+        // Step 3: Polynomial Builder
+        let poly = `P(\\lambda) = \\lambda^{${size}}`;
+
+        function formatCoef(val, power) {
+          if (val === 0) return "";
+          let sign = val > 0 ? "-" : "+";
+          let num = Math.abs(val);
+          let powerStr = "";
+          if (power > 1) powerStr = `\\lambda^${power}`;
+          else if (power === 1) powerStr = `\\lambda`;
+
+          let numStr = (num === 1 && power > 0) ? "" : num;
+          return ` ${sign} ${numStr}${powerStr}`;
+        }
+
+        for (let j = 0; j < size; j++) {
+          poly += formatCoef(p_vals[j], size - 1 - j);
+        }
+
+        renderTex(poly, 'poly-output');
+
+        // Show output
+        document.getElementById('output-section').classList.remove('hidden');
+      }
+    </script>
+  </div>
+</body>
+
+</html>
