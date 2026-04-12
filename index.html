@@ -106,8 +106,452 @@
   </noscript>
   <!-- /Yandex.Metrika counter -->
 
+  <!-- Windows 2000 Style -->
   <style>
-    .module-card,.stat-card{background:#fff;border:2px solid #000}.hero-counter,.ticker-wrap{font-family:Orbitron,sans-serif}.hero-counter{font-size:2rem;font-weight:900;color:#00f2ff;line-height:1}.stat-card{box-shadow:4px 4px 0 #00f2ff;padding:18px;text-align:center;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);transition:transform .2s,box-shadow .2s}.stat-card:hover{transform:translateY(-3px);box-shadow:6px 6px 0 #ff00ea}.module-card{box-shadow:6px 6px 0 #00f2ff;clip-path:polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%);text-decoration:none;color:#0f172a;display:block;padding:24px;transition:box-shadow .25s,transform .25s}.module-card:hover{box-shadow:8px 8px 0 #ff00ea;transform:translateY(-4px)}.module-card .badge{display:inline-block;background:#00f2ff;color:#000;font-size:.65rem;font-weight:900;padding:3px 10px;letter-spacing:.08em;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);margin-bottom:10px}.ticker-wrap{overflow:hidden;background:#000;color:#00f2ff;font-size:.7rem;font-weight:700;letter-spacing:.1em;padding:8px 0;border-top:2px solid #00f2ff;border-bottom:2px solid #00f2ff}.ticker-inner{display:inline-flex;white-space:nowrap;animation:22s linear infinite ticker}.ticker-inner span{padding:0 32px}@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    /* ── Win2000 System Font ── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+      font-size: 11px;
+      background-color: #008080; /* Classic Win2000 teal desktop */
+      color: #000000;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Override sidebar.css body bg — we want teal behind windows */
+    .main-content {
+      background: transparent;
+    }
+
+    /* ── Win2K "Window" container ── */
+    .win2k-window {
+      background: #d4d0c8;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+      box-shadow: 1px 1px 0 #000;
+      margin-bottom: 8px;
+    }
+
+    /* Title bar */
+    .win2k-titlebar {
+      background: linear-gradient(to right, #000080, #1084d0);
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 11px;
+      padding: 3px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .win2k-titlebar .title-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .win2k-titlebar .title-icon {
+      width: 16px;
+      height: 16px;
+      image-rendering: pixelated;
+    }
+    /* Window control buttons */
+    .win2k-controls {
+      display: flex;
+      gap: 2px;
+    }
+    .win2k-btn {
+      width: 16px;
+      height: 14px;
+      background: #d4d0c8;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #404040;
+      border-bottom: 1px solid #404040;
+      font-size: 9px;
+      font-family: "Marlett", "Webdings", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #000;
+    }
+    .win2k-btn:hover { background: #e8e4dc; }
+    .win2k-btn.close:hover { background: #d04030; color: #fff; }
+
+    /* Window body */
+    .win2k-body {
+      padding: 8px;
+      background: #d4d0c8;
+    }
+
+    /* ── Menu bar ── */
+    .win2k-menubar {
+      background: #d4d0c8;
+      border-bottom: 1px solid #808080;
+      padding: 2px 4px;
+      display: flex;
+      gap: 0;
+      font-size: 11px;
+    }
+    .win2k-menubar a {
+      padding: 2px 8px;
+      text-decoration: none;
+      color: #000;
+      display: block;
+    }
+    .win2k-menubar a:hover {
+      background: #000080;
+      color: #fff;
+    }
+
+    /* ── Toolbar ── */
+    .win2k-toolbar {
+      background: #d4d0c8;
+      border-bottom: 2px solid #808080;
+      padding: 4px 6px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
+    .win2k-toolbar-btn {
+      background: #d4d0c8;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #404040;
+      border-bottom: 1px solid #404040;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-family: "Tahoma", Arial, sans-serif;
+      cursor: pointer;
+      color: #000;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .win2k-toolbar-btn:active {
+      border-top: 1px solid #404040;
+      border-left: 1px solid #404040;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      padding: 4px 7px 2px 9px;
+    }
+    .win2k-toolbar-btn:hover { background: #e8e4dc; }
+    .win2k-toolbar-sep {
+      width: 1px;
+      height: 24px;
+      background: #808080;
+      border-right: 1px solid #fff;
+      margin: 0 3px;
+    }
+
+    /* ── Address bar ── */
+    .win2k-address-bar {
+      background: #d4d0c8;
+      border-bottom: 1px solid #808080;
+      padding: 3px 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+    .win2k-address-bar label {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .win2k-address-input {
+      flex: 1;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      background: #fff;
+      padding: 1px 4px;
+      font-size: 11px;
+      font-family: "Tahoma", Arial, sans-serif;
+      outline: none;
+    }
+
+    /* ── Status bar ── */
+    .win2k-statusbar {
+      background: #d4d0c8;
+      border-top: 1px solid #808080;
+      padding: 2px 8px;
+      display: flex;
+      gap: 4px;
+      font-size: 10px;
+    }
+    .win2k-status-panel {
+      border-top: 1px solid #808080;
+      border-left: 1px solid #808080;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      padding: 1px 8px;
+      flex: 1;
+    }
+
+    /* ── Inset panel (for content areas) ── */
+    .win2k-inset {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      background: #fff;
+      padding: 8px;
+    }
+
+    /* ── Raised panel ── */
+    .win2k-raised {
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+      background: #d4d0c8;
+      padding: 8px;
+    }
+
+    /* ── Stat cards ── */
+    .stat-card {
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #404040;
+      border-bottom: 2px solid #404040;
+      background: #d4d0c8;
+      padding: 10px;
+      text-align: center;
+    }
+    .hero-counter {
+      font-size: 20px;
+      font-weight: bold;
+      color: #000080;
+      font-family: "Tahoma", Arial, sans-serif;
+    }
+
+    /* ── Module cards ── */
+    .module-card {
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #404040;
+      border-bottom: 2px solid #404040;
+      background: #d4d0c8;
+      text-decoration: none;
+      color: #000;
+      display: block;
+      padding: 10px;
+      transition: background 0.1s;
+    }
+    .module-card:hover {
+      background: #000080;
+      color: #fff;
+    }
+    .module-card:hover p,
+    .module-card:hover .badge,
+    .module-card:hover div {
+      color: #fff !important;
+    }
+    .module-card .badge {
+      display: inline-block;
+      background: #000080;
+      color: #fff;
+      font-size: 9px;
+      font-weight: bold;
+      padding: 1px 6px;
+      margin-bottom: 6px;
+      font-family: "Tahoma", Arial, sans-serif;
+    }
+    .module-card:hover .badge {
+      background: #1084d0;
+    }
+
+    /* ── Ticker → Win2K "notification area" marquee ── */
+    .ticker-wrap {
+      background: #d4d0c8;
+      border-top: 1px solid #808080;
+      border-bottom: 1px solid #fff;
+      padding: 2px 0;
+      font-size: 11px;
+      overflow: hidden;
+      color: #000080;
+      font-family: "Tahoma", Arial, sans-serif;
+    }
+    .ticker-inner {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: 22s linear infinite ticker;
+    }
+    .ticker-inner span { padding: 0 24px; }
+    @keyframes ticker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+    /* ── Table (classic Win2K list view) ── */
+    .win2k-listview {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 11px;
+    }
+    .win2k-listview th {
+      background: #d4d0c8;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+      padding: 3px 8px;
+      text-align: left;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .win2k-listview td {
+      border-bottom: 1px solid #e0ddd5;
+      padding: 3px 8px;
+    }
+    .win2k-listview tr:hover td { background: #000080; color: #fff; }
+
+    /* ── Tech badges ── */
+    .tech-badge {
+      display: inline-block;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #404040;
+      border-bottom: 1px solid #404040;
+      background: #d4d0c8;
+      padding: 2px 8px;
+      font-size: 11px;
+      margin: 2px;
+    }
+
+    /* ── Desktop icon style for header ── */
+    .win2k-logo {
+      width: 48px;
+      height: 48px;
+      image-rendering: pixelated;
+    }
+
+    /* ── Group box ── */
+    .win2k-groupbox {
+      border: 1px solid #808080;
+      padding: 12px 8px 8px;
+      position: relative;
+      margin: 8px 0;
+    }
+    .win2k-groupbox-legend {
+      position: absolute;
+      top: -8px;
+      left: 8px;
+      background: #d4d0c8;
+      padding: 0 4px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    /* ── Progress bar ── */
+    .win2k-progress {
+      height: 16px;
+      background: #fff;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      overflow: hidden;
+    }
+    .win2k-progress-fill {
+      height: 100%;
+      background: repeating-linear-gradient(
+        to right,
+        #000080 0px, #000080 8px,
+        #d4d0c8 8px, #d4d0c8 10px
+      );
+    }
+
+    /* ── Scrollbar-like desktop ── */
+    .win2k-desktop-bg {
+      background: #008080;
+      min-height: 100vh;
+      padding: 8px;
+    }
+
+    /* Override sidebar to Win2K style */
+    .sidebar {
+      background: #d4d0c8 !important;
+      border-right: 3px solid #404040 !important;
+      box-shadow: none !important;
+      font-family: "Tahoma", Arial, sans-serif !important;
+    }
+    .sidebar-header {
+      background: linear-gradient(to right, #000080, #1084d0) !important;
+      clip-path: none !important;
+      border-bottom: 2px solid #404040 !important;
+      color: #fff !important;
+    }
+    .sidebar-logo { color: #fff !important; font-family: "Tahoma", Arial, sans-serif !important; font-size: 12px !important; }
+    .sidebar-subtitle { color: #c0d8f0 !important; font-family: "Tahoma", Arial, sans-serif !important; }
+    .sidebar-item {
+      background: #d4d0c8 !important;
+      border: none !important;
+      border-bottom: 1px solid #808080 !important;
+      clip-path: none !important;
+      font-family: "Tahoma", Arial, sans-serif !important;
+      font-size: 11px !important;
+    }
+    .sidebar-item:hover {
+      background: #000080 !important;
+      color: #fff !important;
+      transform: none !important;
+    }
+    .sidebar-item.active {
+      background: #000080 !important;
+      color: #fff !important;
+    }
+    .sidebar-section-label {
+      color: #404040 !important;
+      font-family: "Tahoma", Arial, sans-serif !important;
+      background: #c0bdb2;
+      display: block;
+      padding: 4px 10px;
+    }
+    .sidebar-toggle-btn {
+      background: #d4d0c8 !important;
+      border-top: 2px solid #fff !important;
+      border-left: 2px solid #fff !important;
+      border-right: 2px solid #404040 !important;
+      border-bottom: 2px solid #404040 !important;
+      box-shadow: none !important;
+    }
+    .sidebar-toggle-btn:hover { background: #e8e4dc !important; }
+
+    /* Cyber elements override */
+    .cyber-header {
+      clip-path: none !important;
+      border-bottom: none !important;
+      background: transparent !important;
+    }
+    .cyber-card {
+      background: #d4d0c8 !important;
+      border: none !important;
+      box-shadow: none !important;
+      clip-path: none !important;
+    }
+    .cyber-button {
+      clip-path: none !important;
+      background: #d4d0c8 !important;
+      color: #000 !important;
+      border-top: 2px solid #fff !important;
+      border-left: 2px solid #fff !important;
+      border-right: 2px solid #404040 !important;
+      border-bottom: 2px solid #404040 !important;
+      font-family: "Tahoma", Arial, sans-serif !important;
+      font-size: 11px !important;
+      font-weight: bold !important;
+      padding: 4px 16px !important;
+    }
+    .cyber-button:hover {
+      background: #000080 !important;
+      color: #fff !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
   </style>
 </head>
 
@@ -136,226 +580,343 @@
   <script src="src/assets/js/sidebar.js"></script>
 
   <!-- Main Content -->
-  <div class="main-content p-4 md:p-8" id="main-content">
+  <div class="main-content" id="main-content" style="padding:8px;">
 
-    <!-- Ticker / Breaking News Bar -->
-    <div class="ticker-wrap mb-6">
-      <div class="ticker-inner">
-        <span>⚡ SONLI USULLAR v2.2</span>
-        <span>//</span>
-        <span>🔄 ITERATSIYA USULI</span>
-        <span>//</span>
-        <span>✂️ BISECTION METHOD</span>
-        <span>//</span>
-        <span>📈 GRAFIK ENGINE v3.0</span>
-        <span>//</span>
-        <span>🧮 GAUSS-SEYDEL USULI</span>
-        <span>//</span>
-        <span>🚗 HAYDASH USULI</span>
-        <span>//</span>
-        <span>QarDU · Amaliy Matematika · 2026</span>
-        <span>//</span>
-        <!-- Repeat for seamless loop -->
-        <span>⚡ SONLI USULLAR v2.2</span>
-        <span>//</span>
-        <span>🔄 ITERATSIYA USULI</span>
-        <span>//</span>
-        <span>✂️ BISECTION METHOD</span>
-        <span>//</span>
-        <span>📈 GRAFIK ENGINE v3.0</span>
-        <span>//</span>
-        <span>🧮 GAUSS-SEYDEL USULI</span>
-        <span>//</span>
-        <span>QarDU · Amaliy Matematika · 023-40 guruh · 2026</span>
-        <span>//</span>
-      </div>
-    </div>
+    <!-- ══════════════════════════════════════
+         IE-style Browser Window
+         ══════════════════════════════════════ -->
+    <div class="win2k-window">
 
-    <!-- Header -->
-    <header class="p-8 mb-10 text-center shadow-sm cyber-header">
-      <div>
-        <img src="/src/assets/images/logo-glass-optimazed.png" alt="Sonli Usullar Logosi" class="mx-auto mb-4 w-24 h-24">
-        <h1 class="text-4xl font-black tracking-widest text-black" style="font-family:'Orbitron',sans-serif">SONLI
-          USULLAR
-          <span style="color:#00f2ff">v2.4.4</span>
-        </h1>
-      </div>
-      <p class="mt-2 text-xs font-bold tracking-widest uppercase text-cyan-600">Qarshi Davlat Universiteti | Amaliy
-        Matematika</p>
-    </header>
-
-    <!-- Stats row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-      <div class="stat-card">
-        <div class="hero-counter" id="cnt-modules">5+</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Modullar</div>
-      </div>
-      <div class="stat-card">
-        <div class="hero-counter">∞</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Hisoblar</div>
-      </div>
-      <div class="stat-card">
-        <div class="hero-counter">0.01</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Aniqlik (ε)</div>
-      </div>
-      <div class="stat-card">
-        <div class="hero-counter">2026</div>
-        <div class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Yil</div>
-      </div>
-    </div>
-
-    <!-- Info cards -->
-    <div class="grid grid-cols-1 gap-8 mb-10 lg:grid-cols-3">
-      <div class="p-6 cyber-card">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
-          <span class="mr-2">⚡</span> LOYIHA
-        </h3>
-        <div class="space-y-2 text-sm font-bold">
-          <p class="flex justify-between"><span>Maqsad:</span> <span class="text-cyan-600">Sonli usullarni
-              o'rganish</span></p>
-          <p class="flex justify-between"><span>Yaratuvchi:</span> <span style="color:#ff00ea">Haydarov Jasurbek</span>
-          </p>
-          <p class="flex justify-between"><span>Guruh:</span> <span class="text-cyan-600">023-40</span></p>
-          <p class="flex justify-between"><span>Yil:</span> <span style="color:#ff00ea">2026</span></p>
+      <!-- Title Bar -->
+      <div class="win2k-titlebar">
+        <div class="title-left">
+          <img src="/src/assets/images/logo-glass-optimazed.png" alt="" style="width:16px;height:16px;image-rendering:pixelated;">
+          <span>Sonli Usullar v2.4.4 — Microsoft Internet Explorer</span>
+        </div>
+        <div class="win2k-controls">
+          <div class="win2k-btn" title="Minimlashtirish">_</div>
+          <div class="win2k-btn" title="Kattalashtirish">&#9633;</div>
+          <div class="win2k-btn close" title="Yopish">&#x2715;</div>
         </div>
       </div>
 
-      <div class="p-6 cyber-card lg:col-span-2">
-        <h3 class="flex items-center mb-4 font-black border-b-2 border-black" style="font-family:'Orbitron',sans-serif">
-          <span class="mr-2">👤</span> BOSHQARUV PANELI
-        </h3>
-        <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-          <div>
-            <p class="text-2xl font-black text-black">JASURBEK HAYDAROV</p>
-            <p class="text-sm font-bold text-gray-500">Sonli usullar faniga qo'shgan hissasi</p>
-            <p class="max-w-md mt-3 text-xs leading-relaxed">
-              Ushbu loyiha QarDU talabasi tomonidan sonli usullar fanini o'rganish va amaliyot
-              qilish maqsadida yaratildi. Har bir usul alohida HTML faylda bajarilgan va interaktiv
-              hisoblash imkoniyati mavjud.
-            </p>
+      <!-- Menu Bar -->
+      <div class="win2k-menubar">
+        <a href="#">Fayl</a>
+        <a href="#">Tahrirlash</a>
+        <a href="#">Ko'rish</a>
+        <a href="#">Sevimlilar</a>
+        <a href="#">Asboblar</a>
+        <a href="#">Yordam</a>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="win2k-toolbar">
+        <button class="win2k-toolbar-btn" onclick="history.back()">&#9664; Orqaga</button>
+        <button class="win2k-toolbar-btn" onclick="history.forward()">Oldinga &#9654;</button>
+        <button class="win2k-toolbar-btn" onclick="location.reload()">Yangilash</button>
+        <button class="win2k-toolbar-btn" onclick="location.href='/'">Bosh sahifa</button>
+        <div class="win2k-toolbar-sep"></div>
+        <button class="win2k-toolbar-btn">Qidirish</button>
+        <button class="win2k-toolbar-btn">Sevimlilar</button>
+        <button class="win2k-toolbar-btn">Tarix</button>
+        <div class="win2k-toolbar-sep"></div>
+        <button class="win2k-toolbar-btn" onclick="window.print()">Chop etish</button>
+      </div>
+
+      <!-- Address Bar -->
+      <div class="win2k-address-bar">
+        <label for="addr">Manzil:</label>
+        <input id="addr" class="win2k-address-input" type="text" value="http://sonli-usullar.uz/" readonly>
+        <button class="win2k-toolbar-btn" onclick="location.href=document.getElementById('addr').value">O'tish</button>
+      </div>
+
+      <!-- ─── Page Content inside browser ─── -->
+      <div style="background:#d4d0c8; padding:6px;">
+
+        <!-- Ticker (styled like Win2K notification bar) -->
+        <div class="ticker-wrap" style="margin-bottom:6px;">
+          <div class="ticker-inner">
+            <span>[i] SONLI USULLAR v2.4.4</span>
+            <span>|</span>
+            <span>ITERATSIYA USULI</span>
+            <span>|</span>
+            <span>BISECTION METHOD</span>
+            <span>|</span>
+            <span>GRAFIK ENGINE v3.0</span>
+            <span>|</span>
+            <span>GAUSS-SEYDEL USULI</span>
+            <span>|</span>
+            <span>HAYDASH USULI</span>
+            <span>|</span>
+            <span>QarDU - Amaliy Matematika - 2026</span>
+            <span>|</span>
+            <span>[i] SONLI USULLAR v2.4.4</span>
+            <span>|</span>
+            <span>ITERATSIYA USULI</span>
+            <span>|</span>
+            <span>BISECTION METHOD</span>
+            <span>|</span>
+            <span>GRAFIK ENGINE v3.0</span>
+            <span>|</span>
+            <span>GAUSS-SEYDEL USULI</span>
+            <span>|</span>
+            <span>QarDU - Amaliy Matematika - 023-40 guruh - 2026</span>
+            <span>|</span>
           </div>
-          <button onclick="toggleSidebar()" class="px-12 py-4 text-lg font-black cyber-button">MENU</button>
         </div>
+
+        <!-- Header "window" -->
+        <div class="win2k-window" style="margin-bottom:6px;">
+          <div class="win2k-titlebar">
+            <div class="title-left">
+              <img src="/src/assets/images/logo-glass-optimazed.png" alt="" style="width:16px;height:16px;image-rendering:pixelated;">
+              <span>Sonli Usullar — Asosiy Sahifa</span>
+            </div>
+          </div>
+          <div class="win2k-body" style="display:flex; align-items:center; gap:16px; padding:12px;">
+            <img src="/src/assets/images/logo-glass-optimazed.png" alt="Sonli Usullar" class="win2k-logo">
+            <div>
+              <div style="font-size:18px; font-weight:bold; color:#000080; font-family:Tahoma,Arial,sans-serif;">SONLI USULLAR <span style="color:#808080;">v2.4.4</span></div>
+              <div style="font-size:11px; color:#404040; margin-top:2px;">Qarshi Davlat Universiteti | Amaliy Matematika | 023-40 guruh</div>
+              <div style="margin-top:8px; display:flex; gap:4px;">
+                <button onclick="toggleSidebar()" class="win2k-toolbar-btn" style="font-weight:bold;">Menu</button>
+                <a href="src/about.html" class="win2k-toolbar-btn">Haqida</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats + Info row -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:4px; margin-bottom:6px;">
+          <div class="win2k-raised" style="text-align:center; padding:8px;">
+            <div class="hero-counter" id="cnt-modules">5+</div>
+            <div style="font-size:10px; color:#404040; margin-top:2px;">Modullar</div>
+          </div>
+          <div class="win2k-raised" style="text-align:center; padding:8px;">
+            <div class="hero-counter">&#x221E;</div>
+            <div style="font-size:10px; color:#404040; margin-top:2px;">Hisoblar</div>
+          </div>
+          <div class="win2k-raised" style="text-align:center; padding:8px;">
+            <div class="hero-counter">0.01</div>
+            <div style="font-size:10px; color:#404040; margin-top:2px;">Aniqlik (&epsilon;)</div>
+          </div>
+          <div class="win2k-raised" style="text-align:center; padding:8px;">
+            <div class="hero-counter">2026</div>
+            <div style="font-size:10px; color:#404040; margin-top:2px;">Yil</div>
+          </div>
+        </div>
+
+        <!-- Two-column layout: Info + Modules list -->
+        <div style="display:grid; grid-template-columns:220px 1fr; gap:6px; margin-bottom:6px;">
+
+          <!-- Left panel: Loyiha info (Win2K Properties panel style) -->
+          <div>
+            <!-- Project info groupbox -->
+            <div class="win2k-window" style="margin-bottom:6px;">
+              <div class="win2k-titlebar">
+                <div class="title-left"><span>Loyiha Ma'lumotlari</span></div>
+              </div>
+              <div class="win2k-body" style="padding:6px;">
+                <table style="width:100%; font-size:11px; border-collapse:collapse;">
+                  <tr>
+                    <td style="padding:3px 4px; color:#404040; white-space:nowrap;">Maqsad:</td>
+                    <td style="padding:3px 4px; font-weight:bold; color:#000080;">Sonli usullarni o'rganish</td>
+                  </tr>
+                  <tr style="background:#e8e4dc;">
+                    <td style="padding:3px 4px; color:#404040;">Yaratuvchi:</td>
+                    <td style="padding:3px 4px; font-weight:bold;">Haydarov Jasurbek</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:3px 4px; color:#404040;">Guruh:</td>
+                    <td style="padding:3px 4px; font-weight:bold; color:#000080;">023-40</td>
+                  </tr>
+                  <tr style="background:#e8e4dc;">
+                    <td style="padding:3px 4px; color:#404040;">Yil:</td>
+                    <td style="padding:3px 4px; font-weight:bold;">2026</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:3px 4px; color:#404040;">Universitet:</td>
+                    <td style="padding:3px 4px; font-weight:bold; color:#000080;">QarDU</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- Description groupbox -->
+            <div class="win2k-window">
+              <div class="win2k-titlebar">
+                <div class="title-left"><span>Tavsif</span></div>
+              </div>
+              <div class="win2k-body" style="padding:6px; font-size:11px; line-height:1.5; color:#000;">
+                Ushbu loyiha QarDU talabasi tomonidan sonli usullar fanini o'rganish va amaliyot qilish maqsadida yaratildi. Har bir usul alohida HTML faylda bajarilgan va interaktiv hisoblash imkoniyati mavjud.
+              </div>
+            </div>
+          </div>
+
+          <!-- Right panel: Modules as Windows Explorer list view -->
+          <div class="win2k-window">
+            <div class="win2k-titlebar">
+              <div class="title-left"><span>Modullar — Windows Explorer</span></div>
+            </div>
+            <div class="win2k-menubar">
+              <a href="#">Fayl</a>
+              <a href="#">Tahrirlash</a>
+              <a href="#">Ko'rish</a>
+            </div>
+            <div style="padding:4px;">
+              <div class="win2k-inset" style="padding:0; overflow-x:auto;">
+                <table class="win2k-listview">
+                  <thead>
+                    <tr>
+                      <th style="width:28px;">&nbsp;</th>
+                      <th>Nomi</th>
+                      <th>Turi</th>
+                      <th>Tavsif</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr onclick="location.href='src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html'" style="cursor:pointer;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Funksiya Kesishish Nuqta</td>
+                      <td style="color:#808080;">01 / ANIQLIK</td>
+                      <td>Grafik usulda kesishish nuqtalarini aniqlash</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/KesmaniTengIkkigaBo\'lish-Usuli.html'" style="cursor:pointer; background:#f5f3ee;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Kesmani Teng Ikkiga Bo'lish</td>
+                      <td style="color:#808080;">02 / USUL</td>
+                      <td>Bisection — oraliqni teng ikkiga bo'lish</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/Iteratsiya-Usuli.html'" style="cursor:pointer;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Iteratsiya Usuli</td>
+                      <td style="color:#808080;">03 / USUL</td>
+                      <td>Takroriy jarayon orqali ildizni topish</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html'" style="cursor:pointer; background:#f5f3ee;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Oddiy Iteratsiya Usuli</td>
+                      <td style="color:#808080;">04 / USUL</td>
+                      <td>M konstantasi va yaqinlashish sharti</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/Vatar-Usuli.html'" style="cursor:pointer;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Vatar Usuli</td>
+                      <td style="color:#808080;">05 / USUL</td>
+                      <td>Secant Method — ikki nuqtadan o'tuvchi vatar</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/Urinma-Usuli.html'" style="cursor:pointer; background:#f5f3ee;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Urinma Usuli</td>
+                      <td style="color:#808080;">06 / USUL</td>
+                      <td>Nyuton usuli: hosilasi yordamida ildiz topish</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/Urinma-Usuli.html'" style="cursor:pointer;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Oddiy Nyuton Usuli</td>
+                      <td style="color:#808080;">07 / USUL</td>
+                      <td>Funksiya hosilasi yordamida ildiz topish</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/Zeydel-usuli.html'" style="cursor:pointer; background:#f5f3ee;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Zeydel Usuli</td>
+                      <td style="color:#808080;">08 / USUL</td>
+                      <td>Chiziqli tenglamalar sistemasini iterativ yechish</td>
+                    </tr>
+                    <tr onclick="location.href='src/Sonli-Usullar/Haydash-Usuli.html'" style="cursor:pointer;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Haydash Usuli</td>
+                      <td style="color:#808080;">09 / ANIQLIK</td>
+                      <td>Tridiagonal SLAU ni ketma-ket hisoblash</td>
+                    </tr>
+                    <tr onclick="location.href='src/about.html'" style="cursor:pointer; background:#f5f3ee;">
+                      <td style="text-align:center;">&#128196;</td>
+                      <td style="font-weight:bold;">Website Haqida</td>
+                      <td style="color:#808080;">INFO</td>
+                      <td>Loyiha, texnologiyalar va muallif haqida</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Status bar of inner explorer -->
+            <div class="win2k-statusbar">
+              <div class="win2k-status-panel">10 ta ob'ekt</div>
+              <div class="win2k-status-panel" style="flex:none; min-width:120px;">Local intranet</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tech stack "Properties" window -->
+        <div class="win2k-window" style="margin-bottom:6px;">
+          <div class="win2k-titlebar">
+            <div class="title-left"><span>Texnologiyalar — Xususiyatlar</span></div>
+          </div>
+          <div class="win2k-body" style="padding:8px;">
+            <div style="margin-bottom:4px; font-weight:bold; font-size:11px;">O'rnatilgan komponentlar:</div>
+            <div>
+              <span class="tech-badge">HTML5</span>
+              <span class="tech-badge">CSS3</span>
+              <span class="tech-badge">JavaScript</span>
+              <span class="tech-badge">Tailwind CSS</span>
+              <span class="tech-badge">KaTeX</span>
+              <span class="tech-badge">Math.js</span>
+              <span class="tech-badge">Canvas API</span>
+              <span class="tech-badge">Orbitron Font</span>
+              <span class="tech-badge">JetBrains Mono</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /page content -->
+
+      <!-- IE Status Bar -->
+      <div class="win2k-statusbar">
+        <div class="win2k-status-panel">Tayyor</div>
+        <div class="win2k-status-panel" style="flex:none; min-width:160px;">Local intranet</div>
+        <div class="win2k-status-panel" style="flex:none; min-width:80px; text-align:center;">&#128274; Himoya</div>
+      </div>
+
+    </div><!-- /IE window -->
+
+    <!-- Taskbar -->
+    <div style="position:fixed; bottom:0; left:0; right:0; height:30px; background:#d4d0c8; border-top:2px solid #fff; display:flex; align-items:center; gap:2px; padding:2px 4px; z-index:999; box-shadow:0 -1px 0 #808080;">
+      <!-- Start button -->
+      <button style="display:flex; align-items:center; gap:4px; background:#d4d0c8; border-top:2px solid #fff; border-left:2px solid #fff; border-right:2px solid #404040; border-bottom:2px solid #404040; padding:2px 10px; font-weight:bold; font-size:11px; font-family:Tahoma,Arial,sans-serif; cursor:pointer; color:#000;">
+        <img src="/src/assets/images/logo-glass-optimazed.png" alt="" style="width:16px;height:16px;image-rendering:pixelated;">
+        Start
+      </button>
+      <div style="width:1px; height:22px; background:#808080; border-right:1px solid #fff; margin:0 3px;"></div>
+      <!-- Active window tab -->
+      <button style="display:flex; align-items:center; gap:4px; background:#b8b4ac; border-top:1px solid #404040; border-left:1px solid #404040; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:2px 10px; font-size:11px; font-family:Tahoma,Arial,sans-serif; cursor:pointer; min-width:160px; max-width:220px; overflow:hidden;">
+        <img src="/src/assets/images/logo-glass-optimazed.png" alt="" style="width:14px;height:14px;image-rendering:pixelated;">
+        Sonli Usullar — IE
+      </button>
+      <!-- Tray area -->
+      <div style="margin-left:auto; display:flex; align-items:center; gap:6px; border-top:1px solid #808080; border-left:1px solid #808080; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:3px 8px; font-size:10px; font-family:Tahoma,Arial,sans-serif;">
+        <span id="taskbar-clock">00:00</span>
       </div>
     </div>
+    <div style="height:34px;"></div><!-- spacer for taskbar -->
 
-    <!-- Module cards -->
-    <h2 class="text-xl font-black mb-6 tracking-wider" style="font-family:'Orbitron',sans-serif">
-      📦 MODULLAR
-    </h2>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-      <a href="src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" class="module-card">
-        <div class="badge">01 / ANIQLIK</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">FUNKSIYA KESISHISH NUQTA</h4>
-        <p class="text-sm text-gray-600">Grafik usulda kesishish nuqtalarini aniqlash. Zoom & Pan qo'llab-quvvatlash.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
+    <script>
+      (function(){
+        function updateClock(){
+          var n=new Date();
+          var h=n.getHours().toString().padStart(2,'0');
+          var m=n.getMinutes().toString().padStart(2,'0');
+          var el=document.getElementById('taskbar-clock');
+          if(el) el.textContent=h+':'+m;
+        }
+        updateClock();
+        setInterval(updateClock,10000);
+      })();
+    </script>
 
-      <a href="src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="module-card">
-        <div class="badge">02 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">KESMANI TENG IKKIGA BO'LISH</h4>
-        <p class="text-sm text-gray-600">Ildiz joylashgan oraliqni har safar teng ikkiga bo'lish orqali aniqlikni
-          oshirish.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Iteratsiya-Usuli.html" class="module-card">
-        <div class="badge">03 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html" class="module-card">
-        <div class="badge">04 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ODDIY ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Vatar-Usuli.html" class="module-card">
-        <div class="badge">05 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">VATAR USULI</h4>
-        <p class="text-sm text-gray-600">Funksiya grafigidagi ikki nuqtadan o'tuvchi vatar orqali ildizni
-          yaqinlashtirish (Secant Method).</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Urinma-Usuli.html" class="module-card">
-        <div class="badge">06 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">URINMA USULI</h4>
-        <p class="text-sm text-gray-600">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Urinma-Usuli.html" class="module-card">
-        <div class="badge">07 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ODDIY NYUTON USULI</h4>
-        <p class="text-sm text-gray-600">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Zeydel-usuli.html" class="module-card">
-        <div class="badge">08 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ZEYDEL USULI</h4>
-        <p class="text-sm text-gray-600">Chiziqli tenglamalar sistemasini (SLAU) iterativ yechish usuli.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Haydash-Usuli.html" class="module-card">
-        <div class="badge">09 / ANIQLIK</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">HAYDASH USULI</h4>
-        <p class="text-sm text-gray-600">Tridiagonal chiziqli tenglamalar sistemasini ketma-ket hisoblash orqali yechish
-          usuli.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <!-- <a href="src/Sonli-Usullar/Nazariya.html" class="module-card">
-        <div class="badge">05 / NAZARIYA</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">NAZARIYA</h4>
-        <p class="text-sm text-gray-600">Sonli usullar faniga oid nazariy materiallar.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">KO'RISH →</div>
-      </a> -->
-
-      <a href="src/about.html" class="module-card">
-        <div class="badge">ℹ️ / HAQIDA</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">WEBSITE HAQIDA</h4>
-        <p class="text-sm text-gray-600">Loyiha haqida batafsil ma'lumot, texnologiyalar va muallif.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-    </div>
-
-    <!-- Tech stack -->
-    <div class="p-5 cyber-card mb-12">
-      <h3 class="font-black mb-3 text-sm tracking-wider" style="font-family:'Orbitron',sans-serif">🔧 TEXNOLOGIYALAR
-      </h3>
-      <div class="flex flex-wrap gap-2">
-        <span class="px-3 py-1 text-xs font-bold bg-black text-white border border-black">HTML5</span>
-        <span class="px-3 py-1 text-xs font-bold bg-cyan-100 text-black border border-black">CSS3</span>
-        <span class="px-3 py-1 text-xs font-bold bg-yellow-100 text-black border border-black">JavaScript</span>
-        <span class="px-3 py-1 text-xs font-bold bg-blue-100 text-black border border-black">Tailwind CSS</span>
-        <span class="px-3 py-1 text-xs font-bold bg-purple-100 text-black border border-black">KaTeX</span>
-        <span class="px-3 py-1 text-xs font-bold bg-green-100 text-black border border-black">Math.js</span>
-        <span class="px-3 py-1 text-xs font-bold bg-orange-100 text-black border border-black">Canvas API</span>
-        <span class="px-3 py-1 text-xs font-bold" style="background:#00f2ff; border:1px solid #000">Orbitron Font</span>
-        <span class="px-3 py-1 text-xs font-bold"
-          style="background:#ff00ea; color:white; border:1px solid #000">JetBrains Mono</span>
-      </div>
-    </div>
-
-    <footer class="mt-4 text-center">
-      <div class="inline-block px-10 pt-4 border-t-2 border-black">
-        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-          © 2026 Qarshi Davlat Universiteti talabasi | Haydarov Jasurbek
-        </p>
-      </div>
+    <footer style="display:none;">
+      <p>© 2026 Qarshi Davlat Universiteti talabasi | Haydarov Jasurbek</p>
     </footer>
 
   </div><!-- /main-content -->
