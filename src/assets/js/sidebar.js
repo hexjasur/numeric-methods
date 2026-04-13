@@ -66,10 +66,16 @@
       href: base + 'src/Sonli-Usullar/Iteratsiya-Usuli.html',
     },
     {
-      id: '3-talik-oddiyIteratsiya',
+      id: 'no-chiziqli-iteratsiya',
+      label: 'NO-CHIZIQLI ITERATSIYA USULI',
+      icon: '🔄',
+      href: base + 'src/Sonli-Usullar/No-chiziqli-iteratsiya-usuli.html',
+    },
+    {
+      id: 'chiziqli-iteratsiya',
       label: 'CHIZIQLI ITERATSIYA USULI',
       icon: '🔄',
-      href: base + 'src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html',
+      href: base + 'src/Sonli-Usullar/Chiziqli-Iteratsiya-Usuli.html',
     },
     {
       id: 'zeydel',

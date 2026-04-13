@@ -1,8 +1,14 @@
 [
   {
-    "version": "v2.5.1",
+    "version": "v2.5.2",
     "date": "2026-04-13",
     "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/No-CHiziqli-Iteratsiya-Usuli.html\">No CHiziqli Iteratsiya Usuli </a> qo'shildi. <br> SEO biroz yaxshilandi, OG Qo'shildi yangi usul uchun. <br> SITEMAP yangilandi."
+  },
+  {
+    "version": "v2.5.1",
+    "date": "2026-04-13",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/krylov-matrix-vector-method.html\">A.N.Krylov usulida </a> kamchilik tog'irlandi, kod endi ko'r-ko'rona oxirigacha bormaydi(Agar $c^{(2)}$ vektori $c^{(1)}$ va $c^{(0)}$ orqali ifodalansa, darhol to'xtaydi (tartib pasayadi). Ekranda faqat chindan ham qatnashayotgan vektorlar va faqat o'sha pasaygan tartibli ko'phad chiqadi."
   },
   {

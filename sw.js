@@ -9,7 +9,7 @@
  * Versioning: Update CACHE_VERSION when making changes
  */
 
-const CACHE_VERSION = 'v1.1.1';
+const CACHE_VERSION = 'v1.1.2';
 const CACHE_NAME_STATIC = `sonli-usullar-static-${CACHE_VERSION}`;
 const CACHE_NAME_PAGES = `sonli-usullar-pages-${CACHE_VERSION}`;
 const CACHE_NAME_OFFLINE = `sonli-usullar-offline-${CACHE_VERSION}`;
@@ -39,23 +39,24 @@ const PRECACHE_PAGES = [
   '/src/privacy.html',
 
   '/src/Sonli-Usullar/code.html',
-  '/src/Sonli-Usullar/Nazariya.html',
   '/src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html',
-
+  
   "/src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html",
   '/src/Sonli-Usullar/Urinma-Usuli.html',
   '/src/Sonli-Usullar/Vatar-Usuli.html',
   '/src/Sonli-Usullar/Iteratsiya-Usuli.html',
-  '/src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html',
+  '/src/Sonli-Usullar/Chiziqli-Iteratsiya-Usuli.html',
+  '/src/Sonli-Usullar/No-chiziqli-iteratsiya-usuli.html',
   '/src/Sonli-Usullar/Zeydel-usuli.html',
   '/src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html',
   '/src/Sonli-Usullar/Haydash-Usuli.html',
 
   '/src/Sonli-Usullar/Chats-Oddiy-Iteratsiya-Usuli.html',
   '/src/Sonli-Usullar/Chats-Zeydel-Usuli.html',
-
+  
   '/src/Sonli-Usullar/krylov-matrix-vector-method.html',
-
+  
+  '/src/Sonli-Usullar/Nazariya.html',
   'src/Sonli-Usullar-Nazariya/Biseksiya-Usuli.html',
 ];
 

@@ -46,8 +46,15 @@
   </url>
 
   <url>
-    <loc>https://sonli-usullar.uz/src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html</loc>
-    <lastmod>2026-03-20</lastmod>
+    <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Chiziqli-Iteratsiya-Usuli.html</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sonli-usullar.uz/src/Sonli-Usullar/No-chiziqli-iteratsiya-usuli.html</loc>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -83,7 +90,14 @@
   <url>
     <loc>https://sonli-usullar.uz/src/Sonli-Usullar/Nazariya.html</loc>
     <lastmod>2026-03-20</lastmod>
-  <changefreq>monthly</changefreq>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sonli-usullar.uz/src/Sonli-Usullar-Nazariya/Biseksiya-Usuli.html</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
