@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Krylov Solver | Professional Input</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    
+    <style>
+        body { background: #050505; color: #00f2ff; font-family: 'Segoe UI', sans-serif; }
+        .cyber-card { 
+            background: #0a0a0f; 
+            border: 1px solid #00f2ff; 
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1); 
+        }
+        /* Skrinshotdagi input stili */
+        .p-input-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #1a2a3a;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .p-input-box:focus-within {
+            border-color: #00f2ff;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+        }
+        .neon-input { 
+            background: transparent; border: none; color: #00f2ff; 
+            font-family: 'Courier New', monospace; font-size: 1.5rem;
+            width: 100%; text-align: center; outline: none;
+        }
+        .label-text { color: #00f2ff; font-size: 10px; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; opacity: 0.8; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <div class="cyber-card p-6 rounded-2xl mb-6">
+            <h2 class="text-magenta-500 font-bold mb-4 uppercase text-xs tracking-widest">Xarakteristik ko'phadni kiritish</h2>
+            <input type="text" id="poly-input" 
+                   value="x^4 - 10.5x^3 + 15.6x^2 - 8.51x + 6.3984" 
+                   class="w-full bg-black/50 border border-pink-500/30 p-4 rounded-lg text-white text-xl focus:border-pink-500 outline-none mb-6"
+                   oninput="syncFromPoly()">
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-input-box">
+                    <div class="label-text">Topilgan P1</div>
+                    <input type="number" id="p1" value="10.5" step="0.0001" class="neon-input" oninput="syncToPoly()">
+                </div>
+                <div class="p-input-box">
+                    <div class="label-text">Topilgan P2</div>
+                    <input type="number" id="p2" value="-15.6" step="0.0001" class="neon-input" oninput="syncToPoly()">
+                </div>
+                <div class="p-input-box">
+                    <div class="label-text">Topilgan P3</div>
+                    <input type="number" id="p3" value="8.51" step="0.0001" class="neon-input" oninput="syncToPoly()">
+                </div>
+                <div class="p-input-box">
+                    <div class="label-text">Topilgan P4</div>
+                    <input type="number" id="p4" value="-6.3984" step="0.0001" class="neon-input" oninput="syncToPoly()">
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="cyber-card p-6 rounded-2xl col-span-2">
+                <h2 class="text-xs font-bold text-cyan-500 uppercase mb-4 tracking-widest">Formula ko'rinishi</h2>
+                <div id="katex-preview" class="py-10 text-center text-3xl"></div>
+            </div>
+            
+            <div class="cyber-card p-6 rounded-2xl">
+                <h2 class="text-xs font-bold text-pink-500 uppercase mb-4 tracking-widest">C(1) Vektori</h2>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="number" id="c1_1" value="1.2" class="p-input-box neon-input !text-sm">
+                    <input type="number" id="c1_2" value="1" class="p-input-box neon-input !text-sm">
+                    <input type="number" id="c1_3" value="5" class="p-input-box neon-input !text-sm">
+                    <input type="number" id="c1_4" value="2" class="p-input-box neon-input !text-sm">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="calculateVectors()" class="w-full mt-6 py-4 bg-cyan-500 text-black font-black uppercase rounded-xl hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(0,242,255,0.4)]">
+            Vektorlarni hisoblash
+        </button>
+
+        <div id="results" class="mt-8 space-y-4 hidden"></div>
+    </div>
+
+    <script>
+        // Ko'phaddan P-larni ajratish
+        function syncFromPoly() {
+            const str = document.getElementById('poly-input').value;
+            const regex = /([+-]?\s*\d*\.?\d*)\s*x\^(\d)|([+-]?\s*\d*\.?\d+)$/g;
+            let match;
+            
+            while ((match = regex.exec(str)) !== null) {
+                let val = (match[1] || match[3]).replace(/\s+/g, "");
+                if (val === "+" || val === "") val = "1";
+                if (val === "-") val = "-1";
+                let num = parseFloat(val);
+                let power = match[2];
+
+                if (power === "3") document.getElementById('p1').value = -num;
+                if (power === "2") document.getElementById('p2').value = -num;
+                if (match[0].includes("x") && !power) document.getElementById('p3').value = -num;
+                if (!match[0].includes("x")) document.getElementById('p4').value = -num;
+            }
+            renderFormula();
+        }
+
+        // P-lardan Ko'phadni yig'ish
+        function syncToPoly() {
+            const p1 = document.getElementById('p1').value;
+            const p2 = document.getElementById('p2').value;
+            const p3 = document.getElementById('p3').value;
+            const p4 = document.getElementById('p4').value;
+            
+            const poly = `x^4 - ${p1}x^3 - ${p2}x^2 - ${p3}x - ${p4}`.replace(/- -/g, "+ ");
+            document.getElementById('poly-input').value = poly;
+            renderFormula();
+        }
+
+        function renderFormula() {
+            const poly = document.getElementById('poly-input').value;
+            const tex = poly.replace(/x/g, "\\lambda").replace(/\^(\d)/g, "^{$1}");
+            katex.render("P(\\lambda) = " + tex, document.getElementById('katex-preview'));
+        }
+
+        function calculateVectors() {
+            const p1 = parseFloat(document.getElementById('p1').value);
+            const lambdas = [1.2, 8.8]; // Siz bergan misol bo'yicha
+            const c1 = [
+                parseFloat(document.getElementById('c1_1').value),
+                parseFloat(document.getElementById('c1_2').value),
+                parseFloat(document.getElementById('c1_3').value),
+                parseFloat(document.getElementById('c1_4').value)
+            ];
+            
+            const resDiv = document.getElementById('results');
+            resDiv.innerHTML = '';
+            resDiv.classList.remove('hidden');
+
+            lambdas.forEach((L, i) => {
+                const B = (L - p1).toFixed(4);
+                const x1 = (parseFloat(B) * 1 + c1[0]).toFixed(4);
+                
+                const card = document.createElement('div');
+                card.className = 'cyber-card p-6 rounded-xl border-l-4 border-pink-500';
+                const mathStr = `\\vec{X}^{(${i+1})} = (${B}) \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\\\ 0 \\end{pmatrix} + \\begin{pmatrix} ${c1[0]} \\\\ ${c1[1]} \\\\ ${c1[2]} \\\\ ${c1[3]} \\end{pmatrix} = \\begin{pmatrix} ${x1} \\\\ ${c1[1]} \\\\ ${c1[2]} \\\\ ${c1[3]} \\end{pmatrix}`;
+                
+                resDiv.appendChild(card);
+                katex.render(mathStr, card, { displayMode: true });
+            });
+        }
+
+        window.onload = syncFromPoly;
+    </script>
+</body>
+</html>
