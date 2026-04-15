@@ -114,6 +114,12 @@
       href: base + 'src/Sonli-Usullar/krylov-matrix-vector-method.html',
     },
     {
+      id: 'lagranj-interpolatsiya',
+      label: 'LAGRANJ INTERPOLATSIYA USULI',
+      icon: '📊',
+      href: base + 'src/Sonli-Usullar/lagranj-interpolatsiya-usuli.html',
+    },
+    {
       id: 'nazariya',
       label: 'NAZARIYA',
       icon: '📋',

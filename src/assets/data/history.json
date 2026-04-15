@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.5.3",
+    "date": "2026-04-16",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/lagranj-interpolatsiya-usuli.html\">Lagranj Interpolyatsiya Usuli </a> qo'shildi. <br> SEO biroz yaxshilandi, OG Qo'shildi yangi usul uchun. <br> SITEMAP yangilandi."
+  },
+  {
     "version": "v2.5.2",
     "date": "2026-04-13",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/No-CHiziqli-Iteratsiya-Usuli.html\">No CHiziqli Iteratsiya Usuli </a> qo'shildi. <br> SEO biroz yaxshilandi, OG Qo'shildi yangi usul uchun. <br> SITEMAP yangilandi."
   },
   {

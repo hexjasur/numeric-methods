@@ -9,7 +9,7 @@
  * Versioning: Update CACHE_VERSION when making changes
  */
 
-const CACHE_VERSION = 'v1.1.2';
+const CACHE_VERSION = 'v1.1.3';
 const CACHE_NAME_STATIC = `sonli-usullar-static-${CACHE_VERSION}`;
 const CACHE_NAME_PAGES = `sonli-usullar-pages-${CACHE_VERSION}`;
 const CACHE_NAME_OFFLINE = `sonli-usullar-offline-${CACHE_VERSION}`;
@@ -55,6 +55,7 @@ const PRECACHE_PAGES = [
   '/src/Sonli-Usullar/Chats-Zeydel-Usuli.html',
   
   '/src/Sonli-Usullar/krylov-matrix-vector-method.html',
+  '/src/Sonli-Usullar/lagranj-interpolatsiya-usuli.html',
   
   '/src/Sonli-Usullar/Nazariya.html',
   'src/Sonli-Usullar-Nazariya/Biseksiya-Usuli.html',
