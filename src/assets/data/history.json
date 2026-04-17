@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.5.4",
+    "date": "2026-04-17",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/lagranj-interpolatsiya-usuli.html\">Lagranj Interpolyatsiya Usuli</a>da endi f(x) funksiyani ham kiritib xatolikni aniqlash mumkun, maxrajdagi minus ishora yuqalib ketishi tog'irlandi. <br> <a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/krylov-matrix-vector-method.html\">A.N.Krylov usulida</a> endi xos son yani xarakteristik ko'phadidan tashqari xos vektorini ham hisoblab beradi."
+  },
+  {
     "version": "v2.5.3",
     "date": "2026-04-16",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/lagranj-interpolatsiya-usuli.html\">Lagranj Interpolyatsiya Usuli </a> qo'shildi. <br> SEO biroz yaxshilandi, OG Qo'shildi yangi usul uchun. <br> SITEMAP yangilandi."
   },
   {

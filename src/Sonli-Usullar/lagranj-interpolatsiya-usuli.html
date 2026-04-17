@@ -32,7 +32,8 @@
   <meta property="og:title" content="Lagranj Interpolyatsiyasi | sonli-usullar.uz">
   <meta property="og:description"
     content="Lagranj interpolyatsion ko'phadi: nuqtalar asosida bazis ko'phadlarni hisoblash va yakuniy polinomni topish.">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/lagranj-interpolatsiya-usuli.png">
+  <meta property="og:image"
+    content="https://www.sonli-usullar.uz/src/assets/images/og/lagranj-interpolatsiya-usuli.png">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -212,7 +213,7 @@
 
       <!-- Misol kartochkalar -->
       <div class="p-3 pb-5 mt-3 mb-6 space-y-2 text-xs border bg-gray-50 cyber-card">
-        <div class="font-bold">📌 Misollar (bosib qo'llang):</div>
+        <div class="font-bold">📌 Misollar (sinab ko'rish uchun):</div>
         <div id="examples" class="grid grid-cols-1 gap-2"></div>
       </div>
 
@@ -242,6 +243,14 @@
               <span class="text-xs text-gray-500 flex-1">Nuqta qo'shish / o'chirish:</span>
               <button id="btn-add" onclick="addPoint()" class="point-btn" title="Nuqta qo'shish">+</button>
               <button id="btn-remove" onclick="removePoint()" class="point-btn" title="Nuqta o'chirish">−</button>
+            </div>
+
+            <div class="mb-5 p-3 bg-gray-50 border border-gray-200 cyber-card">
+              <label for="fx-input" class="block text-[11px] font-bold text-gray-700 uppercase mb-2">
+                f(x) funksiyasi (ixtiyoriy):
+              </label>
+              <input type="text" id="fx-input" placeholder="Masalan: sin(x) yoki x^2 + 1"
+                class="input-field py-2 text-sm">
             </div>
 
             <button onclick="calculate()"
@@ -284,18 +293,30 @@
         ]
       },
       {
-        label: "3 nuqtali misol",
+        label: "Doskadagi x^2 misoli",
         pts: [
-          { x: "0", y: "1" },
-          { x: "1", y: "3" },
-          { x: "2", y: "2" }
+          { x: "1", y: "1" },
+          { x: "2", y: "4" },
+          { x: "3", y: "9" }
+        ],
+        fx: "x^2 + ((x-1)(x-2)(x-3))"
+      },
+      {
+        label: "Suha'ni misoli",
+        pts: [
+          { x: "1", y: "4" },
+          { x: "3", y: "1" },
+          { x: "4", y: "5" }
         ]
-      }
+      },
     ];
 
     function applyExample(ex) {
       points = ex.pts.map(p => ({ ...p }));
       renderInputs();
+      if (document.getElementById('fx-input')) {
+        document.getElementById('fx-input').value = ex.fx || "";
+      }
       document.getElementById('solution-container').innerHTML =
         '<div class="p-10 italic text-center text-gray-400 cyber-card">Parametrlarni kiriting va tugmani bosing...</div>';
     }
@@ -309,7 +330,10 @@
         el.onclick = () => applyExample(ex);
         el.innerHTML = `
           <div class="text-center text-blue-600 font-bold text-sm">${ex.label}</div>
+
           <div class="text-[10px] mt-1 text-gray-500 text-center">${ex.pts.map((p, i) => `(x<sub>${i + 1}</sub>=${p.x}, y<sub>${i + 1}</sub>=${p.y})`).join(' ')}</div>
+
+          ${ex.fx ? `<div class="text-[10px] mt-1 text-gray-500 text-center">f(x) = ${ex.fx}</div>` : ''}
         `;
         container.appendChild(el);
       });
@@ -355,7 +379,9 @@
     function toTexFrac(val) {
       let f = math.fraction(val);
       if (f.d === 1) return f.n.toString();
-      let sign = (f.n * f.d < 0) ? "-" : "";
+
+      // math.js da f.n (surat) manfiy bo'lsa, ishorani oldinga chiqaramiz
+      let sign = f.s === -1 ? "-" : "";
       return `${sign}\\frac{${Math.abs(f.n)}}{${Math.abs(f.d)}}`;
     }
 
@@ -388,6 +414,15 @@
       const container = document.getElementById('solution-container');
       container.innerHTML = '';
 
+      let fStr = document.getElementById('fx-input') ? document.getElementById('fx-input').value.trim() : "";
+      let hasValidF = false;
+      if (fStr) {
+        try {
+          math.parse(fStr);
+          hasValidF = true;
+        } catch (e) { }
+      }
+
       // X va Y qiymatlarini math.js orqali hisoblab olish
       let X = [], Y = [];
       for (let i = 0; i < points.length; i++) {
@@ -402,8 +437,12 @@
       }
 
       let n = X.length;
+      if (n < 2) {
+        alert("❌ At least 2 points required");
+        return;
+      }
       if (new Set(X).size !== n) {
-        alert("❌ X qiymatlar takrorlanmasligi kerak!");
+        alert("❌ Duplicate x values are not allowed");
         return;
       }
 
@@ -411,87 +450,241 @@
       const card1 = document.createElement('div');
       card1.className = 'cyber-card p-5 bg-white';
       card1.innerHTML = `
-        <div class="step-title">1. Umumiy formula</div>
+        <div class="step-title text-cyan-600 font-bold">1. Umumiy formula</div>
         <div id="step-formula" class="overflow-x-auto custom-scrollbar py-2 text-center text-lg"></div>
       `;
       container.appendChild(card1);
 
       let formulaTerms = [];
       for (let i = 0; i < n; i++) {
-        formulaTerms.push(`${toTexFrac(Y[i])} \\cdot l_{${i + 1}}(x)`);
+        formulaTerms.push(`${Y[i]} \\cdot l_{${i + 1}}(x)`);
       }
-      let formulaTex = `L_{${n - 1}}(x) = \\sum_{i=1}^{${n}} y_i \\cdot l_i(x) = ${formulaTerms.join(" + ")}`;
+      let formulaTex = `P(x) = L_{${n - 1}}(x) = \\sum_{i=1}^{${n}} y_i \\cdot l_i(x) = ${formulaTerms.join(" + ")}`;
       renderKatex(formulaTex, document.getElementById('step-formula'));
 
       // ─── 2. Bazis ko'phadlar ─────────────────────────────────
       const card2 = document.createElement('div');
-      card2.className = 'cyber-card p-5 bg-white';
+      card2.className = 'cyber-card p-5 bg-white mt-4';
       card2.innerHTML = `
-        <div class="step-title">2. Bazis ko'phadlarni hisoblash</div>
+        <div class="step-title text-cyan-600 font-bold">2. Bazis ko'phadlarni hisoblash</div>
         <div id="step-basis" class="space-y-3"></div>
       `;
       container.appendChild(card2);
 
       let finalMathExpression = "";
       const basisContainer = document.getElementById('step-basis');
+      let pxTerms = []; // P(x) ning oraliq kasrli ko'rinishini yig'ish uchun
 
       for (let i = 0; i < n; i++) {
         if (Y[i] === 0) {
           const skipEl = document.createElement('div');
           skipEl.className = "text-gray-400 italic text-center py-2 text-sm";
-          skipEl.innerHTML = `y<sub>${i + 1}</sub> = 0 bo'lganligi sababli, l<sub>${i + 1}</sub>(x) hisoblanmadi`;
+          skipEl.innerHTML = `y<sub>${i + 1}</sub> = 0 bo'lganligi sababli, l<sub>${i + 1}</sub>(x) yozilmadi`;
           basisContainer.appendChild(skipEl);
           continue;
         }
 
         let numeratorTex = [];
+        let denominatorTextArr = [];
         let denominatorVal = 1;
         let mathjsNumerator = [];
 
         for (let j = 0; j < n; j++) {
           if (i !== j) {
-            numeratorTex.push(getTerm(X[j]));
-            denominatorVal *= (X[i] - X[j]);
+            numeratorTex.push(`(x ${X[j] < 0 ? '+' : '-'} ${Math.abs(X[j])})`);
+            let diff = X[i] - X[j];
+            denominatorTextArr.push(`(${diff})`);
+            denominatorVal *= diff;
             mathjsNumerator.push(`(x - (${X[j]}))`);
           }
         }
 
+        // Qavslarni ochish uchun math.rationalize ishlatamiz
+        let numExpr = mathjsNumerator.join(" * ");
+        // Rationalize qavslarni ochib, x^2 - 4x + 3 ko'rinishiga keltiradi
+        let expandedNum = math.rationalize(numExpr).toString();
+        let expandedNumTex = math.parse(expandedNum).toTex();
+
         let numStr = numeratorTex.join("");
-        let denTex = toTexFrac(denominatorVal);
-        let coef = math.fraction(Y[i] / denominatorVal);
-        let coefTex = toTexFrac(coef);
-        let tex = `l_{${i + 1}}(x) = \\frac{${numStr}}{${denTex}} \\quad \\Rightarrow \\quad y_{${i + 1}} \\cdot l_{${i + 1}}(x) = ${coefTex} \\cdot ${numStr}`;
+        let denStr = denominatorTextArr.join("");
+
+        // Natijani daftardagi kabi 3 bosqichli ko'rinishda chiqarish:
+        // l(x) = (x-a)(x-b)/(c)(d) = (x^2...)/N
+        let tex = `l_{${i + 1}}(x) = \\frac{${numStr}}{${denStr}} = \\frac{${expandedNumTex}}{${denominatorVal}}`;
 
         const itemEl = document.createElement('div');
-        itemEl.className = "py-2 overflow-x-auto custom-scrollbar";
+        itemEl.className = "py-4 border-b border-dashed border-magenta-200 overflow-x-auto";
         basisContainer.appendChild(itemEl);
         renderKatex(tex, itemEl);
 
+        // P(x) uchun oraliq yig'indi (expanded formda saqlaymiz)
+        pxTerms.push(`${Y[i]} \\cdot \\frac{${expandedNumTex}}{${denominatorVal}}`);
+
         if (finalMathExpression.length > 0) finalMathExpression += " + ";
-        finalMathExpression += `(${Y[i]} / (${denominatorVal})) * ${mathjsNumerator.join(" * ")}`;
+        finalMathExpression += `(${Y[i]} / (${denominatorVal})) * (${numExpr})`;
       }
 
       // ─── 3. Yakuniy natija ───────────────────────────────────
       const card3 = document.createElement('div');
-      card3.className = 'cyber-card p-5 bg-green-50 border-l-4 border-green-500';
+      card3.className = 'cyber-card p-5 bg-white border-l-4 border-magenta-500 mt-4';
       card3.innerHTML = `
-        <div class="step-title" style="color:#16a34a">3. Yakuniy Lagranj Ko'phadi</div>
-        <div id="step-final" class="overflow-x-auto custom-scrollbar py-2 text-center text-xl"></div>
+        <div class="step-title text-magenta-600 font-bold">3. Yakuniy Lagranj Ko'phadi</div>
+        <div id="step-px" class="overflow-x-auto custom-scrollbar py-2 text-center text-lg text-gray-700"></div>
+        <div id="step-final" class="overflow-x-auto custom-scrollbar py-4 text-center text-xl font-bold text-cyan-600"></div>
       `;
       container.appendChild(card3);
 
+      if (pxTerms.length === 0) pxTerms.push("0");
+      if (finalMathExpression === "") finalMathExpression = "0";
+
+      let pxTex = `P(x) = ${pxTerms.join(" + ")}`;
+      renderKatex(pxTex, document.getElementById('step-px'));
+
       try {
-        let simplified = math.rationalize(finalMathExpression).toString();
-        let finalTex = math.parse(simplified).toTex();
+        const simplifiedNode = math.rationalize(finalMathExpression);
+        let finalTex = simplifiedNode.toTex();
         renderKatex(`P(x) = ${finalTex}`, document.getElementById('step-final'));
       } catch (err) {
         document.getElementById('step-final').innerText =
           "Soddalashtirishda xatolik yuz berdi. Iltimos qiymatlarni tekshiring.";
-        console.error(err);
+        console.error("Rationalize error:", err);
+      }
+
+      // ─── 4. Xatolik tahlili (Error Analysis) ─────────────────
+      if (hasValidF) {
+        const card4 = document.createElement('div');
+        card4.className = 'cyber-card p-5 bg-white border-l-4 border-red-500 mt-4';
+
+        let exactDStr = `(${fStr}) - (${finalMathExpression})`; // D(x) = f(x) - P(x)
+        let exactDNode, exactDTex;
+
+        try {
+          try { exactDNode = math.rationalize(exactDStr); }
+          catch (err) { exactDNode = math.simplify(exactDStr); }
+          exactDTex = exactDNode.toTex();
+        } catch (e) {
+          exactDTex = "\\text{Ifodani tahlil qilib bo'lmadi...}";
+          exactDNode = math.parse("0");
+        }
+
+        let N_points = X.length;
+        let n_val = N_points - 1;
+        let order_val = N_points; // n+1 in user notation
+        let N_factorial = math.factorial(order_val);
+
+        let derivNode = math.parse(fStr);
+        let derivativeStepsTex = [];
+
+        for (let i = 1; i <= order_val; i++) {
+          try {
+            derivNode = math.derivative(derivNode, 'x');
+            derivNode = math.simplify(derivNode);
+            let primeMarks = "'".repeat(i);
+            let derivLabel = i <= 3 ? `f^{${primeMarks}}(x)` : `f^{(${i})}(x)`;
+            derivativeStepsTex.push(`${derivLabel} = ${derivNode.toTex()}`);
+          } catch (e) {
+            derivativeStepsTex.push(`f^{(${i})}(x) = \\text{Error getting derivative}`);
+          }
+        }
+
+        let C_node = derivNode;
+        let coeffNode;
+        try {
+          coeffNode = math.simplify(`(${C_node.toString()}) / ${N_factorial}`);
+        } catch (e) {
+          coeffNode = math.parse(`(${C_node.toString()}) / ${N_factorial}`);
+        }
+
+        let coeffTex = coeffNode.toTex();
+
+        let rawProdTex = X.map(xi => {
+          if (xi === 0) return "x";
+          if (xi > 0) return `(x - ${toTexFrac(xi)})`;
+          return `(x + ${toTexFrac(Math.abs(xi))})`;
+        }).join("");
+
+        let mathJsProdStr = X.map(xi => `(x - (${xi}))`).join(" * ");
+
+        let formulaRnTex = `R_{${n_val}}(x) = \\left( ${coeffTex} \\right) \\cdot \\prod (x - x_i)`;
+
+        let simplifiedRnTex;
+        if (coeffNode.isConstantNode && coeffNode.value === 1) {
+          simplifiedRnTex = rawProdTex;
+        } else if (coeffNode.isConstantNode && coeffNode.value === -1) {
+          simplifiedRnTex = `-${rawProdTex}`;
+        } else if (coeffNode.isConstantNode && coeffNode.value === 0) {
+          simplifiedRnTex = "0";
+        } else {
+          let useBrackets = coeffNode.isOperatorNode || (coeffNode.type === 'UnaryNode' && coeffNode.op !== '-');
+          if (useBrackets) {
+            simplifiedRnTex = `\\left(${coeffTex}\\right) ${rawProdTex}`;
+          } else {
+            simplifiedRnTex = `${coeffTex} ${rawProdTex}`;
+          }
+        }
+
+        let exactnessMatch = false;
+        try {
+          let theoreticalRnMathjsStr = `(${coeffNode.toString()}) * (${mathJsProdStr})`;
+          let diffNode = math.simplify(`(${theoreticalRnMathjsStr}) - (${exactDStr})`);
+
+          try {
+            let diffNodeRat = math.rationalize(diffNode);
+            if ((diffNodeRat.isConstantNode && diffNodeRat.value === 0) || diffNodeRat.toString() === '0') exactnessMatch = true;
+          } catch (e) { }
+
+          if (!exactnessMatch) {
+            if ((diffNode.isConstantNode && diffNode.value === 0) || diffNode.toString() === '0') exactnessMatch = true;
+          }
+        } catch (e) { }
+
+        card4.innerHTML = `
+          <div class="step-title text-red-600 font-bold mb-4">4. Xatolik Tahlili (Error Analysis)</div>
+          
+          <div class="text-sm font-bold text-gray-700 mt-2">1. f(x) funksiya:</div>
+          <div id="err-fx" class="overflow-x-auto py-2 text-center text-lg"></div>
+
+          <div class="text-sm font-bold text-gray-700 mt-5">2. Hosilalar (n+1 = ${order_val}):</div>
+          <div id="err-derivs" class="overflow-x-auto py-2 flex flex-col items-center gap-2 text-md"></div>
+
+          <div class="text-sm font-bold text-gray-700 mt-5">3. Koeffitsiyent <span class="font-normal text-xs text-gray-500">(C / (n+1)!)</span>:</div>
+          <div id="err-coeff" class="overflow-x-auto py-2 text-center text-lg"></div>
+
+          <div class="text-sm font-bold text-gray-700 mt-5">4. Nazariy R<sub>${n_val}</sub>(x) formulasi:</div>
+          <div id="err-rn-form" class="overflow-x-auto py-2 text-center text-lg text-blue-700"></div>
+
+          <div class="text-sm font-bold text-gray-700 mt-5">5. Soddalashtirilgan R<sub>${n_val}</sub>(x):</div>
+          <div id="err-rn-simp" class="overflow-x-auto py-2 text-center text-lg font-bold text-blue-800"></div>
+
+          <div class="text-sm font-bold text-gray-700 mt-5">6. Amaliy xatolik D(x) = f(x) - P(x):</div>
+          <div id="err-dx" class="overflow-x-auto py-3 text-center text-lg bg-gray-50 border rounded-md shadow-inner flex items-center justify-center font-mono"></div>
+
+          <div class="text-sm font-bold text-gray-700 mt-5">7. Xulosa (Solishtirish):</div>
+          <div class="mt-2 p-3 rounded text-center border ${exactnessMatch ? 'bg-green-50 border-green-200 text-green-700' : 'bg-yellow-50 border-yellow-200 text-yellow-800'}">
+            ${exactnessMatch ? '<b>✔ Theoretical error matches exact error.</b>' : '<b>⚠ Theoretical form differs (due to &xi;).</b>'}
+          </div>
+        `;
+        container.appendChild(card4);
+
+        renderKatex(`f(x) = ${math.parse(fStr).toTex()}`, card4.querySelector('#err-fx'));
+
+        const derivsContainer = card4.querySelector('#err-derivs');
+        derivativeStepsTex.forEach(tex => {
+          const row = document.createElement('div');
+          derivsContainer.appendChild(row);
+          renderKatex(tex, row);
+        });
+
+        let primeMarksOrNum = order_val <= 3 ? "'".repeat(order_val) : `(${order_val})`;
+        let coeffDisplayTex = `\\frac{f^{${primeMarksOrNum}}(x)}{${order_val}!} = \\frac{${C_node.toTex()}}{${N_factorial}} = ${coeffTex}`;
+        renderKatex(coeffDisplayTex, card4.querySelector('#err-coeff'));
+
+        renderKatex(formulaRnTex, card4.querySelector('#err-rn-form'));
+        renderKatex(`R_{${n_val}}(x) = ${simplifiedRnTex}`, card4.querySelector('#err-rn-simp'));
+        renderKatex(`D(x) = ${exactDTex}`, card4.querySelector('#err-dx'));
       }
     }
 
-    // Boshlang'ich ishga tushirish
     window.onload = () => {
       renderInputs();
       renderExamples();

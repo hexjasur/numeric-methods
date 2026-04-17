@@ -228,9 +228,23 @@
 
         <div
           class="glass-panel rounded-2xl p-6 shadow-glass relative hover:shadow-neon-magenta transition-shadow duration-300 ring-2 ring-cyber-magenta/20">
-          <h3 class="text-md font-bold text-cyber-magenta border-b border-slate-200 pb-2 mb-4">3-QADAM: Xarakteristik
-            ko'phad</h3>
+          <h3 class="text-md font-bold text-cyber-magenta border-b border-slate-200 pb-2 mb-4">3-QADAM: Xarakteristik ko'phad</h3>
           <div id="poly-output" class="text-xl font-bold text-center p-4"></div>
+        </div>
+
+        <div id="eigenvector-section" class="hidden glass-panel rounded-2xl p-6 shadow-glass relative hover:shadow-neon-cyan transition-shadow duration-300 ring-2 ring-cyber-cyan/20 mt-6">
+          <h3 class="text-md font-bold text-cyber-cyan border-b border-slate-200 pb-2 mb-4">4-QADAM: Xos sonlar va Xos vektorlar</h3>
+          
+          <div class="mb-4 bg-white/50 p-4 rounded-xl border border-slate-200">
+            <label class="block text-sm font-bold text-slate-700 mb-2">Topilgan xos sonlar (<span class="font-serif italic text-cyber-cyan">λ</span>) - Vergul bilan kiritish yoki tahrirlash mumkin:</label>
+            <div class="flex gap-4 flex-col sm:flex-row">
+              <input type="text" id="lambdas-input" class="flex-1 w-full bg-white/80 border-2 border-slate-200 focus:border-cyber-cyan rounded-lg px-4 py-2 outline-none font-mono" placeholder="Masalan: 1.2, 8.8">
+              <button onclick="computeEigenvectors()" class="px-6 py-2 bg-cyber-cyan text-white font-bold rounded-lg hover:bg-cyan-400 transition-colors shadow-neon-cyan whitespace-nowrap">Hisoblash</button>
+            </div>
+            <p class="text-xs text-slate-500 mt-2">* Avtomatik hisoblangan haqiqiy ildizlar yuqorida ko'rsatiladi. Agarda bo'sh bo'lsa, o'zingiz kiritishingiz mumkin.</p>
+          </div>
+          
+          <div id="eigenvectors-output" class="text-lg space-y-6"></div>
         </div>
 
       </div>
@@ -528,6 +542,153 @@
 
         renderTex(poly, 'poly-output');
         document.getElementById('output-section').classList.remove('hidden');
+
+        // Xos sonlar va vektorlarni avtomatik hisoblash
+        window.current_k_degree = k_degree;
+        window.current_vectors = vectors;
+        window.current_p_vals = p_vals;
+        window.current_matrix_size = size;
+
+        let realRoots = findPolynomialRoots(p_vals.slice(0, k_degree));
+        let lambdaInput = document.getElementById('lambdas-input');
+        if(lambdaInput) {
+            lambdaInput.value = realRoots.join(', ');
+            document.getElementById('eigenvector-section').classList.remove('hidden');
+            if(realRoots.length > 0) {
+                computeEigenvectors();
+            } else {
+                document.getElementById('eigenvectors-output').innerHTML = `<span class="text-sm text-slate-500">Avtomatik haqiqiy ildiz (xos son) topilmadi. O'zingiz hisoblab kiritib ko'ring.</span>`;
+            }
+        }
+      }
+
+      function findPolynomialRoots(p_vals) {
+          let n = p_vals.length;
+          let maxP = 0;
+          for (let i = 0; i < n; i++) {
+              if (Math.abs(p_vals[i]) > maxP) maxP = Math.abs(p_vals[i]);
+          }
+          let R = 1 + maxP;
+
+          let roots = [];
+          for (let j = 0; j < n; j++) {
+              let angle = 2 * Math.PI * j / n + 0.1;
+              roots.push({ re: R * Math.cos(angle), im: R * Math.sin(angle) });
+          }
+
+          for (let iter = 0; iter < 100; iter++) {
+              let maxDiff = 0;
+              let nextRoots = [];
+              for (let j = 0; j < n; j++) {
+                  let z = roots[j];
+                  let p_z = { re: 1, im: 0 };
+                  for (let i = 0; i < n; i++) {
+                      let nz_re = p_z.re * z.re - p_z.im * z.im - p_vals[i];
+                      let nz_im = p_z.re * z.im + p_z.im * z.re;
+                      p_z = { re: nz_re, im: nz_im };
+                  }
+
+                  let denom = { re: 1, im: 0 };
+                  for (let m = 0; m < n; m++) {
+                      if (m !== j) {
+                          let diff_re = z.re - roots[m].re;
+                          let diff_im = z.im - roots[m].im;
+                          let nd_re = denom.re * diff_re - denom.im * diff_im;
+                          let nd_im = denom.re * diff_im + denom.im * diff_re;
+                          denom = { re: nd_re, im: nd_im };
+                      }
+                  }
+
+                  let den_mag2 = denom.re * denom.re + denom.im * denom.im;
+                  if (den_mag2 < 1e-14) {
+                     nextRoots.push(z);
+                     continue;
+                  }
+                  let diff_re = (p_z.re * denom.re + p_z.im * denom.im) / den_mag2;
+                  let diff_im = (p_z.im * denom.re - p_z.re * denom.im) / den_mag2;
+
+                  nextRoots.push({ re: z.re - diff_re, im: z.im - diff_im });
+                  let err = Math.sqrt(diff_re * diff_re + diff_im * diff_im);
+                  if (err > maxDiff) maxDiff = err;
+              }
+              roots = nextRoots;
+              if (maxDiff < 1e-8) break;
+          }
+
+          let realRoots = [];
+          for (let i = 0; i < n; i++) {
+              if (Math.abs(roots[i].im) < 1e-3) {
+                  let val = Math.round(roots[i].re * 1000) / 1000;
+                  if (!realRoots.some(r => Math.abs(r - val) < 1e-4)) {
+                      realRoots.push(val);
+                  }
+              }
+          }
+          return realRoots.sort((a, b) => a - b);
+      }
+
+      function computeEigenvectors() {
+          let inputVal = document.getElementById('lambdas-input').value;
+          let outputDiv = document.getElementById('eigenvectors-output');
+          if(!inputVal.trim()) {
+              outputDiv.innerHTML = `<span class="text-sm text-slate-500">Iltimos, xos sonlarni kiriting. Yoki ko'phadning haqiqiy ildizlari topilmadi.</span>`;
+              return;
+          }
+          let lambdas = inputVal.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+          
+          if(lambdas.length === 0) {
+              outputDiv.innerHTML = '<span class="text-sm text-slate-500">Iltimos, durust xos sonlarni kiriting.</span>';
+              return;
+          }
+          
+          let k_degree = window.current_k_degree;
+          let vectors = window.current_vectors;
+          let p_vals = window.current_p_vals;
+          let size = window.current_matrix_size;
+          
+          let outputHtml = '';
+          
+          lambdas.forEach((lambda, idx) => {
+              let q = [1];
+              for(let j=1; j<k_degree; j++) {
+                  let next_q = lambda * q[j-1] - p_vals[j-1];
+                  q.push(next_q);
+              }
+              
+              let X = new Array(size).fill(0);
+              for(let j=0; j<k_degree; j++) {
+                  let c_idx = k_degree - 1 - j;
+                  let q_val = q[j];
+                  for(let i=0; i<size; i++) {
+                      X[i] += q_val * vectors[c_idx][i];
+                  }
+              }
+              
+              let mathStr = `\\lambda_{${idx+1}} = ${lambda} \\implies \\vec{X}^{(${idx+1})} = `;
+              let parts = [];
+              for(let j=0; j<k_degree; j++) {
+                  let c_idx = k_degree - 1 - j;
+                  let q_val = Math.round(q[j] * 10000) / 10000;
+                  if(Math.abs(q_val) > 1e-6) {
+                      let eqVal = Math.abs(q_val) === 1 ? '' : Math.abs(q_val);
+                      let sign = q_val < 0 ? '-' : '+';
+                      if(parts.length === 0 && sign === '+') sign = '';
+                      parts.push(`${sign} ${eqVal}\\vec{c}^{(${c_idx})}`.trim());
+                  }
+              }
+              if(parts.length === 0) parts.push(`0`);
+              
+              mathStr += parts.join(' ') + ` = ${texVector(X)}`;
+              
+              outputHtml += `
+              <div class="p-4 bg-white/60 rounded-xl border-l-4 border-cyber-cyan shadow-sm hover:shadow-md transition-shadow">
+                  <div class="text-center overflow-x-auto py-2">
+                      ${renderTexInline(mathStr)}
+                  </div>
+              </div>`;
+          });
+          
+          outputDiv.innerHTML = outputHtml;
       }
     </script>
   </div>
