@@ -16,11 +16,6 @@
   <!-- 3. CANONICAL -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/404.html">
 
-  <!-- 4. PRECONNECT (SPEED) -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
   <!-- 5. FAVICON -->
   <link rel="icon" href="src/assets/images/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="src/assets/images/favicon.ico">
@@ -38,172 +33,8 @@
   <!-- 7. ROBOTS -->
   <meta name="robots" content="noindex, follow">
 
-  <!-- 8. MANIFEST -->
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- 12. HEAD MANAGER (JS) -->
-  <script>
-    window.HEAD_BASE = '';
-  </script>
-  <script src="src/assets/js/head-manager.js"></script>
-  <link rel="stylesheet" href="src/assets/css/splash.css">
-
-  <!-- Yandex.Metrika counter -->
-  <script type="text/javascript">
-    (function (m, e, t, r, i, k, a) {
-      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
-      m[i].l = 1 * new Date();
-      for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
-      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=108219942', 'ym');
-
-    ym(108219942, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
-  </script>
-  <noscript>
-    <div><img src="https://mc.yandex.ru/watch/108219942" style="position:absolute; left:-9999px;" alt="" /></div>
-  </noscript>
-  <!-- /Yandex.Metrika counter -->
-
   <style>
-    /* ══════════════════════════════════════════════
-       404 PAGE STYLES
-       ══════════════════════════════════════════════ */
-
-    .hero-counter {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: #00f2ff;
-      line-height: 1;
-    }
-
-    .stat-card {
-      background: white;
-      border: 2px solid #000;
-      box-shadow: 4px 4px 0 #00f2ff;
-      padding: 18px;
-      text-align: center;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 6px 6px 0 #ff00ea;
-    }
-
-    .module-card {
-      background: white;
-      border: 2px solid #000;
-      box-shadow: 6px 6px 0px #00f2ff;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
-      text-decoration: none;
-      color: #0f172a;
-      display: block;
-      padding: 24px;
-      transition: box-shadow 0.25s, transform 0.25s;
-    }
-
-    .module-card:hover {
-      box-shadow: 8px 8px 0px #ff00ea;
-      transform: translateY(-4px);
-    }
-
-    .module-card .badge {
-      display: inline-block;
-      background: #00f2ff;
-      color: #000;
-      font-size: 0.65rem;
-      font-weight: 900;
-      padding: 3px 10px;
-      letter-spacing: 0.08em;
-      clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
-      margin-bottom: 10px;
-    }
-
-    .error-box {
-      background: white;
-      border: 3px solid #ff00ea;
-      box-shadow: 8px 8px 0 #ff00ea;
-      padding: 40px;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .error-code {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 5rem;
-      font-weight: 900;
-      color: #ff00ea;
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-
-    .error-message {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #000;
-      margin-bottom: 10px;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .error-description {
-      color: #666;
-      margin-bottom: 30px;
-      font-size: 0.95rem;
-    }
-
-    .back-home-btn {
-      display: inline-block;
-      padding: 15px 40px;
-      background: #00f2ff;
-      color: #000;
-      border: 2px solid #000;
-      font-weight: 900;
-      font-family: 'Orbitron', sans-serif;
-      text-decoration: none;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-
-    .back-home-btn:hover {
-      background: #ff00ea;
-      box-shadow: 4px 4px 0 #000;
-    }
-
-    .ticker-wrap {
-      overflow: hidden;
-      background: #000;
-      color: #00f2ff;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      padding: 8px 0;
-      border-top: 2px solid #00f2ff;
-      border-bottom: 2px solid #00f2ff;
-    }
-
-    .ticker-inner {
-      display: inline-flex;
-      white-space: nowrap;
-      animation: ticker 22s linear infinite;
-    }
-
-    .ticker-inner span {
-      padding: 0 32px;
-    }
-
-    @keyframes ticker {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(-50%);
-      }
-    }
+    .error-box,.stat-card{background:#fff;text-align:center}.error-code,.hero-counter{font-weight:900;line-height:1;font-family:Orbitron,sans-serif}.back-home-btn,.error-code,.error-message,.hero-counter,.ticker-wrap{font-family:Orbitron,sans-serif}.hero-counter{font-size:2rem;color:#00f2ff}.stat-card{border:2px solid #000;box-shadow:4px 4px 0 #00f2ff;padding:18px;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);transition:transform .2s,box-shadow .2s}.stat-card:hover{transform:translateY(-3px);box-shadow:6px 6px 0 #ff00ea}.module-card{background:#fff;border:2px solid #000;box-shadow:6px 6px 0 #00f2ff;clip-path:polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%);text-decoration:none;color:#0f172a;display:block;padding:24px;transition:box-shadow .25s,transform .25s}.module-card:hover{box-shadow:8px 8px 0 #ff00ea;transform:translateY(-4px)}.module-card .badge{display:inline-block;background:#00f2ff;color:#000;font-size:.65rem;font-weight:900;padding:3px 10px;letter-spacing:.08em;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);margin-bottom:10px}.error-box{border:3px solid #ff00ea;box-shadow:8px 8px 0 #ff00ea;padding:40px;margin-bottom:30px}.error-code{font-size:5rem;color:#ff00ea;margin-bottom:20px}.error-message{font-size:1.5rem;font-weight:700;color:#000;margin-bottom:10px}.error-description{color:#666;margin-bottom:30px;font-size:.95rem}.back-home-btn{display:inline-block;padding:15px 40px;background:#00f2ff;color:#000;border:2px solid #000;font-weight:900;text-decoration:none;clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%);transition:.3s;cursor:pointer}.back-home-btn:hover{background:#ff00ea;box-shadow:4px 4px 0 #000}.ticker-wrap{overflow:hidden;background:#000;color:#00f2ff;font-size:.7rem;font-weight:700;letter-spacing:.1em;padding:8px 0;border-top:2px solid #00f2ff;border-bottom:2px solid #00f2ff}.ticker-inner{display:inline-flex;white-space:nowrap;animation:22s linear infinite ticker}.ticker-inner span{padding:0 32px}@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   </style>
 
   <!-- Tailwind CSS -->
@@ -212,54 +43,8 @@
 
 <body>
 
-  <!-- ═══════════════════════════════════════
-       SPLASH SCREEN (shown until page loads)
-       ═══════════════════════════════════════ -->
-  <div id="app-splash" role="status" aria-label="Yuklanmoqda">
-    <div class="splash-ring">
-      <img src="src/assets/images/logo-glass-optimazed.png" alt="Sonli Usullar" class="splash-logo">
-    </div>
-    <div class="splash-title">SONLI USULLAR</div>
-    <div class="splash-subtitle">QarDU · Amaliy Matematika · 2026</div>
-  </div>
-
-  <!-- PAGE LOADER (every navigation) -->
-  <div id="app-loader" role="status" aria-label="Yuklanmoqda">
-    <div class="loader-ring"></div>
-  </div>
-
-  <!-- Sidebar injected by sidebar.js -->
-  <script>
-    window.SIDEBAR_BASE = '';
-    window.SIDEBAR_ACTIVE = 'home';
-  </script>
-  <script src="src/assets/js/sidebar.js"></script>
-
   <!-- Main Content -->
-  <div class="main-content p-4 md:p-8" id="main-content">
-
-    <!-- Ticker / Breaking News Bar -->
-    <div class="ticker-wrap mb-6">
-      <div class="ticker-inner">
-        <span>⚡ 404 ERROR ⚠️ SAHIFA TOPILMADI</span>
-        <span>//</span>
-        <span>🔄 ASOSIY SAHIFAGA QAYTISH</span>
-        <span>//</span>
-        <span>📚 BOSHQA USULLARNI O'RGANING</span>
-        <span>//</span>
-        <span>QarDU · Amaliy Matematika · 023-40 guruh · 2026</span>
-        <span>//</span>
-        <!-- Repeat for seamless loop -->
-        <span>⚡ 404 ERROR ⚠️ SAHIFA TOPILMADI</span>
-        <span>//</span>
-        <span>🔄 ASOSIY SAHIFAGA QAYTISH</span>
-        <span>//</span>
-        <span>📚 BOSHQA USULLARNI O'RGANING</span>
-        <span>//</span>
-        <span>QarDU · Amaliy Matematika · 023-40 guruh · 2026</span>
-        <span>//</span>
-      </div>
-    </div>
+  <div class=" p-4 md:p-8">
 
     <!-- Error Box -->
     <div class="error-box mb-12">
@@ -271,122 +56,15 @@
       <a href="index.html" class="back-home-btn">← ASOSIY SAHIFAGA QAYTISH</a>
     </div>
 
-    <!-- Available Modules Section -->
-    <h2 class="text-xl font-black mb-6 tracking-wider" style="font-family:'Orbitron',sans-serif">
-      📦 MAVJUD MODULLAR
-    </h2>
-    <p class="text-sm text-gray-600 mb-8">
-      Ushbu sahifalardan qaysi biriga kirmoqchi bo'lganingizni tanlang:
-    </p>
-
-    <!-- Module cards grid -->
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-      <a href="src/Sonli-Usullar/FunksiyaKesishishNuqtasiAniqlash.html" class="module-card">
-        <div class="badge">01 / ANIQLIK</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">FUNKSIYA KESISHISH NUQTA</h4>
-        <p class="text-sm text-gray-600">Grafik usulda kesishish nuqtalarini aniqlash. Zoom & Pan qo'llab-quvvatlash.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html" class="module-card">
-        <div class="badge">02 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">KESMANI TENG IKKIGA BO'LISH</h4>
-        <p class="text-sm text-gray-600">Ildiz joylashgan oraliqni har safar teng ikkiga bo'lish orqali aniqlikni
-          oshirish.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Iteratsiya-Usuli.html" class="module-card">
-        <div class="badge">03 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/3nd-Oddiy-Iteratsiya-Usuli.html" class="module-card">
-        <div class="badge">04 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ODDIY ITERATSIYA USULI</h4>
-        <p class="text-sm text-gray-600">Takroriy jarayon orqali ildizni topish. M konstantasi va yaqinlashish sharti.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Vatar-Usuli.html" class="module-card">
-        <div class="badge">05 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">VATAR USULI</h4>
-        <p class="text-sm text-gray-600">Funksiya grafigidagi ikki nuqtadan o'tuvchi vatar orqali ildizni
-          yaqinlashtirish (Secant Method).</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Urinma-Usuli.html" class="module-card">
-        <div class="badge">06 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">URINMA USULI</h4>
-        <p class="text-sm text-gray-600">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Oddiy-Nyuton-Usuli.html" class="module-card">
-        <div class="badge">07 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ODDIY NYUTON USULI</h4>
-        <p class="text-sm text-gray-600">Nyuton usuli: Funksiya hosilasi yordamida urinmalar o'tkazib ildizni topish.
-        </p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Zeydel-usuli.html" class="module-card">
-        <div class="badge">08 / USUL</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">ZEYDEL USULI</h4>
-        <p class="text-sm text-gray-600">Chiziqli tenglamalar sistemasini (SLAU) iterativ yechish usuli.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/Sonli-Usullar/Haydash-Usuli.html" class="module-card">
-        <div class="badge">09 / ANIQLIK</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">HAYDASH USULI</h4>
-        <p class="text-sm text-gray-600">Tridiagonal chiziqli tenglamalar sistemasini ketma-ket hisoblash orqali yechish
-          usuli.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-      <a href="src/about.html" class="module-card">
-        <div class="badge">ℹ️ / HAQIDA</div>
-        <h4 class="mb-2 text-lg font-black" style="font-family:'Orbitron',sans-serif">WEBSITE HAQIDA</h4>
-        <p class="text-sm text-gray-600">Loyiha haqida batafsil ma'lumot, texnologiyalar va muallif.</p>
-        <div class="mt-4 text-xs font-bold text-cyan-600">BATAFSIL →</div>
-      </a>
-
-    </div>
-
-    <!-- Help section -->
-    <div class="p-6 cyber-card mb-12" style="background: white; border: 2px solid #000; box-shadow: 6px 6px 0 #00f2ff;">
-      <h3 class="flex items-center mb-4 font-black border-b-2 border-black text-lg"
-        style="font-family:'Orbitron',sans-serif">
-        <span class="mr-2">❓</span> KO'MAKKA MUHTOJ?
-      </h3>
-      <div class="space-y-2 text-sm">
-        <p><strong>URL noto'g'ri bo'lishi mumkin:</strong> Sahifa manzilini qayta tekshiring.</p>
-        <p><strong>Link eski bo'lishi mumkin:</strong> Yuqoridagi modullardan kerakli sahifani tanlang.</p>
-        <p><strong>Muammo davom etsa:</strong> <a href="index.html" class="text-cyan-600 font-bold">Asosiy sahifaga</a>
-          qaytib ko'ring.</p>
-      </div>
-    </div>
-
     <footer class="mt-4 text-center">
       <div class="inline-block px-10 pt-4 border-t-2 border-black">
         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-          © 2026 Qarshi Davlat Universiteti | 404 Sahifa
+          © 2026 Sonli-Usullar.uz | 404 Sahifa Topilmadi
         </p>
       </div>
     </footer>
 
-  </div><!-- /main-content -->
-
-  <!-- Native enhancements: loader, share FAB -->
-  <script src="src/assets/js/capacitor-app.js"></script>
+  </div>
 
   <!-- PWA: Service Worker Registration & Install Prompt -->
   <script src="/sw-register.js"></script>

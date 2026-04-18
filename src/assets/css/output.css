@@ -482,9 +482,6 @@
   .max-h-\[500px\] {
     max-height: 500px;
   }
-  .min-h-\[1\.5rem\] {
-    min-height: 1.5rem;
-  }
   .min-h-\[36px\] {
     min-height: 36px;
   }
@@ -742,10 +739,6 @@
     border-inline-style: var(--tw-border-style);
     border-inline-width: 1px;
   }
-  .border-y {
-    border-block-style: var(--tw-border-style);
-    border-block-width: 1px;
-  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -847,14 +840,8 @@
   .border-green-200 {
     border-color: var(--color-green-200);
   }
-  .border-green-500 {
-    border-color: var(--color-green-500);
-  }
   .border-green-600 {
     border-color: var(--color-green-600);
-  }
-  .border-orange-400 {
-    border-color: var(--color-orange-400);
   }
   .border-pink-500 {
     border-color: var(--color-pink-500);
@@ -864,9 +851,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-pink-500) 30%, transparent);
     }
-  }
-  .border-purple-500 {
-    border-color: var(--color-purple-500);
   }
   .border-red-200 {
     border-color: var(--color-red-200);
@@ -879,9 +863,6 @@
   }
   .border-slate-200 {
     border-color: var(--color-slate-200);
-  }
-  .border-white {
-    border-color: var(--color-white);
   }
   .border-white\/80 {
     border-color: color-mix(in srgb, #fff 80%, transparent);
@@ -966,9 +947,6 @@
   }
   .bg-green-600 {
     background-color: var(--color-green-600);
-  }
-  .bg-orange-50 {
-    background-color: var(--color-orange-50);
   }
   .bg-orange-100 {
     background-color: var(--color-orange-100);
@@ -1369,12 +1347,6 @@
   }
   .text-green-900 {
     color: var(--color-green-900);
-  }
-  .text-indigo-600 {
-    color: var(--color-indigo-600);
-  }
-  .text-orange-700 {
-    color: var(--color-orange-700);
   }
   .text-pink-500 {
     color: var(--color-pink-500);

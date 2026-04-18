@@ -86,55 +86,7 @@
     }
   </script>
   <style>
-    body {
-      background-color: #f0fdfa;
-      background-image:
-        linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-
-    .glass-panel {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-    }
-
-    .matrix-wrapper {
-      position: relative;
-      display: inline-block;
-      --matrix-rows: 4;
-    }
-
-    /* Chap qavs */
-    .matrix-wrapper::before {
-      content: "(";
-      position: absolute;
-      left: -25px;
-      top: 50%;
-      transform: translateY(-50%) scaleY(calc(var(--matrix-rows) * 1.5));
-      font-size: 40px;
-      transition: transform 0.3s ease;
-    }
-
-    /* O‘ng qavs */
-    .matrix-wrapper::after {
-      content: ")";
-      position: absolute;
-      right: -25px;
-      top: 50%;
-      transform: translateY(-50%) scaleY(calc(var(--matrix-rows) * 1.5));
-      font-size: 40px;
-      transition: transform 0.3s ease;
-    }
-
-    /* Hide number input arrows */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+    .matrix-wrapper::after,.matrix-wrapper::before{position:absolute;top:50%;transform:translateY(-50%) scaleY(calc(var(--matrix-rows) * 1.5));font-size:40px;transition:transform .3s}body{background-color:#f0fdfa;background-image:linear-gradient(rgba(6,182,212,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,.05) 1px,transparent 1px);background-size:30px 30px}.glass-panel{background:rgba(255,255,255,.65);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.8)}.matrix-wrapper{position:relative;display:inline-block;--matrix-rows:4}.matrix-wrapper::before{content:"(";left:-25px}.matrix-wrapper::after{content:")";right:-25px}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </style>
 </head>
 
