@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.6t",
+    "date": "2026-04-20",
+    "color": "#ff00ea",
+    "description": "TEST UPDATE: <a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/newton-interpolatsiya-usuli.html\">Nyuton Interpolyatsiya Usuli</a> va <a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/Eng-kichik-kvadratlar-usuli.html\">Eng Kichik Kvadratlar Usuli</a> usullari ustida ishlar olib borilmoqda. <br> Yangi Sahifalar uchun SEO va OG Qo'shildi. <br> SITEMAP yangilandi. <br>Asosiy sahifa css stylelar minify qilindi. (Minifyed: <a class=\"underline text-blue-700 font-bold\" href=\"/index.html\">index.html</a>)"
+  },
+  {
     "version": "v2.5.4",
     "date": "2026-04-17",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/lagranj-interpolatsiya-usuli.html\">Lagranj Interpolyatsiya Usuli</a>da endi f(x) funksiyani ham kiritib xatolikni aniqlash mumkun, maxrajdagi minus ishora yuqalib ketishi tog'irlandi. <br> <a class=\"underline text-blue-700 font-bold\" href=\"/src/Sonli-Usullar/krylov-matrix-vector-method.html\">A.N.Krylov usulida</a> endi xos son yani xarakteristik ko'phadidan tashqari xos vektorini ham hisoblab beradi."
   },
   {

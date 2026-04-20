@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <!-- 1. Basics -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-language" content="uz">
+
+  <!-- 2. TITLE + DESCRIPTION -->
+  <title>Newton interpolatsiya usuli | Sonli-Usullar.uz</title>
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:locale" content="uz_UZ">
+
+  <meta property="og:title" content="Newton interpolatsiya usuli | Sonli-Usullar.uz">
+  <meta property="og:description"
+    content="Newton interpolatsiya usuli — ma'lumotlarga eng yaxshi mos keluvchi funksiyani topish usuli. Approksimatsiya va regressiya uchun qo'llaniladi.">
+
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter OG -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Newton interpolatsiya usuli | Sonli-Usullar.uz">
+  <meta name="twitter:description"
+    content="Newton interpolatsiya usuli — ma'lumotlarga eng yaxshi mos keluvchi funksiyani topish usuli. Approksimatsiya va regressiya uchun qo'llaniladi.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og-image-1200x630.jpg">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LearningResource",
+      "name": "Newton interpolatsiya usuli",
+      "headline": "Newton interpolatsiya usuli | Sonli-Usullar.uz",
+      "description": "Newton interpolatsiya usuli — ma'lumotlarga eng yaxshi mos keluvchi funksiyani topish uchun ishlatiladigan sonli usul. Approksimatsiya, regressiya va statistik modellashtirishda qo'llaniladi.",
+      "inLanguage": "uz",
+      "educationalLevel": "University",
+      "learningResourceType": "Numerical Method",
+      "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html",
+
+      "author": {
+        "@type": "Person",
+        "name": "Haydarov Jasurbek"
+      },
+
+      "publisher": {
+        "@type": "Organization",
+        "name": "Sonli Usullar",
+        "url": "https://www.sonli-usullar.uz"
+      },
+
+      "isPartOf": {
+        "@type": "EducationalWebsite",
+        "name": "Sonli Usullar",
+        "url": "https://www.sonli-usullar.uz/"
+      },
+
+      "keywords": [
+        "newton interpolatsiya usuli",
+        "newton interpolation method",
+        "regressiya",
+        "approksimatsiya",
+        "sonli usullar"
+      ]
+    }
+  </script>
+
+  <!-- HEAD MANAGER (JS) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
+  <!-- Sidebar injected by sidebar.js -->
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'newton-interpolatsiya';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f0fdfa;
+      background-image: linear-gradient(rgba(6, 182, 212, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, .05) 1px, transparent 1px);
+      background-size: 30px 30px
+    }
+
+    /* Pyramid Table Styles */
+    .pyramid-container {
+      display: flex;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      min-width: max-content;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .diff-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.5s ease;
+    }
+
+    /* Stair-step effect: each next column shifts down by half a cell height + gap */
+    /* We'll handle exact alignment in JS but some basic styles here */
+    .diff-cell {
+      width: 140px;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      animation: fadeIn 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    .diff-cell:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border-color: #06b6d4;
+      z-index: 10;
+    }
+
+    .diff-cell.zero-pattern {
+      background: rgba(240, 253, 244, 0.9);
+      border-color: #22c55e;
+      border-style: solid;
+    }
+
+    .diff-cell.zero-pattern::after {
+      content: '→ 0';
+      position: absolute;
+      right: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      font-weight: bold;
+      color: #16a34a;
+    }
+
+    .cell-label {
+      font-size: 10px;
+      color: #94a3b8;
+      margin-bottom: 4px;
+      display: block;
+      font-family: monospace;
+    }
+
+    .cell-value {
+      font-weight: 700;
+      color: #1e293b;
+      font-size: 13px;
+    }
+
+    /* Active States & Dimming */
+    .pyramid-container.has-active .diff-cell:not(.active) {
+      opacity: 0.5;
+      filter: grayscale(0.2);
+    }
+
+    .diff-cell.active {
+      transform: scale(1.1);
+      box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+      border-color: #06b6d4;
+      background: #ffffff;
+      z-index: 100 !important;
+      opacity: 1 !important;
+    }
+
+    /* Tooltip styles (Click triggered) */
+    .formula-tooltip {
+      position: absolute;
+      bottom: calc(100% + 15px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: #1e293b;
+      color: white;
+      padding: 1rem;
+      border-radius: 16px;
+      width: 280px;
+      font-size: 12px;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 200;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .diff-cell.active .formula-tooltip {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .tooltip-arrow {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #1e293b transparent transparent transparent;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .col-header {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #0891b2;
+      margin-bottom: 1rem;
+      min-width: 140px;
+      letter-spacing: 0.05em;
+    }
+
+    .x-col-cell {
+      background: #f8fafc;
+      border-left: 3px solid #64748b;
+      /* Slate accent */
+    }
+
+    .y-col-cell {
+      background: #fffcf0;
+      /* Light amber/cream */
+      border-left: 3px solid #f59e0b;
+      /* Amber accent */
+    }
+
+    .diff-col-cell {
+      background: rgba(236, 254, 255, 0.4);
+    }
+  </style>
+</head>
+
+<body class="main-content">
+  <div class="p-4 md:p-8 bg-[#f0fdfa] text-slate-800"
+    style="background-image: linear-gradient(rgba(6,182,212,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,.05) 1px, transparent 1px); background-size: 30px 30px;">
+    <div class="max-w-5xl mx-auto space-y-8">
+      <header class="text-center space-y-2">
+        <h1 class="text-3xl font-bold tracking-tight">Nyuton interpolyatsiya usuli</h1>
+        <p class="text-slate-500 text-sm">Masalani bosqichma-bosqich ishlash dasturi</p>
+      </header>
+
+      <main class="bg-white/90 backdrop-blur-md border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+
+        <div class="p-6 border-b border-slate-100">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="flex items-center gap-2 font-semibold text-slate-700">
+              <span class="w-2 h-2 bg-cyan-500 rounded-full"></span>
+              Nuqtalarni kiriting (x, y)
+            </h2>
+            <div class="flex gap-2">
+              <button onclick="addRow()"
+                class="text-xs bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 text-cyan-700 px-4 py-2 rounded-lg transition-all font-medium">
+                + Qator qo'shish
+              </button>
+              <button onclick="removeRow()"
+                class="text-xs bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 px-4 py-2 rounded-lg transition-all font-medium">
+                - Qator o'chirish
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table
+              class="w-full max-w-2xl mx-auto text-sm text-center border-collapse bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 font-semibold text-slate-600 w-16">i</th>
+                  <th class="px-4 py-3 font-semibold text-slate-600">x<sub>i</sub></th>
+                  <th class="px-4 py-3 font-semibold text-slate-600">y<sub>i</sub></th>
+                </tr>
+              </thead>
+              <tbody id="points-table-body" class="divide-y divide-slate-100">
+                <!-- Rows will be injected here -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-8 flex justify-center">
+            <button onclick="solveNewton()"
+              class="bg-slate-900 text-white px-10 py-3 rounded-xl text-sm font-semibold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200/50 transform active:scale-95">
+              Bosqichma-bosqich ishlash
+            </button>
+          </div>
+        </div>
+
+        <div id="solution-section" class="hidden">
+
+          <div class="p-6 border-b border-slate-100">
+            <h3 class="text-sm font-bold text-cyan-700 mb-3 uppercase tracking-wider">1-qadam: Nyuton formulasi</h3>
+            <div class="bg-cyan-50/50 p-4 rounded-xl border border-cyan-100/50 overflow-x-auto text-sm text-center">
+              <p class="text-slate-700">
+                \[ P_n(x) = y_0 + f(x_0, x_1)(x - x_0) + f(x_0, x_1, x_2)(x - x_0)(x - x_1) + \dots + f(x_0, \dots,
+                x_n)(x - x_0)\dots(x - x_{n-1}) \]
+              </p>
+            </div>
+          </div>
+
+          <div class="p-6 border-b border-slate-100">
+            <h3 class="text-sm font-bold text-cyan-700 mb-3 uppercase tracking-wider">2-qadam: Bo'lingan ayirmalar
+              jadvali (Piramida)</h3>
+            <p class="text-xs text-slate-500 mb-4">Har bir katak kiritilgan ma'lumotlar orasidagi farqni bildiradi.
+              Katakni <b>ustiga bosing</b> - uning qanday hisoblangani ko'rinadi.</p>
+            <div class="overflow-x-auto bg-slate-50/50 rounded-2xl border border-slate-100 shadow-inner min-h-[350px]">
+              <div id="pyramid-table" class="pyramid-container">
+                <!-- Pyramid will be injected here -->
+              </div>
+            </div>
+            <div id="zero-label"
+              class="mt-4 hidden p-3 bg-cyan-50 text-cyan-700 text-xs rounded-xl border border-cyan-100 flex items-center gap-2">
+              <span class="flex-shrink-0 w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></span>
+              <span id="zero-label-text"></span>
+            </div>
+          </div>
+
+          <div class="p-6 border-b border-slate-100">
+            <h3 class="text-sm font-bold text-cyan-700 mb-3 uppercase tracking-wider">3-qadam: Qiymatlarni formulaga
+              qo'yish</h3>
+            <p class="text-xs text-slate-500 mb-4">Jadvalning eng yuqori qatoridagi qiymatlar asosiy koeffitsiyentlar
+              hisoblanadi.</p>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 overflow-x-auto text-center">
+              <div id="substitution-step" class="text-slate-800 text-sm"></div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50">
+            <h3 class="text-sm font-bold text-cyan-700 mb-3 uppercase tracking-wider">4-qadam: Soddalashtirish va
+              Yakuniy natija</h3>
+            <p class="text-xs text-slate-500 mb-4">Qavslarni ochib, o'xshash hadlarni ixchamlash natijasida hosil
+              bo'lgan ko'phad:</p>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm text-center">
+              <p class="text-xs text-slate-400 font-medium mb-1">Yakuniy interpolyatsion ko'phad P(x)</p>
+              <div id="final-polynomial" class="text-2xl font-bold text-slate-800"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Standart x^2 misoli ma'lumotlari (5 ta default nuqta)
+    // let points = [
+    //   { x: 0, y: 0 },
+    //   { x: 1, y: 1 },
+    //   { x: 2, y: 4 },
+    //   { x: 3, y: 9 },
+    //   { x: 4, y: 16 }
+    // ];
+    let points = [
+      { x: 1, y: 1 },
+      { x: 2, y: 4 },
+      { x: 3, y: 9 },
+    ];
+
+    function renderInputs() {
+      const tbody = document.getElementById('points-table-body');
+      tbody.innerHTML = '';
+      points.forEach((p, i) => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-4 py-2 text-slate-400 font-mono text-xs">${i}</td>
+            <td class="px-4 py-2">
+              <input type="number" step="any" value="${p.x}" 
+                onchange="updatePoint(${i}, 'x', this.value)" 
+                class="w-full max-w-[120px] mx-auto bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-sm text-center focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all">
+            </td>
+            <td class="px-4 py-2">
+              <input type="number" step="any" value="${p.y}" 
+                onchange="updatePoint(${i}, 'y', this.value)" 
+                class="w-full max-w-[120px] mx-auto bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-sm text-center focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all">
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function addRow() {
+      const lastX = points.length > 0 ? points[points.length - 1].x : 0;
+      points.push({ x: Number(lastX) + 1, y: 0 });
+      renderInputs();
+    }
+
+    function removeRow() {
+      if (points.length > 2) {
+        points.pop();
+        renderInputs();
+      }
+    }
+
+    function updatePoint(index, field, value) {
+      points[index][field] = parseFloat(value) || 0;
+    }
+
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    // --- MATEMATIK QISMI ---
+
+    // Ikki ko'phadni qo'shish (Massiv ko'rinishida [c_0, c_1, c_2] => c_0 + c_1*x + c_2*x^2)
+    function addPoly(p1, p2) {
+      let len = Math.max(p1.length, p2.length);
+      let res = new Array(len).fill(0);
+      for (let i = 0; i < len; i++) res[i] = (p1[i] || 0) + (p2[i] || 0);
+      return res;
+    }
+
+    // Ko'phadni (x - a) ga ko'paytirish
+    function multiplyBinomial(poly, a) {
+      let res = new Array(poly.length + 1).fill(0);
+      for (let i = 0; i < poly.length; i++) {
+        res[i + 1] += poly[i];         // x ga ko'paytirish
+        res[i] += poly[i] * (-a);    // -a ga ko'paytirish
+      }
+      return res;
+    }
+
+    // Ko'phad massivini o'qilishi oson LaTeX qatorga o'tkazish
+    function formatPolyLaTeX(coeffs) {
+      let terms = [];
+      for (let i = coeffs.length - 1; i >= 0; i--) {
+        let c = coeffs[i];
+        if (Math.abs(c) < 1e-10) continue; // 0 larni tashlab ketish
+
+        let term = "";
+        let absC = Math.abs(c);
+        let cStr = (absC % 1 === 0) ? absC.toString() : absC.toFixed(4).replace(/\.?0+$/, '');
+
+        if (i === 0) {
+          term = cStr;
+        } else {
+          if (absC !== 1) term += cStr;
+          term += "x";
+          if (i > 1) term += "^{" + i + "}";
+        }
+
+        if (terms.length > 0) {
+          terms.push(c > 0 ? " + " + term : " - " + term);
+        } else {
+          terms.push(c > 0 ? term : "-" + term);
+        }
+      }
+      return terms.length === 0 ? "0" : terms.join("");
+    }
+
+    // Sonni chiroyli ko'rsatish
+    function fmtStr(num) {
+      if (Math.abs(num) < 1e-10) return "0";
+      return (num % 1 === 0) ? num.toString() : num.toFixed(4).replace(/\.?0+$/, '');
+    }
+
+    async function solveNewton() {
+      const n = points.length;
+      let x = points.map(p => p.x);
+      let y = points.map(p => p.y);
+
+      // 1. Hisoblash va tushuntirishlarni saqlash
+      // f[i][j] obyekti: { val, formula, step, isZero }
+      let diffData = Array.from({ length: n }, () => new Array(n).fill(null));
+
+      // 0-darajali (y qiymatlari)
+      for (let i = 0; i < n; i++) {
+        diffData[i][0] = {
+          val: y[i],
+          formula: `y_{${i}}`,
+          step: `f(x_{${i}}) = ${fmtStr(y[i])}`,
+          isZero: Math.abs(y[i]) < 1e-10
+        };
+      }
+
+      // n-darajali ayirmalar
+      for (let j = 1; j < n; j++) {
+        for (let i = 0; i < n - j; i++) {
+          let v1 = diffData[i][j - 1].val;
+          let v2 = diffData[i + 1][j - 1].val;
+          let val = (v2 - v1) / (x[i + j] - x[i]);
+
+          let formula = `f[x_{${i}}, \dots, x_{${i + j}}]`;
+          // User requested format: f[...] = (v2 - v1) / (x2 - x1) = res
+          let step = `${formula} = \\frac{${fmtStr(v2)} - ${fmtStr(v1)}}{${fmtStr(x[i + j])} - ${fmtStr(x[i])}} = ${fmtStr(val)}`;
+
+          diffData[i][j] = {
+            val: val,
+            formula: formula,
+            step: step,
+            isZero: Math.abs(val) < 1e-10
+          };
+        }
+      }
+
+      // 2. Natijalarni ko'rsatish boshlanishi
+      document.getElementById('solution-section').classList.remove('hidden');
+      const pyramidContainer = document.getElementById('pyramid-table');
+      pyramidContainer.innerHTML = '';
+      document.getElementById('zero-label').classList.add('hidden');
+
+      // 2.1. X ustunini yaratish (Y bilan birga, chapda)
+      const xCol = document.createElement('div');
+      xCol.className = 'diff-col';
+      const xHeader = document.createElement('div');
+      xHeader.className = 'col-header';
+      xHeader.innerText = 'x_i';
+      xCol.appendChild(xHeader);
+
+      for (let i = 0; i < n; i++) {
+        const xCellDiv = document.createElement('div');
+        xCellDiv.className = 'diff-cell x-col-cell';
+        xCellDiv.innerHTML = `<span class="cell-label">x_{${i}}</span><div class="cell-value">${fmtStr(x[i])}</div>`;
+        xCol.appendChild(xCellDiv);
+      }
+      pyramidContainer.appendChild(xCol);
+
+      // Step-by-step rendering
+      for (let j = 0; j < n; j++) {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'diff-col';
+
+        const header = document.createElement('div');
+        header.className = 'col-header';
+        header.innerText = j === 0 ? 'y qiymatlari' : `${j}-darajali ayirmalar`;
+        colDiv.appendChild(header);
+
+        // Stair-step (piramida) uchun tepadan bo'shliq
+        // j=0 (y) da bo'shliq yo'q
+        // j>0 (ayirmalar) da har bir daraja uchun tepadan padding qo'shiladi
+        if (j > 0) {
+          colDiv.style.paddingTop = `${j * 2.5}rem`;
+        }
+
+        pyramidContainer.appendChild(colDiv);
+
+        for (let i = 0; i < n - j; i++) {
+          const cell = diffData[i][j];
+          const cellDiv = document.createElement('div');
+          cellDiv.className = `diff-cell ${j === 0 ? 'y-col-cell' : 'diff-col-cell'} ${cell.isZero ? 'zero-pattern' : ''}`;
+
+          cellDiv.innerHTML = `
+            <span class="cell-label">${cell.formula}</span>
+            <div class="cell-value">${fmtStr(cell.val)}</div>
+            <div class="formula-tooltip">
+              <div class="font-bold mb-2 text-cyan-400">Hisoblash bosqichi:</div>
+              <div class="text-[11px] leading-relaxed">\\[ ${cell.step} \\]</div>
+              <div class="tooltip-arrow"></div>
+            </div>
+          `;
+
+          colDiv.appendChild(cellDiv);
+
+          // Click trigger logic
+          cellDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isActive = cellDiv.classList.contains('active');
+            document.querySelectorAll('.diff-cell').forEach(c => c.classList.remove('active'));
+            pyramidContainer.classList.remove('has-active');
+
+            if (!isActive) {
+              cellDiv.classList.add('active');
+              pyramidContainer.classList.add('has-active');
+            }
+          });
+
+          renderMathInElement(cellDiv, {
+            delimiters: [{ left: "\\[", right: "\\]", display: true }],
+            throwOnError: false
+          });
+
+          await sleep(100); // Tezroq animatsiya
+        }
+
+        // 0-pattern tekshiruvi (faqat ma'lumot uchun)
+        let isAllZero = true;
+        for (let i = 0; i < n - j; i++) if (!diffData[i][j].isZero) isAllZero = false;
+        if (isAllZero && j > 0) {
+          const zeroLabel = document.getElementById('zero-label');
+          zeroLabel.classList.remove('hidden');
+          document.getElementById('zero-label-text').innerText = `Diqqat: ${j}-darajali ayirmalar 0 ga teng bo'ldi.`;
+        }
+      }
+
+      // 3. Newton formulasi natijalari
+      let subStr = `P(x) = ${fmtStr(diffData[0][0].val)}`;
+      let finalPoly = [diffData[0][0].val];
+
+      for (let j = 1; j < n; j++) {
+        let coef = diffData[0][j].val;
+        if (Math.abs(coef) < 1e-10) continue;
+
+        let termStr = "";
+        for (let k = 0; k < j; k++) {
+          let xk = x[k];
+          if (xk === 0) termStr += `(x)`;
+          else if (xk > 0) termStr += `(x - ${fmtStr(xk)})`;
+          else termStr += `(x + ${fmtStr(Math.abs(xk))})`;
+        }
+        subStr += ` ${coef >= 0 ? '+' : '-'} ${fmtStr(Math.abs(coef))}${termStr}`;
+
+        let termPoly = [coef];
+        for (let k = 0; k < j; k++) {
+          termPoly = multiplyBinomial(termPoly, x[k]);
+        }
+        finalPoly = addPoly(finalPoly, termPoly);
+      }
+
+      document.getElementById('substitution-step').innerHTML = "\\[ " + subStr + " \\]";
+      document.getElementById('final-polynomial').innerHTML = "\\[ P(x) = " + formatPolyLaTeX(finalPoly) + " \\]";
+
+      renderMathInElement(document.getElementById('solution-section'), {
+        delimiters: [
+          { left: "\\[", right: "\\]", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+
+      window.scrollTo({ top: document.getElementById('solution-section').offsetTop - 50, behavior: 'smooth' });
+    }
+
+    // Dastur ishga tushganda oyna chizilishi
+    window.addEventListener('DOMContentLoaded', (event) => {
+      renderInputs();
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "\\[", right: "\\]", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+
+      // Global click listener to close tooltips
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.diff-cell').forEach(c => c.classList.remove('active'));
+        document.getElementById('pyramid-table').classList.remove('has-active');
+      });
+
+      // ESC key listener
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.diff-cell').forEach(c => c.classList.remove('active'));
+          document.getElementById('pyramid-table').classList.remove('has-active');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -109,7 +109,7 @@
     // },
     {
       id: 'krylov-matrix-vector-method',
-      label: 'KRYLOV USULI (MATRIX-VEKTOR)',
+      label: 'KRYLOV USULI (Xos+Son/Vektor)',
       icon: '🧮',
       href: base + 'src/Sonli-Usullar/krylov-matrix-vector-method.html',
     },
@@ -118,6 +118,18 @@
       label: 'LAGRANJ INTERPOLATSIYA USULI',
       icon: '📊',
       href: base + 'src/Sonli-Usullar/lagranj-interpolatsiya-usuli.html',
+    },
+    {
+      id: 'newton-interpolatsiya',
+      label: '(demo) NYUTON INTERPOLATSIYA USULI',
+      icon: '📊',
+      href: base + 'src/Sonli-Usullar/newton-interpolatsiya-usuli.html',
+    },
+    {
+      id: 'eng-kichik-kvadratlar-usuli',
+      label: '(demo) ENG KICHIK KVADRATLAR USULI',
+      icon: '📊',
+      href: base + 'src/Sonli-Usullar/Eng-kichik-kvadratlar-usuli.html',
     },
     {
       id: 'nazariya',
