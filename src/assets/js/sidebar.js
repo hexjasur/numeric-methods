@@ -121,7 +121,7 @@
     },
     {
       id: 'newton-interpolatsiya',
-      label: '(demo) NYUTON INTERPOLATSIYA USULI',
+      label: 'NYUTON INTERPOLATSIYA USULI',
       icon: '📊',
       href: base + 'src/Sonli-Usullar/newton-interpolatsiya-usuli.html',
     },
