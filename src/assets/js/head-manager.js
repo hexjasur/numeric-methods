@@ -83,6 +83,11 @@
       defer: true,
       src: 'https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js',
     },
+    {
+      tag: 'script',
+      defer: true,
+      src: base + 'src/assets/js/math-config.js',
+    },
 
     // 5. Katex
     {

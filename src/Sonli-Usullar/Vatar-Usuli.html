@@ -4,11 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vatar (Sekant) Usuli — Secant Method | Sonli Usullar — sonli-usullar.uz</title>
+  <title>Метод хорд, Vatar (Sekant) Usuli — Secant Method | Sonli Usullar — sonli-usullar.uz</title>
 
   <!-- Primary SEO -->
-  <meta name="description" content="Vatar (sekant) usuli — hosila hisoblashsiz ildiz topish. Ikki nuqtadan o'tuvchi to'g'ri chiziq (vatar) yordamida: xₙ₊₁ = xₙ - f(xₙ)·(xₙ-xₙ₋₁)/(f(xₙ)-f(xₙ₋₁)). KaTeX bosqichlar. QarDU.">
-  <meta name="keywords" content="vatar usuli, sekant usuli, secant method, chord method, hosilasiz usul, sonli usullar, algebraik tenglama, QarDU, Haydarov Jasurbek">
+  <meta name="description"
+    content="Метод хорд, Vatar (sekant) usuli — hosila hisoblashsiz ildiz topish. Ikki nuqtadan o'tuvchi to'g'ri chiziq (vatar) yordamida: xₙ₊₁ = xₙ - f(xₙ)·(xₙ-xₙ₋₁)/(f(xₙ)-f(xₙ₋₁)). KaTeX bosqichlar. QarDU.">
+  <meta name="keywords"
+    content="метод хорд, vatar usuli, sekant usuli, secant method, chord method, hosilasiz usul, sonli usullar, algebraik tenglama, QarDU, Haydarov Jasurbek">
   <!-- Head Manager (DRY) -->
   <script>
     window.HEAD_BASE = '../../';
@@ -25,14 +27,16 @@
   <meta property="og:site_name" content="Sonli Usullar">
   <meta property="og:locale" content="uz_UZ">
   <meta property="og:title" content="Vatar (Sekant) Usuli — Secant Method | sonli-usullar.uz">
-  <meta property="og:description" content="Hosila hisoblashsiz ildiz topish — farq kvotenti yordamida sekant usuli. Interaktiv hisob va KaTeX bosqichlar.">
-  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+  <meta property="og:description"
+    content="Hosila hisoblashsiz ildiz topish — farq kvotenti yordamida sekant usuli. Interaktiv hisob va KaTeX bosqichlar.">
+  <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-vatar-usuli.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Vatar (Sekant) Usuli | sonli-usullar.uz">
-  <meta name="twitter:description" content="Hosila kerak emas — vatar usuli bilan ildiz topish. KaTeX bosqichlar, interaktiv misолlar. QarDU.">
-  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/logo-dark.jpg">
+  <meta name="twitter:description"
+    content="Hosila kerak emas — vatar usuli bilan ildiz topish. KaTeX bosqichlar, interaktiv misолlar. QarDU.">
+  <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-vatar-usuli.png">
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -102,7 +106,9 @@
       <!-- Info card -->
       <div class="p-3 mt-3 mb-6 space-y-2 text-xs border bg-sky-50 cyber-card">
         <div><b>📌 Vatar usuli haqida:</b></div>
-        <div>Formula: <code>x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>) · (x<sub>n</sub> - x<sub>n-1</sub>) / (f(x<sub>n</sub>) - f(x<sub>n-1</sub>))</code></div>
+        <div>Formula:
+          <code>x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>) · (x<sub>n</sub> - x<sub>n-1</sub>) / (f(x<sub>n</sub>) - f(x<sub>n-1</sub>))</code>
+        </div>
         <div>Boshlanish: ikkita boshlang'ich nuqta kerak — <code>x₀ = a</code>, <code>x₁ = b</code></div>
         <div>Hosila hisoblanmaydi — farq kvotenti ishlatiladi</div>
         <div>To'xtash sharti: <code>|x<sub>n+1</sub> - x<sub>n</sub>| &lt; ε</code></div>
@@ -183,10 +189,11 @@
 
     // ── Examples ──────────────────────────────────────────────────────────
     const examples = [
-      { func: "x^3 + x - 1",        latex: "x^3 + x - 1",                       a: 0,   b: 1,   eps: 0.01  },
-      { func: "x - 1 - sin(x)/10",  latex: "x - 1 - \\frac{\\sin(x)}{10}",      a: 1,   b: 1.1,   eps: 0.01  },
-      { func: "x^2 - 2",            latex: "x^2 - 2",                           a: 1,   b: 2,   eps: 0.01  },
-      { func: "exp(x) - 3*x",       latex: "e^{x} - 3x",                        a: 0,   b: 2,   eps: 0.01  },
+      { func: "x^3 + x - 1", latex: "x^3 + x - 1", a: 0, b: 1, eps: 0.01 },
+      { func: "x - 1 - sin(x)/10", latex: "x - 1 - \\frac{\\sin(x)}{10}", a: 1, b: 1.1, eps: 0.01 },
+      { func: "x^2 - 2", latex: "x^2 - 2", a: 1, b: 2, eps: 0.01 },
+      { func: "exp(x) - 3*x", latex: "e^{x} - 3x", a: 0, b: 2, eps: 0.01 },
+      { func: "x-arcsin((x+1)/4)", latex: "x - \\arcsin(\\frac{x+1}{4})", a: 0, b: 1, eps: 0.01 },
     ];
 
     function applyExample(ex) {
@@ -227,12 +234,12 @@
     // ── Main calculation ──────────────────────────────────────────────────
     function calculate() {
       const funcStr = document.getElementById('funcInput').value.trim();
-      const a       = parseFloat(document.getElementById('aInput').value);
-      const b       = parseFloat(document.getElementById('bInput').value);
-      const eps     = parseFloat(document.getElementById('epsInput').value);
+      const a = parseFloat(document.getElementById('aInput').value);
+      const b = parseFloat(document.getElementById('bInput').value);
+      const eps = parseFloat(document.getElementById('epsInput').value);
 
       const resultsContainer = document.getElementById('results-container');
-      const finalVerify      = document.getElementById('final-verify');
+      const finalVerify = document.getElementById('final-verify');
 
       resultsContainer.innerHTML = '';
       finalVerify.classList.add('hidden');
@@ -263,15 +270,15 @@
 
           // x_new = x_curr - f(x_curr)*(x_curr - x_prev) / (f(x_curr) - f(x_prev))
           const x_new = x_curr - fc * (x_curr - x_prev) / denom;
-          const diff  = Math.abs(x_new - x_curr);
+          const diff = Math.abs(x_new - x_curr);
 
           // Step card
           const card = document.createElement('div');
           card.className = 'cyber-card p-4 bg-white';
 
-          const stepId   = `step-${k}`;
-          const quotId   = `quot-${k}`;
-          const errId    = `err-${k}`;
+          const stepId = `step-${k}`;
+          const quotId = `quot-${k}`;
+          const errId = `err-${k}`;
 
           card.innerHTML = `
             <div class="step-title">${k}-yaqinlashish (Vatar):</div>
@@ -284,16 +291,16 @@
 
           // Farq kvotenti
           katex.render(
-            `\\frac{f(x_{${k}}) - f(x_{${k-1}})}{x_{${k}} - x_{${k-1}}} = \\frac{${fc.toFixed(5)}}{${(x_curr - x_prev).toFixed(5)}} \\approx ${(denom / (x_curr - x_prev)).toFixed(5)}`,
+            `\\frac{f(x_{${k}}) - f(x_{${k - 1}})}{x_{${k}} - x_{${k - 1}}} = \\frac{${fc.toFixed(5)}}{${(x_curr - x_prev).toFixed(5)}} \\approx ${(denom / (x_curr - x_prev)).toFixed(5)}`,
             document.getElementById(quotId), { throwOnError: false }
           );
           katex.render(
-            `x_{${k+1}} = ${x_curr.toFixed(5)} - \\frac{${fc.toFixed(5)} \\cdot (${(x_curr - x_prev).toFixed(5)})}{${denom.toFixed(5)}} \\approx ${x_new.toFixed(5)}`,
+            `x_{${k + 1}} = ${x_curr.toFixed(5)} - \\frac{${fc.toFixed(5)} \\cdot (${(x_curr - x_prev).toFixed(5)})}{${denom.toFixed(5)}} \\approx ${x_new.toFixed(5)}`,
             document.getElementById(stepId), { throwOnError: false }
           );
           const sym = diff < eps ? '<' : '>';
           katex.render(
-            `|x_{${k+1}} - x_{${k}}| = ${diff.toFixed(6)} ${sym} \\varepsilon`,
+            `|x_{${k + 1}} - x_{${k}}| = ${diff.toFixed(6)} ${sym} \\varepsilon`,
             document.getElementById(errId), { throwOnError: false }
           );
 
@@ -331,4 +338,5 @@
     }
   </script>
 </body>
+
 </html>

@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.6.2",
+    "date": "2026-04-22",
+    "color": "",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html\">Vatar Usuli</a> xatolik to'girlandi endi arcsinlarni ham hisoblab beradi. <br> OG va SEO yaxshilandi."
+  },
+  {
     "version": "v2.6.1",
     "date": "2026-04-21",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html\">Nyuton Interpolyatsiya Usuli</a> usuli qo'shildi xatolik tog'irlandi. <br> Yangi Sahifalar uchun SEO va OG Qo'shildi. <br> SITEMAP yangilandi. <br>Asosiy sahifa css stylelar minify qilindi."
   },
   {
