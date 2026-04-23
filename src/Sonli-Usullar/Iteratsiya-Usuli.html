@@ -33,7 +33,7 @@
   <meta property="og:description"
     content="M konstantani topish, yaqinlashish sharti tekshiruvi, va har bir iteratsiya qadami KaTeX formulada. F(x)=0 uchun interaktiv hisob-kitob.">
   <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-oddiy-iter-usuli.png>
-  <meta property="og:image:width" content="1200">
+  <meta property=" og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/png">
 
@@ -245,33 +245,77 @@
 
         while (!isConditionMet && k < k_max) {
           k++;
+
           let fk = f.evaluate({ x: x_old });
+
+          // ❗ f(x) tekshiruv
+          if (!isFinite(fk)) {
+            resultsContainer.innerHTML += `
+      <div class="cyber-card p-4 bg-red-50 text-red-700 font-bold">
+        f(x) aniqlanmagan (x = ${x_old})
+      </div>`;
+            break;
+          }
+
+          // ❗ M tekshiruv
+          if (Math.abs(M) < 1e-12) {
+            resultsContainer.innerHTML += `
+      <div class="cyber-card p-4 bg-red-50 text-red-700 font-bold">
+        M ≈ 0 bo‘ldi → bo‘linish mumkin emas
+      </div>`;
+            break;
+          }
+
           let x_new = x_old - (fk / M);
+
+          // ❗ Infinity / NaN check
+          if (!isFinite(x_new)) {
+            resultsContainer.innerHTML += `
+      <div class="cyber-card p-4 bg-red-50 text-red-700 font-bold">
+        Iteratsiya cheksizlikka ketdi (Infinity / NaN)
+      </div>`;
+            break;
+          }
+
           let f_new_val = Math.abs(f.evaluate({ x: x_new }));
 
           const card = document.createElement('div');
           card.className = "cyber-card p-5 bg-white mb-4";
           const stepId = `step-${k}`;
           const errorId = `err-${k}`;
+
           card.innerHTML = `
-                <div class="step-title">${k}-yaqinlashish:</div>
-                <div id="${stepId}" class="mb-2"></div>
-                <div class="error-text">Xatolik |F(x)|:</div>
-                <div id="${errorId}" class="text-sm font-bold"></div>
-            `;
+    <div class="step-title">${k}-yaqinlashish:</div>
+    <div id="${stepId}" class="mb-2"></div>
+    <div class="error-text">Xatolik |F(x)|:</div>
+    <div id="${errorId}" class="text-sm font-bold"></div>
+  `;
           resultsContainer.appendChild(card);
 
-          katex.render(`x_{${k}} = ${x_old.toFixed(4)} - \\frac{f(${x_old.toFixed(4)})}{${M}} \\approx ${x_new.toFixed(4)}`, document.getElementById(stepId));
+          katex.render(
+            `x_{${k}} = ${x_old.toFixed(4)} - \\frac{f(${x_old.toFixed(4)})}{${M}} \\approx ${x_new.toFixed(4)}`,
+            document.getElementById(stepId)
+          );
 
           const errorSymbol = f_new_val <= eps ? "<" : ">";
-          katex.render(`|F(x_{${k}})| = |${f_new_val.toFixed(4)}| ${errorSymbol} \\epsilon`, document.getElementById(errorId));
+          katex.render(
+            `|F(x_{${k}})| = ${f_new_val.toFixed(6)} ${errorSymbol} \\epsilon`,
+            document.getElementById(errorId)
+          );
 
+          // ✅ convergence
           if (f_new_val <= eps) {
             document.getElementById('final-verify').classList.remove('hidden');
             const finalF = f.evaluate({ x: x_new });
-            katex.render(`f(\\xi) = f(${x_new.toFixed(4)}) \\approx ${finalF.toFixed(4)} \\le ${eps}`, document.getElementById('verify-math'));
+
+            katex.render(
+              `f(\\xi) = f(${x_new.toFixed(4)}) \\approx ${finalF.toFixed(6)} \\le ${eps}`,
+              document.getElementById('verify-math')
+            );
+
             isConditionMet = true;
           }
+
           x_old = x_new;
         }
       } catch (err) {

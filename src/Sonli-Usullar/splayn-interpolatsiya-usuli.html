@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сплайн интерполяция, Splayn Interpolatsiya | sonli-usullar.uz</title>
+
+  <!-- Primary SEO -->
+  <meta name="description"
+    content="Сплайн интерполяция, Splayn interpolatsiya. Kubik splaynlar, interpolatsiya ko'phadi hisoblash. QarDU Amaliy Matematika. Professional MATH Calculator.">
+  <meta name="keywords"
+    content="splayn interpolatsiya, spline interpolation, kubik splaynlar, cubic splines, interpolyatsiya, sonli usullar, QarDU, Haydarov Jasurbek">
+  <meta name="author" content="Haydarov Jasurbek">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#00f2ff">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/splayn-interpolatsiya-usuli.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/splayn-interpolatsiya-usuli.html">
+  <meta property="og:site_name" content="Sonli Usullar">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:title" content="Сплайн интерполяция, Splayn Interpolatsiya | sonli-usullar.uz">
+  <meta property="og:description"
+    content="Сплайн интерполяция, Splayn interpolatsiya. Kubik splaynlar, interpolatsiya ko'phadi hisoblash.">
+  <meta property="og:image"
+    content="https://www.sonli-usullar.uz/src/assets/images/og/og-splayn-interpolatsiya-usuli.png">
+
+  <!-- twitter og -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Сплайн интерполяция, Splayn Interpolatsiya | sonli-usullar.uz">
+  <meta name="twitter:description"
+    content="Сплайн интерполяция, Splayn interpolatsiya. Kubik splaynlar, interpolatsiya ko'phadi hisoblash.">
+  <meta name="twitter:image"
+    content="https://www.sonli-usullar.uz/src/assets/images/og/og-splayn-interpolatsiya-usuli.png">
+
+  <!-- Head Manager (DRY) -->
+  <script>
+    window.HEAD_BASE = '../../';
+  </script>
+  <script src="../assets/js/head-manager.js"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    :root {
+      --brand-primary: #2563eb;
+      --brand-secondary: #00f2ff;
+      --bg-main: #f8fafc;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      background-image: linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      color: #1e293b;
+    }
+
+    .math-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .step-title {
+      color: var(--brand-primary);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      border-bottom: 1px dashed #cbd5e1;
+      margin-bottom: 1rem;
+    }
+
+    .math-block {
+      background: #f8fafc;
+      padding: 1.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin: 12px 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .point-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .point-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #374151;
+      padding: 6px 8px;
+      text-align: center;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid #e5e7eb;
+    }
+
+    .point-table td {
+      padding: 4px;
+      border: 1px solid #e5e7eb;
+      text-align: center;
+    }
+
+    .notebook-input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #cbd5e1;
+      background: transparent;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+      padding: 4px 2px;
+    }
+
+    .notebook-input:focus {
+      border-bottom-color: var(--brand-primary);
+    }
+
+    .btn-cyber {
+      background: #000;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.2s;
+      border: 2px solid #000;
+    }
+
+    .btn-cyber:hover {
+      background: var(--brand-primary);
+      color: #fff;
+    }
+
+    .point-btn {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      background: white;
+      border: 2px solid #000;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .point-btn:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+
+  <script>
+    window.SIDEBAR_BASE = '../../';
+    window.SIDEBAR_ACTIVE = 'splayn-interpolatsiya-usuli';
+  </script>
+  <script src="../assets/js/sidebar.js"></script>
+</head>
+
+<body class="p-4 md:p-8">
+
+  <!-- Header -->
+  <div class="main-content" id="main-content">
+    <div class="max-w-4xl mx-auto">
+      <header class="mt-8 mb-12 p-6 text-center cyber-card">
+        <h1 class="text-3xl font-black text-blue-600 tracking-tighter" style="font-family: 'Orbitron', sans-serif;">
+          SPLINE <span class="text-black">INTERPOLYATSIYASI</span>
+        </h1>
+        <p class="text-[10px] font-bold text-gray-500 uppercase mt-2 tracking-[0.2em]">
+          QarDU | Amaliy Matematika <span class="ml-2 text-blue-400">v2.2</span>
+        </p>
+      </header>
+
+      <main class="max-w-7xl mx-auto pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+          <!-- Left Sidebar -->
+          <aside class="lg:col-span-4 space-y-6">
+            <!-- Misollar -->
+            <div class="p-4 bg-gray-50 cyber-card">
+              <p class="text-[10px] font-black uppercase mb-3 tracking-widest text-slate-400">🚀 Misollar</p>
+              <div id="examples-container" class="grid grid-cols-1 gap-2"></div>
+            </div>
+
+            <section class="cyber-card p-6">
+              <h2 class="text-sm font-black text-slate-800 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                <span>📥</span> Kirish ma'lumotlari
+              </h2>
+
+              <div class="space-y-6">
+                <div class="overflow-x-auto custom-scrollbar">
+                  <table class="point-table">
+                    <thead>
+                      <tr>
+                        <th>№</th>
+                        <th>x<sub>i</sub></th>
+                        <th>y<sub>i</sub></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="points-tbody">
+                      <tr>
+                        <td class="text-[10px] text-gray-400 font-mono">0</td>
+                        <td><input type="text" class="x-input notebook-input" value="0"></td>
+                        <td><input type="text" class="y-input notebook-input" value="0"></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="text-[10px] text-gray-400 font-mono">1</td>
+                        <td><input type="text" class="x-input notebook-input" value="1"></td>
+                        <td><input type="text" class="y-input notebook-input" value="1"></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="text-[10px] text-gray-400 font-mono">2</td>
+                        <td><input type="text" class="x-input notebook-input" value="2"></td>
+                        <td><input type="text" class="y-input notebook-input" value="0.5"></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider flex-1">Boshqaruv:</span>
+                  <button onclick="addPoint()" class="point-btn" title="Nuqta qo'shish">+</button>
+                  <button onclick="removePoint()" class="point-btn" title="Nuqta o'chirish">−</button>
+                </div>
+
+                <div class="pt-4 border-t-2 border-dashed border-slate-100">
+                  <label class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">Tekshirish
+                    nuqtasi (x)</label>
+                  <input type="text" id="eval-x" value="1.5"
+                    class="w-full bg-blue-50 border-b-2 border-blue-200 px-4 py-3 text-sm font-bold text-blue-700 outline-none focus:border-blue-500 transition-colors">
+                </div>
+
+                <button onclick="runSpline()"
+                  class="w-full py-4 btn-cyber shadow-[4px_4px_0px_rgba(37,99,235,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+                  HISOBLASH
+                </button>
+              </div>
+            </section>
+
+            <div class="p-4 bg-blue-50 border-2 border-blue-100 cyber-card shadow-none">
+              <p class="text-[10px] font-bold text-blue-600 uppercase mb-2">💡 Eslatma</p>
+              <p class="text-xs text-blue-800 leading-relaxed">
+                Nuqtalar soni kamida 3 ta bo'lishi kerak. x qiymatlari o'sish tartibida kiritilishi tavsiya etiladi.
+              </p>
+            </div>
+          </aside>
+
+          <!-- Right Content -->
+          <div class="lg:col-span-8 space-y-8">
+            <section class="cyber-card p-6">
+              <h2 class="text-sm font-black text-slate-800 mb-6 uppercase tracking-widest flex items-center gap-2">
+                <span>📊</span> Grafik Ko'rinish
+              </h2>
+              <div class="relative h-[350px] w-full">
+                <canvas id="splineChart"></canvas>
+              </div>
+            </section>
+            <div id="results-area" class="hidden space-y-8"></div>
+            <div id="empty-state"
+              class="flex flex-col items-center justify-center py-20 text-slate-400 cyber-card bg-slate-50 border-dashed">
+              <p class="font-bold italic uppercase tracking-widest text-xs">Ma'lumotlarni kiriting va hisoblashni bosing
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    let chartInstance = null;
+
+    const addPoint = () => {
+      const tbody = document.getElementById('points-tbody');
+      const rowCount = tbody.rows.length;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+                <td class="text-[10px] text-gray-400 font-mono">${rowCount}</td>
+                <td><input type="text" class="x-input notebook-input"></td>
+                <td><input type="text" class="y-input notebook-input"></td>
+                <td><button onclick="this.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-600 font-bold">×</button></td>
+            `;
+      tbody.appendChild(tr);
+    };
+
+    const removePoint = () => {
+      const tbody = document.getElementById('points-tbody');
+      if (tbody.rows.length > 3) {
+        tbody.deleteRow(-1);
+      }
+    };
+
+    const examples = [
+      {
+        label: "Default misol (3 nuqta)",
+        pts: [[0, 0], [1, 1], [2, 0.5]],
+        tx: 1.5
+      },
+      {
+        label: "Sinusoidal (4 nuqta)",
+        pts: [[0, 0], [1, 2], [2, 1], [3, 0]],
+        tx: 1.5
+      },
+      {
+        label: "FarDU - O'quv Qo'llanma (6 nuqta)",
+        pts: [
+          [0.2, 1.2214],
+          [0.24, 1.2710],
+          [0.27, 1.3100],
+          [0.30, 1.3499],
+          [0.32, 1.3771],
+          [0.38, 1.4623]
+        ],
+        tx: 0.22
+      }
+    ];
+
+    const renderExamples = () => {
+      const container = document.getElementById('examples-container');
+      container.innerHTML = '';
+      examples.forEach((ex, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "text-left p-3 border border-slate-200 hover:bg-blue-50 transition-all text-[10px] font-bold text-slate-600 uppercase tracking-tight cyber-card shadow-none hover:shadow-sm";
+        btn.onclick = () => applyExample(idx);
+
+        const pointsPreview = ex.pts.map((p, i) => `(x<sub>${i}</sub>=${p[0]}, y<sub>${i}</sub>=${p[1]})`).join(' ');
+
+        btn.innerHTML = `
+                    <div class="text-blue-600 mb-1">${ex.label}</div>
+                    <div class="text-[9px] text-gray-400 font-normal normal-case leading-relaxed">
+                        ${pointsPreview}
+                    </div>
+                    <div class="text-[8px] text-blue-400 mt-2 font-black">TEST: x = ${ex.tx}</div>
+                `;
+        container.appendChild(btn);
+      });
+    };
+
+    const applyExample = (index) => {
+      const ex = examples[index];
+      const tbody = document.getElementById('points-tbody');
+      tbody.innerHTML = '';
+      ex.pts.forEach((p, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+                    <td class="text-[10px] text-gray-400 font-mono">${i}</td>
+                    <td><input type="text" class="x-input notebook-input" value="${p[0]}"></td>
+                    <td><input type="text" class="y-input notebook-input" value="${p[1]}"></td>
+                    <td><button onclick="this.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-600 font-bold">×</button></td>
+                `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('eval-x').value = ex.tx;
+      runSpline();
+    };
+
+    const computeH = (x) => {
+      const h = [];
+      for (let i = 0; i < x.length - 1; i++) h.push(x[i + 1] - x[i]);
+      return h;
+    };
+
+    const solveTridiagonal = (x, y, h) => {
+      const n = x.length - 1;
+      const EPS = 1e-12;
+
+      // ✅ 1. x tartibini tekshirish
+      for (let i = 1; i < x.length; i++) {
+        if (x[i] <= x[i - 1]) {
+          throw new Error("x values must be strictly increasing");
+        }
+      }
+
+      // ✅ 2. h nol emasligini tekshirish
+      for (let i = 0; i < h.length; i++) {
+        if (Math.abs(h[i]) < EPS) {
+          throw new Error("Duplicate x values detected (h = 0)");
+        }
+      }
+
+      const A = new Array(n + 1).fill(0);
+      const B = new Array(n + 1).fill(0);
+      const C = new Array(n + 1).fill(0);
+      const D = new Array(n + 1).fill(0);
+
+      // Koefitsiyentlar
+      for (let i = 1; i < n; i++) {
+        A[i] = h[i - 1] / 6;
+        B[i] = (h[i - 1] + h[i]) / 3;
+        C[i] = h[i] / 6;
+        D[i] = (y[i + 1] - y[i]) / h[i] - (y[i] - y[i - 1]) / h[i - 1];
+      }
+
+      const alpha = new Array(n + 1).fill(0);
+      const beta = new Array(n + 1).fill(0);
+
+      // 🔥 Progonka (forward)
+      for (let i = 1; i < n; i++) {
+        const den = B[i] + A[i] * alpha[i];
+
+        // ✅ 3. Division check
+        if (Math.abs(den) < EPS) {
+          throw new Error(`Numerical instability at i=${i} (den ≈ 0)`);
+        }
+
+        alpha[i + 1] = -C[i] / den;
+        beta[i + 1] = (D[i] - A[i] * beta[i]) / den;
+      }
+
+      const M = new Array(n + 1).fill(0);
+
+      // Natural spline
+      M[0] = 0;
+      M[n] = 0;
+
+      // 🔥 Backward
+      for (let i = n - 1; i >= 1; i--) {
+        M[i] = alpha[i + 1] * M[i + 1] + beta[i + 1];
+
+        // NaN check (extra safety)
+        if (!isFinite(M[i])) {
+          throw new Error(`Computation failed at i=${i} (NaN detected)`);
+        }
+      }
+
+      return M;
+    };
+
+    const expandPolynomial = (xi, xi1, yi, yi1, hi, Mi, Mi1) => {
+      const A = xi, B = xi1;
+      const Ci = (yi / hi) - (Mi * hi / 6);
+      const Di = (yi1 / hi) - (Mi1 * hi / 6);
+      const a = (Mi1 - Mi) / (6 * hi);
+      const b = (3 * Mi * B - 3 * Mi1 * A) / (6 * hi);
+      const c = (3 * Mi1 * A ** 2 - 3 * Mi * B ** 2) / (6 * hi) - Ci + Di;
+      const d = (Mi * B ** 3 - Mi1 * A ** 3) / (6 * hi) + (Ci * B) - (Di * A);
+      return { a, b, c, d };
+    };
+
+    const parseMath = (val) => {
+      try {
+        if (typeof math !== 'undefined' && math.evaluate) {
+          return math.evaluate(val);
+        }
+        if (val.includes('/')) {
+          const parts = val.split('/');
+          return parseFloat(parts[0]) / parseFloat(parts[1]);
+        }
+        return parseFloat(val);
+      } catch (e) {
+        return NaN;
+      }
+    };
+
+    const runSpline = () => {
+      const xInputs = Array.from(document.querySelectorAll('.x-input')).map(i => parseMath(i.value));
+      const yInputs = Array.from(document.querySelectorAll('.y-input')).map(i => parseMath(i.value));
+      const tx = parseMath(document.getElementById('eval-x').value);
+      const points = xInputs.map((val, idx) => ({ x: val, y: yInputs[idx] }))
+        .filter(p => !isNaN(p.x) && !isNaN(p.y))
+        .sort((a, b) => a.x - b.x);
+      if (points.length < 3) return;
+      const x = points.map(p => p.x);
+      const y = points.map(p => p.y);
+      const h = computeH(x);
+      const M = solveTridiagonal(x, y, h);
+      const splines = x.slice(0, -1).map((_, i) => ({
+        interval: [x[i], x[i + 1]],
+        coeffs: expandPolynomial(x[i], x[i + 1], y[i], y[i + 1], h[i], M[i], M[i + 1]),
+        params: { xi: x[i], xi1: x[i + 1], yi: y[i], yi1: y[i + 1], hi: h[i], Mi: M[i], Mi1: M[i + 1] }
+      }));
+      renderStepByStep(x, y, h, M, splines, tx);
+      renderGraph(x, y, splines, tx);
+    };
+
+    const renderStepByStep = (x, y, h, M, splines, tx) => {
+      document.getElementById('empty-state').classList.add('hidden');
+      const area = document.getElementById('results-area');
+      area.classList.remove('hidden');
+      area.innerHTML = '';
+
+      const addSection = (title, content) => {
+        const div = document.createElement('div');
+        div.className = 'cyber-card p-8';
+        div.innerHTML = `<h3 class="step-title">${title}</h3><div>${content}</div>`;
+        area.appendChild(div);
+      };
+
+      const fV = (v) => v.toFixed(4);
+
+      // 1. Masala
+      let pts = "\\{ " + x.map((xv, i) => `(${xv}, ${y[i]})`).join(', ') + " \\}";
+      addSection("1. 📌 Masalaning berilishi", `
+                <div class="math-block">$$ ${pts} $$</div>
+                <p>Tekshirish nuqtasi: <b>$x = ${tx}$</b></p>
+            `);
+
+      // 2. Formula
+      addSection("2. 📐 Umumiy spline formulasi", `
+                <div class="math-block">$$ S_{i}(x) = a_i + b_i(x - x_i) + c_i(x - x_i)^2 + d_i(x - x_i)^3 $$</div>
+                <div class="math-block">
+                $$ S_i(x) = \\frac{M_i(x_{i+1}-x)^3}{6h_i} + \\frac{M_{i+1}(x-x_i)^3}{6h_i} + \\left(y_i - \\frac{M_i h_i^2}{6}\\right)\\frac{x_{i+1}-x}{h_i} + \\left(y_{i+1} - \\frac{M_{i+1} h_i^2}{6}\\right)\\frac{x-x_i}{h_i} $$
+                </div>
+            `);
+
+      // 3. H
+      let hC = h.map((val, i) => `$$ h_{${i + 1}} = x_{${i + 1}} - x_{${i}} = ${x[i + 1]} - ${x[i]} = ${val.toFixed(4)} $$`).join('');
+      addSection("3. 📏 Qadam o'lchamlari ($h_i$)", `<div class="math-block">${hC}</div>`);
+
+      // 4. M
+      let mL = M.map((val, i) => `M_{${i}} = ${val.toFixed(6)}`).join(', ');
+      addSection("4. 🧮 Momentlar tizimi ($M_i$)", `
+                <div class="math-block">$$ h_{i-1}M_{i-1} + 2(h_{i-1} + h_i)M_i + h_i M_{i+1} = 6\\left[ \\frac{y_{i+1}-y_i}{h_i} - \\frac{y_i-y_{i-1}}{h_{i-1}} \\right] $$</div>
+                <p>Natural splayn: $M_0 = 0, M_n = 0$</p>
+                <div class="math-block">$$ ${mL} $$</div>
+            `);
+
+      // 5. Splines
+      let phtml = splines.map((s, i) => {
+        const p = s.params, c = s.coeffs;
+        const Ci = (p.yi / p.hi) - (p.Mi * p.hi / 6);
+        const Di = (p.yi1 / p.hi) - (p.Mi1 * p.hi / 6);
+        const sub = `S_{${i + 1}}(x) = \\frac{${fV(p.Mi)}(${p.xi1}-x)^3}{6 \\cdot ${fV(p.hi)}} + \\frac{${fV(p.Mi1)}(x-${p.xi})^3}{6 \\cdot ${fV(p.hi)}} + ${fV(Ci)}(${p.xi1}-x) + ${fV(Di)}(x-${p.xi})`;
+        const poly = `S_{${i + 1}}(x) = ${fV(c.a)}x^3 ${c.b >= 0 ? '+' : ''} ${fV(c.b)}x^2 ${c.c >= 0 ? '+' : ''} ${fV(c.c)}x ${c.d >= 0 ? '+' : ''} ${fV(c.d)}`;
+        return `<div class="mb-6 p-6 bg-slate-50 border-2 border-slate-100 relative">
+                    <p class="absolute -top-3 left-4 bg-blue-600 text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest">Interval [${p.xi}, ${p.xi1}]</p>
+                    <div class="math-block text-sm">$$ ${sub} $$</div>
+                    <div class="math-block text-lg font-bold border-blue-200 bg-blue-50/50">$$ ${poly} $$</div>
+                </div>`;
+      }).join('');
+      addSection("5. 🧩 Har bir interval uchun $S_i(x)$ ni hosil qilish", phtml);
+
+      // 6, 7, 8
+      let act = splines.find(s => tx >= s.interval[0] && tx <= s.interval[1]) || splines[0];
+      const c = act.coeffs;
+      const res = c.a * tx ** 3 + c.b * tx ** 2 + c.c * tx + c.d;
+      addSection("6. 📍 Interval", `<div class="math-block text-center font-bold text-blue-600">$$ x \\in [${act.interval[0]}, ${act.interval[1]}] $$</div>`);
+      addSection("7. 🧪 Hisob", `<div class="math-block">$$ S(${tx}) = ${fV(c.a)}(${tx})^3 + ${fV(c.b)}(${tx})^2 + ${fV(c.c)}(${tx}) + ${fV(c.d)} $$</div>`);
+      addSection("8. ✅ Javob", `
+            <div class="bg-black p-8 text-white text-center cyber-card" style="box-shadow: 8px 8px 0px #2563eb;">
+                <p class="text-[10px] font-black uppercase mb-4 tracking-[0.3em] text-blue-400">Yakuniy Natija</p>
+                <div class="text-4xl font-black mb-2">$$ f(${tx}) \\approx ${res.toFixed(6)} $$</div>
+                <div class="h-1 w-20 bg-blue-600 mx-auto"></div>
+            </div>`);
+
+      if (window.renderMathInElement) {
+        renderMathInElement(area, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    };
+
+    const renderGraph = (x, y, splines, tx) => {
+      const ctx = document.getElementById('splineChart').getContext('2d');
+      const cX = [], cY = [];
+      const min = Math.min(...x), max = Math.max(...x);
+      for (let i = 0; i <= 100; i++) {
+        const cur = min + (max - min) * i / 100;
+        cX.push(cur);
+        const s = splines.find(sp => cur >= sp.interval[0] && cur <= sp.interval[1]) || splines[0];
+        cY.push(s.coeffs.a * cur ** 3 + s.coeffs.b * cur ** 2 + s.coeffs.c * cur + s.coeffs.d);
+      }
+      if (chartInstance) chartInstance.destroy();
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: cX,
+          datasets: [
+            { label: 'Spline', data: cY, borderColor: '#2563eb', borderWidth: 3, pointRadius: 0, tension: 0.4, fill: true, backgroundColor: 'rgba(37, 99, 235, 0.05)' },
+            { label: 'Tugunlar', data: x.map((xv, i) => ({ x: xv, y: y[i] })), backgroundColor: '#000', pointRadius: 5, pointHoverRadius: 8, showLine: false, type: 'scatter' }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'linear' } } }
+      });
+    };
+    window.onload = () => {
+      renderExamples();
+    };
+  </script>
+</body>
+
+</html>

@@ -126,6 +126,12 @@
       href: base + 'src/Sonli-Usullar/newton-interpolatsiya-usuli.html',
     },
     {
+      id: 'splayn-interpolatsiya-usuli',
+      label: 'SPLAYN INTERPOLATSIYA USULI',
+      icon: '📊',
+      href: base + 'src/Sonli-Usullar/splayn-interpolatsiya-usuli.html',
+    },
+    {
       id: 'eng-kichik-kvadratlar-usuli',
       label: '(demo) ENG KICHIK KVADRATLAR USULI',
       icon: '📊',

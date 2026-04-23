@@ -1,9 +1,15 @@
 [
   {
+    "version": "v2.7",
+    "date": "2026-04-23",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/splayn-interpolatsiya-usuli.html\">Splayn Interpolatsiya Usuli</a> qo'shildi + CSS Minify qilindi. <br> OG va SEO yaxshilandi. <br>404 Sahifadagi ichki sahifadagi path muammosi tog'irlandi. <br> <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html\">Oddiy Iteratsiya</a> usulidagi inifinity xatoligi oldini olindi. <br> SITEMAP yangilandi."
+  },
+  {
     "version": "v2.6.2",
     "date": "2026-04-22",
     "color": "",
-    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html\">Vatar Usuli</a> xatolik to'girlandi endi arcsinlarni ham hisoblab beradi. <br> OG va SEO yaxshilandi."
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html\">Vatar Usuli</a> kamchilik to'girlandi endi arcsinlarni ham hisoblab beradi. <br> OG va SEO yaxshilandi."
   },
   {
     "version": "v2.6.1",
