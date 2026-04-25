@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.7.1",
+    "date": "2026-04-25",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html\">Newton Interpolyatsiya Usuli</a>da berilgan x qiymat qo'yib hisoblash qo'shildi. <br> <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/splayn-interpolatsiya-usuli.html\">Splayn Interpolatsiya Usuli</a>da x kiritmaslikda yuzaga keladigan xatolik oldini olindi."
+  },
+  {
     "version": "v2.7",
     "date": "2026-04-23",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/splayn-interpolatsiya-usuli.html\">Splayn Interpolatsiya Usuli</a> qo'shildi + CSS Minify qilindi. <br> OG va SEO yaxshilandi. <br>404 Sahifadagi ichki sahifadagi path muammosi tog'irlandi. <br> <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html\">Oddiy Iteratsiya</a> usulidagi inifinity xatoligi oldini olindi. <br> SITEMAP yangilandi."
   },
   {

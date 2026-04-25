@@ -118,6 +118,12 @@
               <button id="btn-remove" onclick="removePoint()" class="point-btn" title="Nuqta o'chirish">−</button>
             </div>
 
+            <!-- Oraliq qadami (h) -->
+            <div class="p-3 bg-gray-50 border border-black mb-4" style="box-shadow: 2px 2px 0px #000;">
+              <div class="text-[10px] font-black uppercase text-gray-500 mb-1">Oraliq qadami (h)</div>
+              <div id="h-display" class="font-mono text-sm font-bold text-blue-600">h = 1 (default)</div>
+            </div>
+
             <!-- Hisoblash tugmasi -->
             <button onclick="calculate()"
               class="w-full cursor-pointer py-3 font-black text-white uppercase transition-colors bg-black hover:bg-blue-600">
@@ -128,6 +134,25 @@
 
         <!-- Natijalar paneli -->
         <div class="space-y-4 md:col-span-2">
+          <!-- EVALUATION CARD -->
+          <div id="eval-card" class="p-5 bg-white cyber-card hidden" style="border: 2px solid #000; box-shadow: 4px 4px 0px #000;">
+            <h3 class="mb-4 font-black flex items-center gap-2 text-blue-600">
+              <span>🧮</span> POLINOMNI HISOBLASH
+            </h3>
+            <div class="flex flex-col md:flex-row gap-4 items-end">
+              <div class="flex-1">
+                <label for="evalX" class="block text-xs font-bold text-gray-500 mb-1">x qiymat kiriting:</label>
+                <input type="text" id="evalX" class="input-field" placeholder="Masalan: 0.7">
+              </div>
+              <button onclick="evaluateAtX()" class="bg-blue-600 text-white font-black px-6 py-3 uppercase hover:bg-blue-700 transition-colors">
+                Hisoblash P(x)
+              </button>
+            </div>
+            <div id="eval-result-container" class="mt-4 p-4 bg-blue-50 border-2 border-blue-200 rounded hidden transition-all duration-500">
+              <div class="text-lg font-black text-blue-800" id="eval-result-text"></div>
+            </div>
+          </div>
+
           <div id="solution-container" class="space-y-4">
             <div class="p-10 italic text-center text-gray-400 bg-white cyber-card"
               style="border: 2px solid #000; box-shadow: 4px 4px 0px #000;">
@@ -176,6 +201,9 @@
       }
     ];
 
+    let lastX = [];
+    let lastCoeffs = [];
+
     let calculationDetails = {};
 
     function applyExample(ex) {
@@ -216,10 +244,45 @@
         `;
         tbody.appendChild(tr);
       });
+      updateHDisplay();
     }
 
     function updatePoint(index, axis, value) {
       points[index][axis] = value;
+      updateHDisplay();
+    }
+
+    function updateHDisplay() {
+      const hDisplay = document.getElementById('h-display');
+      let xValues = [];
+      let allValid = true;
+
+      for (let i = 0; i < points.length; i++) {
+        let val = safeEval(points[i].x);
+        if (val === null) {
+          allValid = false;
+          break;
+        }
+        xValues.push(val);
+      }
+
+      if (!allValid || xValues.length < 2) {
+        hDisplay.innerText = "h = 1 (default)";
+        return;
+      }
+
+      let hList = [];
+      for (let i = 0; i < xValues.length - 1; i++) {
+        let hVal = xValues[i + 1] - xValues[i];
+        hList.push(Number(hVal.toFixed(8)));
+      }
+
+      let allEqual = hList.every(h => Math.abs(h - hList[0]) < 1e-9);
+      if (allEqual) {
+        hDisplay.innerText = `h = ${hList[0]}`;
+      } else {
+        hDisplay.innerHTML = hList.map((h, i) => `h<sub>${i}</sub> = ${h}`).join(', ');
+      }
     }
 
     function addPoint() {
@@ -375,6 +438,63 @@
       } catch (err) {
         cardFinal.querySelector('#step-final').innerText = "Soddalashtirishda xatolik yuz berdi.";
       }
+
+      // Store for evaluation
+      lastX = [...X];
+      lastCoeffs = F[0];
+      document.getElementById('eval-card').classList.remove('hidden');
+    }
+
+    function evaluateNewton(x, xs, coeffs) {
+      let result = coeffs[0];
+      let term = 1;
+      for (let i = 1; i < coeffs.length; i++) {
+        term *= (x - xs[i - 1]);
+        result += coeffs[i] * term;
+      }
+      return result;
+    }
+
+    function evaluateAtX() {
+      const xInput = document.getElementById('evalX');
+      const resultContainer = document.getElementById('eval-result-container');
+      const resultText = document.getElementById('eval-result-text');
+      const solutionContainer = document.getElementById('solution-container');
+
+      const xVal = safeEval(xInput.value);
+      if (xVal === null || xInput.value === "") {
+        alert("❌ Xatolik: Iltimos, x uchun raqam kiriting!");
+        return;
+      }
+
+      const result = evaluateNewton(xVal, lastX, lastCoeffs);
+      const roundedResult = parseFloat(result.toFixed(6));
+
+      // Update small result in eval card
+      resultText.innerText = `Natija: P(${xVal}) = ${roundedResult}`;
+      resultContainer.classList.remove('hidden');
+      resultContainer.style.opacity = '0';
+      setTimeout(() => { resultContainer.style.opacity = '1'; }, 50);
+
+      // Add/Update Step 4 in solution container
+      let step4 = document.getElementById('step-4-card');
+      if (!step4) {
+        step4 = document.createElement('div');
+        step4.id = 'step-4-card';
+        step4.className = 'bg-white p-5 cyber-card mt-4 border-l-4 border-green-500';
+        step4.style = "border: 2px solid #000; box-shadow: 4px 4px 0px #000; border-left: 4px solid #10b981;";
+        step4.innerHTML = `
+          <div class="step-title text-green-700 font-bold">4. Polinom qiymati</div>
+          <div id="step-4-content" class="overflow-x-auto custom-scrollbar py-4 text-center text-xl font-bold text-green-800"></div>
+        `;
+        solutionContainer.appendChild(step4);
+      }
+      
+      const tex = `P(${xVal}) = ${roundedResult}`;
+      renderKatex(tex, step4.querySelector('#step-4-content'));
+      
+      // Scroll to Step 4
+      step4.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function showStep(key) {

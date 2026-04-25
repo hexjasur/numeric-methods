@@ -262,7 +262,7 @@
                 <div class="pt-4 border-t-2 border-dashed border-slate-100">
                   <label class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">Tekshirish
                     nuqtasi (x)</label>
-                  <input type="text" id="eval-x" value="1.5"
+                  <input type="text" id="eval-x" value="" placeholder="Masalan: 1.5"
                     class="w-full bg-blue-50 border-b-2 border-blue-200 px-4 py-3 text-sm font-bold text-blue-700 outline-none focus:border-blue-500 transition-colors">
                 </div>
 
@@ -528,7 +528,7 @@
       let pts = "\\{ " + x.map((xv, i) => `(${xv}, ${y[i]})`).join(', ') + " \\}";
       addSection("1. 📌 Masalaning berilishi", `
                 <div class="math-block">$$ ${pts} $$</div>
-                <p>Tekshirish nuqtasi: <b>$x = ${tx}$</b></p>
+                <p>Tekshirish nuqtasi: <b>${isNaN(tx) ? '<span class="text-gray-400">Kiritilmagan</span>' : `$x = ${tx}$`}</b></p>
             `);
 
       // 2. Formula
@@ -566,18 +566,20 @@
       }).join('');
       addSection("5. 🧩 Har bir interval uchun $S_i(x)$ ni hosil qilish", phtml);
 
-      // 6, 7, 8
-      let act = splines.find(s => tx >= s.interval[0] && tx <= s.interval[1]) || splines[0];
-      const c = act.coeffs;
-      const res = c.a * tx ** 3 + c.b * tx ** 2 + c.c * tx + c.d;
-      addSection("6. 📍 Interval", `<div class="math-block text-center font-bold text-blue-600">$$ x \\in [${act.interval[0]}, ${act.interval[1]}] $$</div>`);
-      addSection("7. 🧪 Hisob", `<div class="math-block">$$ S(${tx}) = ${fV(c.a)}(${tx})^3 + ${fV(c.b)}(${tx})^2 + ${fV(c.c)}(${tx}) + ${fV(c.d)} $$</div>`);
-      addSection("8. ✅ Javob", `
-            <div class="bg-black p-8 text-white text-center cyber-card" style="box-shadow: 8px 8px 0px #2563eb;">
-                <p class="text-[10px] font-black uppercase mb-4 tracking-[0.3em] text-blue-400">Yakuniy Natija</p>
-                <div class="text-4xl font-black mb-2">$$ f(${tx}) \\approx ${res.toFixed(6)} $$</div>
-                <div class="h-1 w-20 bg-blue-600 mx-auto"></div>
-            </div>`);
+      // 6, 7, 8 (Only if tx is provided)
+      if (!isNaN(tx)) {
+        let act = splines.find(s => tx >= s.interval[0] && tx <= s.interval[1]) || splines[0];
+        const c = act.coeffs;
+        const res = c.a * tx ** 3 + c.b * tx ** 2 + c.c * tx + c.d;
+        addSection("6. 📍 Interval", `<div class="math-block text-center font-bold text-blue-600">$$ x \\in [${act.interval[0]}, ${act.interval[1]}] $$</div>`);
+        addSection("7. 🧪 Hisob", `<div class="math-block">$$ S(${tx}) = ${fV(c.a)}(${tx})^3 + ${fV(c.b)}(${tx})^2 + ${fV(c.c)}(${tx}) + ${fV(c.d)} $$</div>`);
+        addSection("8. ✅ Javob", `
+              <div class="bg-black p-8 text-white text-center cyber-card" style="box-shadow: 8px 8px 0px #2563eb;">
+                  <p class="text-[10px] font-black uppercase mb-4 tracking-[0.3em] text-blue-400">Yakuniy Natija</p>
+                  <div class="text-4xl font-black mb-2">$$ f(${tx}) \\approx ${res.toFixed(6)} $$</div>
+                  <div class="h-1 w-20 bg-blue-600 mx-auto"></div>
+              </div>`);
+      }
 
       if (window.renderMathInElement) {
         renderMathInElement(area, {
@@ -601,14 +603,30 @@
         cY.push(s.coeffs.a * cur ** 3 + s.coeffs.b * cur ** 2 + s.coeffs.c * cur + s.coeffs.d);
       }
       if (chartInstance) chartInstance.destroy();
+      const datasets = [
+        { label: 'Spline', data: cY, borderColor: '#2563eb', borderWidth: 3, pointRadius: 0, tension: 0.4, fill: true, backgroundColor: 'rgba(37, 99, 235, 0.05)' },
+        { label: 'Tugunlar', data: x.map((xv, i) => ({ x: xv, y: y[i] })), backgroundColor: '#000', pointRadius: 5, pointHoverRadius: 8, showLine: false, type: 'scatter' }
+      ];
+
+      if (!isNaN(tx)) {
+        const s = splines.find(sp => tx >= sp.interval[0] && tx <= sp.interval[1]) || (tx < x[0] ? splines[0] : splines[splines.length - 1]);
+        const ty = s.coeffs.a * tx ** 3 + s.coeffs.b * tx ** 2 + s.coeffs.c * tx + s.coeffs.d;
+        datasets.push({
+          label: `f(${tx})`,
+          data: [{ x: tx, y: ty }],
+          backgroundColor: '#ef4444',
+          pointRadius: 7,
+          pointHoverRadius: 10,
+          showLine: false,
+          type: 'scatter'
+        });
+      }
+
       chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
           labels: cX,
-          datasets: [
-            { label: 'Spline', data: cY, borderColor: '#2563eb', borderWidth: 3, pointRadius: 0, tension: 0.4, fill: true, backgroundColor: 'rgba(37, 99, 235, 0.05)' },
-            { label: 'Tugunlar', data: x.map((xv, i) => ({ x: xv, y: y[i] })), backgroundColor: '#000', pointRadius: 5, pointHoverRadius: 8, showLine: false, type: 'scatter' }
-          ]
+          datasets: datasets
         },
         options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'linear' } } }
       });
