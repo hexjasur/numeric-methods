@@ -1,8 +1,14 @@
 [
   {
-    "version": "v2.7.2",
+    "version": "v2.7.3",
     "date": "2026-04-27",
     "color": "#ff00ea",
+    "description": "Versiya sinxronlash scripti yaratildi va ishga tushirildi endi yangi versiya qo'shilganda yoki o'zgartirilganda avtomatik yangilanadi."
+  },
+  {
+    "version": "v2.7.2",
+    "date": "2026-04-27",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html\">Newton Interpolyatsiya Usuli</a>da endi t.b.a.(tartibli bo'lingan ayirma)dan tashqari t.ch.a.(tartibli chekli ayirma)ni ham hisoblash imkoniyati qo'shildi."
   },
   {

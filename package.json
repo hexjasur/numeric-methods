@@ -1,6 +1,6 @@
 {
   "name": "sonli-usullar",
-  "version": "2.7.2",
+  "version": "2.7.3",
   "description": "Elementar Matematika va sonli usullar bo'yicha o'quv qo'llanma",
   "keywords": [
     "math",
@@ -33,7 +33,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npx serve . -p 3000",
-    "dev": "concurrently -n \"serve\",\"tailwindcss\" -c \"green\",\"blue\" \"npx serve . -p 3000\" \"npx @tailwindcss/cli -i ./src/assets/css/input.css -o ./src/assets/css/output.css --watch\""
+    "sync-version": "node sync-version.js",
+    "dev": "node sync-version.js && concurrently -n \"serve\",\"tailwindcss\" -c \"green\",\"blue\" \"npx serve . -p 3000\" \"npx @tailwindcss/cli -i ./src/assets/css/input.css -o ./src/assets/css/output.css --watch\""
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.2.2",
