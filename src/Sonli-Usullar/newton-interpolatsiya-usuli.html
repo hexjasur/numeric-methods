@@ -139,6 +139,19 @@
             <h3 class="mb-4 font-black flex items-center gap-2 text-blue-600">
               <span>🧮</span> POLINOMNI HISOBLASH
             </h3>
+
+            <!-- Tab Switcher -->
+            <div class="flex border-2 border-black mb-6 bg-gray-100" style="box-shadow: 2px 2px 0px #000;">
+              <button id="tab-TBA" onclick="setMethod('TBA')" 
+                class="flex-1 py-2 text-[10px] font-black uppercase transition-all duration-200 bg-white border-r-2 border-black">
+                Bo'lingan Ayirmalar (TBA)
+              </button>
+              <button id="tab-TCHA" onclick="setMethod('TCHA')" 
+                class="flex-1 py-2 text-[10px] font-black uppercase transition-all duration-200 hover:bg-gray-200">
+                Chekli Ayirmalar (TCHA)
+              </button>
+            </div>
+
             <div class="flex flex-col md:flex-row gap-4 items-end">
               <div class="flex-1">
                 <label for="evalX" class="block text-xs font-bold text-gray-500 mb-1">x qiymat kiriting:</label>
@@ -198,13 +211,48 @@
           { x: "2", y: "4" },
           { x: "3", y: "9" }
         ]
+      },
+      {
+        label: "Chiroyli Misol",
+        pts: [
+          { x: "1", y: "1" },
+          { x: "2", y: "5" },
+          { x: "3", y: "14" },
+          { x: "4", y: "30" },
+          { x: "5", y: "55" },
+          { x: "6", y: "91" }
+        ]
       }
     ];
 
     let lastX = [];
     let lastCoeffs = [];
+    let currentMethod = 'TBA'; // TBA or TCHA
 
     let calculationDetails = {};
+
+    function setMethod(method) {
+      currentMethod = method;
+      
+      // Update UI Tabs
+      const tabs = ['TBA', 'TCHA'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === method) {
+          btn.classList.add('bg-white');
+          btn.classList.remove('hover:bg-gray-200');
+        } else {
+          btn.classList.remove('bg-white');
+          btn.classList.add('hover:bg-gray-200');
+        }
+      });
+
+      // Update instructions / info if needed
+      // Clear results
+      document.getElementById('solution-container').innerHTML = 
+        '<div class="p-10 italic text-center text-gray-400 bg-white cyber-card" style="border: 2px solid #000; box-shadow: 4px 4px 0px #000;">Usul o\'zgartirildi. Hisoblash tugmasini bosing...</div>';
+      document.getElementById('eval-card').classList.add('hidden');
+    }
 
     function applyExample(ex) {
       points = ex.pts.map(p => ({ ...p }));
@@ -347,12 +395,31 @@
       if (n < 2) { alert("❌ Kamida 2 ta nuqta kerak"); return; }
       if (new Set(X).size !== n) { alert("❌ X qiymatlar takrorlanmasligi kerak"); return; }
 
-      // 1. Bo'lingan ayirmalar jadvali
+      // TCHA check: Equidistant nodes
+      let h = 0;
+      if (currentMethod === 'TCHA') {
+        let hList = [];
+        for (let i = 0; i < X.length - 1; i++) {
+          hList.push(X[i + 1] - X[i]);
+        }
+        let allEqual = hList.every(val => Math.abs(val - hList[0]) < 1e-9);
+        if (!allEqual) {
+          container.innerHTML = `
+            <div class="p-5 bg-red-50 border-2 border-red-600 text-red-600 font-bold cyber-card" style="box-shadow: 4px 4px 0px #000;">
+              ❌ Xatolik: Chekli ayirmalar usuli (TCHA) uchun tugunlar orasidagi masofa (h) bir xil bo'lishi shart!
+            </div>
+          `;
+          return;
+        }
+        h = hList[0];
+      }
+
+      // 1. Ayirmalar jadvali
       const cardTable = document.createElement('div');
       cardTable.className = 'bg-white p-5 cyber-card';
       cardTable.style = "border: 2px solid #000; box-shadow: 4px 4px 0px #000;";
       cardTable.innerHTML = `
-        <div class="step-title text-blue-600 font-bold">1. Bo'lingan ayirmalar jadvali</div>
+        <div class="step-title text-blue-600 font-bold">1. ${currentMethod === 'TBA' ? "Bo'lingan" : "Chekli"} ayirmalar jadvali</div>
         <div class="overflow-x-auto custom-scrollbar my-2">
           <table id="diffTable" class="point-table w-full text-sm"></table>
         </div>
@@ -366,14 +433,24 @@
 
       for (let j = 1; j < n; j++) {
         for (let i = 0; i < n - j; i++) {
-          F[i][j] = (F[i + 1][j - 1] - F[i][j - 1]) / (X[i + j] - X[i]);
-          calculationDetails[`${i}_${j}`] = { v1: F[i + 1][j - 1], v2: F[i][j - 1], x1: X[i + j], x2: X[i], res: F[i][j], i, j };
+          if (currentMethod === 'TBA') {
+            F[i][j] = (F[i + 1][j - 1] - F[i][j - 1]) / (X[i + j] - X[i]);
+            calculationDetails[`${i}_${j}`] = { 
+              type: 'TBA', v1: F[i + 1][j - 1], v2: F[i][j - 1], x1: X[i + j], x2: X[i], res: F[i][j], i, j 
+            };
+          } else {
+            F[i][j] = F[i + 1][j - 1] - F[i][j - 1];
+            calculationDetails[`${i}_${j}`] = { 
+              type: 'TCHA', v1: F[i + 1][j - 1], v2: F[i][j - 1], res: F[i][j], i, j 
+            };
+          }
         }
       }
 
       const table = cardTable.querySelector('#diffTable');
-      let html = `<thead><tr><th>i</th><th>x<sub>i</sub></th><th>f(x<sub>i</sub>)</th>`;
-      for (let j = 1; j < n; j++) html += `<th>${j}-t.b.a</th>`;
+      let colName = currentMethod === 'TBA' ? 't.b.a' : 't.ch.a';
+      let html = `<thead><tr><th>i</th><th>x<sub>i</sub></th><th>y<sub>i</sub></th>`;
+      for (let j = 1; j < n; j++) html += `<th>${j}-${colName}</th>`;
       html += `</tr></thead><tbody>`;
       for (let i = 0; i < n; i++) {
         html += `<tr><td class="text-xs text-gray-400 font-mono">${i}</td><td class="font-bold">${X[i]}</td><td>${Y[i]}</td>`;
@@ -407,17 +484,29 @@
         let xi = X[i - 1];
         let coef = F[0][i];
 
-        // Har doim ko'paytmani yangilaymiz (keyingi hadlar uchun kerak)
         currentProductTex += `(x ${xi < 0 ? '+' : '-'} ${toTexFrac(Math.abs(xi))})`;
         currentProductMathJS += ` * (x - (${xi}))`;
 
         if (coef === 0) continue;
 
         let sign = coef > 0 ? "+" : "-";
-        let valFrac = toTexFrac(Math.abs(coef));
+        let valFrac = "";
+        
+        if (currentMethod === 'TBA') {
+          valFrac = toTexFrac(Math.abs(coef));
+          mExpr += ` + (${coef}) ${currentProductMathJS}`;
+        } else {
+          // TCHA formula: Δ^n y0 / (n! * h^n)
+          let fact = math.factorial(i);
+          let h_pow = Math.pow(h, i);
+          let denom = fact * h_pow;
+          let totalCoef = coef / denom;
+          
+          valFrac = `\\frac{${toTexFrac(Math.abs(coef))}}{${i}! \\cdot ${toTexFrac(h)}^{${i}}}`;
+          mExpr += ` + (${totalCoef}) ${currentProductMathJS}`;
+        }
 
         rawTex += ` ${sign} ${valFrac} \\cdot ${currentProductTex}`;
-        mExpr += ` + (${coef}) ${currentProductMathJS}`;
       }
       renderKatex(rawTex, cardFormula.querySelector('#step-construction'));
 
@@ -441,18 +530,11 @@
 
       // Store for evaluation
       lastX = [...X];
-      lastCoeffs = F[0];
+      // Note: for evaluation, we need to handle the coeffs differently for TCHA if we use evaluateNewton
+      // But we can just use the simplified mathjs expression for evaluation!
+      lastMExpr = mExpr; 
+      
       document.getElementById('eval-card').classList.remove('hidden');
-    }
-
-    function evaluateNewton(x, xs, coeffs) {
-      let result = coeffs[0];
-      let term = 1;
-      for (let i = 1; i < coeffs.length; i++) {
-        term *= (x - xs[i - 1]);
-        result += coeffs[i] * term;
-      }
-      return result;
     }
 
     function evaluateAtX() {
@@ -467,16 +549,15 @@
         return;
       }
 
-      const result = evaluateNewton(xVal, lastX, lastCoeffs);
+      // Use mathjs to evaluate the stored expression
+      const result = math.evaluate(lastMExpr, { x: xVal });
       const roundedResult = parseFloat(result.toFixed(6));
 
-      // Update small result in eval card
       resultText.innerText = `Natija: P(${xVal}) = ${roundedResult}`;
       resultContainer.classList.remove('hidden');
       resultContainer.style.opacity = '0';
       setTimeout(() => { resultContainer.style.opacity = '1'; }, 50);
 
-      // Add/Update Step 4 in solution container
       let step4 = document.getElementById('step-4-card');
       if (!step4) {
         step4 = document.createElement('div');
@@ -492,14 +573,22 @@
       
       const tex = `P(${xVal}) = ${roundedResult}`;
       renderKatex(tex, step4.querySelector('#step-4-content'));
-      
-      // Scroll to Step 4
       step4.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function showStep(key) {
       const d = calculationDetails[key];
-      const tex = `f(x_{i}, \\dots, x_{i+${d.j}}) = \\frac{f(x_{i+1}, \\dots, x_{i+${d.j}}) - f(x_{i}, \\dots, x_{i+${d.j - 1}})}{x_{i+${d.j}} - x_{i}} = \\frac{${d.v1.toFixed(4)} - (${d.v2.toFixed(4)})}{${d.x1} - (${d.x2})} = ${d.res.toFixed(4)}`;
+      let tex = "";
+      if (d.type === 'TBA') {
+        tex = `f(x_{i}, \\dots, x_{i+${d.j}}) = \\frac{f(x_{i+1}, \\dots, x_{i+${d.j}}) - f(x_{i}, \\dots, x_{i+${d.j - 1}})}{x_{i+${d.j}} - x_{i}} = \\frac{${d.v1.toFixed(4)} - (${d.v2.toFixed(4)})}{${d.x1} - (${d.x2})} = ${d.res.toFixed(4)}`;
+      } else {
+        // TCHA step
+        let deltaPrefix = d.j > 1 ? `\\Delta^{${d.j}}` : `\\Delta`;
+        let prevDeltaPrefix = d.j > 2 ? `\\Delta^{${d.j - 1}}` : (d.j === 2 ? `\\Delta` : ``);
+        let yLabel = prevDeltaPrefix === `` ? `y` : prevDeltaPrefix + ` y`;
+        
+        tex = `${deltaPrefix} y_{${d.i}} = ${yLabel}_{${d.i+1}} - ${yLabel}_{${d.i}} = ${d.v1.toFixed(4)} - (${d.v2.toFixed(4)}) = ${d.res.toFixed(4)}`;
+      }
       renderKatex(tex, document.getElementById('modalContent'), true);
       document.getElementById('calcModal').classList.remove('hidden');
     }

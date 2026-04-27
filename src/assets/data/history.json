@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.7.2",
+    "date": "2026-04-27",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html\">Newton Interpolyatsiya Usuli</a>da endi t.b.a.(tartibli bo'lingan ayirma)dan tashqari t.ch.a.(tartibli chekli ayirma)ni ham hisoblash imkoniyati qo'shildi."
+  },
+  {
     "version": "v2.7.1",
     "date": "2026-04-25",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html\">Newton Interpolyatsiya Usuli</a>da berilgan x qiymat qo'yib hisoblash qo'shildi. <br> <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/splayn-interpolatsiya-usuli.html\">Splayn Interpolatsiya Usuli</a>da x kiritmaslikda yuzaga keladigan xatolik oldini olindi."
   },
   {
