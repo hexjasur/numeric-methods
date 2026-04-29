@@ -125,9 +125,15 @@
             </div>
 
             <!-- Hisoblash tugmasi -->
-            <button onclick="calculate()"
+            <button onclick="setMethod('TBA'); calculate();"
               class="w-full cursor-pointer py-3 font-black text-white uppercase transition-colors bg-black hover:bg-blue-600">
-              Hisoblash
+              Hisoblash T.B.A
+            </button>
+
+            <!-- Hisoblash tugmasi -->
+            <button onclick="setMethod('TCHA'); calculate();"
+              class="w-full cursor-pointer py-3 mt-3 font-black text-white uppercase transition-colors bg-black hover:bg-blue-600">
+              Hisoblash T.CH.A
             </button>
           </div>
         </div>
@@ -406,7 +412,7 @@
         if (!allEqual) {
           container.innerHTML = `
             <div class="p-5 bg-red-50 border-2 border-red-600 text-red-600 font-bold cyber-card" style="box-shadow: 4px 4px 0px #000;">
-              ❌ Xatolik: Chekli ayirmalar usuli (TCHA) uchun tugunlar orasidagi masofa (h) bir xil bo'lishi shart!
+              ❌ Xatolik: Tugunlar orasidagi masofa (h) teng emas!
             </div>
           `;
           return;
@@ -465,38 +471,148 @@
       }
       table.innerHTML = html + `</tbody>`;
 
-      // 2. Ko'phadni shakllantirish
+      let stepNum = 2;
+
+      const xInput = document.getElementById('evalX');
+      let evalXVal = null;
+      if (xInput && xInput.value !== "") {
+        let parsed = safeEval(xInput.value);
+        if (parsed !== null) evalXVal = parsed;
+      }
+      if (evalXVal === null) evalXVal = X[0];
+
+      let tchaMethod = 'forward';
+      if (currentMethod === 'TCHA') {
+        let mid = (X[0] + X[n - 1]) / 2;
+        tchaMethod = (evalXVal <= mid) ? 'forward' : 'backward';
+
+        const badgeMsg = tchaMethod === 'forward' 
+          ? "Jadval boshiga yaqin bo'lgani uchun: Nyutonning 1-formulasi (oldinga) qo'llanildi"
+          : "Jadval oxiriga yaqin bo'lgani uchun: Nyutonning 2-formulasi (orqaga) qo'llanildi";
+        
+        const badge = document.createElement('div');
+        badge.className = "text-center text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 py-2 px-4 rounded mt-2 mb-2 inline-block";
+        badge.innerText = `💡 Avto-tanlov: ${badgeMsg}`;
+        
+        cardTable.appendChild(badge);
+      }
+
+      if (currentMethod === 'TCHA') {
+        const cardSample = document.createElement('div');
+        cardSample.className = 'bg-white p-5 cyber-card mt-4';
+        cardSample.style = "border: 2px solid #000; box-shadow: 4px 4px 0px #000;";
+        
+        let tVal = tchaMethod === 'forward' ? (evalXVal - X[0]) / h : (evalXVal - X[n - 1]) / h;
+        let paramName = tchaMethod === 'forward' ? 't' : 'q';
+        let xBase = tchaMethod === 'forward' ? 'x_0' : 'x_n';
+        
+        let abstractForm = tchaMethod === 'forward' ? `y_0` : `y_n`;
+        for(let i=1; i<n; i++) {
+          if (i === 1) abstractForm += ` + ${paramName}\\Delta y_{${tchaMethod === 'forward' ? '0' : 'n-1'}}`;
+          else {
+            let num = `${paramName}`;
+            for(let j=1; j<i; j++) num += tchaMethod === 'forward' ? `(${paramName}-${j})` : `(${paramName}+${j})`;
+            abstractForm += ` + \\frac{${num}}{${i}!}\\Delta^{${i}} y_{${tchaMethod === 'forward' ? '0' : 'n-'+i}}`;
+          }
+        }
+
+        let substForm = tchaMethod === 'forward' ? `${toTexFrac(Y[0])}` : `${toTexFrac(Y[n-1])}`;
+        let resVal = tchaMethod === 'forward' ? Y[0] : Y[n-1];
+        let tProd = 1;
+        for(let i=1; i<n; i++) {
+          let coef = tchaMethod === 'forward' ? F[0][i] : F[n-1-i][i];
+          tProd = tProd * (tchaMethod === 'forward' ? (tVal - i + 1) : (tVal + i - 1));
+          let termVal = (tProd / math.factorial(i)) * coef;
+          resVal += termVal;
+          
+          if (i === 1) {
+            substForm += ` + (${parseFloat(tVal.toFixed(4))})(${toTexFrac(coef)})`;
+          } else {
+            let numSubst = `(${parseFloat(tVal.toFixed(4))})`;
+            for(let j=1; j<i; j++) numSubst += tchaMethod === 'forward' ? `(${parseFloat((tVal - j).toFixed(4))})` : `(${parseFloat((tVal + j).toFixed(4))})`;
+            substForm += ` + \\frac{${numSubst}}{${i}!}(${toTexFrac(coef)})`;
+          }
+        }
+        
+        cardSample.innerHTML = `
+          <div class="step-title text-blue-600 font-bold">${stepNum++}. Nuqtadagi qiymatni hisoblash (Namuna)</div>
+          <div class="text-gray-600 text-sm mb-4 text-center">x = ${evalXVal} uchun qadam-ba-qadam hisoblash. Agar <span class="text-blue-600 font-bold font-mono">${paramName} = (x - ${xBase}) / h</span> formulasidan foydalansak:</div>
+          <div id="step-t-calc" class="overflow-x-auto custom-scrollbar py-2 text-center text-lg"></div>
+          <div id="step-t-formula" class="overflow-x-auto custom-scrollbar py-2 text-center text-lg mt-2"></div>
+          <div id="step-t-subst" class="overflow-x-auto custom-scrollbar py-2 text-center text-lg mt-2"></div>
+        `;
+        container.appendChild(cardSample);
+        
+        renderKatex(`\\color{#007BFF} ${paramName} = \\frac{x - ${xBase}}{h} = \\frac{${evalXVal} - (${tchaMethod === 'forward' ? X[0] : X[n-1]})}{${h}} = ${parseFloat(tVal.toFixed(4))}`, cardSample.querySelector('#step-t-calc'));
+        renderKatex(`\\color{#007BFF} P_{${n-1}}(${evalXVal}) = ${abstractForm}`, cardSample.querySelector('#step-t-formula'));
+        renderKatex(`\\color{#007BFF} = ${substForm} = ${parseFloat(resVal.toFixed(6))}`, cardSample.querySelector('#step-t-subst'));
+      }
+
+      // Ko'phadni shakllantirish
       const cardFormula = document.createElement('div');
       cardFormula.className = 'bg-white p-5 cyber-card mt-4';
       cardFormula.style = "border: 2px solid #000; box-shadow: 4px 4px 0px #000;";
       cardFormula.innerHTML = `
-        <div class="step-title text-blue-600 font-bold">2. Nyuton ko'phadi (qurish)</div>
+        <div class="step-title text-blue-600 font-bold">${stepNum++}. Nyuton ko'phadi (qurish)</div>
         <div id="step-construction" class="overflow-x-auto custom-scrollbar py-2 text-center text-lg"></div>
       `;
       container.appendChild(cardFormula);
 
-      let rawTex = `P_{${n - 1}}(x) = ${toTexFrac(Y[0])}`;
-      let mExpr = `(${Y[0]})`;
-      let currentProductTex = "";
-      let currentProductMathJS = "";
+      let rawTex = "";
+      let mExpr = "";
 
-      for (let i = 1; i < n; i++) {
-        let xi = X[i - 1];
-        let coef = F[0][i];
+      if (currentMethod === 'TBA' || tchaMethod === 'forward') {
+        rawTex = `P_{${n - 1}}(x) = ${toTexFrac(Y[0])}`;
+        mExpr = `(${Y[0]})`;
+        let currentProductTex = "";
+        let currentProductMathJS = "";
 
-        currentProductTex += `(x ${xi < 0 ? '+' : '-'} ${toTexFrac(Math.abs(xi))})`;
-        currentProductMathJS += ` * (x - (${xi}))`;
+        for (let i = 1; i < n; i++) {
+          let xi = X[i - 1];
+          let coef = F[0][i];
 
-        if (coef === 0) continue;
+          currentProductTex += `(x ${xi < 0 ? '+' : '-'} ${toTexFrac(Math.abs(xi))})`;
+          currentProductMathJS += ` * (x - (${xi}))`;
 
-        let sign = coef > 0 ? "+" : "-";
-        let valFrac = "";
-        
-        if (currentMethod === 'TBA') {
-          valFrac = toTexFrac(Math.abs(coef));
-          mExpr += ` + (${coef}) ${currentProductMathJS}`;
-        } else {
-          // TCHA formula: Δ^n y0 / (n! * h^n)
+          if (coef === 0) continue;
+
+          let sign = coef > 0 ? "+" : "-";
+          let valFrac = "";
+          
+          if (currentMethod === 'TBA') {
+            valFrac = toTexFrac(Math.abs(coef));
+            mExpr += ` + (${coef}) ${currentProductMathJS}`;
+          } else {
+            let fact = math.factorial(i);
+            let h_pow = Math.pow(h, i);
+            let denom = fact * h_pow;
+            let totalCoef = coef / denom;
+            
+            valFrac = `\\frac{${toTexFrac(Math.abs(coef))}}{${i}! \\cdot ${toTexFrac(h)}^{${i}}}`;
+            mExpr += ` + (${totalCoef}) ${currentProductMathJS}`;
+          }
+
+          rawTex += ` ${sign} ${valFrac} \\cdot ${currentProductTex}`;
+        }
+      } else {
+        // TCHA Backward
+        rawTex = `P_{${n - 1}}(x) = ${toTexFrac(Y[n-1])}`;
+        mExpr = `(${Y[n-1]})`;
+        let currentProductTex = "";
+        let currentProductMathJS = "";
+
+        for (let i = 1; i < n; i++) {
+          let xi = X[n - i];
+          let coef = F[n - 1 - i][i];
+
+          currentProductTex += `(x ${xi < 0 ? '+' : '-'} ${toTexFrac(Math.abs(xi))})`;
+          currentProductMathJS += ` * (x - (${xi}))`;
+
+          if (coef === 0) continue;
+
+          let sign = coef > 0 ? "+" : "-";
+          let valFrac = "";
+          
           let fact = math.factorial(i);
           let h_pow = Math.pow(h, i);
           let denom = fact * h_pow;
@@ -504,18 +620,19 @@
           
           valFrac = `\\frac{${toTexFrac(Math.abs(coef))}}{${i}! \\cdot ${toTexFrac(h)}^{${i}}}`;
           mExpr += ` + (${totalCoef}) ${currentProductMathJS}`;
-        }
 
-        rawTex += ` ${sign} ${valFrac} \\cdot ${currentProductTex}`;
+          rawTex += ` ${sign} ${valFrac} \\cdot ${currentProductTex}`;
+        }
       }
+      
       renderKatex(rawTex, cardFormula.querySelector('#step-construction'));
 
-      // 3. Yakuniy natija
+      // Yakuniy natija
       const cardFinal = document.createElement('div');
       cardFinal.className = 'bg-white p-5 cyber-card mt-4 border-l-4 border-blue-500';
       cardFinal.style = "border: 2px solid #000; box-shadow: 4px 4px 0px #000; border-left: 4px solid #3b82f6;";
       cardFinal.innerHTML = `
-        <div class="step-title text-blue-700 font-bold">3. Soddalashtirilgan ko'phad</div>
+        <div class="step-title text-blue-700 font-bold">${stepNum++}. Soddalashtirilgan ko'phad</div>
         <div id="step-final" class="overflow-x-auto custom-scrollbar py-4 text-center text-xl font-bold text-blue-800"></div>
       `;
       container.appendChild(cardFinal);
@@ -528,13 +645,39 @@
         cardFinal.querySelector('#step-final').innerText = "Soddalashtirishda xatolik yuz berdi.";
       }
 
+      if (currentMethod === 'TCHA') {
+        const cardError = document.createElement('div');
+        cardError.className = 'bg-red-50 p-5 cyber-card mt-4 border-l-4 border-red-500';
+        cardError.style = "border: 2px solid #000; box-shadow: 4px 4px 0px #000; border-left: 4px solid #ef4444;";
+        cardError.innerHTML = `
+          <div class="step-title text-red-700 font-bold">${stepNum++}. Qoldiq had (Xatolik)</div>
+          <div id="step-error-term" class="overflow-x-auto custom-scrollbar py-4 text-center text-lg font-bold text-red-800"></div>
+        `;
+        container.appendChild(cardError);
+
+        let errorTex = "";
+        let deg = n - 1;
+        let pName = tchaMethod === 'forward' ? 't' : 'q';
+        let num = `${pName}`;
+        if (tchaMethod === 'forward') {
+          for(let j=1; j<=deg; j++) num += `(${pName}-${j})`;
+        } else {
+          for(let j=1; j<=deg; j++) num += `(${pName}+${j})`;
+        }
+        errorTex = `R_{${deg}}(x) = h^{${n}}\\frac{${num}}{${n}!}f^{(${n})}(\\xi)`;
+        
+        renderKatex(`\\color{#B91C1C} ${errorTex}`, cardError.querySelector('#step-error-term'));
+      }
+
       // Store for evaluation
       lastX = [...X];
-      // Note: for evaluation, we need to handle the coeffs differently for TCHA if we use evaluateNewton
-      // But we can just use the simplified mathjs expression for evaluation!
       lastMExpr = mExpr; 
       
       document.getElementById('eval-card').classList.remove('hidden');
+    }
+
+    function calculateNewton(xTarget) {
+      return math.evaluate(lastMExpr, { x: xTarget });
     }
 
     function evaluateAtX() {
@@ -549,8 +692,8 @@
         return;
       }
 
-      // Use mathjs to evaluate the stored expression
-      const result = math.evaluate(lastMExpr, { x: xVal });
+      // Use calculateNewton
+      const result = calculateNewton(xVal);
       const roundedResult = parseFloat(result.toFixed(6));
 
       resultText.innerText = `Natija: P(${xVal}) = ${roundedResult}`;
@@ -564,8 +707,9 @@
         step4.id = 'step-4-card';
         step4.className = 'bg-white p-5 cyber-card mt-4 border-l-4 border-green-500';
         step4.style = "border: 2px solid #000; box-shadow: 4px 4px 0px #000; border-left: 4px solid #10b981;";
+        let totalSteps = document.querySelectorAll('#solution-container .step-title').length + 1;
         step4.innerHTML = `
-          <div class="step-title text-green-700 font-bold">4. Polinom qiymati</div>
+          <div class="step-title text-green-700 font-bold">${totalSteps}. Polinom qiymati</div>
           <div id="step-4-content" class="overflow-x-auto custom-scrollbar py-4 text-center text-xl font-bold text-green-800"></div>
         `;
         solutionContainer.appendChild(step4);
