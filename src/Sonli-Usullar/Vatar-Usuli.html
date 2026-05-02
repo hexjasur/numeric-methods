@@ -157,8 +157,15 @@
     // ── KaTeX preview ─────────────────────────────────────────────────────
     function renderPreview() {
       try {
-        const node = math.parse(document.getElementById('funcInput').value);
-        katex.render("f(x) = " + node.toTex(), document.getElementById('math-preview'), { throwOnError: false });
+        let funcStr = document.getElementById('funcInput').value;
+        funcStr = funcStr.replace(/arcsin/g, 'asin').replace(/arccos/g, 'acos').replace(/arctan/g, 'atan').replace(/arcctg/g, 'acot').replace(/arccot/g, 'acot');
+        const node = math.parse(funcStr);
+        let tex = node.toTex();
+        tex = tex.replace(/\\sin\^\{-1\}/g, '\\arcsin')
+                 .replace(/\\cos\^\{-1\}/g, '\\arccos')
+                 .replace(/\\tan\^\{-1\}/g, '\\arctan')
+                 .replace(/\\cot\^\{-1\}/g, '\\text{arcctg}');
+        katex.render("f(x) = " + tex, document.getElementById('math-preview'), { throwOnError: false });
       } catch (e) { document.getElementById('math-preview').innerHTML = ''; }
     }
 
@@ -208,7 +215,8 @@
 
     // ── Main calculation ──────────────────────────────────────────────────
     function calculate() {
-      const funcStr = document.getElementById('funcInput').value.trim();
+      let funcStr = document.getElementById('funcInput').value.trim();
+      funcStr = funcStr.replace(/arcsin/g, 'asin').replace(/arccos/g, 'acos').replace(/arctan/g, 'atan').replace(/arcctg/g, 'acot').replace(/arccot/g, 'acot');
       const a = parseFloat(document.getElementById('aInput').value);
       const b = parseFloat(document.getElementById('bInput').value);
       const eps = parseFloat(document.getElementById('epsInput').value);

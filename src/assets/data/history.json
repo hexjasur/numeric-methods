@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.7.5",
+    "date": "2026-05-02",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html\">Iteratsiya Usuli</a> arc yani teskari funksiyalar kiritishda xatolik berishini oldini olindi."
+  },
+  {
     "version": "v2.7.4",
     "date": "2026-04-29",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/newton-interpolatsiya-usuli.html\">Newton Interpolyatsiya Usuli</a>da T.B.A va T.CH.A larni hisoblash uchun buttonlar aloxida qilindi va qoldiq hadi hisoblash ustida ish olib borilmoqda va bir qancha qoshimchalar."
   },
   {
