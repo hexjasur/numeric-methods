@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.7.6",
+    "date": "2026-05-06",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/kvadratik-splayn-interpolatsiya.html\">Kvadratik Spline Interpolatsiya</a> usuli qo'shildi, lekin hozircha u faqat demo rejimda ishlaydi(xozircha bir qancha muammolar mavjud)."
+  },
+  {
     "version": "v2.7.5",
     "date": "2026-05-02",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html\">Iteratsiya Usuli</a> arc yani teskari funksiyalar kiritishda xatolik berishini oldini olindi."
   },
   {

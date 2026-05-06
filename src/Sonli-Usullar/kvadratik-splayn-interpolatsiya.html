@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kvadratik Splayn Interpolatsiyasi | sonli-usullar.uz</title>
+
+    <!-- Head Manager (DRY) -->
+    <script>
+        window.HEAD_BASE = '../../';
+    </script>
+    <script src="../assets/js/head-manager.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root{--brand-primary:#2563eb;--brand-secondary:#00f2ff;--bg-main:#f8fafc}body{background-color:var(--bg-main);background-image:linear-gradient(rgba(59,130,246,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.05) 1px,transparent 1px);background-size:30px 30px;color:#1e293b}.math-font{font-family:'JetBrains Mono',monospace}.step-title{color:var(--brand-primary);font-family:Orbitron,sans-serif;font-weight:800;border-bottom:1px dashed #cbd5e1;margin-bottom:1rem}.math-block,.notebook-input,.point-table th{font-family:'JetBrains Mono',monospace}.math-block{background:#f8fafc;padding:1.25rem;border:1px solid #e2e8f0;border-radius:4px;overflow-x:auto;margin:12px 0}.point-table td,.point-table th{border:1px solid #e5e7eb;text-align:center}.point-table{width:100%;border-collapse:collapse}.point-table th{font-size:.75rem;font-weight:700;color:#374151;padding:6px 8px;background:rgba(59,130,246,.08)}.point-table td{padding:4px}.notebook-input{width:100%;border:none;border-bottom:2px solid #cbd5e1;background:0 0;text-align:center;font-size:.9rem;outline:0;transition:border-color .3s;padding:4px 2px}.notebook-input:focus{border-bottom-color:var(--brand-primary)}.btn-cyber,.point-btn{border:2px solid #000}.btn-cyber{background:#000;color:#fff;font-family:Orbitron,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.1em;transition:.2s}.btn-cyber:hover{background:var(--brand-primary);color:#fff}.point-btn{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;background:#fff;cursor:pointer;transition:.15s}.point-btn:hover{background:#000;color:#fff}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#f1f5f9}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}::-webkit-scrollbar-thumb:hover{background:#94a3b8}
+    </style>
+
+    <script>
+        window.SIDEBAR_BASE = '../../';
+        window.SIDEBAR_ACTIVE = 'kvadratik-splayn-interpolatsiya';
+    </script>
+    <script src="../assets/js/sidebar.js"></script>
+</head>
+
+<body class="p-4 md:p-8">
+
+    <!-- Header -->
+    <div class="main-content" id="main-content">
+        <div class="max-w-4xl mx-auto">
+            <header class="mt-8 mb-12 p-6 text-center cyber-card">
+                <h1 class="text-3xl font-black text-blue-600 tracking-tighter"
+                    style="font-family: 'Orbitron', sans-serif;">
+                    KVADRATIK SPLINE <span class="text-black">INTERPOLYATSIYASI</span>
+                </h1>
+                <p class="text-[10px] font-bold text-gray-500 uppercase mt-2 tracking-[0.2em]">
+                    QarDU | Amaliy Matematika <span class="ml-2 text-blue-400">v1.0</span>
+                </p>
+            </header>
+
+            <main class="max-w-7xl mx-auto pb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                    <!-- Left Sidebar -->
+                    <aside class="lg:col-span-4 space-y-6">
+                        <!-- Misollar -->
+                        <div class="p-4 bg-gray-50 cyber-card">
+                            <p class="text-[10px] font-black uppercase mb-3 tracking-widest text-slate-400">🚀 Misollar
+                            </p>
+                            <div id="examples-container" class="grid grid-cols-1 gap-2"></div>
+                        </div>
+
+                        <section class="cyber-card p-6">
+                            <h2
+                                class="text-sm font-black text-slate-800 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                                <span>📥</span> Kirish ma'lumotlari
+                            </h2>
+
+                            <div class="space-y-6">
+                                <div class="overflow-x-auto custom-scrollbar">
+                                    <table class="point-table">
+                                        <thead>
+                                            <tr>
+                                                <th>№</th>
+                                                <th>x<sub>i</sub></th>
+                                                <th>y<sub>i</sub></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="points-tbody">
+                                            <tr>
+                                                <td class="text-[10px] text-gray-400 font-mono">0</td>
+                                                <td><input type="text" class="x-input notebook-input" value="1"></td>
+                                                <td><input type="text" class="y-input notebook-input" value="2"></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-[10px] text-gray-400 font-mono">1</td>
+                                                <td><input type="text" class="x-input notebook-input" value="2"></td>
+                                                <td><input type="text" class="y-input notebook-input" value="3"></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-[10px] text-gray-400 font-mono">2</td>
+                                                <td><input type="text" class="x-input notebook-input" value="3"></td>
+                                                <td><input type="text" class="y-input notebook-input" value="5"></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="text-[10px] text-gray-400 font-bold uppercase tracking-wider flex-1">Boshqaruv:</span>
+                                    <button onclick="addPoint()" class="point-btn" title="Nuqta qo'shish">+</button>
+                                    <button onclick="removePoint()" class="point-btn" title="Nuqta o'chirish">−</button>
+                                </div>
+
+                                <div class="pt-4 border-t-2 border-dashed border-slate-100">
+                                    <label
+                                        class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">Boshlang'ich
+                                        hosila f'(x₀)</label>
+                                    <input type="text" id="fprime0" value="1" placeholder="Masalan: 1"
+                                        class="w-full bg-blue-50 border-b-2 border-blue-200 px-4 py-3 text-sm font-bold text-blue-700 outline-none focus:border-blue-500 transition-colors">
+                                </div>
+
+                                <div class="pt-4 border-t-2 border-dashed border-slate-100">
+                                    <label
+                                        class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">Tekshirish
+                                        nuqtasi (x)</label>
+                                    <input type="text" id="eval-x" value="" placeholder="Masalan: 1.5"
+                                        class="w-full bg-blue-50 border-b-2 border-blue-200 px-4 py-3 text-sm font-bold text-blue-700 outline-none focus:border-blue-500 transition-colors">
+                                </div>
+
+                                <button onclick="calculate()"
+                                    class="w-full py-4 btn-cyber shadow-[4px_4px_0px_rgba(37,99,235,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+                                    HISOBLASH
+                                </button>
+                            </div>
+                        </section>
+
+                        <div class="p-4 bg-blue-50 border-2 border-blue-100 cyber-card shadow-none">
+                            <p class="text-[10px] font-bold text-blue-600 uppercase mb-2">💡 Eslatma</p>
+                            <p class="text-xs text-blue-800 leading-relaxed">
+                                Nuqtalar soni kamida 2 ta bo'lishi kerak. x qiymatlari qat'iy o'sish tartibida
+                                kiritilishi shart.
+                            </p>
+                        </div>
+                    </aside>
+
+                    <!-- Right Content -->
+                    <div class="lg:col-span-8 space-y-8">
+                        <section class="cyber-card p-6">
+                            <h2
+                                class="text-sm font-black text-slate-800 mb-6 uppercase tracking-widest flex items-center gap-2">
+                                <span>📊</span> Grafik Ko'rinish
+                            </h2>
+                            <div class="relative h-[350px] w-full">
+                                <canvas id="splineChart"></canvas>
+                            </div>
+                        </section>
+
+                        <div id="results-area" class="hidden space-y-8"></div>
+
+                        <div id="empty-state"
+                            class="flex flex-col items-center justify-center py-20 text-slate-400 cyber-card bg-slate-50 border-dashed">
+                            <p class="font-bold italic uppercase tracking-widest text-xs">Ma'lumotlarni kiriting va
+                                hisoblashni bosing
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        let chartInstance = null;
+
+        const parseMath = (val) => {
+            try {
+                if (typeof math !== 'undefined' && math.evaluate) {
+                    return math.evaluate(val);
+                }
+                if (val.includes('/')) {
+                    const parts = val.split('/');
+                    return parseFloat(parts[0]) / parseFloat(parts[1]);
+                }
+                return parseFloat(val);
+            } catch (e) {
+                return NaN;
+            }
+        };
+
+        const addPoint = () => {
+            const tbody = document.getElementById('points-tbody');
+            const rowCount = tbody.rows.length;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="text-[10px] text-gray-400 font-mono">${rowCount}</td>
+                <td><input type="text" class="x-input notebook-input"></td>
+                <td><input type="text" class="y-input notebook-input"></td>
+                <td><button onclick="this.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-600 font-bold">×</button></td>
+            `;
+            tbody.appendChild(tr);
+        };
+
+        const removePoint = () => {
+            const tbody = document.getElementById('points-tbody');
+            if (tbody.rows.length > 2) {
+                tbody.deleteRow(-1);
+            }
+        };
+
+        const examples = [
+            {
+                label: "10-misol",
+                pts: [[-0.6, -1.4], [-1.4, -2.2], [-2.2, -2.8]],
+                fp: -1.2,
+                tx: -2.8
+            },
+            {
+                label: "Djabborov misoli",
+                pts: [[0.78, 1.56], [1.56, 2.34], [2.34, 3.12], [3.12, 3.81]],
+                fp: -2.5,
+                tx: 0.78
+            }
+        ];
+
+        const renderExamples = () => {
+            const container = document.getElementById('examples-container');
+            container.innerHTML = '';
+            examples.forEach((ex, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "text-left p-3 border border-slate-200 hover:bg-blue-50 transition-all text-[10px] font-bold text-slate-600 uppercase tracking-tight cyber-card shadow-none hover:shadow-sm";
+                btn.onclick = () => applyExample(idx);
+
+                const pointsPreview = ex.pts.map((p, i) => `(${p[0]}, ${p[1]})`).join(' ');
+
+                btn.innerHTML = `
+                    <div class="text-blue-600 mb-1">${ex.label}</div>
+                    <div class="text-[9px] text-gray-400 font-normal normal-case leading-relaxed">
+                        ${pointsPreview}
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                      <div class="text-[8px] text-blue-400 font-black">f'(x₀) = ${ex.fp}</div>
+                      <div class="text-[8px] text-blue-400 font-black">TEST: x = ${ex.tx}</div>
+                    </div>
+                `;
+                container.appendChild(btn);
+            });
+        };
+
+        const applyExample = (index) => {
+            const ex = examples[index];
+            const tbody = document.getElementById('points-tbody');
+            tbody.innerHTML = '';
+            ex.pts.forEach((p, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="text-[10px] text-gray-400 font-mono">${i}</td>
+                    <td><input type="text" class="x-input notebook-input" value="${p[0]}"></td>
+                    <td><input type="text" class="y-input notebook-input" value="${p[1]}"></td>
+                    <td><button onclick="this.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-600 font-bold">×</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('fprime0').value = ex.fp;
+            document.getElementById('eval-x').value = ex.tx;
+            calculate();
+        };
+
+        // Math utils
+        function formatNumber(num) {
+            if (Math.abs(num) < 1e-10) return 0;
+            return Number.isInteger(num) ? num : parseFloat(num.toFixed(4));
+        }
+
+        function signCoeff(coeff, isFirst = false) {
+            if (coeff < 0) return isFirst ? "-" + Math.abs(coeff) : "- " + Math.abs(coeff);
+            return isFirst ? coeff : "+ " + coeff;
+        }
+
+        const calculate = () => {
+            const xInputs = Array.from(document.querySelectorAll('.x-input')).map(i => parseMath(i.value));
+            const yInputs = Array.from(document.querySelectorAll('.y-input')).map(i => parseMath(i.value));
+            const fPrime0Input = parseMath(document.getElementById('fprime0').value);
+            const tx = parseMath(document.getElementById('eval-x').value);
+
+            const points = xInputs.map((val, idx) => ({ x: val, y: yInputs[idx] }))
+                .filter(p => !isNaN(p.x) && !isNaN(p.y))
+                .sort((a, b) => a.x - b.x);
+
+            if (points.length < 2) {
+                alert("Kamida 2 ta to'g'ri nuqta kerak!");
+                return;
+            }
+
+            let x = points.map(p => p.x);
+            let y = points.map(p => p.y);
+            let n = x.length;
+
+            let f_prime = isNaN(fPrime0Input) ? 0 : fPrime0Input;
+            let splines = [];
+            let h_vals = [];
+
+            for (let i = 0; i < n - 1; i++) {
+                let h = x[i + 1] - x[i];
+                if (h === 0) {
+                    alert("X nuqtalarida takrorlanish mavjud, iltimos turli qiymatlar kiriting!");
+                    return;
+                }
+                h_vals.push(h);
+
+                let a2 = ((y[i + 1] - y[i]) - f_prime * h) / (h * h);
+                let a1 = f_prime - 2 * a2 * x[i];
+                let a0 = y[i] - a1 * x[i] - a2 * x[i] * x[i];
+
+                let next_f_prime = a1 + 2 * a2 * x[i + 1];
+
+                splines.push({
+                    x0: x[i],
+                    x1: x[i + 1],
+                    a0: a0,
+                    a1: a1,
+                    a2: a2,
+                    f_prime_in: f_prime,
+                    f_prime_out: next_f_prime
+                });
+
+                f_prime = next_f_prime;
+            }
+
+            renderStepByStep(x, y, h_vals, splines, fPrime0Input, tx);
+            renderGraph(x, y, splines, tx);
+        };
+
+        const renderStepByStep = (x, y, h, splines, fp0, tx) => {
+            document.getElementById('empty-state').classList.add('hidden');
+            const area = document.getElementById('results-area');
+            area.classList.remove('hidden');
+            area.innerHTML = '';
+
+            const addSection = (title, content) => {
+                const div = document.createElement('div');
+                div.className = 'cyber-card p-8';
+                div.innerHTML = `<h3 class="step-title">${title}</h3><div>${content}</div>`;
+                area.appendChild(div);
+            };
+
+            const fV = (v) => formatNumber(v);
+
+            // 1. Masala
+            let pts = "\\{ " + x.map((xv, i) => `(${xv}, ${y[i]})`).join(', ') + " \\}";
+            addSection("1. 📌 Masalaning berilishi", `
+                <div class="math-block">$$ ${pts} $$</div>
+                <div class="math-block">$$ f'(x_0) = ${isNaN(fp0) ? 0 : fp0} $$</div>
+                <p>Tekshirish nuqtasi: <b>${isNaN(tx) ? '<span class="text-gray-400">Kiritilmagan</span>' : `$x = ${tx}$`}</b></p>
+            `);
+
+            // 2. Formula
+            addSection("2. 📐 Umumiy kvadratik spline formulasi", `
+                <div class="math-block">$$ S_i(x) = a_{i,0} + a_{i,1}x + a_{i,2}x^2 $$</div>
+                <div class="math-block">$$ S'_i(x) = a_{i,1} + 2a_{i,2}x $$</div>
+            `);
+
+            // 3. Step-by-step splines
+            let phtml = splines.map((s, i) => {
+                const h_val = h[i];
+                const a0 = s.a0, a1 = s.a1, a2 = s.a2;
+                const fpin = s.f_prime_in, fpout = s.f_prime_out;
+
+                let p_a0 = signCoeff(fV(a0), true);
+                let p_a1 = signCoeff(fV(a1)) + "x";
+                let p_a2 = signCoeff(fV(a2)) + "x^2";
+
+                let d_a1 = signCoeff(fV(a1), true);
+                let d_a2 = signCoeff(fV(a2) * 2) + "x";
+
+                return `<div class="mb-6 p-6 bg-slate-50 border-2 border-slate-100 relative mt-4">
+                    <p class="absolute -top-3 left-4 bg-blue-600 text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest">Interval [${s.x0}, ${s.x1}]</p>
+                    
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase mb-2">Shartlar (Tenglamalar sistemasi)</p>
+                            <div class="math-block text-sm">
+                                <span class="text-indigo-600 font-bold text-[10px] uppercase tracking-wider block mb-1">1. Hosila sharti (Uzluksizlik):</span>
+                                $a_1 + 2a_2(${s.x0}) = ${fV(fpin)}$ <br><br>
+                                <span class="text-indigo-600 font-bold text-[10px] uppercase tracking-wider block mb-1">2. Chap nuqta sharti:</span>
+                                $a_0 + a_1(${s.x0}) + a_2(${s.x0})^2 = ${y[i]}$ <br><br>
+                                <span class="text-indigo-600 font-bold text-[10px] uppercase tracking-wider block mb-1">3. O'ng nuqta sharti:</span>
+                                $a_0 + a_1(${s.x1}) + a_2(${s.x1})^2 = ${y[i + 1]}$
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase mb-2">Koeffitsientlarni hisoblash</p>
+                            <div class="math-block text-sm">
+                                $h = ${fV(h_val)}$ <br><br>
+                                $a_2 = \\frac{(${y[i + 1]} - (${y[i]})) - (${fV(fpin)})(${fV(h_val)})}{${fV(h_val)}^2} = ${fV(a2)}$ <br><br>
+                                $a_1 = ${fV(fpin)} - 2(${fV(a2)})(${s.x0}) = ${fV(a1)}$ <br><br>
+                                $a_0 = (${y[i]}) - (${fV(a1)})(${s.x0}) - (${fV(a2)})(${s.x0})^2 = ${fV(a0)}$
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-xs font-bold text-gray-500 uppercase mt-4">Natijaviy Splayn</p>
+                    <div class="math-block text-lg font-bold border-blue-200 bg-blue-50/50">
+                        $$ S_{${i + 1}}(x) = ${p_a0} ${p_a1} ${p_a2} $$
+                        $$ S'_{${i + 1}}(x) = ${d_a1} ${d_a2} $$
+                    </div>
+                    <p class="text-xs text-blue-600 mt-2 font-bold">Keyingi interval uchun hosila: $f'(${s.x1}) = ${fV(fpout)}$</p>
+                </div>`;
+            }).join('');
+            addSection("3. 🧩 Har bir interval uchun hisoblash qadamlari", phtml);
+
+            // 4, 5, 6 (Only if tx is provided)
+            if (!isNaN(tx)) {
+                let act = splines.find(s => tx >= s.x0 && tx <= s.x1) || splines[0];
+                if (tx < splines[0].x0) act = splines[0];
+                if (tx > splines[splines.length - 1].x1) act = splines[splines.length - 1];
+
+                const res = act.a0 + act.a1 * tx + act.a2 * tx ** 2;
+
+                addSection("4. 📍 Interval", `<div class="math-block text-center font-bold text-blue-600">$$ x \\in [${act.x0}, ${act.x1}] $$</div>`);
+
+                let p_a0 = signCoeff(fV(act.a0), true);
+                let p_a1 = signCoeff(fV(act.a1));
+                let p_a2 = signCoeff(fV(act.a2));
+
+                addSection("5. 🧪 Hisob", `<div class="math-block">$$ S(${tx}) = ${p_a0} ${p_a1}(${tx}) ${p_a2}(${tx})^2 $$</div>`);
+
+                addSection("6. ✅ Javob", `
+              <div class="bg-black p-8 text-white text-center cyber-card" style="box-shadow: 8px 8px 0px #2563eb;">
+                  <p class="text-[10px] font-black uppercase mb-4 tracking-[0.3em] text-blue-400">Yakuniy Natija</p>
+                  <div class="text-4xl font-black mb-2">$$ f(${tx}) \\approx ${formatNumber(res)} $$</div>
+                  <div class="h-1 w-20 bg-blue-600 mx-auto"></div>
+              </div>`);
+            }
+
+            if (window.renderMathInElement) {
+                renderMathInElement(area, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
+        };
+
+        const renderGraph = (x, y, splines, tx) => {
+            const ctx = document.getElementById('splineChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            let datasets = [];
+
+            // Splayn chiziqlari uchun ranglar
+            let colors = ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+
+            splines.forEach((spline, i) => {
+                let curveData = [];
+                let numPoints = 100;
+                let step = (spline.x1 - spline.x0) / numPoints;
+
+                for (let j = 0; j <= numPoints; j++) {
+                    let vx = spline.x0 + j * step;
+                    let vy = spline.a0 + spline.a1 * vx + spline.a2 * vx * vx;
+                    curveData.push({ x: vx, y: vy });
+                }
+
+                datasets.push({
+                    type: 'line',
+                    label: `S${i + 1}(x)`,
+                    data: curveData,
+                    borderColor: colors[i % colors.length],
+                    borderWidth: 3,
+                    fill: false,
+                    pointRadius: 0,
+                    tension: 0,
+                    order: 2
+                });
+            });
+
+            // Nuqtalar
+            datasets.push({
+                type: 'scatter',
+                label: 'Tugunlar',
+                data: x.map((xv, i) => ({ x: xv, y: y[i] })),
+                backgroundColor: '#000',
+                borderColor: '#000',
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                showLine: false,
+                order: 1,
+                zIndex: 10
+            });
+
+            if (!isNaN(tx)) {
+                let act = splines.find(s => tx >= s.x0 && tx <= s.x1) || splines[0];
+                if (tx < splines[0].x0) act = splines[0];
+                if (tx > splines[splines.length - 1].x1) act = splines[splines.length - 1];
+
+                const ty = act.a0 + act.a1 * tx + act.a2 * tx ** 2;
+
+                datasets.push({
+                    label: `f(${tx})`,
+                    data: [{ x: tx, y: ty }],
+                    backgroundColor: '#ef4444',
+                    pointRadius: 7,
+                    pointHoverRadius: 10,
+                    showLine: false,
+                    type: 'scatter',
+                    order: 0
+                });
+            }
+
+            chartInstance = new Chart(ctx, {
+                data: { datasets: datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'nearest', intersect: false },
+                    scales: { x: { type: 'linear', position: 'bottom' } }
+                }
+            });
+        };
+
+        window.onload = () => {
+            // Boshlang'ich default qiymatlarni hisoblash
+            calculate();
+            renderExamples();
+        };
+    </script>
+</body>
+
+</html>

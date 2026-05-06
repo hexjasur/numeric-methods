@@ -126,6 +126,12 @@
       href: base + 'src/Sonli-Usullar/newton-interpolatsiya-usuli.html',
     },
     {
+      id: 'kvadratik-splayn-interpolatsiya',
+      label: '(DEMO) KVADRATIK SPLAYN INTERPOLATSIYA',
+      icon: '📊',
+      href: base + 'src/Sonli-Usullar/kvadratik-splayn-interpolatsiya.html',
+    },
+    {
       id: 'splayn-interpolatsiya-usuli',
       label: 'SPLAYN INTERPOLATSIYA USULI',
       icon: '📊',
