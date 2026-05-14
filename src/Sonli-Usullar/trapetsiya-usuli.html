@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Метод трапеций, Trapeziya Usuli, Trapezium Method | sonli-usullar.uz</title>
+
+    <!-- Head Manager (DRY) -->
+    <script>
+        window.HEAD_BASE = '../../';
+    </script>
+    <script src="../assets/js/head-manager.js"></script>
+
+    <!-- Primary SEO -->
+    <meta name="description"
+        content="Trapeziya usuli, Trapezium method. Integral hisoblash, sonli integrallash. KaTeX ishlanish, Chart.js grafik. QarDU Amaliy Matematika.">
+    <meta name="keywords"
+        content="trapeziya usuli, trapezium method, integral hisoblash, sonli integrallash, numerical integration, sonli usullar, QarDU, Haydarov Jasurbek">
+    <meta name="author" content="Haydarov Jasurbek">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/trapetsiya-usuli.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/trapetsiya-usuli.html">
+    <meta property="og:site_name" content="Sonli Usullar">
+    <meta property="og:locale" content="uz_UZ">
+    <meta property="og:title" content="Trapeziya Usuli | sonli-usullar.uz">
+    <meta property="og:description"
+        content="Trapeziya usuli: integral hisoblash uchun sonli usul. Bo'lingan oraliqlar, trapezium yuzalari, aniqlik xatoliklari.">
+    <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/trapetsiya-usuli.png">
+
+    <!-- Twitter OG -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trapeziya Usuli, Trapezium Method | sonli-usullar.uz">
+    <meta name="twitter:description"
+        content="Trapeziya usuli: integral hisoblash uchun sonli usul. Bo'lingan oraliqlar, trapezium yuzalari, aniqlik xatoliklari.">
+    <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-trapetsiya-usuli.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Math.js for calculation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+
+    <!-- Chart.js for Graphing -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --brand-primary: #2563eb;
+            --brand-secondary: #00f2ff;
+            --bg-main: #f8fafc
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: linear-gradient(rgba(59, 130, 246, .05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, .05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #1e293b
+        }
+
+        .math-font {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .step-title {
+            color: var(--brand-primary);
+            font-family: Orbitron, sans-serif;
+            font-weight: 800;
+            border-bottom: 1px dashed #cbd5e1;
+            margin-bottom: 1rem
+        }
+
+        .math-block,
+        .notebook-input,
+        .point-table th {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .math-block {
+            background: #f8fafc;
+            padding: 1.25rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 12px 0
+        }
+
+        .btn-cyber {
+            border: 2px solid #000;
+            background: #000;
+            color: #fff;
+            font-family: Orbitron, sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            transition: .2s
+        }
+
+        .btn-cyber:hover {
+            background: var(--brand-primary);
+            color: #fff
+        }
+
+        .input-cyber {
+            width: 100%;
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-bottom: 2px solid #cbd5e1;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-cyber:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .select-cyber {
+            width: 100%;
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #1e293b;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .select-cyber:focus {
+            border-color: var(--brand-primary);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8
+        }
+
+        .result-box-cyan {
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
+            box-shadow: 0 0 12px rgba(0, 186, 255, 0.12);
+        }
+
+        .result-box-magenta {
+            background: #fff0f3;
+            border: 2px solid #fecdd3;
+            box-shadow: 0 0 12px rgba(255, 0, 60, 0.1);
+        }
+    </style>
+
+    <script>
+        window.SIDEBAR_BASE = '../../';
+        window.SIDEBAR_ACTIVE = 'trapetsiya-usuli';
+    </script>
+    <script src="../assets/js/sidebar.js"></script>
+</head>
+
+<body class="p-4 md:p-8">
+
+    <!-- Header -->
+    <div class="main-content" id="main-content">
+        <div class="max-w-4xl mx-auto">
+            <header class="mt-8 mb-12 p-6 text-center cyber-card">
+                <h1 class="text-3xl font-black text-blue-600 tracking-tighter"
+                    style="font-family: 'Orbitron', sans-serif;">
+                    TRAPETSIYA <span class="text-black">USULI</span>
+                </h1>
+                <div class="text-sm font-bold text-slate-600 space-y-1 mt-3">
+                    <p class="text-blue-600">Trapezoidal Rule</p>
+                    <p class="text-slate-500">Метод трапеций</p>
+                </div>
+                <p class="text-[10px] font-bold text-gray-500 uppercase mt-4 tracking-[0.2em]">
+                    QarDU | Amaliy Matematika <span class="ml-2 text-blue-400" id="version-tag">v1.0</span>
+                </p>
+            </header>
+
+            <main class="max-w-7xl mx-auto pb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                    <!-- Left Sidebar (Controls) -->
+                    <aside class="lg:col-span-4 space-y-6">
+
+                        <!-- Input Panel -->
+                        <section class="cyber-card p-6">
+                            <h2
+                                class="text-sm font-black text-slate-800 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                                <span>📥</span> Kirish parametrlari
+                            </h2>
+
+                            <div class="space-y-5">
+                                <!-- Function -->
+                                <div>
+                                    <label
+                                        class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">Funksiya
+                                        f(x)</label>
+                                    <input type="text" id="func" value="2*x^2 + 1 - sqrt(x)"
+                                        class="input-cyber rounded-sm">
+                                </div>
+
+                                <!-- a and b -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">a
+                                            (quyi)</label>
+                                        <input type="number" id="a" value="0" step="any" class="input-cyber rounded-sm">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">b
+                                            (yuqori)</label>
+                                        <input type="number" id="b" value="4" step="any" class="input-cyber rounded-sm">
+                                    </div>
+                                </div>
+
+                                <!-- n -->
+                                <div>
+                                    <label
+                                        class="block text-[10px] font-black text-slate-400 mb-2 uppercase tracking-[0.2em]">Bo'linishlar
+                                        soni (n)</label>
+                                    <input type="number" id="n" value="8" min="1" class="input-cyber rounded-sm">
+                                </div>
+
+                                <button onclick="calculateAndRender()"
+                                    class="w-full py-4 btn-cyber shadow-[4px_4px_0px_rgba(37,99,235,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+                                    HISOBLASH
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- Tip Box -->
+                        <div class="p-4 bg-blue-50 border-2 border-blue-100 cyber-card shadow-none">
+                            <p class="text-[10px] font-bold text-blue-600 uppercase mb-2">💡 Eslatma</p>
+                            <p class="text-xs text-blue-800 leading-relaxed">
+                                Kvadrat uchun <code>x^2</code>, ildiz uchun <code>sqrt(x)</code>,
+                                trigonometrik uchun <code>sin(x)</code> kabi math.js sintaksisini ishlating.
+                            </p>
+                        </div>
+                    </aside>
+
+                    <!-- Right Content -->
+                    <div class="lg:col-span-8 space-y-8">
+
+                        <!-- Formula display -->
+                        <section class="cyber-card p-6">
+                            <h2
+                                class="text-sm font-black text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-2">
+                                <span>∫</span> Berilgan Integral
+                            </h2>
+                            <div id="katex-formula" class="math-block text-center text-xl"></div>
+                        </section>
+
+                        <!-- Chart -->
+                        <section class="cyber-card p-6">
+                            <h2
+                                class="text-sm font-black text-slate-800 mb-6 uppercase tracking-widest flex items-center gap-2">
+                                <span>📊</span> Grafik Ko'rinish
+                            </h2>
+                            <div class="relative h-[350px] w-full">
+                                <canvas id="integralChart"></canvas>
+                            </div>
+                        </section>
+
+                        <!-- Step-by-step results -->
+                        <div id="results-area" class="hidden space-y-8"></div>
+
+                        <!-- Empty state -->
+                        <div id="empty-state"
+                            class="flex flex-col items-center justify-center py-20 text-slate-400 cyber-card bg-slate-50 border-dashed">
+                            <p class="font-bold italic uppercase tracking-widest text-xs">
+                                Parametrlarni kiriting va hisoblashni bosing
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        let myChart = null;
+
+        function calculateAndRender() {
+            try {
+                const funcStr = document.getElementById('func').value;
+                const a = parseFloat(document.getElementById('a').value);
+                const b = parseFloat(document.getElementById('b').value);
+                const n = parseInt(document.getElementById('n').value);
+
+                const compiledFunc = math.compile(funcStr);
+                const f = (x) => compiledFunc.evaluate({ x: x });
+
+                const h = (b - a) / n;
+
+                let x_vals = [];
+                let y_vals = [];
+
+                for (let i = 0; i <= n; i++) {
+                    let xi = a + i * h;
+                    let yi = f(xi);
+                    x_vals.push(xi);
+                    y_vals.push(yi);
+                }
+
+                // Show results area, hide empty state
+                document.getElementById('empty-state').classList.add('hidden');
+                const area = document.getElementById('results-area');
+                area.classList.remove('hidden');
+                area.innerHTML = '';
+
+                const addSection = (title, content) => {
+                    const div = document.createElement('div');
+                    div.className = 'cyber-card p-8';
+                    div.innerHTML = `<h3 class="step-title">${title}</h3><div>${content}</div>`;
+                    area.appendChild(div);
+                };
+
+                // Formula display
+                let texFormula = `\\int_{${a}}^{${b}} \\left(${funcStr.replace(/\*\*/g, '^')}\\right)\\, dx`;
+                katex.render(texFormula, document.getElementById('katex-formula'), { throwOnError: false, displayMode: true });
+
+                // 1-qadam: h
+                let step1TeX = `h = \\frac{b - a}{n} = \\frac{${b} - ${a}}{${n}} = ${h.toFixed(6)}`;
+                addSection('1. 📏 Qadam kattaligi (h) ni topish',
+                    `<div class="math-block">${katex.renderToString(step1TeX, { throwOnError: false, displayMode: true })}</div>`
+                );
+
+                // 2-qadam: 4-ustunli kengaytirilgan jadval
+                function buildRow(i) {
+                    const xi = x_vals[i];
+                    const yi = y_vals[i];
+                    const bg = i % 2 === 0 ? 'bg-slate-50' : 'bg-white';
+
+                    // x_i = a + i*h hisoblanishi
+                    const xiTex = `x_{${i}} = ${a} + ${i} \\cdot ${h.toFixed(4)} = ${xi.toFixed(4)}`;
+                    const xiHtml = katex.renderToString(xiTex, { throwOnError: false, displayMode: false });
+
+                    // f(xi) yoyilmasi
+                    let fHtml;
+                    try {
+                        const xiStr = xi.toFixed(4);
+                        const substituted = funcStr.replace(/\bx\b/g, `(${xiStr})`);
+                        const exprTex = math.parse(substituted).toTex();
+                        const fullTex = `f(${xiStr}) = ${exprTex} = ${yi.toFixed(4)}`;
+                        fHtml = katex.renderToString(fullTex, { throwOnError: false, displayMode: false });
+                    } catch (e) {
+                        fHtml = `f(${xi.toFixed(4)}) = ${yi.toFixed(4)}`;
+                    }
+
+                    return `<tr class="${bg}">
+                        <td class="border border-slate-200 px-3 py-2 text-center font-bold text-blue-600">${i}</td>
+                        <td class="border border-slate-200 px-3 py-2">${xiHtml}</td>
+                        <td class="border border-slate-200 px-3 py-2">${fHtml}</td>
+                        <td class="border border-slate-200 px-3 py-2 text-center font-bold">${yi.toFixed(4)}</td>
+                    </tr>`;
+                }
+
+                const showDots = n > 12;
+                const limit = showDots ? 5 : n;
+
+                let tableHTML = `<div class="overflow-x-auto"><table class="w-full text-xs border-collapse" style="font-family:'JetBrains Mono',monospace">
+                    <thead>
+                        <tr class="bg-blue-600 text-white">
+                            <th class="border border-blue-700 px-3 py-2 text-center" style="min-width:30px">i</th>
+                            <th class="border border-blue-700 px-3 py-2 text-left" style="min-width:200px">x<sub>i</sub> ning hisoblanishi</th>
+                            <th class="border border-blue-700 px-3 py-2 text-left" style="min-width:280px">f(x<sub>i</sub>) ning yoyilgan formulasi</th>
+                            <th class="border border-blue-700 px-3 py-2 text-center" style="min-width:80px">y<sub>i</sub></th>
+                        </tr>
+                    </thead><tbody>`;
+
+                for (let i = 0; i <= limit; i++) {
+                    tableHTML += buildRow(i);
+                }
+                if (showDots) {
+                    tableHTML += `<tr class="bg-blue-50"><td class="border border-slate-200 px-3 py-2 text-center text-blue-400 font-bold" colspan="4">⋮</td></tr>`;
+                    for (let i = Math.max(limit + 1, n - 2); i <= n; i++) {
+                        tableHTML += buildRow(i);
+                    }
+                }
+                tableHTML += `</tbody></table></div>`;
+                addSection('2. 📋 Tugun nuqtalar va funksiya qiymatlari', tableHTML);
+
+                // 3-qadam: Trapezium formula
+                let trapeziumTerms = [];
+                for (let i = 0; i < n; i++) {
+                    trapeziumTerms.push(`\\frac{${y_vals[i].toFixed(4)} + ${y_vals[i + 1].toFixed(4)}}{2}`);
+                }
+
+                let trapeziumTermsStr = trapeziumTerms.length > 10
+                    ? `${trapeziumTerms.slice(0, 3).join(' + ')} + \\dots + ${trapeziumTerms.slice(-2).join(' + ')}`
+                    : trapeziumTerms.join(' + ');
+
+                let I_trap = 0;
+                for (let i = 0; i < n; i++) {
+                    I_trap += (y_vals[i] + y_vals[i + 1]) * h / 2;
+                }
+
+                let texTrap = `\\begin{aligned} I_{\\text{trap}} &= h \\cdot \\left( ${trapeziumTermsStr} \\right) \\\\ &= ${h.toFixed(4)} \\cdot (\\text{yig'indi}) \\\\ &= ${I_trap.toFixed(6)} \\end{aligned}`;
+
+                addSection('3. 🔷 Trapezium usuli yuzasini hisoblash', `
+                    <div class="result-box-cyan p-6 overflow-x-auto">
+                        <h4 class="text-sm font-black text-blue-600 mb-4 uppercase tracking-wider">📐 Trapezium Usuli Formulasi</h4>
+                        <div class="math-block bg-transparent border-0 text-blue-700">
+                            ${katex.renderToString(texTrap, { throwOnError: false, displayMode: true })}
+                        </div>
+                    </div>
+                `);
+
+                // ── 4-qadam: Nyuton-Leybnits va Solishtirish ──────────────────
+                // Analitik yaqinlashish: n=10000 bilan yuqori aniqlikdagi hisob
+                const N_EXACT = 10000;
+                const h_exact = (b - a) / N_EXACT;
+                let I_exact = 0;
+                for (let i = 0; i < N_EXACT; i++) {
+                    const x0e = a + i * h_exact;
+                    const x1e = a + (i + 1) * h_exact;
+                    I_exact += (f(x0e) + f(x1e)) * h_exact / 2;
+                }
+
+                // Xatoliklar
+                const errTrap = Math.abs(I_exact - I_trap);
+                const pctTrap = I_exact !== 0 ? (errTrap / Math.abs(I_exact) * 100).toFixed(4) : '—';
+
+                // Xulosa
+                const isGood = errTrap < 0.01 * Math.abs(I_exact);
+                const verdictIcon = isGood ? '✅' : '⚠️';
+                const verdictColor = isGood ? 'text-emerald-400' : 'text-amber-400';
+                const verdictBorder = isGood ? 'border-emerald-500' : 'border-amber-400';
+                const verdictMsg = isGood
+                    ? 'Hisoblash to\'g\'ri bajarildi! Taqribiy va aniq qiymatlar bir-biriga yaqin.'
+                    : 'Diqqat! Natijalarda katta farq bor — <b>n</b> qiymatini oshirib ko\'ring.';
+
+                // Taqqoslash jadvali HTML
+                const cmpRows = [
+                    { label: "Trapezium usuli", sym: 'I_{\\text{trap}}', val: I_trap, err: errTrap, pct: pctTrap, color: '#2563eb' },
+                    { label: `Aniq yechim (n=${N_EXACT})`, sym: 'I_{\\text{aniq}}', val: I_exact, err: 0, pct: '0.0000', color: '#16a34a' },
+                ];
+
+                let cmpTableHTML = `<div class="overflow-x-auto mt-2"><table class="w-full text-xs border-collapse" style="font-family:'JetBrains Mono',monospace">
+                    <thead>
+                        <tr class="bg-slate-800 text-white">
+                            <th class="border border-slate-700 px-4 py-2 text-left">Usul</th>
+                            <th class="border border-slate-700 px-4 py-2 text-center">Natija</th>
+                            <th class="border border-slate-700 px-4 py-2 text-center">|Xatolik|</th>
+                            <th class="border border-slate-700 px-4 py-2 text-center">Xatolik %</th>
+                        </tr>
+                    </thead><tbody>`;
+
+                cmpRows.forEach((row, idx) => {
+                    const isExact = idx === cmpRows.length - 1;
+                    const bg = isExact ? 'bg-emerald-50' : 'bg-slate-50';
+                    const errStr = isExact ? '—' : row.err.toFixed(6);
+                    const pctStr = isExact ? '0.0000%' : `${row.pct}%`;
+                    const pctNum = parseFloat(row.pct);
+                    const pctColor = pctNum < 1 ? 'text-emerald-600' : pctNum < 5 ? 'text-amber-600' : 'text-red-600';
+                    cmpTableHTML += `<tr class="${bg}">
+                        <td class="border border-slate-200 px-4 py-2 font-bold" style="color:${row.color}">${row.label}</td>
+                        <td class="border border-slate-200 px-4 py-2 text-center font-bold">${row.val.toFixed(6)}</td>
+                        <td class="border border-slate-200 px-4 py-2 text-center">${errStr}</td>
+                        <td class="border border-slate-200 px-4 py-2 text-center font-bold ${isExact ? 'text-emerald-600' : pctColor}">${pctStr}</td>
+                    </tr>`;
+                });
+                cmpTableHTML += `</tbody></table></div>`;
+
+                // Analitik formula (n=10000 yaqinlashish ko'rinishi)
+                const texExact = `I_{\\text{aniq}} = \\int_{${a}}^{${b}} f(x)\\,dx \\approx ${I_exact.toFixed(6)} \\quad (n=${N_EXACT}\\text{ trapezium})`;
+
+                addSection('4. 🔬 Nyuton-Leybnits va Solishtirish', `
+                    <div class="space-y-6">
+
+                        <!-- Analitik yechim -->
+                        <div class="p-5 bg-emerald-50 border-2 border-emerald-200 rounded-sm">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-3">📐 Aniq integral qiymati (yuqori aniqlikli yaqinlashish)</p>
+                            <div class="math-block bg-white border border-emerald-200">
+                                ${katex.renderToString(texExact, { throwOnError: false, displayMode: true })}
+                            </div>
+                            <p class="text-[10px] text-emerald-700 mt-2 font-bold">
+                                * Math.js analitik integralni to'g'ridan-to'g'ri hisoblay olmaydi, shuning uchun
+                                <b>n = ${N_EXACT}</b> bo'linishli trapezium usuli orqali "aniq" qiymat sifatida qabul qilinadi.
+                            </p>
+                        </div>
+
+                        <!-- Taqqoslash jadvali -->
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3">📊 Usullar taqqoslash jadvali</p>
+                            ${cmpTableHTML}
+                        </div>
+
+                        <!-- Vizual xulosa -->
+                        <div class="p-6 border-2 ${verdictBorder} bg-black text-white rounded-sm" style="box-shadow: 6px 6px 0px rgba(37,99,235,0.3);">
+                            <div class="flex items-start gap-4">
+                                <span class="text-4xl">${verdictIcon}</span>
+                                <div>
+                                    <p class="text-[10px] font-black uppercase tracking-[0.3em] ${verdictColor} mb-2">Mantiqiy Tekshiruv Natijasi</p>
+                                    <p class="text-sm font-bold leading-relaxed">${verdictMsg}</p>
+                                    <div class="mt-4 grid grid-cols-2 gap-3 text-[11px]">
+                                        <div><span class="font-bold text-blue-300">Trapezium:</span> <span>${I_trap.toFixed(6)}</span></div>
+                                        <div><span class="font-bold text-emerald-300">Aniq:</span> <span>${I_exact.toFixed(6)}</span></div>
+                                        <div><span class="font-bold text-yellow-300">Xatolik:</span> <span>${errTrap.toFixed(6)}</span></div>
+                                        <div><span class="font-bold text-cyan-300">%:</span> <span>${pctTrap}%</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                // Draw chart with trapeziums
+                let trapData = [];
+                for (let i = 0; i < n; i++) {
+                    let y1 = y_vals[i];
+                    let y2 = y_vals[i + 1];
+                    let x_start = x_vals[i];
+                    let x_end = x_vals[i + 1];
+
+                    // Trapezium corners
+                    trapData.push({ x: x_start, y: 0 });
+                    trapData.push({ x: x_start, y: y1 });
+                    trapData.push({ x: x_end, y: y2 });
+                    trapData.push({ x: x_end, y: 0 });
+                }
+
+                let curveData = [];
+                for (let x = a; x <= b; x += (b - a) / 200) {
+                    curveData.push({ x: x, y: f(x) });
+                }
+                curveData.push({ x: b, y: f(b) });
+
+                drawChart(curveData, trapData);
+
+            } catch (error) {
+                alert("Xatolik! Funksiya kiritishda xato bo'lishi mumkin. Kvadrat uchun x^2 ishlating.");
+                console.error(error);
+            }
+        }
+
+        function drawChart(curveData, trapData) {
+            const ctx = document.getElementById('integralChart').getContext('2d');
+            if (myChart) myChart.destroy();
+
+            myChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: "Trapezium yuzasi",
+                            data: trapData,
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.12)',
+                            borderWidth: 1.5,
+                            fill: true,
+                            showLine: true,
+                            pointRadius: 0,
+                        },
+                        {
+                            label: 'f(x) Funksiya',
+                            data: curveData,
+                            borderColor: '#000000',
+                            borderWidth: 2.5,
+                            showLine: true,
+                            pointRadius: 0,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            grid: { color: 'rgba(148,163,184,0.15)' },
+                            ticks: { color: '#64748b', font: { family: 'JetBrains Mono' } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(148,163,184,0.15)' },
+                            ticks: { color: '#64748b', font: { family: 'JetBrains Mono' } }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#334155', font: { family: 'JetBrains Mono', weight: 'bold' } } }
+                    }
+                }
+            });
+        }
+
+        window.onload = calculateAndRender;
+    </script>
+</body>
+
+</html>
