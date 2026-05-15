@@ -24,7 +24,139 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
     <style>
-        :root{--brand-primary:#2563eb;--brand-secondary:#00f2ff;--bg-main:#f8fafc}body{background-color:var(--bg-main);background-image:linear-gradient(rgba(59,130,246,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.05) 1px,transparent 1px);background-size:30px 30px;color:#1e293b}.math-font{font-family:'JetBrains Mono',monospace}.step-title{color:var(--brand-primary);font-family:Orbitron,sans-serif;font-weight:800;border-bottom:1px dashed #cbd5e1;margin-bottom:1rem}.math-block,.notebook-input,.point-table th{font-family:'JetBrains Mono',monospace}.math-block{background:#f8fafc;padding:1.25rem;border:1px solid #e2e8f0;border-radius:4px;overflow-x:auto;margin:12px 0}.point-table td,.point-table th{border:1px solid #e5e7eb;text-align:center}.point-table{width:100%;border-collapse:collapse}.point-table th{font-size:.75rem;font-weight:700;color:#374151;padding:6px 8px;background:rgba(59,130,246,.08)}.point-table td{padding:4px}.notebook-input{width:100%;border:none;border-bottom:2px solid #cbd5e1;background:0 0;text-align:center;font-size:.9rem;outline:0;transition:border-color .3s;padding:4px 2px}.notebook-input:focus{border-bottom-color:var(--brand-primary)}.btn-cyber,.point-btn{border:2px solid #000}.btn-cyber{background:#000;color:#fff;font-family:Orbitron,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.1em;transition:.2s}.btn-cyber:hover{background:var(--brand-primary);color:#fff}.point-btn{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;background:#fff;cursor:pointer;transition:.15s}.point-btn:hover{background:#000;color:#fff}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#f1f5f9}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}::-webkit-scrollbar-thumb:hover{background:#94a3b8}
+        :root {
+            --brand-primary: #2563eb;
+            --brand-secondary: #00f2ff;
+            --bg-main: #f8fafc
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: linear-gradient(rgba(59, 130, 246, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, .05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #1e293b
+        }
+
+        .math-font {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .step-title {
+            color: var(--brand-primary);
+            font-family: Orbitron, sans-serif;
+            font-weight: 800;
+            border-bottom: 1px dashed #cbd5e1;
+            margin-bottom: 1rem
+        }
+
+        .math-block,
+        .notebook-input,
+        .point-table th {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .math-block {
+            background: #f8fafc;
+            padding: 1.25rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 12px 0
+        }
+
+        .point-table td,
+        .point-table th {
+            border: 1px solid #e5e7eb;
+            text-align: center
+        }
+
+        .point-table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .point-table th {
+            font-size: .75rem;
+            font-weight: 700;
+            color: #374151;
+            padding: 6px 8px;
+            background: rgba(59, 130, 246, .08)
+        }
+
+        .point-table td {
+            padding: 4px
+        }
+
+        .notebook-input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #cbd5e1;
+            background: 0 0;
+            text-align: center;
+            font-size: .9rem;
+            outline: 0;
+            transition: border-color .3s;
+            padding: 4px 2px
+        }
+
+        .notebook-input:focus {
+            border-bottom-color: var(--brand-primary)
+        }
+
+        .btn-cyber,
+        .point-btn {
+            border: 2px solid #000
+        }
+
+        .btn-cyber {
+            background: #000;
+            color: #fff;
+            font-family: Orbitron, sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            transition: .2s
+        }
+
+        .btn-cyber:hover {
+            background: var(--brand-primary);
+            color: #fff
+        }
+
+        .point-btn {
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            background: #fff;
+            cursor: pointer;
+            transition: .15s
+        }
+
+        .point-btn:hover {
+            background: #000;
+            color: #fff
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8
+        }
     </style>
 
     <script>
@@ -406,7 +538,24 @@
             }).join('');
             addSection("3. 🧩 Har bir interval uchun hisoblash qadamlari", phtml);
 
-            // 4, 5, 6 (Only if tx is provided)
+            // 4. Umumiy piecewise spline (KaTeX bilan)
+            let casesContent = splines.map((s, i) => {
+                const a0 = s.a0, a1 = s.a1, a2 = s.a2;
+                let p_a0 = signCoeff(fV(a0), true);
+                let p_a1 = signCoeff(fV(a1));
+                let p_a2 = signCoeff(fV(a2));
+                return `${p_a0} ${p_a1}x ${p_a2}x^2, & x \\in [${fV(s.x0)}; ${fV(s.x1)}]`;
+            }).join(' \\\\\n');
+
+            let splineFormatHTML = `<div class="math-block" style="background: #eff6ff; border: 2px solid #2563eb; padding: 1.5rem;">
+                $$S(x) = \\begin{cases}
+                ${casesContent}
+                \\end{cases}$$
+            </div>`;
+
+            addSection("4. 🎯 Umumiy Piecewise Splayn Funksiyasi", splineFormatHTML);
+
+            // 5, 6, 7 (Only if tx is provided)
             if (!isNaN(tx)) {
                 let act = splines.find(s => tx >= s.x0 && tx <= s.x1) || splines[0];
                 if (tx < splines[0].x0) act = splines[0];
@@ -414,15 +563,15 @@
 
                 const res = act.a0 + act.a1 * tx + act.a2 * tx ** 2;
 
-                addSection("4. 📍 Interval", `<div class="math-block text-center font-bold text-blue-600">$$ x \\in [${act.x0}, ${act.x1}] $$</div>`);
+                addSection("5. 📍 Interval", `<div class="math-block text-center font-bold text-blue-600">$$ x \\in [${act.x0}, ${act.x1}] $$</div>`);
 
                 let p_a0 = signCoeff(fV(act.a0), true);
                 let p_a1 = signCoeff(fV(act.a1));
                 let p_a2 = signCoeff(fV(act.a2));
 
-                addSection("5. 🧪 Hisob", `<div class="math-block">$$ S(${tx}) = ${p_a0} ${p_a1}(${tx}) ${p_a2}(${tx})^2 $$</div>`);
+                addSection("6. 🧪 Hisob", `<div class="math-block">$$ S(${tx}) = ${p_a0} ${p_a1}(${tx}) ${p_a2}(${tx})^2 $$</div>`);
 
-                addSection("6. ✅ Javob", `
+                addSection("7. ✅ Javob", `
               <div class="bg-black p-8 text-white text-center cyber-card" style="box-shadow: 8px 8px 0px #2563eb;">
                   <p class="text-[10px] font-black uppercase mb-4 tracking-[0.3em] text-blue-400">Yakuniy Natija</p>
                   <div class="text-4xl font-black mb-2">$$ f(${tx}) \\approx ${formatNumber(res)} $$</div>

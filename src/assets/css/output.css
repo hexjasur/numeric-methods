@@ -303,6 +303,9 @@
   }
 }
 @layer utilities {
+  .collapse {
+    visibility: collapse;
+  }
   .visible {
     visibility: visible;
   }
@@ -594,6 +597,9 @@
   .flex-shrink {
     flex-shrink: 1;
   }
+  .flex-grow {
+    flex-grow: 1;
+  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -868,6 +874,9 @@
   .border-blue-200 {
     border-color: var(--color-blue-200);
   }
+  .border-blue-400 {
+    border-color: var(--color-blue-400);
+  }
   .border-blue-500 {
     border-color: var(--color-blue-500);
   }
@@ -939,6 +948,9 @@
   }
   .border-slate-700 {
     border-color: var(--color-slate-700);
+  }
+  .border-white {
+    border-color: var(--color-white);
   }
   .border-white\/80 {
     border-color: color-mix(in srgb, #fff 80%, transparent);

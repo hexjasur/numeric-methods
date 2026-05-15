@@ -12,6 +12,11 @@
   </script>
   <script src="../assets/js/head-manager.js"></script>
 
+  <!-- KaTeX va Math.js kutubxonalari -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjs@11.11.0/lib/browser/math.min.js"></script>
+
   <!-- Primary SEO -->
   <meta name="description"
     content="Oddiy iteratsiya usuli — f(x)=0 tenglamasini xₙ₊₁ = φ(xₙ) formulasi orqali bosqichma-bosqich yechish. M konstantani topish, yaqinlashish sharti va to'liq KaTeX ishlanish. QarDU Amaliy Matematika.">
@@ -165,15 +170,27 @@
 
   <script>
     function renderPreview() {
+      if (typeof math === 'undefined' || typeof katex === 'undefined') {
+        return;
+      }
       try {
         let funcStr = document.getElementById('funcInput').value;
+
+        // Tenglama ko'rinishidagi kiritishni funksiyaga o'tkazish
+        if (funcStr.includes('=')) {
+          const parts = funcStr.split('=');
+          if (parts.length === 2) {
+            funcStr = '(' + parts[0].trim() + ') - (' + parts[1].trim() + ')';
+          }
+        }
+
         funcStr = funcStr.replace(/arcsin/g, 'asin').replace(/arccos/g, 'acos').replace(/arctan/g, 'atan').replace(/arcctg/g, 'acot').replace(/arccot/g, 'acot');
         const node = math.parse(funcStr);
         let tex = node.toTex();
         tex = tex.replace(/\\sin\^\{-1\}/g, '\\arcsin')
-                 .replace(/\\cos\^\{-1\}/g, '\\arccos')
-                 .replace(/\\tan\^\{-1\}/g, '\\arctan')
-                 .replace(/\\cot\^\{-1\}/g, '\\text{arcctg}');
+          .replace(/\\cos\^\{-1\}/g, '\\arccos')
+          .replace(/\\tan\^\{-1\}/g, '\\arctan')
+          .replace(/\\cot\^\{-1\}/g, '\\text{arcctg}');
         katex.render("f(x) = " + tex, document.getElementById('math-preview'));
       } catch (e) { }
     }
@@ -194,6 +211,9 @@
     }
 
     function renderExamples() {
+      if (typeof katex === 'undefined') {
+        return;
+      }
       const container = document.getElementById('examples');
       container.innerHTML = '';
       examples.forEach((ex, i) => {
@@ -210,10 +230,27 @@
       });
     }
 
-    window.onload = () => { renderPreview(); renderExamples(); };
+    // KaTeX va Math.js load bo'lgandan keyin chaqir
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => { renderPreview(); renderExamples(); }, 100);
+      });
+    } else {
+      setTimeout(() => { renderPreview(); renderExamples(); }, 100);
+    }
 
     function calculate() {
       let funcStr = document.getElementById('funcInput').value;
+
+      // Tenglama ko'rinishidagi kiritishni funksiyaga o'tkazish
+      // Masalan: x^2 + x = 1  →  x^2 + x - 1
+      if (funcStr.includes('=')) {
+        const parts = funcStr.split('=');
+        if (parts.length === 2) {
+          funcStr = '(' + parts[0].trim() + ') - (' + parts[1].trim() + ')';
+        }
+      }
+
       funcStr = funcStr.replace(/arcsin/g, 'asin').replace(/arccos/g, 'acos').replace(/arctan/g, 'atan').replace(/arcctg/g, 'acot').replace(/arccot/g, 'acot');
       const a = parseFloat(document.getElementById('aInput').value);
       const b = parseFloat(document.getElementById('bInput').value);

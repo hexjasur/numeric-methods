@@ -17,6 +17,11 @@
   </script>
   <script src="../assets/js/head-manager.js"></script>
 
+  <!-- KaTeX va Math.js kutubxonalari -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjs@11.11.0/lib/browser/math.min.js"></script>
+
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/Urinma-Usuli.html">
 
@@ -187,8 +192,21 @@
 
     // ── KaTeX preview ─────────────────────────────────────────────────────
     function renderPreview() {
+      if (typeof math === 'undefined' || typeof katex === 'undefined') {
+        return;
+      }
       try {
-        const node = math.parse(document.getElementById('funcInput').value);
+        let exp = document.getElementById('funcInput').value;
+
+        // Tenglama ko'rinishidagi kiritishni funksiyaga o'tkazish
+        if (exp.includes('=')) {
+          const parts = exp.split('=');
+          if (parts.length === 2) {
+            exp = '(' + parts[0].trim() + ') - (' + parts[1].trim() + ')';
+          }
+        }
+
+        const node = math.parse(exp);
         katex.render("f(x) = " + node.toTex(), document.getElementById('math-preview'), { throwOnError: false });
       } catch (e) { document.getElementById('math-preview').innerHTML = ''; }
     }
@@ -196,7 +214,7 @@
     // ── Examples ──────────────────────────────────────────────────────────
     const examples = [
       { func: "x^3 + x - 1", latex: "x^3 + x - 1", a: 0, b: 1, eps: 0.01 },
-      { func: "x - 1 - sin(x)/10", latex: "x - 1 - \\frac{\\sin(x)}{10}", a: 1, b: 1.1, eps: 0.01 },
+      { func: "x - 1 = sin(x)/10", latex: "x - 1 = \\frac{\\sin(x)}{10}", a: 1, b: 1.1, eps: 0.01 },
       { func: "x^2 - 2", latex: "x^2 - 2", a: 1, b: 2, eps: 0.01 },
       { func: "exp(x) - 3*x", latex: "e^{x} - 3x", a: 0, b: 2, eps: 0.01 },
     ];
@@ -210,6 +228,9 @@
     }
 
     function renderExamples() {
+      if (typeof katex === 'undefined') {
+        return;
+      }
       const container = document.getElementById('examples');
       container.innerHTML = '';
       examples.forEach((ex, i) => {
@@ -227,11 +248,18 @@
       });
     }
 
-    window.onload = () => { renderPreview(); renderExamples(); };
+    // KaTeX va Math.js load bo'lgandan keyin chaqir
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => { renderPreview(); renderExamples(); }, 100);
+      });
+    } else {
+      setTimeout(() => { renderPreview(); renderExamples(); }, 100);
+    }
 
     // ── Main calculation ──────────────────────────────────────────────────
     function calculate() {
-      const funcStr = document.getElementById('funcInput').value.trim();
+      let funcStr = document.getElementById('funcInput').value.trim();
       const a = parseFloat(document.getElementById('aInput').value);
       const b = parseFloat(document.getElementById('bInput').value);
       const eps = parseFloat(document.getElementById('epsInput').value);
@@ -245,6 +273,15 @@
       x0Info.classList.add('hidden');
 
       try {
+        // Tenglama ko'rinishidagi kiritishni funksiyaga o'tkazish
+        // Masalan: x^2 + x = 1  →  x^2 + x - 1
+        if (funcStr.includes('=')) {
+          const parts = funcStr.split('=');
+          if (parts.length === 2) {
+            funcStr = '(' + parts[0].trim() + ') - (' + parts[1].trim() + ')';
+          }
+        }
+
         const compiled = math.compile(funcStr);
         const f = x => compiled.evaluate({ x });
 

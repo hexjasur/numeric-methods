@@ -20,11 +20,17 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- KaTeX va Math.js kutubxonalari -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjs@11.11.0/lib/browser/math.min.js"></script>
+
   <!-- Canonical -->
   <link rel="canonical" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html">
 
   <!-- 9. HREFLANG -->
-  <link rel="alternate" hreflang="uz" href="https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html">
+  <link rel="alternate" hreflang="uz"
+    href="https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo%27lish-Usuli.html">
 
   <!-- 6. OPEN GRAPH -->
   <meta property="og:type" content="website">
@@ -137,7 +143,8 @@
             class="font-black text-cyan-700 mb-4 uppercase text-xs tracking-[0.2em] flex items-center border-b border-cyan-200 pb-2">
             <span class="mr-2 text-lg">💡</span> NAZARIYA BATAFSIL
           </div>
-          <a class="text-cyan-600 hover:text-cyan-800 underline" href="../Sonli-Usullar-Nazariya/Biseksiya-Usuli.html">Biseksiya usuli nazariyasini o'qish</a>
+          <a class="text-cyan-600 hover:text-cyan-800 underline"
+            href="../Sonli-Usullar-Nazariya/Biseksiya-Usuli.html">Biseksiya usuli nazariyasini o'qish</a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-700">
@@ -263,21 +270,44 @@
   <script>
     // Formula preview funksiyasi
     function updateFormula() {
-      const exp = document.getElementById('equation').value;
       const preview = document.getElementById('formula-preview');
+
+      // KaTeX va Math.js hali load bo'lganligini tekshir
+      if (typeof math === 'undefined' || typeof katex === 'undefined') {
+        preview.innerHTML = "<span class='text-gray-400 text-xs'>Kutubxonalar yuklanmoqda...</span>";
+        return;
+      }
+
+      let exp = document.getElementById('equation').value;
+
       try {
+        // Tenglama ko'rinishidagi kiritishni funksiyaga o'tkazish
+        if (exp.includes('=')) {
+          const parts = exp.split('=');
+          if (parts.length === 2) {
+            exp = '(' + parts[0].trim() + ') - (' + parts[1].trim() + ')';
+          }
+        }
+
         const node = math.parse(exp);
         const latex = node.toTex({ parenthesis: 'keep', implicit: 'hide' });
         katex.render("f(x) = " + latex, preview, { throwOnError: false });
       } catch (e) {
-        preview.innerHTML = "<span class='text-red-500 text-xs'>Formula xato!</span>";
+        preview.innerHTML = "<span class='text-red-500 text-xs'>Formula xato: " + e.message.substring(0, 30) + "...</span>";
       }
     }
 
-    window.onload = updateFormula;
+    // KaTeX va Math.js load bo'lgandan keyin updateFormula() chaqir
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(updateFormula, 100);
+      });
+    } else {
+      setTimeout(updateFormula, 100);
+    }
 
     function calculate() {
-      const exprStr = document.getElementById('equation').value;
+      let exprStr = document.getElementById('equation').value;
       const a_init = parseFloat(document.getElementById('inputA').value);
       const b_init = parseFloat(document.getElementById('inputB').value);
       const eps = parseFloat(document.getElementById('inputEps').value);
@@ -288,6 +318,15 @@
       resultCard.classList.add('hidden');
 
       try {
+        // Tenglama ko'rinishidagi kiritishni funksiyaga o'tkazish
+        // Masalan: x^3 + x = 1  →  x^3 + x - 1
+        if (exprStr.includes('=')) {
+          const parts = exprStr.split('=');
+          if (parts.length === 2) {
+            exprStr = '(' + parts[0].trim() + ') - (' + parts[1].trim() + ')';
+          }
+        }
+
         const node = math.parse(exprStr);
         const code = node.compile();
         const f = (x) => code.evaluate({ x: x });
