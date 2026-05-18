@@ -149,6 +149,12 @@
       icon: '🧮',
       href: base + 'src/Sonli-Usullar/trapetsiya-usuli.html',
     },
+    {
+      id: 'integral-simpson',
+      label: 'INTEGRAL: SIMPSON USULI',
+      icon: '🧮',
+      href: base + 'src/Sonli-Usullar/Integral-Simpson.html',
+    },
     // {
     //   id: 'splayn-interpolatsiya-usuli',
     //   label: 'SPLAYN INTERPOLATSIYA USULI',

@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.9.9",
+    "date": "2026-05-18",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/togri-tortburchak-usuli.html\">Tog'ri To'rtburchak usuli</a> va <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/trapetsiya-usuli.html\">Trapetsiya usul</a>larida x^2 muammosi tog'irlandi. <br><a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Integral-Simpson.html\">Integral Simpson usuli</a> qo'shildi. <br> Yangi sahifa uchun SEO va OG qo'shildi. <br> SITEMAP yangilandi. <br>Boshqa sahifalarda xatoliklar tuzatildi."
+  },
+  {
     "version": "v2.9.1 + #bugfix v10.4",
     "date": "2026-05-15",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/KesmaniTengIkkigaBo'lish-Usuli.html\">Kesmani teng ikkiga bo'lish usuli</a>, <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Urinma-Usuli.html\">Urunma usul</a>, <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html\">Oddiy iteratsiya usuli</a> va <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html\">Vatar Usul</a>larida xatoliklar tuzatildi(endi misollar = x kabi kiritish mumkun: ilgari - x ko'rinishida inputga kiritish kerak edi). <br> <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Iteratsiya-Usuli.html\"> Kvadratik splayn interpolatsiya usuli</a>da umumiy sistema qilib chiqarish xususiyati qo'shildi."
   },
   {

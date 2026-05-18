@@ -32,7 +32,8 @@
     <meta property="og:title" content="To'g'ri To'rtburchaklar Usuli | sonli-usullar.uz">
     <meta property="og:description"
         content="To'g'ri to'rtburchaklar usuli: integral hisoblash uchun sonli usul. Chap va o'ng to'rtburchaklar, bo'lingan oraliqlar, aniqlik xatoliklari.">
-    <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-togri-tortburchak-usuli.png">
+    <meta property="og:image"
+        content="https://www.sonli-usullar.uz/src/assets/images/og/og-togri-tortburchak-usuli.png">
 
     <!-- Twitter OG -->
     <meta name="twitter:card" content="summary_large_image">
@@ -267,6 +268,12 @@
                                     class="w-full py-4 btn-cyber shadow-[4px_4px_0px_rgba(37,99,235,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
                                     HISOBLASH
                                 </button>
+
+                                <!-- Test Example Button -->
+                                <button onclick="loadTestExample()"
+                                    class="w-full py-3 mt-3 bg-gradient-to-r from-amber-500 to-orange-500 font-bold rounded-sm hover:from-amber-600 hover:to-orange-600 transition-all shadow-[2px_2px_0px_rgba(251,146,60,0.3)]">
+                                    🧪 MISOL YUKLASH
+                                </button>
                             </div>
                         </section>
 
@@ -323,9 +330,34 @@
     <script>
         let myChart = null;
 
+        // Convert math expression to LaTeX format
+        function convertToLatexFormula(funcStr, a, b) {
+            // Replace ^ with ^{ } for proper LaTeX exponentiation
+            let latexExpr = funcStr
+                .replace(/\*\*/g, '^') // Replace ** with ^
+                .replace(/\^(\d+)/g, '^{$1}') // Convert x^2 to x^{2}
+                .replace(/sqrt\(/g, '\\sqrt{') // sqrt( -> \sqrt{
+                .replace(/\)(?=[\+\-\*\/]|$)/g, '}'); // Close sqrt braces
+
+            return `\\int_{${a}}^{${b}} \\left(${latexExpr}\\right)\\, dx`;
+        }
+
+        // Load test example
+        function loadTestExample() {
+            document.getElementById('func').value = 'dx/sqrt(1+2*x^2)';
+            document.getElementById('a').value = '0.6';
+            document.getElementById('b').value = '1.6';
+            document.getElementById('n').value = '8';
+            // Trigger calculation automatically
+            setTimeout(() => calculateAndRender(), 100);
+        }
+
         function calculateAndRender() {
             try {
-                const funcStr = document.getElementById('func').value;
+                let funcStr = document.getElementById('func').value;
+                // Replace 'dx' with '1' for user convenience
+                funcStr = funcStr.replace(/\bdx\b/g, '1');
+
                 const a = parseFloat(document.getElementById('a').value);
                 const b = parseFloat(document.getElementById('b').value);
                 const n = parseInt(document.getElementById('n').value);
@@ -360,7 +392,7 @@
                 };
 
                 // Formula display
-                let texFormula = `\\int_{${a}}^{${b}} \\left(${funcStr.replace(/\*\*/g, '^')}\\right)\\, dx`;
+                let texFormula = convertToLatexFormula(funcStr, a, b);
                 katex.render(texFormula, document.getElementById('katex-formula'), { throwOnError: false, displayMode: true });
 
                 // 1-qadam: h
