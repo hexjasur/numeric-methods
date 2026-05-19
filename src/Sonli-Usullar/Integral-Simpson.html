@@ -212,7 +212,7 @@
 <body class="relative font-sans text-gray-800 antialiased selection:bg-sakura-200 selection:text-sakura-900 pb-12">
   <!-- Main Content -->
   <div class="main-content" id="main-content">
-    <div class="max-w-5xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4">
       <!-- Film Noise Overlay -->
       <div class="film-overlay"></div>
 
@@ -227,7 +227,7 @@
               <path
                 d="M12,2C15.31,2 18,4.66 18,7.95C18,12.41 12,19 12,19C12,19 6,12.41 6,7.95C6,4.66 8.69,2 12,2M12,4C9.79,4 8,5.79 8,8C8,10.68 12,15.7 12,15.7C12,15.7 16,10.68 16,8C16,5.79 14.21,4 12,4M12,6.5A1.5,1.5 0 0,1 13.5,8A1.5,1.5 0 0,1 12,9.5A1.5,1.5 0 0,1 10.5,8A1.5,1.5 0 0,1 12,6.5Z" />
             </svg>
-            <h1 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight drop-shadow-sm">Simpson Usuli Bilan Integrallash</h1>
+            <h1 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight drop-shadow-sm">Simpson Usuli Bilan Integrallash <br> Метод Симпсона</h1>
           </div>
         </header>
 
@@ -504,6 +504,11 @@
 
           if (n <= 0) {
             showToast("Bo'linishlar soni musbat bo'lishi kerak.");
+            return;
+          }
+
+          if (n > 1000) {
+            showToast("Bo'linishlar soni 1000 dan katta bo'lishi mumkin emas.");
             return;
           }
 

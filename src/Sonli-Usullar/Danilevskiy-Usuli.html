@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danilevskiy Usuli | sonli-usullar.uz</title>
+
+    <!-- Head Manager (DRY) -->
+    <script>
+        window.HEAD_BASE = '../../';
+    </script>
+    <script src="../assets/js/head-manager.js"></script>
+
+    <!-- Primary SEO -->
+    <meta name="description"
+        content="Danilevskiy usuli. Matritsaning xos son va xos vektorlarini topish algoritmi. KaTeX ishlanish. QarDU Amaliy Matematika.">
+    <meta name="keywords"
+        content="danilevskiy usuli, xos son, xos vektor, matritsa, sonli usullar, QarDU, Haydarov Jasurbek">
+    <meta name="author" content="Haydarov Jasurbek">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Math.js for calculation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+
+    <style>
+        :root {
+            --brand-primary: #2563eb;
+            --brand-secondary: #00f2ff;
+            --bg-main: #f8fafc
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: linear-gradient(rgba(59, 130, 246, .05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, .05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #1e293b
+        }
+
+        .math-font {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .step-title {
+            color: var(--brand-primary);
+            font-family: Orbitron, sans-serif;
+            font-weight: 800;
+            border-bottom: 1px dashed #cbd5e1;
+            margin-bottom: 1rem
+        }
+
+        .math-block,
+        .notebook-input,
+        .point-table th {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .math-block {
+            background: #f8fafc;
+            padding: 1.25rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 12px 0
+        }
+
+        .btn-cyber {
+            border: 2px solid #000;
+            background: #000;
+            color: #fff;
+            font-family: Orbitron, sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            transition: .2s
+        }
+
+        .btn-cyber:hover {
+            background: var(--brand-primary);
+            color: #fff
+        }
+
+        .input-cyber {
+            width: 100%;
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-bottom: 2px solid #cbd5e1;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .input-cyber:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8
+        }
+
+        .result-box-cyan {
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
+            box-shadow: 0 0 12px rgba(0, 186, 255, 0.12);
+        }
+
+        .cyber-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
+        }
+    </style>
+
+    <script>
+        window.SIDEBAR_BASE = '../../';
+        window.SIDEBAR_ACTIVE = 'danilevskiy-usuli';
+    </script>
+    <script src="../assets/js/sidebar.js"></script>
+</head>
+
+<body class="p-4 md:p-8">
+
+    <!-- Header -->
+    <div class="main-content" id="main-content">
+        <div class="max-w-4xl mx-auto">
+            <header class="mt-8 mb-12 p-6 text-center cyber-card">
+                <h1 class="text-3xl font-black text-blue-600 tracking-tighter"
+                    style="font-family: 'Orbitron', sans-serif;">
+                    DANILEVSKIY <span class="text-black">USULI</span>
+                </h1>
+                <div class="text-sm font-bold text-slate-600 space-y-1 mt-3">
+                    <p class="text-blue-600">Matritsaning Xos Son va Xos Vektorlarini Topish</p>
+                    <p class="text-slate-500">Метод Данилевского</p>
+                </div>
+                <p class="text-[10px] font-bold text-gray-500 uppercase mt-4 tracking-[0.2em]">
+                    QarDU | Amaliy Matematika <span class="ml-2 text-blue-400" id="version-tag">v1.0</span>
+                </p>
+            </header>
+
+            <main class="max-w-7xl mx-auto pb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                    <!-- Left Sidebar (Controls) -->
+                    <aside class="lg:col-span-4 space-y-6">
+
+                        <!-- Input Panel -->
+                        <section class="cyber-card p-6">
+                            <h2
+                                class="text-sm font-black text-slate-800 mb-6 flex items-center gap-2 uppercase tracking-widest">
+                                <span>📥</span> 3x3 Matritsa (A)
+                            </h2>
+
+                            <div class="space-y-5">
+                                <div class="grid grid-cols-3 gap-2" id="matrix-inputs">
+                                    <!-- Inputs injected by JS -->
+                                </div>
+
+                                <button onclick="calculateDanilevsky()"
+                                    class="w-full py-4 btn-cyber shadow-[4px_4px_0px_rgba(37,99,235,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+                                    HISOBLASH
+                                </button>
+
+                                <!-- Test Example Button -->
+                                <!-- <button onclick="loadTestExample()"
+                                    class="w-full py-3 mt-3 bg-gradient-to-r from-amber-500 to-orange-500 font-bold rounded-sm hover:from-amber-600 hover:to-orange-600 transition-all shadow-[2px_2px_0px_rgba(251,146,60,0.3)]">
+                                    🧪 MISOL YUKLASH
+                                </button> -->
+                            </div>
+                        </section>
+
+                        <!-- Tip Box -->
+                        <div class="p-4 bg-blue-50 border-2 border-blue-100 cyber-card shadow-none">
+                            <p class="text-[10px] font-bold text-blue-600 uppercase mb-2">💡 Eslatma</p>
+                            <p class="text-xs text-blue-800 leading-relaxed">
+                                Danilevskiy usuli orqali berilgan matritsa Frobenius normal ko'rinishiga keltiriladi. So'ngra xarakteristik ko'phad tuzilib, xos sonlar topiladi.
+                            </p>
+                        </div>
+                    </aside>
+
+                    <!-- Right Content -->
+                    <div class="lg:col-span-8 space-y-8">
+
+                        <!-- Step-by-step results -->
+                        <div id="output-container" class="hidden space-y-8"></div>
+
+                        <!-- Empty state -->
+                        <div id="empty-state"
+                            class="flex flex-col items-center justify-center py-20 text-slate-400 cyber-card bg-slate-50 border-dashed">
+                            <p class="font-bold italic uppercase tracking-widest text-xs">
+                                Matritsani kiriting va hisoblashni bosing
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Matrix Inputs
+        const defaultA = [[16, 13, 18], [23, 24, 24], [23, 25, 25]];
+        const grid = document.getElementById('matrix-inputs');
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                grid.innerHTML += `<input type="number" id="a${i}${j}" value="${defaultA[i][j]}" step="any"
+                    class="input-cyber rounded-sm font-bold text-blue-600">`;
+            }
+        }
+
+        function loadTestExample() {
+            const testA = [[16, 13, 18], [23, 24, 24], [23, 25, 25]];
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    document.getElementById(`a${i}${j}`).value = testA[i][j];
+                }
+            }
+            calculateDanilevsky();
+        }
+
+        // Utility to format numbers cleanly
+        function formatNum(num) {
+            return Number(num.toFixed(4)).toString();
+        }
+
+        const out = document.getElementById('output-container');
+        
+        function renderMath(container, texString, title = "") {
+            const div = document.createElement('div');
+            div.className = 'cyber-card p-6';
+            
+            let htmlContent = "";
+            if (title) {
+                htmlContent += `<h3 class="step-title">${title}</h3>`;
+            }
+            htmlContent += `<div class="math-block text-center text-lg text-blue-700"></div>`;
+            
+            div.innerHTML = htmlContent;
+            container.appendChild(div);
+
+            katex.render(texString, div.querySelector('.math-block'), {
+                displayMode: true,
+                throwOnError: false,
+                strict: false
+            });
+        }
+
+        function calculateDanilevsky() {
+            document.getElementById('empty-state').classList.add('hidden');
+            out.innerHTML = ""; // Clear previous
+            out.classList.remove('hidden');
+
+            // 1. Read Matrix
+            let A = [];
+            for (let i = 0; i < 3; i++) {
+                A[i] = [];
+                for (let j = 0; j < 3; j++) {
+                    A[i][j] = parseFloat(document.getElementById(`a${i}${j}`).value);
+                }
+            }
+
+            renderMath(out, `A = \\begin{pmatrix} ${A[0].join(' & ')} \\\\ ${A[1].join(' & ')} \\\\ ${A[2].join(' & ')} \\end{pmatrix}`, "1. Berilgan Matritsa");
+
+            // 2. Qadam: M2 va teskarisi
+            let a31 = A[2][0], a32 = A[2][1], a33 = A[2][2];
+            let M2 = [
+                [1, 0, 0],
+                [-a31 / a32, 1 / a32, -a33 / a32],
+                [0, 0, 1]
+            ];
+            let M2_inv = [
+                [1, 0, 0],
+                [a31, a32, a33],
+                [0, 0, 1]
+            ];
+
+            let texM2 = `M_2 = \\begin{pmatrix} 1 & 0 & 0 \\\\ -\\frac{a_{31}}{a_{32}} & \\frac{1}{a_{32}} & -\\frac{a_{33}}{a_{32}} \\\\ 0 & 0 & 1 \\end{pmatrix} = \\begin{pmatrix} 1 & 0 & 0 \\\\ ${formatNum(M2[1][0])} & ${formatNum(M2[1][1])} & ${formatNum(M2[1][2])} \\\\ 0 & 0 & 1 \\end{pmatrix}`;
+            renderMath(out, texM2, "2. Birinchi O'xshashlik Almashtirishi (M₂)");
+
+            // 3. O'xshash Matritsa C = M2_inv * A * M2
+            let AM2 = math.multiply(A, M2);
+            let C = math.multiply(M2_inv, AM2);
+
+            let texC = `C = M_2^{-1} \\cdot A \\cdot M_2 = \\begin{pmatrix} ${formatNum(C[0][0])} & ${formatNum(C[0][1])} & ${formatNum(C[0][2])} \\\\ ${formatNum(C[1][0])} & ${formatNum(C[1][1])} & ${formatNum(C[1][2])} \\\\ 0 & 1 & 0 \\end{pmatrix}`;
+            renderMath(out, texC, "3. Oraliq C Matritsani Hisoblash");
+
+            // 4. Qadam: M1 va teskarisi
+            let c21 = C[1][0], c22 = C[1][1], c23 = C[1][2];
+            let M1 = [
+                [1 / c21, -c22 / c21, -c23 / c21],
+                [0, 1, 0],
+                [0, 0, 1]
+            ];
+            let M1_inv = [
+                [c21, c22, c23],
+                [0, 1, 0],
+                [0, 0, 1]
+            ];
+
+            let texM1 = `M_1 = \\begin{pmatrix} \\frac{1}{c_{21}} & -\\frac{c_{22}}{c_{21}} & -\\frac{c_{23}}{c_{21}} \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{pmatrix} = \\begin{pmatrix} ${formatNum(M1[0][0])} & ${formatNum(M1[0][1])} & ${formatNum(M1[0][2])} \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{pmatrix}`;
+            renderMath(out, texM1, "4. Ikkinchi Almashtirish (M₁)");
+
+            // 5. Frobenius Matritsasi
+            let CM1 = math.multiply(C, M1);
+            let P = math.multiply(M1_inv, CM1);
+
+            let p1 = P[0][0], p2 = P[0][1], p3 = P[0][2];
+            let texP = `P = M_1^{-1} \\cdot C \\cdot M_1 = \\begin{pmatrix} ${formatNum(p1)} & ${formatNum(p2)} & ${formatNum(p3)} \\\\ 1 & 0 & 0 \\\\ 0 & 1 & 0 \\end{pmatrix}`;
+            renderMath(out, texP, "5. Normal Frobenius Ko'rinishi (P)");
+
+            // 6. Xarakteristik Ko'phad
+            let texPoly = `D(\\lambda) = \\lambda^3 - (${formatNum(p1)})\\lambda^2 - (${formatNum(p2)})\\lambda - (${formatNum(p3)}) = 0`;
+            renderMath(out, texPoly, "6. Xarakteristik Tenglama");
+
+            // 7. Xos Sonni Nyuton Usulida Qidirish
+            let x0 = 100; // Boshlang'ich taqribiylik
+            for (let step = 0; step < 50; step++) {
+                let fx = Math.pow(x0, 3) - p1 * Math.pow(x0, 2) - p2 * x0 - p3;
+                let dfx = 3 * Math.pow(x0, 2) - 2 * p1 * x0 - p2;
+                x0 = x0 - (fx / dfx);
+            }
+            let lambda1 = x0;
+
+            let texEigVal = `\\text{Nyuton usulidagi yechim: } \\lambda_1 \\approx ${formatNum(lambda1)}`;
+            renderMath(out, texEigVal, "7. Haqiqiy Xos Son (λ)");
+
+            // 8. Xos Vektorni Topish
+            let Y1 = [[Math.pow(lambda1, 2)], [lambda1], [1]];
+            let texY = `y^{(1)} = \\begin{pmatrix} \\lambda_1^2 \\\\ \\lambda_1 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} ${formatNum(Y1[0][0])} \\\\ ${formatNum(Y1[1][0])} \\\\ 1 \\end{pmatrix}`;
+            renderMath(out, texY, "8. Frobenius Matritsasining Xos Vektori");
+
+            // Asl xos vektor X = M2 * M1 * Y
+            let M_total = math.multiply(M2, M1);
+            let X1 = math.multiply(M_total, Y1);
+
+            let texX = `
+                X^{(1)} = M_2 \\cdot M_1 \\cdot y^{(1)} = 
+                \\begin{pmatrix} ${formatNum(X1[0][0])} \\\\ ${formatNum(X1[1][0])} \\\\ ${formatNum(X1[2][0])} \\end{pmatrix}`;
+            
+            // For the last one, special style result-box-cyan
+            const lastDiv = document.createElement('div');
+            lastDiv.className = 'cyber-card p-6 result-box-cyan mt-6';
+            lastDiv.innerHTML = `
+                <h3 class="step-title" style="border-bottom-color: #bae6fd; color: #0369a1;">9. Dastlabki A Matritsaning Xos Vektori</h3>
+                <div class="math-block bg-transparent border-0 text-blue-800" style="margin: 0; padding: 0;"></div>
+            `;
+            out.appendChild(lastDiv);
+            katex.render(texX, lastDiv.querySelector('.math-block'), {
+                displayMode: true,
+                throwOnError: false,
+                strict: false
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.9.10",
+    "date": "2026-05-19",
+    "color": "#ff00ea",
+    "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Danilevskiy-Usuli.html\">Daniylevskiy Usuli</a> usuli qo'shildi, lekin hozircha u faqat demo rejimda ishlaydi. <br> Yangi usul uchun SEO va OG qo'shildi. <br> SITEMAP yangilandi. <br> <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Integral-Simpson.html\">Integral Simpson usuli</a> n (ya'ni bo'laklar soni maximum 1000 ta qilib belgilandi.) va usul optimallashtirildi(website performance tomonlama)." 
+  },
+  {
     "version": "v2.9.9",
     "date": "2026-05-18",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/togri-tortburchak-usuli.html\">Tog'ri To'rtburchak usuli</a> va <a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/trapetsiya-usuli.html\">Trapetsiya usul</a>larida x^2 muammosi tog'irlandi. <br><a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Integral-Simpson.html\">Integral Simpson usuli</a> qo'shildi. <br> Yangi sahifa uchun SEO va OG qo'shildi. <br> SITEMAP yangilandi. <br>Boshqa sahifalarda xatoliklar tuzatildi."
   },
   {

@@ -155,6 +155,12 @@
       icon: '🧮',
       href: base + 'src/Sonli-Usullar/Integral-Simpson.html',
     },
+    {
+      id: 'danilevskiy-usuli',
+      label: 'DANILEVSKIY USULI (Xos+Son/Vektor)',
+      icon: '🧮',
+      href: base + 'src/Sonli-Usullar/Danilevskiy-Usuli.html',
+    },
     // {
     //   id: 'splayn-interpolatsiya-usuli',
     //   label: 'SPLAYN INTERPOLATSIYA USULI',
