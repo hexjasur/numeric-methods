@@ -9,7 +9,7 @@
  * Versioning: Update CACHE_VERSION when making changes
  */
 
-const CACHE_VERSION = 'v2.9.10';
+const CACHE_VERSION = 'v2.9.11';
 const CACHE_NAME_STATIC = `sonli-usullar-static-${CACHE_VERSION}`;
 const CACHE_NAME_PAGES = `sonli-usullar-pages-${CACHE_VERSION}`;
 const CACHE_NAME_OFFLINE = `sonli-usullar-offline-${CACHE_VERSION}`;

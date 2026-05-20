@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Метод хорд, Vatar (Sekant) Usuli — Secant Method | Sonli Usullar — sonli-usullar.uz</title>
+  <title>Vatar (Regula Falsi) Usuli — False Position Method | Sonli Usullar — sonli-usullar.uz</title>
 
   <!-- Primary SEO -->
   <meta name="description"
-    content="Метод хорд, Vatar (sekant) usuli — hosila hisoblashsiz ildiz topish. Ikki nuqtadan o'tuvchi to'g'ri chiziq (vatar) yordamida: xₙ₊₁ = xₙ - f(xₙ)·(xₙ-xₙ₋₁)/(f(xₙ)-f(xₙ₋₁)). KaTeX bosqichlar. QarDU.">
+    content="Vatarlar usuli (Regula Falsi / False Position) — algebraik tenglamalar ildizlarini topishning ishonchli va hosilasiz usuli. Har bir qadamda interval f(a)·f(b)<0 sharti bo'yicha yangilanadi. Bosqichma-bosqich yechim, KaTeX va Math.js.">
   <meta name="keywords"
-    content="метод хорд, vatar usuli, sekant usuli, secant method, chord method, hosilasiz usul, sonli usullar, algebraik tenglama, QarDU, Haydarov Jasurbek">
+    content="vatar usuli, regula falsi, false position, vatarlar usuli, hosilasiz usul, sonli usullar, algebraik tenglama, QarDU, Haydarov Jasurbek">
   <!-- Head Manager (DRY) -->
   <script>
     window.HEAD_BASE = '../../';
@@ -30,16 +30,16 @@
   <meta property="og:url" content="https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html">
   <meta property="og:site_name" content="Sonli Usullar">
   <meta property="og:locale" content="uz_UZ">
-  <meta property="og:title" content="Vatar (Sekant) Usuli — Secant Method | sonli-usullar.uz">
+  <meta property="og:title" content="Vatar (Regula Falsi) Usuli — False Position Method | sonli-usullar.uz">
   <meta property="og:description"
-    content="Hosila hisoblashsiz ildiz topish — farq kvotenti yordamida sekant usuli. Interaktiv hisob va KaTeX bosqichlar.">
+    content="Hosila hisoblashsiz ildiz topish — Regula Falsi (False Position) usuli. Interaktiv hisob va KaTeX bosqichlar.">
   <meta property="og:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-vatar-usuli.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Vatar (Sekant) Usuli | sonli-usullar.uz">
+  <meta name="twitter:title" content="Vatar (Regula Falsi) Usuli | sonli-usullar.uz">
   <meta name="twitter:description"
-    content="Hosila kerak emas — vatar usuli bilan ildiz topish. KaTeX bosqichlar, interaktiv misолlar. QarDU.">
+    content="Hosila kerak emas — vatar (Regula Falsi) usuli bilan ildiz topish. KaTeX bosqichlar, interaktiv misollar. QarDU.">
   <meta name="twitter:image" content="https://www.sonli-usullar.uz/src/assets/images/og/og-vatar-usuli.png">
 
   <!-- JSON-LD -->
@@ -47,8 +47,8 @@
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Vatar (Sekant) Usuli",
-    "description": "Vatar usuli — hosila hisoblashsiz, farq kvotenti orqali algebraik tenglamalar ildizini iterativ topish.",
+    "name": "Vatar (Regula Falsi) Usuli",
+    "description": "Vatar (Regula Falsi) usuli — hosila hisoblashsiz, interval bo'lish orqali algebraik tenglamalar ildizini iterativ topish.",
     "url": "https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html",
     "inLanguage": "uz",
     "educationalLevel": "University",
@@ -102,21 +102,21 @@
 
       <header class="p-6 mb-8 text-center bg-white cyber-card">
         <h1 style="font-family:'Orbitron',sans-serif" class="text-2xl font-black">
-          VATAR (SEKANT) USULI
+          VATAR (REGULA FALSI) USULI
         </h1>
         <p class="text-[10px] font-bold text-gray-500 uppercase mt-1">QarDU | Amaliy Matematika | 023-40 guruh</p>
       </header>
 
       <!-- Info card -->
       <div class="p-3 mt-3 mb-6 space-y-2 text-xs border bg-sky-50 cyber-card">
-        <div><b>📌 Vatar usuli haqida:</b></div>
+        <div><b>📌 Vatarlar (Regula Falsi) usuli haqida:</b></div>
         <div>Formula:
-          <code>x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>) · (x<sub>n</sub> - x<sub>n-1</sub>) / (f(x<sub>n</sub>) - f(x<sub>n-1</sub>))</code>
+          <code>x<sub>n+1</sub> = x<sub>n</sub> - ( (x<sub>n</sub> - x<sup>*</sup>) / (f(x<sub>n</sub>) - f(x<sup>*</sup>)) ) · f(x<sub>n</sub>)</code>
         </div>
-        <div>Boshlanish: ikkita boshlang'ich nuqta kerak — <code>x₀ = a</code>, <code>x₁ = b</code></div>
-        <div>Hosila hisoblanmaydi — farq kvotenti ishlatiladi</div>
+        <div>Boshlanish: boshlang'ich oraliq <code>[a, b]</code> kiritiladi va <code>f(a) · f(b) &lt; 0</code> sharti tekshiriladi.</div>
+        <div>Interval yangilanishi: har bir iteratsiyada yangi nuqta <code>x<sub>n+1</sub></code> hisoblanib, ildiz joylashgan oraliq yangilanadi.</div>
         <div>To'xtash sharti: <code>|x<sub>n+1</sub> - x<sub>n</sub>| &lt; ε</code></div>
-        <div class="font-bold text-sky-700">⚡ Nyutondan sekinroq, lekin hech qanday hosila kerak emas</div>
+        <div class="font-bold text-sky-700">⚡ Nyutondan sekinroq, lekin biseksiya usulidan tezroq va har doim yaqinlashadi!</div>
       </div>
 
       <!-- Examples -->
@@ -215,7 +215,7 @@
       { func: "x^3 + x - 1", latex: "x^3 + x - 1", a: 0, b: 1, eps: 0.01 },
       { func: "x - 1 = sin(x)/10", latex: "x - 1 = \\frac{\\sin(x)}{10}", a: 1, b: 1.1, eps: 0.01 },
       { func: "x^2 - 2", latex: "x^2 - 2", a: 1, b: 2, eps: 0.01 },
-      { func: "exp(x) - 3*x", latex: "e^{x} - 3x", a: 0, b: 2, eps: 0.01 },
+      { func: "exp(x) - 3*x", latex: "e^{x} - 3x", a: 0, b: 1, eps: 0.01 },
       { func: "x-arcsin((x+1)/4)", latex: "x - \\arcsin(\\frac{x+1}{4})", a: 0, b: 1, eps: 0.01 },
     ];
 
@@ -235,53 +235,160 @@
       container.innerHTML = '';
       examples.forEach((ex, i) => {
         const el = document.createElement('div');
-        el.className = "p-2 bg-white border cursor-pointer hover:bg-sky-50";
+        el.className = "p-2 bg-white border cursor-pointer hover:bg-sky-50 rounded shadow-sm text-center transition-all duration-200 hover:-translate-y-0.5";
         el.onclick = () => applyExample(ex);
         const mathId = `ex-${i}`;
         el.innerHTML = `
-          <div id="${mathId}" class="text-center text-sky-600"></div>
-          <div class="text-[10px] mt-1 text-gray-500 text-center">[${ex.a}, ${ex.b}], ε = ${ex.eps}</div>
+          <div id="${mathId}" class="text-sm text-sky-600"></div>
+          <div class="text-[10px] mt-1 text-gray-500">[${ex.a}, ${ex.b}], ε = ${ex.eps}</div>
         `;
         container.appendChild(el);
         setTimeout(() => katex.render(ex.latex, document.getElementById(mathId), { throwOnError: false }), 0);
       });
     }
 
-    // KaTeX va Math.js load bo'lgandan keyin chaqir
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () {
-        setTimeout(() => {
-          renderPreview();
-          renderExamples();
-          // Render vatar formula
-          if (typeof katex !== 'undefined') {
-            katex.render(
-              "x_{n+1} = x_n - \\frac{f(x_n) \\cdot (x_n - x_{n-1})}{f(x_n) - f(x_{n-1})}",
-              document.getElementById('vatar-formula'), { throwOnError: false }
-            );
-          }
-        }, 100);
-      });
-    } else {
-      setTimeout(() => {
-        renderPreview();
-        renderExamples();
-        // Render vatar formula
-        if (typeof katex !== 'undefined') {
-          katex.render(
-            "x_{n+1} = x_n - \\frac{f(x_n) \\cdot (x_n - x_{n-1})}{f(x_n) - f(x_{n-1})}",
-            document.getElementById('vatur-formula'), { throwOnError: false }
-          );
-        }
-      }, 100);
+    // KaTeX va Math.js yuklangach chaqiriladigan yordamchi
+    function initPage() {
+      renderPreview();
+      renderExamples();
+      if (typeof katex !== 'undefined') {
+        katex.render(
+          "x_{n+1} = x_n - \\frac{x_n - x^*}{f(x_n) - f(x^*)} \\cdot f(x_n)",
+          document.getElementById('vatar-formula'), { throwOnError: false }
+        );
+      }
     }
 
-    // ── Main calculation ──────────────────────────────────────────────────
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(initPage, 100));
+    } else {
+      setTimeout(initPage, 100);
+    }
+
+    // ── Dynamic KaTeX Evaluation Substitution Helper ────────────────────────
+    function getEvaluationLaTeX(node, val) {
+      const valFormatted = Number(val.toFixed(6));
+      // Replaces symbol 'x' with the parenthesized value node
+      const transformedNode = node.transform(function (childNode) {
+        if (childNode.isSymbolNode && childNode.name === 'x') {
+          return math.parse(`(${valFormatted})`);
+        }
+        return childNode;
+      });
+      return transformedNode.toTex();
+    }
+
+    // ── Core Solver (Modular calculation logic) ────────────────────────────
+    function solveRegulaFalsi(funcStr, a_init, b_init, eps, maxIter = 100) {
+      // 1. Compile math function
+      const compiled = math.compile(funcStr);
+      const f = x => compiled.evaluate({ x });
+      const parsedNode = math.parse(funcStr);
+
+      let a = a_init;
+      let b = b_init;
+      let fa = f(a);
+      let fb = f(b);
+
+      // Verify sign condition
+      if (fa * fb > 0) {
+        return {
+          success: false,
+          errorMsg: `Oraliqning chetki nuqtalarida f(a) va f(b) bir xil ishoraga ega! f(a)·f(b) < 0 sharti bajarilishi lozim.<br>` +
+                    `f(a) = f(${a.toFixed(5)}) = ${fa.toFixed(5)}<br>` +
+                    `f(b) = f(${b.toFixed(5)}) = ${fb.toFixed(5)}`
+        };
+      }
+
+      const steps = [];
+      let x_old = b; // Initialize the previous approximation as the right boundary
+      let k = 0;
+      let converged = false;
+
+      while (k < maxIter) {
+        k++;
+        
+        // Regula Falsi formula: x_new = b - f(b)*(b - a)/(f(b) - f(a))
+        // Or in terms of x_n = b and x^* = a:
+        // x_new = x_n - (x_n - x^*)/(f(x_n) - f(x^*)) * f(x_n)
+        const x_n = b;
+        const x_star = a;
+        const fx_n = fb;
+        const fx_star = fa;
+
+        const denom = fx_n - fx_star;
+        if (Math.abs(denom) < 1e-15) {
+          return {
+            success: false,
+            errorMsg: `Iteratsiya to'xtatildi: Nolga bo'linish yuz berdi (f(x_n) - f(x^*) ≈ 0)!`,
+            steps
+          };
+        }
+
+        const x_new = x_n - ((x_n - x_star) / denom) * fx_n;
+        const fx_new = f(x_new);
+        const diff = Math.abs(x_new - x_old);
+
+        const currentStep = {
+          k,
+          a,
+          b,
+          fa,
+          fb,
+          x_n,
+          x_star,
+          fx_n,
+          fx_star,
+          x_new,
+          fx_new,
+          diff,
+          a_tex: getEvaluationLaTeX(parsedNode, a),
+          b_tex: getEvaluationLaTeX(parsedNode, b),
+          x_new_tex: getEvaluationLaTeX(parsedNode, x_new),
+          converged: diff < eps
+        };
+
+        steps.push(currentStep);
+
+        if (diff < eps || Math.abs(fx_new) < 1e-15) {
+          converged = true;
+          break;
+        }
+
+        if (!isFinite(x_new)) {
+          return {
+            success: false,
+            errorMsg: `Iteratsiya to'xtatildi: Cheksiz qiymat aniqlandi.`,
+            steps
+          };
+        }
+
+        // Update interval
+        if (fa * fx_new < 0) {
+          b = x_new;
+          fb = fx_new;
+        } else {
+          a = x_new;
+          fa = fx_new;
+        }
+        x_old = x_new; // Update previous approximation for the next step
+      }
+
+      return {
+        success: true,
+        converged,
+        steps,
+        finalX: steps[steps.length - 1].x_new,
+        finalVal: steps[steps.length - 1].fx_new,
+        totalIterations: k
+      };
+    }
+
+    // ── Main Controller & DOM Manipulation ─────────────────────────────────
     function calculate() {
       let funcStr = document.getElementById('funcInput').value.trim();
 
-      // Tenglama ko'rinishidagi kiritishni funksiyaga o'tkazish
-      // Masalan: x^2 + x = 1  →  x^2 + x - 1
+      // Convert equations with "=" to standard functions
       if (funcStr.includes('=')) {
         const parts = funcStr.split('=');
         if (parts.length === 2) {
@@ -297,99 +404,125 @@
       const resultsContainer = document.getElementById('results-container');
       const finalVerify = document.getElementById('final-verify');
 
+      // Clear previous outputs
       resultsContainer.innerHTML = '';
       finalVerify.classList.add('hidden');
 
       try {
-        const compiled = math.compile(funcStr);
-        const f = x => compiled.evaluate({ x });
+        const result = solveRegulaFalsi(funcStr, a, b, eps);
 
-        // Secant: two starting points x_prev = a, x_curr = b
-        let x_prev = a;
-        let x_curr = b;
-        let k = 0;
-        const MAX_ITER = 100;
-        let converged = false;
-
-        while (k < MAX_ITER) {
-          k++;
-          const fp = f(x_prev);
-          const fc = f(x_curr);
-          const denom = fc - fp;
-
-          if (Math.abs(denom) < 1e-15) {
-            resultsContainer.innerHTML += `<div class="p-4 cyber-card bg-red-50 text-red-700 font-bold">
-              ${k}-qadamda f(xₙ) - f(xₙ₋₁) ≈ 0 (bo'linish noli) — usul to'xtadi!
+        if (!result.success) {
+          resultsContainer.innerHTML = `
+            <div class="p-5 border-2 border-red-600 bg-red-50 text-red-700 font-bold cyber-card rounded-lg">
+              <div class="text-sm font-black uppercase mb-1">❌ Xatolik yuz berdi:</div>
+              <div class="text-xs font-mono">${result.errorMsg}</div>
             </div>`;
-            break;
-          }
+          return;
+        }
 
-          // x_new = x_curr - f(x_curr)*(x_curr - x_prev) / (f(x_curr) - f(x_prev))
-          const x_new = x_curr - fc * (x_curr - x_prev) / denom;
-          const diff = Math.abs(x_new - x_curr);
-
-          // Step card
+        // Render each step inside a beautiful premium card
+        result.steps.forEach(step => {
           const card = document.createElement('div');
-          card.className = 'cyber-card p-4 bg-white';
+          card.className = 'cyber-card p-5 bg-white border-l-8 border-l-sky-500 shadow-sm transition-transform duration-200 hover:scale-[1.01]';
 
-          const stepId = `step-${k}`;
-          const quotId = `quot-${k}`;
-          const errId = `err-${k}`;
+          const faId = `fa-calc-${step.k}`;
+          const fbId = `fb-calc-${step.k}`;
+          const fxId = `fx-calc-${step.k}`;
+          const formulaId = `formula-${step.k}`;
+          const errId = `err-${step.k}`;
+
+          // Format strings
+          const signStr = step.fa * step.fx_new < 0
+            ? `f(a) \\cdot f(x_{new}) < 0 \\implies \\text{yangi oraliq: } [a, x_{new}] = [${step.a.toFixed(5)}, ${step.x_new.toFixed(5)}]`
+            : `f(x_{new}) \\cdot f(b) < 0 \\implies \\text{yangi oraliq: } [x_{new}, b] = [${step.x_new.toFixed(5)}, ${step.b.toFixed(5)}]`;
 
           card.innerHTML = `
-            <div class="step-title">${k}-yaqinlashish (Vatar):</div>
-            <div id="${quotId}" class="text-xs text-gray-600 mb-1 katex-block"></div>
-            <div id="${stepId}" class="mb-2 katex-block"></div>
-            <div class="error-text">Xatolik:</div>
-            <div id="${errId}" class="text-sm font-bold katex-block"></div>
+            <div class="flex justify-between items-center border-b border-dashed border-sky-100 pb-2 mb-3">
+              <span class="text-xs font-black text-sky-700 uppercase tracking-wider">Iteratsiya #${step.k}</span>
+              <span class="text-[10px] font-mono text-gray-400">Oraliq: [${step.a.toFixed(5)}, ${step.b.toFixed(5)}]</span>
+            </div>
+            
+            <div class="space-y-2 text-xs mb-3">
+              <div><b>Funksiya qiymatlarini hisoblash:</b></div>
+              <div id="${faId}" class="katex-block bg-sky-50/50 p-1.5 rounded font-mono"></div>
+              <div id="${fbId}" class="katex-block bg-sky-50/50 p-1.5 rounded font-mono"></div>
+            </div>
+
+            <div class="space-y-2 text-xs mb-3">
+              <div><b>Yangi yaqinlashish nuqtasini topish:</b></div>
+              <div id="${formulaId}" class="katex-block bg-sky-50 p-2 rounded border border-sky-100"></div>
+              <div id="${fxId}" class="katex-block bg-sky-50/50 p-1.5 rounded font-mono"></div>
+            </div>
+
+            <div class="pt-2 border-t border-gray-100 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-gray-600">Yaqinlashish sharti:</span>
+                <span id="${errId}" class="font-mono font-bold"></span>
+              </div>
+              <div class="text-[11px] text-sky-700 italic font-medium mt-1">
+                Qaror: <span class="font-mono">${step.converged ? "Kriteriy bajarildi. Iteratsiya tugallandi." : "Davom etamiz. " + signStr}</span>
+              </div>
+            </div>
           `;
           resultsContainer.appendChild(card);
 
-          // Farq kvotenti
-          katex.render(
-            `\\frac{f(x_{${k}}) - f(x_{${k - 1}})}{x_{${k}} - x_{${k - 1}}} = \\frac{${fc.toFixed(5)}}{${(x_curr - x_prev).toFixed(5)}} \\approx ${(denom / (x_curr - x_prev)).toFixed(5)}`,
-            document.getElementById(quotId), { throwOnError: false }
-          );
-          katex.render(
-            `x_{${k + 1}} = ${x_curr.toFixed(5)} - \\frac{${fc.toFixed(5)} \\cdot (${(x_curr - x_prev).toFixed(5)})}{${denom.toFixed(5)}} \\approx ${x_new.toFixed(5)}`,
-            document.getElementById(stepId), { throwOnError: false }
-          );
-          const sym = diff < eps ? '<' : '>';
-          katex.render(
-            `|x_{${k + 1}} - x_{${k}}| = ${diff.toFixed(6)} ${sym} \\varepsilon`,
-            document.getElementById(errId), { throwOnError: false }
-          );
+          // Render step math equations using KaTeX
+          setTimeout(() => {
+            // f(a)
+            katex.render(
+              `f(a) = f(${step.a.toFixed(5)}) = ${step.a_tex} \\approx ${step.fa.toFixed(6)}`,
+              document.getElementById(faId), { throwOnError: false }
+            );
+            // f(b)
+            katex.render(
+              `f(b) = f(${step.b.toFixed(5)}) = ${step.b_tex} \\approx ${step.fb.toFixed(6)}`,
+              document.getElementById(fbId), { throwOnError: false }
+            );
+            // Regula Falsi chord intersection formula
+            const formattedXStar = step.x_star < 0 ? `(${step.x_star.toFixed(5)})` : step.x_star.toFixed(5);
+            const formattedFxStar = step.fx_star < 0 ? `(${step.fx_star.toFixed(5)})` : step.fx_star.toFixed(5);
+            katex.render(
+              `x_{${step.k}} = x_n - \\frac{x_n - x^*}{f(x_n) - f(x^*)} \\cdot f(x_n) = ` +
+              `${step.x_n.toFixed(5)} - \\frac{${step.x_n.toFixed(5)} - ${formattedXStar}}{${step.fx_n.toFixed(5)} - ${formattedFxStar}} \\cdot (${step.fx_n.toFixed(5)}) \\approx ${step.x_new.toFixed(6)}`,
+              document.getElementById(formulaId), { throwOnError: false }
+            );
+            // f(x_new)
+            katex.render(
+              `f(x_{${step.k}}) = f(${step.x_new.toFixed(5)}) = ${step.x_new_tex} \\approx ${step.fx_new.toFixed(8)}`,
+              document.getElementById(fxId), { throwOnError: false }
+            );
+            // Error difference
+            const sym = step.diff < eps ? '<' : '>';
+            const colorClass = step.converged ? 'text-green-600 font-extrabold' : 'text-amber-600';
+            const element = document.getElementById(errId);
+            element.className += ` ${colorClass}`;
+            katex.render(
+              `|x_{${step.k}} - x_{${step.k - 1}}| = |${step.x_new.toFixed(6)} - ${step.x_n.toFixed(6)}| = ${step.diff.toFixed(6)} ${sym} \\varepsilon`,
+              element, { throwOnError: false }
+            );
+          }, 0);
+        });
 
-          x_prev = x_curr;
-          x_curr = x_new;
-
-          if (diff < eps) {
-            converged = true;
-            break;
-          }
-
-          if (!isFinite(x_new)) {
-            resultsContainer.innerHTML += `<div class="p-4 cyber-card bg-red-50 text-red-700 font-bold">
-              ${k}-qadamda son cheksizlikka o'tib ketdi — parametrlarni o'zgartiring.
-            </div>`;
-            break;
-          }
-        }
-
-        if (converged) {
+        // If convergence is achieved, show beautiful final results box
+        if (result.converged) {
           finalVerify.classList.remove('hidden');
           katex.render(
-            `\\xi \\approx ${x_curr.toFixed(6)},\\quad f(\\xi) = ${f(x_curr).toFixed(8)},\\quad k = ${k}`,
+            `\\xi \\approx ${result.finalX.toFixed(6)},\\quad f(\\xi) = ${result.finalVal.toFixed(8)},\\quad k = ${result.totalIterations}`,
             document.getElementById('verify-math'), { throwOnError: false }
           );
-        } else if (k >= MAX_ITER) {
-          resultsContainer.innerHTML += `<div class="p-4 cyber-card bg-yellow-50 text-yellow-700 font-bold">
-            ${MAX_ITER} iteratsiyadan keyin ham yaqinlashmadi. Oraliqni yoki aniqlikni o'zgartiring.
-          </div>`;
+        } else {
+          resultsContainer.innerHTML += `
+            <div class="p-4 border-2 border-amber-500 bg-amber-50 text-amber-700 font-bold cyber-card rounded-lg">
+              Tenglama berilgan ${result.totalIterations} iteratsiyada yaqinlashmadi. Oraliq yoki aniqlik darajasini o'zgartiring!
+            </div>`;
         }
 
       } catch (err) {
-        resultsContainer.innerHTML = `<div class="p-4 cyber-card bg-red-50 text-red-700 font-bold">Xatolik: ${err.message}</div>`;
+        resultsContainer.innerHTML = `
+          <div class="p-5 border-2 border-red-600 bg-red-50 text-red-700 font-bold cyber-card rounded-lg">
+            <div class="text-sm font-black uppercase mb-1">❌ Hisoblashda xatolik:</div>
+            <div class="text-xs font-mono">${err.message}</div>
+          </div>`;
       }
     }
   </script>
