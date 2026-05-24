@@ -38,7 +38,11 @@
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.2.2",
-    "tailwindcss": "^4.2.2"
+    "@tailwindcss/vite": "^4.3.0",
+    "@vitejs/plugin-react": "^6.0.2",
+    "react": "^19.2.6",
+    "tailwindcss": "^4.2.2",
+    "vite": "^8.0.14"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
