@@ -1,8 +1,14 @@
 [
   {
+    "version": "v2.9.12",
+    "date": "2026-06-07",
+    "color": "#ff00ea",
+    "description": "#devUpdates: <br> GitHub'dagi loyiha open source rejimi uchun tayyorlandi endi loyiha kodlari ochiq manbali va loyihadan foydalanish uchun qo'llanma tayyorlandi(uz, eng, rus)."
+  },
+  {
     "version": "v2.9.11",
     "date": "2026-05-20",
-    "color": "#ff00ea",
+    "color": "",
     "description": "<a class=\"underline text-blue-700 font-bold\" href=\"https://www.sonli-usullar.uz/src/Sonli-Usullar/Vatar-Usuli.html\">Vatar Usuli</a> Secant method'dan guarantees-converging <b>Regula Falsi (False Position)</b> algoritmi bilan almashtirildi. <br> Har bir iteratsiya uchun premium dizayndagi Tailwind CSS card'lar va dynamic KaTeX yordamida formula qiymatlarini ko'rsatuvchi vizualizatsiya qo'shildi. <br> math.js AST orqali funksiya argumentlarini almashtirib hisob ko'rsatish yo'lga qo'yildi va boshlang'ich oraliq f(a)·f(b) < 0 sharti tekshirilishi qo'shildi."
   },
   {
