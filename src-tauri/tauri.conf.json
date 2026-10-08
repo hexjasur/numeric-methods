@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Numeric Methods",
+  "version": "3.0.0",
+  "identifier": "uz.sonliusullar.numericmethods",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:3000",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../out"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Numeric Methods",
+        "width": 1440,
+        "height": 920,
+        "minWidth": 960,
+        "minHeight": 640,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "Education",
+    "shortDescription": "Sonli usullarni interaktiv o‘rganish laboratoriyasi",
+    "longDescription": "Numeric Methods — sonli usullar va ildiz topish algoritmlarini o‘rganish uchun desktop va mobile ilova."
+  }
+}
