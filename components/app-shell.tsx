@@ -8,286 +8,41 @@ import { LayoutDashboard, Menu, Sigma, X } from 'lucide-react';
 import logo from '@/public/logo.png';
 import { ThemeToggle } from '@/components/theme-toggle';
 
-/* ──────────────────────────────────────────────────────────────
-   APP SHELL  ·  single-file layout
-   Dizayn: "Print Stream" — bisection-method.tsx bilan bir xil tizim.
-   Dark/Light: tizim rejimi yoki <html class="dark|light"> /
-   data-theme="dark|light". Tailwind tokenlariga bog'liq emas.
-   ────────────────────────────────────────────────────────────── */
-
 const navigation = [
   { href: '/', label: 'Dashboard', code: '00', icon: LayoutDashboard },
-  {
-    href: '/methods/bisection',
-    label: 'Bisection Method',
-    code: '01',
-    icon: Sigma,
-  },
+  { href: '/methods/bisection', label: 'Bisection Method', code: '01', icon: Sigma },
 ];
 
-export function AppShell({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pageTitle = pathname === '/' ? 'Dashboard' : 'Bisection Method';
 
   useEffect(() => {
     if (!mobileOpen) return;
-    const onKey = (e: KeyboardEvent) =>
-      e.key === 'Escape' && setMobileOpen(false);
+    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && setMobileOpen(false);
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [mobileOpen]);
 
-  const pageTitle = pathname === '/' ? 'Dashboard' : 'Bisection Method';
-
-  return (
-    <div className="as">
-      <style>{CSS}</style>
-
-      {/* ───────── SIDEBAR ───────── */}
-      <aside
-        className={`as-side ${mobileOpen ? 'is-open' : ''}`}
-        aria-label="Asosiy navigatsiya"
-      >
-        <div className="as-side-top">
-          <Link
-            href="/"
-            className="as-brand"
-            aria-label="Numeric Methods bosh sahifasi"
-          >
-            <span className="as-logo">
-              <Image src={logo} width={40} height={40} alt="Numeric Methods" />
-            </span>
-            <span className="as-brand-txt">
-              <strong>NUMERIC</strong>
-              <small>METHODS / 3.0</small>
-            </span>
-          </Link>
-          <button
-            className="as-icon-btn as-only-mobile"
-            onClick={() => setMobileOpen(false)}
-            aria-label="Menyuni yopish"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        <div className="as-section">
-          <span>Laboratoriya</span>
-          <i aria-hidden />
-        </div>
-
-        <nav className="as-nav">
-          {navigation.map((item) => {
-            const active =
-              item.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`as-link ${active ? 'is-active' : ''}`}
-                aria-current={active ? 'page' : undefined}
-              >
-                <item.icon size={20} strokeWidth={active ? 2.4 : 2} />
-                <span className="as-link-label">{item.label}</span>
-                <em>{item.code}</em>
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="as-side-bottom">
-          <div className="as-status">
-            <span className="as-dot" />
-            <div>
-              <strong>Hisoblash muhiti</strong>
-              <small>Math.js + KaTeX</small>
-            </div>
-          </div>
-          <div className="as-serial" aria-hidden>
-            <span>SN-3.0</span>
-            <i />
-            <span>MK-1</span>
-          </div>
-        </div>
-      </aside>
-
-      {mobileOpen && (
-        <button
-          className="as-backdrop"
-          onClick={() => setMobileOpen(false)}
-          aria-label="Menyuni yopish"
-        />
-      )}
-
-      {/* ───────── CONTENT ───────── */}
-      <div className="as-body">
-        <header className="as-head">
-          <div className="as-head-left">
-            <button
-              className="as-icon-btn as-only-mobile"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Menyuni ochish"
-            >
-              <Menu size={20} />
-            </button>
-            <div className="as-crumbs">
-              <span className="as-crumb-root">Numeric Methods</span>
-              <b className="as-crumb-sep">/</b>
-              <strong>{pageTitle}</strong>
-            </div>
-          </div>
-
-          <div className="as-head-right">
-            <span className="as-online">
-              <i className="as-dot" /> Online
-            </span>
-            <ThemeToggle />
-          </div>
-        </header>
-
-        <main className="as-main">{children}</main>
+  return <div className="flex min-h-screen bg-[var(--bg)] font-sans text-[var(--ink)]">
+    <aside className={`fixed inset-y-0 left-0 z-30 flex w-[272px] flex-col overflow-hidden border-r border-[var(--line)] bg-[var(--panel)] px-[18px] py-[26px] transition-transform duration-200 max-[900px]:w-[min(300px,86vw)] max-[900px]:shadow-[var(--shadow)] ${mobileOpen ? 'translate-x-0' : 'max-[900px]:-translate-x-full'}`} aria-label="Asosiy navigatsiya">
+      <div className="relative z-10 flex items-center justify-between px-1 pb-[30px] pl-[18px]">
+        <Link href="/" className="flex items-center gap-3" aria-label="Numeric Methods bosh sahifasi"><span className="grid h-[46px] w-[46px] place-items-center rounded-[10px] border border-[var(--line-2)] bg-[var(--bg-2)]"><Image src={logo} width={34} height={34} alt="Numeric Methods" className="object-contain" /></span><span className="flex flex-col leading-none"><strong className="text-[15px] tracking-[.16em]">NUMERIC</strong><small className="mt-2 font-mono text-[11px] font-semibold tracking-[.08em] text-[var(--muted)]">METHODS / 3.0</small></span></Link>
+        <button className="hidden place-items-center rounded-[9px] border border-[var(--line-2)] bg-[var(--panel)] p-2 text-[var(--ink)] transition hover:border-[var(--brand)] hover:text-[var(--brand)] max-[900px]:grid" onClick={() => setMobileOpen(false)} aria-label="Menyuni yopish"><X size={20} /></button>
       </div>
+      <div className="relative z-10 flex items-center gap-2.5 px-3 pb-3 font-mono text-xs font-semibold uppercase tracking-[.14em] text-[var(--muted)]"><span>Laboratoriya</span><i className="h-px flex-1 bg-[repeating-linear-gradient(90deg,var(--line-2)_0_4px,transparent_4px_8px)]" /></div>
+      <nav className="relative z-10 grid gap-1.5">
+        {navigation.map((item) => { const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href); return <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`group relative flex min-h-12 items-center gap-3 rounded-[9px] border px-3.5 text-[15px] font-semibold transition ${active ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--panel)] shadow-[0_10px_22px_-14px_var(--ink)]' : 'border-transparent text-[var(--muted)] hover:translate-x-0.5 hover:border-[var(--line)] hover:bg-[var(--bg-2)] hover:text-[var(--ink)]'}`} aria-current={active ? 'page' : undefined}><item.icon size={20} strokeWidth={active ? 2.4 : 2} className={active ? 'text-[var(--brand)]' : ''} /><span className="flex-1">{item.label}</span><em className={`font-mono text-xs not-italic ${active ? 'text-[var(--brand)] opacity-100' : 'opacity-60'}`}>{item.code}</em>{active && <i className="absolute -left-[19px] top-2.5 bottom-2.5 w-1 rounded-r bg-[var(--brand)]" />}</Link>; })}
+      </nav>
+      <div className="relative z-10 mt-auto grid gap-3.5"><div className="flex items-center gap-3 rounded-[9px] border border-[var(--line)] bg-[var(--bg-2)] p-3.5"><span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-[var(--ok)] shadow-[0_0_0_4px_color-mix(in_srgb,var(--ok)_18%,transparent)]" /><div><strong className="block text-[13px]">Hisoblash muhiti</strong><small className="mt-0.5 block font-mono text-xs text-[var(--muted)]">Math.js + KaTeX</small></div></div><div className="flex items-center gap-2.5 font-mono text-xs font-semibold tracking-[.14em] text-[var(--muted)]"><span>SN-3.0</span><i className="h-3 flex-1 bg-[repeating-linear-gradient(90deg,var(--ink)_0_1px,transparent_1px_3px,var(--ink)_3px_5px,transparent_5px_6px,var(--ink)_6px_7px,transparent_7px_11px)] opacity-50" /><span>MK-1</span></div></div>
+    </aside>
+    {mobileOpen && <button className="fixed inset-0 z-20 cursor-pointer border-0 bg-black/55 backdrop-blur-sm min-[901px]:hidden" onClick={() => setMobileOpen(false)} aria-label="Menyuni yopish" />}
+    <div className="ml-[272px] flex min-h-screen min-w-0 w-[calc(100%-272px)] flex-1 flex-col max-[900px]:ml-0 max-[900px]:w-full">
+      <header className="sticky top-0 z-20 flex h-[76px] items-center justify-between border-b border-[var(--line)] bg-[var(--head-bg)] px-[clamp(22px,5vw,70px)] backdrop-blur-md max-[620px]:h-[66px] max-[620px]:px-4"><div className="flex items-center gap-3.5"><button className="hidden place-items-center rounded-[9px] border border-[var(--line-2)] bg-[var(--panel)] p-2.5 text-[var(--ink)] transition hover:border-[var(--brand)] hover:text-[var(--brand)] max-[900px]:grid" onClick={() => setMobileOpen(true)} aria-label="Menyuni ochish"><Menu size={20} /></button><div className="flex items-center gap-2.5 text-sm text-[var(--muted)] max-[620px]:text-xs"><span className="max-[620px]:hidden">Numeric Methods</span><b className="text-[var(--line-2)] max-[620px]:hidden">/</b><strong className="font-semibold text-[var(--ink)]">{pageTitle}</strong></div></div><div className="flex items-center gap-[18px]"><span className="flex items-center gap-2.5 rounded-full border border-[var(--line)] bg-[var(--panel)] px-3 py-1.5 font-mono text-xs font-semibold tracking-wide text-[var(--muted)] max-[900px]:hidden"><i className="h-2 w-2 animate-pulse rounded-full bg-[var(--ok)]" /> Online</span><ThemeToggle /></div></header>
+      <main className="mx-auto w-full max-w-[1420px] flex-1 px-[clamp(22px,5vw,70px)] py-[clamp(28px,5vw,68px)] max-[620px]:px-4 max-[620px]:py-6">{children}</main>
     </div>
-  );
+  </div>;
 }
 
 export default AppShell;
-
-/* ───────────────────────── STYLES ───────────────────────── */
-const DARK_VARS = `
-  --bg:#0a0b0d; --bg-2:#0f1114; --panel:#14161a; --panel-2:#1a1d22;
-  --ink:#eef0f2; --ink-2:#c3c8cf; --muted:#8d949d;
-  --line:#272b32; --line-2:#363b44;
-  --cyan:#22d3ee; --cyan-soft:rgba(34,211,238,.1);
-  --brand:#ff6a2b; --brand-ink:#0a0b0d; --brand-soft:rgba(255,106,43,.12);
-  --ok:#34d399;
-  --shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 20px 40px -24px rgba(0,0,0,.8);
-  --stripe: repeating-linear-gradient(135deg, transparent 0 7px, rgba(255,255,255,.035) 7px 8px);
-  --page-glow: radial-gradient(900px 400px at 85% -10%, rgba(34,211,238,.08), transparent 60%);
-  --head-bg: rgba(10,11,13,.82);
-`;
-
-const CSS = `
-.as{
-  --bg:#eceef0; --bg-2:#f6f7f8; --panel:#fbfbfc; --panel-2:#f1f2f4;
-  --ink:#0d0f12; --ink-2:#2a2e35; --muted:#5d646e;
-  --line:#d5d9de; --line-2:#b9bfc7;
-  --cyan:#0891b2; --cyan-soft:rgba(8,145,178,.09);
-  --brand:#e8480c; --brand-ink:#ffffff; --brand-soft:rgba(232,72,12,.09);
-  --ok:#0f9d6b;
-  --shadow:0 1px 0 #fff inset, 0 1px 2px rgba(13,15,18,.06), 0 18px 36px -26px rgba(13,15,18,.35);
-  --stripe: repeating-linear-gradient(135deg, transparent 0 7px, rgba(13,15,18,.04) 7px 8px);
-  --page-glow: radial-gradient(900px 400px at 85% -10%, rgba(8,145,178,.10), transparent 60%);
-  --head-bg: rgba(236,238,240,.82);
-  --mono: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
-  --sans: ui-sans-serif, "Inter", "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --side-w: 272px;
-
-  display:flex; min-height:100vh; color:var(--ink); font-family:var(--sans);
-  background:var(--page-glow), var(--bg); font-size:15px; line-height:1.5;
-}
-:root.dark .as, [data-theme="dark"] .as { ${DARK_VARS} }
-@media (prefers-color-scheme: dark){
-  :root:not(.light):not([data-theme="light"]) .as { ${DARK_VARS} }
-}
-.as *{ box-sizing:border-box; }
-.as a{ color:inherit; text-decoration:none; }
-.as button{ font:inherit; color:inherit; }
-.as a:focus-visible,.as button:focus-visible{ outline:3px solid var(--cyan); outline-offset:2px; }
-
-/* ── sidebar ── */
-.as-side{
-  position:fixed; inset:0 auto 0 0; z-index:30; width:var(--side-w);
-  display:flex; flex-direction:column; padding:26px 18px 18px;
-  background:var(--panel); border-right:1px solid var(--line);
-  transition:transform .22s ease; overflow:hidden;
-}
-.as-side::before{ content:""; position:absolute; top:0; left:0; width:54px; height:54px;
-  background:linear-gradient(135deg,var(--ink) 0 50%,transparent 50%); pointer-events:none; }
-.as-side::after{ content:""; position:absolute; right:0; bottom:0; width:100%; height:240px; background:var(--stripe); pointer-events:none;
-  -webkit-mask:linear-gradient(0deg,#000,transparent); mask:linear-gradient(0deg,#000,transparent); }
-.as-side > *{ position:relative; z-index:1; }
-
-.as-side-top{ display:flex; align-items:center; justify-content:space-between; padding:6px 4px 30px 18px; }
-.as-brand{ display:flex; align-items:center; gap:12px; }
-.as-logo{ display:grid; place-items:center; width:46px; height:46px; border:1px solid var(--line-2); border-radius:10px; background:var(--bg-2); }
-.as-logo img{ width:34px; height:34px; object-fit:contain; }
-.as-brand-txt{ display:flex; flex-direction:column; line-height:1; }
-.as-brand-txt strong{ font-size:15px; font-weight:700; letter-spacing:.16em; }
-.as-brand-txt small{ margin-top:7px; font:600 11.5px var(--mono); letter-spacing:.08em; color:var(--muted); }
-
-.as-section{ display:flex; align-items:center; gap:10px; padding:0 12px 12px; font:600 12px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
-.as-section i{ flex:1; height:1px; background:repeating-linear-gradient(90deg,var(--line-2) 0 4px,transparent 4px 8px); }
-
-.as-nav{ display:grid; gap:6px; }
-.as-link{
-  position:relative; display:flex; align-items:center; gap:12px; min-height:48px; padding:0 14px;
-  border:1px solid transparent; border-radius:9px; color:var(--muted);
-  font-size:15px; font-weight:600; transition:background .15s, color .15s, border-color .15s, transform .15s;
-}
-.as-link-label{ flex:1; }
-.as-link em{ font:600 12px var(--mono); font-style:normal; opacity:.6; }
-.as-link:hover{ background:var(--bg-2); color:var(--ink); border-color:var(--line); transform:translateX(2px); }
-.as-link.is-active{ background:var(--ink); color:var(--panel); border-color:var(--ink); font-weight:700; box-shadow:0 10px 22px -14px var(--ink); }
-.as-link.is-active::before{ content:""; position:absolute; left:-18px; top:10px; bottom:10px; width:4px; border-radius:0 3px 3px 0; background:var(--brand); }
-.as-link.is-active em{ color:var(--brand); opacity:1; }
-.as-link.is-active svg{ color:var(--brand); }
-
-.as-side-bottom{ margin-top:auto; display:grid; gap:14px; }
-.as-status{ display:flex; align-items:center; gap:12px; padding:14px; border:1px solid var(--line); border-radius:9px; background:var(--bg-2); }
-.as-status strong{ display:block; font-size:13.5px; }
-.as-status small{ display:block; margin-top:3px; font:500 12px var(--mono); color:var(--muted); }
-.as-dot{ display:inline-block; flex-shrink:0; width:9px; height:9px; border-radius:50%; background:var(--ok);
-  box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 18%,transparent); animation:as-pulse 2.4s ease-in-out infinite; }
-@keyframes as-pulse{ 50%{ box-shadow:0 0 0 7px color-mix(in srgb,var(--ok) 4%,transparent); } }
-.as-serial{ display:flex; align-items:center; gap:10px; font:600 11.5px var(--mono); letter-spacing:.14em; color:var(--muted); }
-.as-serial i{ flex:1; height:12px; opacity:.5;
-  background:repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 3px,var(--ink) 3px 5px,transparent 5px 6px,var(--ink) 6px 7px,transparent 7px 11px); }
-
-/* ── body ── */
-.as-body{ margin-left:var(--side-w); flex:1; min-width:0; width:calc(100% - var(--side-w)); display:flex; flex-direction:column; min-height:100vh; }
-.as-head{
-  position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between;
-  height:76px; padding:0 clamp(22px,5vw,70px);
-  background:var(--head-bg); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);
-}
-.as-head::after{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px;
-  background:linear-gradient(90deg,var(--brand) 0 64px,transparent 64px); }
-.as-head-left,.as-head-right{ display:flex; align-items:center; gap:14px; }
-.as-head-right{ gap:18px; }
-.as-crumbs{ display:flex; align-items:center; gap:10px; font-size:14px; color:var(--muted); }
-.as-crumbs strong{ color:var(--ink); font-weight:650; }
-.as-crumb-sep{ color:var(--line-2); font-weight:400; }
-.as-online{ display:flex; align-items:center; gap:10px; padding:7px 12px; border:1px solid var(--line); border-radius:999px; background:var(--panel);
-  font:600 12.5px var(--mono); letter-spacing:.04em; color:var(--muted); }
-.as-online .as-dot{ width:8px; height:8px; }
-
-.as-main{ width:100%; max-width:1420px; margin:0 auto; flex:1; padding:clamp(28px,5vw,68px) clamp(22px,5vw,70px); }
-
-.as-icon-btn{ display:grid; place-items:center; width:42px; height:42px; cursor:pointer; border:1px solid var(--line-2); border-radius:9px;
-  background:var(--panel); color:var(--ink); transition:all .15s; }
-.as-icon-btn:hover{ border-color:var(--brand); color:var(--brand); background:var(--brand-soft); }
-.as-only-mobile{ display:none; }
-.as-backdrop{ position:fixed; inset:0; z-index:25; border:0; cursor:pointer; background:rgba(5,6,8,.55); backdrop-filter:blur(2px); }
-
-/* ── responsive ── */
-@media (max-width:900px){
-  .as-side{ transform:translateX(-100%); box-shadow:var(--shadow); width:min(300px,86vw); }
-  .as-side.is-open{ transform:translateX(0); }
-  .as-body{ margin-left:0; width:100%; }
-  .as-only-mobile{ display:grid; }
-  .as-online{ display:none; }
-}
-@media (max-width:620px){
-  .as-head{ height:66px; padding:0 16px; }
-  .as-crumb-root,.as-crumb-sep{ display:none; }
-  .as-main{ padding:24px 16px; }
-}
-@media (prefers-reduced-motion:reduce){ .as *{ animation:none !important; transition:none !important; } }
-`;
