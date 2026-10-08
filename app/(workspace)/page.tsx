@@ -8,68 +8,13 @@ const stats = [
 ];
 
 export default function Home() {
-  return (
-    <div className="dashboard-page">
-      <section className="hero-panel">
-        <div className="hero-copy">
-          <span className="eyebrow">SONLI USULLAR / LABORATORIYA</span>
-          <h1>
-            Matematikani <em>hisoblab</em>,<br />
-            har qadamni tushuning.
-          </h1>
-          <p>
-            Sonli usullarni nazariya bilan emas, real interaktiv hisoblash
-            orqali o‘rganing.
-          </p>
-          <Link href="/methods/bisection" className="primary-button">
-            Bisection Methodni ochish{' '}
-            <span>
-              <ArrowUpRight size={18} strokeWidth={2} />
-            </span>
-          </Link>
-        </div>
-        <div className="hero-visual" aria-hidden="true">
-          <div className="formula-card">
-            <span>f(x) = x³ + x − 1</span>
-            <b>c = (a + b) / 2</b>
-            <small>precision / 0.01</small>
-          </div>
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <div className="hero-symbol">∫</div>
-        </div>
-      </section>
-      <div className="section-heading">
-        <div>
-          <span className="eyebrow">01 / OVERVIEW</span>
-          <h2>Workspace holati</h2>
-        </div>
-        <span className="muted-label">LIVE ENVIRONMENT</span>
-      </div>
-      <section className="stats-grid">
-        {stats.map(([number, label, value, mark]) => (
-          <article className="stat-card" key={label}>
-            <span className="stat-number">{number}</span>
-            <span className="stat-mark">{mark}</span>
-            <small>{label}</small>
-            <strong>{value}</strong>
-            <span className="stat-arrow">↗</span>
-          </article>
-        ))}
-      </section>
-      <section className="next-card">
-        <div>
-          <span className="eyebrow">KEYingi qadam</span>
-          <h2>Birinchi usulni sinab ko‘ring</h2>
-          <p>
-            Funksiya, oraliq va aniqlikni kiriting. Tizim ildizga
-            yaqinlashishning har bir qadamini ko‘rsatadi.
-          </p>
-        </div>
-        <Link href="/methods/bisection" className="outline-button">
-          Laboratoriyani boshlash <span>→</span>
-        </Link>
-      </section>
-    </div>
-  );
+  return <div className="mx-auto max-w-[1130px]">
+    <section className="relative flex min-h-[420px] items-center overflow-hidden rounded-[18px] bg-gradient-to-br from-[#202044] via-[#383178] to-brand p-[clamp(34px,6vw,72px)] text-white shadow-[var(--shadow)] max-[620px]:min-h-[510px] max-[620px]:items-start max-[620px]:p-8">
+      <div className="relative z-10 max-w-[590px]"><span className="font-mono text-[10px] uppercase tracking-[.15em] text-[#a8a8dc]">SONLI USULLAR / LABORATORIYA</span><h1 className="my-[18px] text-[clamp(36px,5vw,66px)] font-semibold leading-[.98] tracking-[-.065em] max-[620px]:text-[43px]">Matematikani <em className="text-[#88e5e6] not-italic">hisoblab</em>,<br />har qadamni tushuning.</h1><p className="max-w-[440px] text-[15px] leading-[1.7] text-[#c3c4df]">Sonli usullarni nazariya bilan emas, real interaktiv hisoblash orqali o‘rganing.</p><Link href="/methods/bisection" className="mt-[18px] inline-flex items-center justify-center gap-4 rounded-md bg-white px-[17px] py-[13px] text-xs font-semibold text-[#2b2760] transition hover:-translate-y-0.5">Bisection Methodni ochish <ArrowUpRight size={18} /></Link></div>
+      <div className="pointer-events-none absolute right-[3%] top-0 h-full w-[44%] opacity-75 max-[620px]:top-[245px] max-[620px]:w-full"><div className="absolute right-[18%] top-[28%] z-10 grid w-[220px] rotate-7 gap-3 rounded-xl border border-white/30 bg-[#171739]/50 p-5 font-mono text-[13px] backdrop-blur-md"><span>f(x) = x³ + x − 1</span><b className="text-lg">c = (a + b) / 2</b><small className="text-[10px] text-[#9ea4d9]">precision / 0.01</small></div><div className="absolute right-[-4%] top-1/4 h-[190px] w-[370px] -rotate-[23deg] rounded-[50%] border border-[#95f6f6]/40" /><div className="absolute right-[5%] top-[12%] h-[260px] w-[260px] rounded-[50%] border border-[#95f6f6]/40" /><div className="absolute right-[7%] top-[18%] font-serif text-[140px] text-[#99f5f3]/30">∫</div></div>
+    </section>
+    <div className="mb-5 mt-[68px] flex items-end justify-between"><div><span className="font-mono text-[10px] uppercase tracking-[.15em] text-muted">01 / OVERVIEW</span><h2 className="mt-2 text-[25px] font-semibold tracking-[-.04em]">Workspace holati</h2></div><span className="font-mono text-[10px] text-muted">LIVE ENVIRONMENT</span></div>
+    <section className="grid grid-cols-3 gap-3 max-[620px]:grid-cols-1">{stats.map(([number, label, value, mark]) => <article className="relative min-h-[165px] rounded-[10px] border border-line bg-surface p-[22px] shadow-sm" key={label}><span className="font-mono text-[11px] text-brand">{number}</span><span className="absolute right-[23px] top-[23px] rounded border border-line px-1.5 py-1 font-mono text-[11px] text-brand">{mark}</span><small className="mt-8 block text-[11px] text-muted max-[620px]:mt-5">{label}</small><strong className="mt-2 block text-xl">{value}</strong><span className="absolute bottom-5 right-[22px] text-muted">↗</span></article>)}</section>
+    <section className="mt-[45px] flex items-center justify-between gap-7 rounded-[10px] border border-line bg-surface p-7 max-[620px]:flex-col max-[620px]:items-start"><div><span className="font-mono text-[10px] uppercase tracking-[.15em] text-muted">KEYINGI QADAM</span><h2 className="mt-2 text-[25px] font-semibold tracking-[-.04em]">Birinchi usulni sinab ko‘ring</h2><p className="mt-2 max-w-[600px] text-[13px] leading-[1.6] text-muted">Funksiya, oraliq va aniqlikni kiriting. Tizim ildizga yaqinlashishning har bir qadamini ko‘rsatadi.</p></div><Link href="/methods/bisection" className="inline-flex shrink-0 items-center gap-4 rounded-md border border-line px-[17px] py-[13px] text-xs font-semibold transition hover:border-brand hover:text-brand">Laboratoriyani boshlash <ArrowUpRight size={16} /></Link></section>
+  </div>;
 }
