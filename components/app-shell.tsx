@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
   { href: "/", label: "Dashboard", icon: "⌂" },
-  { href: "/methods/bisection", label: "Bisection Method", icon: "÷", badge: "Yangi" },
+  { href: "/methods/bisection", label: "Bisection Method", icon: "÷" },
 ];
 
 function BrandMark() {
@@ -38,7 +38,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
           {navigation.map((item) => {
             const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`nav-item ${active ? "active" : ""}`} aria-current={active ? "page" : undefined}>
-              <span className="nav-icon">{item.icon}</span><span>{item.label}</span>{item.badge && <em>{item.badge}</em>}
+              <span className="nav-icon">{item.icon}</span><span>{item.label}</span>
             </Link>;
           })}
         </nav>

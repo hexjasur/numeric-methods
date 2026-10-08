@@ -5,7 +5,7 @@ import { all, create } from "mathjs";
 import katex from "katex";
 
 const math = create(all, {});
-type Step = { iteration: number; a: number; b: number; c: number; fa: number; fb: number; fc: number; width: number; done: boolean; interval: string; explanation: string };
+type Step = { iteration: number; a: number; b: number; c: number; fa: number; fb: number; fc: number; width: number; done: boolean; interval: string; explanation: string; decision: string };
 type Result = { root: number; iterations: number; steps: Step[] };
 
 function normalizeExpression(expression: string) {
@@ -54,7 +54,8 @@ export function BisectionMethod() {
         const leftHasRoot = fa * fc < 0;
         const interval = leftHasRoot ? `[${format(low)}, ${format(c)}]` : `[${format(c)}, ${format(high)}]`;
         const explanation = done ? "Oraliq uzunligi ε dan kichik — hisoblash to‘xtadi." : leftHasRoot ? "f(a) va f(c) ishoralari qarama-qarshi. Ildiz chap yarim oraliqda qoldi." : "f(c) va f(b) ishoralari qarama-qarshi. Ildiz o‘ng yarim oraliqda qoldi.";
-        steps.push({ iteration, a: low, b: high, c, fa, fb, fc, width, done, interval, explanation });
+        const decision = done ? `|b - a| = ${format(width)} ≤ ε — aniqlikka erishildi.` : leftHasRoot ? `f(a) · f(c) < 0 bo‘lgani uchun yangi oraliq [a, c] = ${interval}` : `f(c) · f(b) < 0 bo‘lgani uchun yangi oraliq [c, b] = ${interval}`;
+        steps.push({ iteration, a: low, b: high, c, fa, fb, fc, width, done, interval, explanation, decision });
         if (done) return setResult({ root: c, iterations: iteration, steps });
         if (leftHasRoot) { high = c; fb = fc; } else { low = c; fa = fc; }
       }
@@ -94,10 +95,9 @@ export function BisectionMethod() {
           {!result && !error && <div className="empty-state"><span>⌁</span><p><b>Hali hisoblash yo‘q</b><br />Chap tomondagi parametrlarni kiriting,<br />so‘ng tugmani bosing.</p></div>}
           {result?.steps.length === 0 && <div className="empty-state compact"><span>✓</span><p><b>Ildiz oraliq chetida topildi.</b><br />Qo‘shimcha iteratsiya kerak emas.</p></div>}
           {result?.steps.map((step) => <article className={`step-item ${step.done ? "step-done" : ""}`} key={step.iteration}>
-            <div className="step-top"><b>QADAM {String(step.iteration).padStart(2, "0")}</b><span>{step.done ? "Aniqlikka erishildi ✓" : `Oraliq: ${format(step.width)}`}</span></div>
-            <div className="step-values"><span>a <b>{format(step.a)}</b></span><span className="midpoint">c <b>{format(step.c)}</b></span><span>b <b>{format(step.b)}</b></span></div>
-            <div className="step-function">f(c) = <strong className={step.fc < 0 ? "negative" : "positive"}>{format(step.fc, 8)}</strong></div>
-            <p className="step-explanation"><b>{step.done ? "Natija:" : "Qaror:"}</b> {step.explanation} {!step.done && <><br /><span>Keyingi oraliq: <code>{step.interval}</code></span></>}</p>
+            <div className="step-top"><b>QADAM #{step.iteration}</b><span>{`Oraliq uzunligi |b - a| = ${format(step.width)} ${step.done ? "≤" : ">"} ε`}</span></div>
+            <div className="step-formula"><div><span>a = {format(step.a)}</span><b> → f(a) = <i className={step.fa < 0 ? "negative" : "positive"}>{format(step.fa)}</i></b></div><div><span>b = {format(step.b)}</span><b> → f(b) = <i className={step.fb < 0 ? "negative" : "positive"}>{format(step.fb)}</i></b></div><div className="formula-center"><span>Markaz: c = (a + b) / 2 = <b>{format(step.c)}</b></span><span>Qiymat: f(c) = <i className={step.fc < 0 ? "negative" : "positive"}>{format(step.fc, 8)}</i></span></div></div>
+            <p className="step-explanation"><b>{step.done ? "Natija:" : "Qaror:"}</b> {step.decision}<br /><span>{step.explanation}</span></p>
           </article>)}
         </div>
       </section>

@@ -39,3 +39,9 @@ button, input { font: inherit; } button { cursor: pointer; } a { color: inherit;
 .formula-preview .katex { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 8px; }
 @media (max-width: 900px) { .map-title { flex-basis: 100%; min-width: 100%; }.map-step { flex: 1 1 0; }.map-line { flex-basis: 14px; } }
 @media (max-width: 620px) { .map-title { flex-basis: auto; min-width: 0; }.map-step { width: 100%; }.map-line { width: 100%; flex-basis: auto; } }
+
+/* Full derivation view for each bisection iteration */
+.step-formula { margin: 15px 0 11px; padding: 13px 15px; border: 1px solid var(--line); background: var(--surface-soft); font: 12px var(--font-mono); line-height: 1.8; }
+.step-formula > div { display: flex; flex-wrap: wrap; gap: 5px; }
+.step-formula b { color: var(--ink); font-weight: 500; }.step-formula i { font-style: normal; }.formula-center { margin-top: 7px; padding-top: 8px; display: grid !important; gap: 3px !important; border-top: 1px dashed var(--line); }.formula-center b { color: var(--brand); }.step-explanation { line-height: 1.65; }.step-explanation > span { color: var(--muted); font-size: 10px; }
+@media (max-width: 620px) { .step-formula { padding: 11px; font-size: 10px; }.step-formula > div { display: grid; gap: 1px; }.formula-center { margin-top: 6px; }.step-top { align-items: flex-start; flex-direction: column; gap: 4px; } }
