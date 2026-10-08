@@ -16,3 +16,9 @@
 - Keep changes focused and make one descriptive commit per requested change.
 - Split multi-part requests into logical tasks. After each task is implemented and validated, create its own descriptive commit; do not bundle unrelated fixes into one final commit.
 - Before committing a task, run the relevant lint/build checks and leave the working tree understandable for the next task.
+
+## Multi-target application
+
+- The `tauri-desktop` branch supports one shared codebase for website, Tauri desktop, and Tauri Android targets.
+- Keep the Next.js app compatible with static export (`output: "export"`); do not add server-only routes or APIs without a target-specific adapter.
+- Keep Tauri configuration and Rust entry points under `src-tauri/`. Do not commit `src-tauri/target/`, signing keys, keystores, or platform secrets.
