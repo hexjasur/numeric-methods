@@ -25,3 +25,17 @@ button, input { font: inherit; } button { cursor: pointer; } a { color: inherit;
 .field-explainer { display: flex; align-items: start; gap: 9px; margin: -6px 0 14px; padding: 10px 11px; border-left: 2px solid var(--cyan); background: color-mix(in srgb, var(--cyan) 7%, var(--surface)); }.field-explainer.slim { margin: 2px 0 12px; border-left-color: var(--brand); background: color-mix(in srgb, var(--brand) 6%, var(--surface)); }.field-bullet { flex: 0 0 20px; color: var(--cyan); font: 13px var(--font-mono); }.field-explainer p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }.field-explainer b { color: var(--ink); }.field-explainer code { color: var(--brand); font: 10px var(--font-mono); }.label-main { float: none !important; color: var(--ink) !important; font: inherit !important; }.label-main i { margin-left: 6px; color: var(--muted); font: 10px var(--font-mono); font-style: normal; font-weight: 400; }.result-card small { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; }.result-visible { background: linear-gradient(110deg, color-mix(in srgb, var(--brand) 11%, var(--surface)), var(--surface)) !important; }.steps-card .card-heading { padding-bottom: 18px; margin-bottom: 0; border-bottom: 1px solid var(--line); }.empty-state { min-height: 300px; }.empty-state p b { color: var(--ink); font-weight: 600; }.step-item { padding: 19px 0 18px 17px; }.step-values { padding: 10px 13px; margin: 14px 0 10px; border: 1px dashed var(--line); background: var(--surface-soft); }.step-values .midpoint b { color: var(--brand); }.step-function { color: var(--muted); font: 11px var(--font-mono); }.step-explanation { margin-top: 9px !important; line-height: 1.55; }.step-explanation b { color: var(--ink); }.step-explanation code { color: var(--brand); font: 10px var(--font-mono); }.step-done .step-values { border-color: color-mix(in srgb, var(--cyan) 55%, var(--line)); background: color-mix(in srgb, var(--cyan) 7%, var(--surface)); }
 @media (max-width: 900px) { .method-map { align-items: start; flex-wrap: wrap; }.map-title { min-width: 100%; }.map-step { min-width: 29%; }.map-line { width: 14px; } }
 @media (max-width: 620px) { .method-map { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 16px; }.map-title { min-width: 0; }.map-line { width: 100%; }.map-step { min-width: 0; }.method-map .map-step { padding: 7px 0; }.open-corner-card { background-size: 100% 1px, 1px 100%, calc(100% - 25px) 1px, 1px calc(100% - 25px); }.method-intro p { max-width: 340px; line-height: 1.55; } }
+
+/* Text flow fixes for the method map and explanatory labels */
+.method-map { align-items: center; }
+.map-title { flex: 0 0 150px; min-width: 150px; align-content: center; }
+.map-title .eyebrow, .map-title strong { display: block; }
+.map-step { min-width: 0; align-items: flex-start; }
+.map-step > div { min-width: 0; display: grid; gap: 5px; }
+.map-step b, .map-step small { display: block; white-space: normal; }
+.map-step small { line-height: 1.35; }
+.map-line { flex: 0 0 24px; }
+.field-explainer p { min-width: 0; }
+.formula-preview .katex { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 8px; }
+@media (max-width: 900px) { .map-title { flex-basis: 100%; min-width: 100%; }.map-step { flex: 1 1 0; }.map-line { flex-basis: 14px; } }
+@media (max-width: 620px) { .map-title { flex-basis: auto; min-width: 0; }.map-step { width: 100%; }.map-line { width: 100%; flex-basis: auto; } }

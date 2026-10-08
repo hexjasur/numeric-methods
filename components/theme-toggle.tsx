@@ -1,28 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
+const themeEvent = "numeric-theme-change";
+
+function getTheme(): Theme {
+  if (typeof window === "undefined") return "light";
+  const stored = window.localStorage.getItem("numeric-theme") as Theme | null;
+  return stored ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+}
+
+function subscribe(callback: () => void) {
+  window.addEventListener(themeEvent, callback);
+  return () => window.removeEventListener(themeEvent, callback);
+}
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "light";
-    const saved = window.localStorage.getItem("numeric-theme") as Theme | null;
-    return saved ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  });
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-  }, [theme]);
+  const theme = useSyncExternalStore(subscribe, getTheme, () => "light");
 
   function toggleTheme() {
-    const next = theme === "light" ? "dark" : "light";
-    setTheme(next);
+    const next: Theme = theme === "light" ? "dark" : "light";
     document.documentElement.dataset.theme = next;
     window.localStorage.setItem("numeric-theme", next);
+    window.dispatchEvent(new Event(themeEvent));
   }
 
   return <button className="theme-toggle" onClick={toggleTheme} aria-label={`${theme === "light" ? "Dark" : "Light"} modega o‘tish`} title="Ko‘rinishni almashtirish">
-    <span className="theme-icon">{theme === "light" ? "☾" : "☼"}</span><span className="theme-label">{theme === "light" ? "Dark" : "Light"}</span>
+    <span className="theme-icon" aria-hidden="true">{theme === "light" ? "☾" : "☼"}</span><span className="theme-label">{theme === "light" ? "Dark" : "Light"}</span>
   </button>;
 }
