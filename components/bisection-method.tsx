@@ -80,7 +80,7 @@ export function BisectionMethod() {
       <section className="control-card open-corner-card">
         <div className="card-heading"><div><span className="eyebrow">INPUT / PARAMETRLAR</span><h2>Masalani sozlang</h2></div><span className="card-index">01</span></div>
         <div className="field-explainer"><span className="field-bullet">ƒ</span><p><b>Funksiya</b> — ildizini topmoqchi bo‘lgan tenglama. Masalan: <code>x^3 + x - 1</code></p></div>
-        <label>f(x) funksiya <span>Math.js sintaksisi</span><input value={expression} onChange={(event) => setExpression(event.target.value)} placeholder="x^3 + x - 1" /></label>
+        <label className="function-field">f(x) funksiya <span>Math.js sintaksisi</span><div className="function-input-shell"><b>f(x) =</b><input value={expression} onChange={(event) => setExpression(event.target.value)} placeholder="x^3 + x - 1" aria-label="Funksiya ifodasi" /></div></label>
         <div className="formula-preview">{formula ? <span dangerouslySetInnerHTML={{ __html: formula }} /> : <span className="invalid-formula">Formula ko‘rinishi uchun ifodani tekshiring</span>}</div>
         <div className="field-row"><label><span className="label-main">a <i>boshi</i></span><input type="number" step="any" value={a} onChange={(event) => setA(event.target.value)} /></label><label><span className="label-main">b <i>oxiri</i></span><input type="number" step="any" value={b} onChange={(event) => setB(event.target.value)} /></label></div>
         <div className="field-explainer slim"><span className="field-bullet">ε</span><p><b>Aniqlik</b> — oraliq uzunligi shu qiymatdan kichik bo‘lganda to‘xtaymiz.</p></div>

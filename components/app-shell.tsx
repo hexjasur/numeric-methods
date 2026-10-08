@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { LayoutDashboard, Menu, Sigma, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
-  { href: "/", label: "Dashboard", icon: "⌂" },
-  { href: "/methods/bisection", label: "Bisection Method", icon: "÷" },
+  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/methods/bisection", label: "Bisection Method", icon: Sigma },
 ];
 
 function BrandMark() {
@@ -31,14 +32,14 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
             <BrandMark />
             <span><strong>NUMERIC</strong><small>METHODS / 3.0</small></span>
           </Link>
-          <button className="icon-button mobile-close" onClick={() => setMobileOpen(false)} aria-label="Menyuni yopish">×</button>
+          <button className="icon-button mobile-close" onClick={() => setMobileOpen(false)} aria-label="Menyuni yopish"><X size={18} /></button>
         </div>
         <div className="nav-section-label">LABORATORIYA</div>
         <nav className="nav-list">
           {navigation.map((item) => {
             const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`nav-item ${active ? "active" : ""}`} aria-current={active ? "page" : undefined}>
-              <span className="nav-icon">{item.icon}</span><span>{item.label}</span>
+              <span className="nav-icon"><item.icon size={18} strokeWidth={active ? 2.5 : 2} /></span><span>{item.label}</span>
             </Link>;
           })}
         </nav>
@@ -50,7 +51,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
       {mobileOpen && <button className="sidebar-overlay" onClick={() => setMobileOpen(false)} aria-label="Menyuni yopish" />}
       <div className="main-frame">
         <header className="topbar">
-          <button className="menu-button" onClick={() => setMobileOpen(true)} aria-label="Menyuni ochish"><span /><span /><span /></button>
+          <button className="menu-button" onClick={() => setMobileOpen(true)} aria-label="Menyuni ochish"><Menu size={18} /></button>
           <div className="breadcrumb"><span>Numeric Methods</span><b>/</b><strong>{pathname === "/" ? "Dashboard" : "Bisection Method"}</strong></div>
           <div className="topbar-actions"><span className="topbar-status"><i /> Online</span><ThemeToggle /></div>
         </header>
