@@ -7,8 +7,9 @@ const themeEvent = "numeric-theme-change";
 
 function getTheme(): Theme {
   if (typeof window === "undefined") return "light";
-  const stored = window.localStorage.getItem("numeric-theme") as Theme | null;
-  return stored ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const stored = window.localStorage.getItem("numeric-theme");
+  if (stored === "dark" || stored === "light") return stored;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function subscribe(callback: () => void) {
