@@ -146,10 +146,7 @@ export function AppShell({
             </div>
           </div>
 
-          <div className="as-head-right">
-            <span className="as-online">
-              <i className="as-dot" /> Online
-            </span>
+          <div>
             <ThemeToggle />
           </div>
         </header>
@@ -201,7 +198,6 @@ const CSS = `
 }
 .as *{ box-sizing:border-box; }
 .as a{ color:inherit; text-decoration:none; }
-.as button{ font:inherit; color:inherit; }
 .as a:focus-visible,.as button:focus-visible{ outline:3px solid var(--cyan); outline-offset:2px; }
 
 /* ── sidebar ── */
@@ -219,8 +215,7 @@ const CSS = `
 
 .as-side-top{ display:flex; align-items:center; justify-content:space-between; padding:6px 4px 30px 18px; }
 .as-brand{ display:flex; align-items:center; gap:12px; }
-.as-logo{ display:grid; place-items:center; width:46px; height:46px; border:1px solid var(--line-2); border-radius:10px; background:var(--bg-2); }
-.as-logo img{ width:34px; height:34px; object-fit:contain; }
+.as-logo{ display:grid; place-items:center; width:46px; height:46px;}
 .as-brand-txt{ display:flex; flex-direction:column; line-height:1; }
 .as-brand-txt strong{ font-size:15px; font-weight:700; letter-spacing:.16em; }
 .as-brand-txt small{ margin-top:7px; font:600 11.5px var(--mono); letter-spacing:.08em; color:var(--muted); }
@@ -246,7 +241,6 @@ const CSS = `
 .as-status{ display:flex; align-items:center; gap:12px; padding:14px; border:1px solid var(--line); border-radius:9px; background:var(--bg-2); }
 .as-status strong{ display:block; font-size:13.5px; }
 .as-status small{ display:block; margin-top:3px; font:500 12px var(--mono); color:var(--muted); }
-.as-dot{ display:inline-block; flex-shrink:0; width:9px; height:9px; border-radius:50%; background:var(--ok);
   box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 18%,transparent); animation:as-pulse 2.4s ease-in-out infinite; }
 @keyframes as-pulse{ 50%{ box-shadow:0 0 0 7px color-mix(in srgb,var(--ok) 4%,transparent); } }
 .as-serial{ display:flex; align-items:center; gap:10px; font:600 11.5px var(--mono); letter-spacing:.14em; color:var(--muted); }
@@ -263,14 +257,9 @@ const CSS = `
 }
 .as-head::after{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px;
   background:linear-gradient(90deg,var(--brand) 0 64px,transparent 64px); }
-.as-head-left,.as-head-right{ display:flex; align-items:center; gap:14px; }
-.as-head-right{ gap:18px; }
 .as-crumbs{ display:flex; align-items:center; gap:10px; font-size:14px; color:var(--muted); }
 .as-crumbs strong{ color:var(--ink); font-weight:650; }
 .as-crumb-sep{ color:var(--line-2); font-weight:400; }
-.as-online{ display:flex; align-items:center; gap:10px; padding:7px 12px; border:1px solid var(--line); border-radius:999px; background:var(--panel);
-  font:600 12.5px var(--mono); letter-spacing:.04em; color:var(--muted); }
-.as-online .as-dot{ width:8px; height:8px; }
 
 .as-main{ width:100%; max-width:1420px; margin:0 auto; flex:1; padding:clamp(28px,5vw,68px) clamp(22px,5vw,70px); }
 
@@ -286,7 +275,6 @@ const CSS = `
   .as-side.is-open{ transform:translateX(0); }
   .as-body{ margin-left:0; width:100%; }
   .as-only-mobile{ display:grid; }
-  .as-online{ display:none; }
 }
 @media (max-width:620px){
   .as-head{ height:66px; padding:0 16px; }

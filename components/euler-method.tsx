@@ -139,7 +139,7 @@ export function EulerMethod() {
         </div>
       </div>
 
-      <div className="grid items-stretch gap-5 xl:grid-cols-2">
+      <div className="grid items-stretch gap-6 xl:grid-cols-2">
         <form
           className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-5 shadow-[var(--shadow)] sm:p-6"
           onSubmit={(event) => {
@@ -174,19 +174,19 @@ export function EulerMethod() {
                 value={inputs.expression}
                 onChange={(event) => setValue('expression', event.target.value)}
                 aria-label="f(x, y) funksiyasi"
-                className="h-12 min-w-0 flex-1 bg-transparent font-mono text-sm font-semibold text-[var(--ink)] outline-none"
+                className="h-10 min-w-0 flex-1 bg-transparent font-mono text-sm font-semibold text-[var(--ink)] outline-none"
                 placeholder="x - 2*y"
                 spellCheck={false}
               />
             </span>
           </label>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3">
             {(
               [
                 ['x0', 'Boshlanish x₀'],
-                ['y0', 'Boshlang‘ich y₀'],
                 ['xEnd', 'Oxirgi x_end'],
+                ['y0', 'Boshlang‘ich y₀'],
                 ['h', 'Qadam h'],
               ] as const
             ).map(([key, label]) => (
@@ -200,19 +200,19 @@ export function EulerMethod() {
                   value={inputs[key]}
                   onChange={(event) => setValue(key, event.target.value)}
                   aria-label={label}
-                  className="h-11 w-full rounded-lg border border-[var(--line-2)] bg-[var(--bg-2)] px-3 font-mono text-sm text-[var(--ink)] outline-none transition focus:border-[var(--brand)] focus:bg-[var(--panel)] focus:ring-4 focus:ring-[var(--brand)]/10"
+                  className="h-10 w-full rounded-lg border border-[var(--line-2)] bg-[var(--bg-2)] px-3 font-mono text-sm text-[var(--ink)] outline-none transition focus:border-[var(--brand)] focus:bg-[var(--panel)] focus:ring-4 focus:ring-[var(--brand)]/10"
                 />
               </label>
             ))}
           </div>
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] px-3.5 py-2.5">
-            <span className="flex items-center gap-2 text-xs text-[var(--muted)]">
+            <span className="flex min-w-0 flex-1 items-center gap-2 text-xs text-[var(--muted)]">
               <Info size={15} className="shrink-0 text-[var(--cyan)]" />
               Boshlang‘ich oraliq
             </span>
             <span
-              className="rounded-md border border-[var(--line)] bg-[var(--panel)] px-3 py-1.5 font-mono text-sm text-[var(--brand)]"
+              className="shrink-0 whitespace-nowrap rounded-md border border-[var(--line)] bg-[var(--panel)] px-4 py-2 font-mono text-sm text-[var(--brand)]"
               aria-label={`Interval: ${inputs.x0} dan ${inputs.xEnd} gacha`}
             >
               <MathInline html={intervalMarkup} />
@@ -221,7 +221,7 @@ export function EulerMethod() {
 
           <button
             type="submit"
-            className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--cyan)]"
+            className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--cyan)]"
           >
             <Calculator size={17} />
             Hisoblash
@@ -237,77 +237,7 @@ export function EulerMethod() {
           )}
         </form>
 
-        <section className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-5 shadow-[var(--shadow)] sm:p-6">
-          <div className="mb-5 flex items-start justify-between gap-4 border-b border-[var(--line)] pb-4">
-            <div>
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[.14em] text-[var(--muted)]">
-                Method / Formulalar
-              </span>
-              <h2 className="mt-1 text-lg font-semibold tracking-tight">
-                Hisoblash usullari
-              </h2>
-            </div>
-            <span className="font-mono text-xs text-[var(--muted)]">02</span>
-          </div>
-          <div className="grid min-w-0 gap-3">
-            <article className="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] p-4">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-                Oddiy Eyler
-              </span>
-              <div className="mt-3 min-h-10">
-                <Formula html={formulaMarkup.euler} />
-              </div>
-              <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-                Hosila joriy nuqtada baholanadi.
-              </p>
-            </article>
-            <article className="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] p-4">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-                Takomillashgan · Heun
-              </span>
-              <div className="mt-3 min-h-10">
-                <Formula html={formulaMarkup.improved} />
-              </div>
-              <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-                Pretsenzor bashorati va korrektor aniqlashtirishi.
-              </p>
-            </article>
-          </div>
-        </section>
-      </div>
-
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,.9fr)_minmax(0,1.25fr)] xl:items-stretch">
-        <section className="grid grid-cols-1 gap-4">
-          <article className="min-w-0 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-5">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-              Aniq yechim
-            </span>
-            <div className="mt-4 min-h-12">
-              <Formula html={formulaMarkup.exact} />
-            </div>
-            <p className="mt-3 text-xs leading-5 text-[var(--muted)]">
-              C = y₀ − x₀/2 + 1/4; standart boshlang‘ich qiymatlarda C = 7/4.
-            </p>
-          </article>
-          <article className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-5">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-              Qadamlar soni
-            </span>
-            <strong className="mt-3 block font-mono text-3xl text-[var(--brand)]">
-              {result ? result.steps : '—'}
-            </strong>
-            <p className="mt-2 min-w-0 overflow-hidden text-xs text-[var(--muted)]">
-              <MathInline html={formulaMarkup.steps} />
-            </p>
-            <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-              {result
-                ? `${numeric(Number(calculationInputs.xEnd) - Number(calculationInputs.x0))} oraliq, oxirgi qadam chegaraga moslanadi.`
-                : 'Parametrlarni tekshiring.'}
-            </p>
-          </article>
-        </section>
-
-        <section className="flex min-h-[500px] flex-col rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 shadow-[var(--shadow)] sm:p-5 xl:min-h-full">
+        <section className="flex min-h-[420px] min-w-0 flex-col rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 shadow-[var(--shadow)] sm:p-5">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-lg font-semibold">Yechimlar grafigi</h2>
@@ -332,7 +262,7 @@ export function EulerMethod() {
               )}
             </div>
           </div>
-          <div className="min-h-[380px] w-full flex-1">
+          <div className="h-[350px] w-full min-w-0 flex-1">
             {result && <EulerChart result={result} />}
           </div>
           {!result?.hasExactSolution && result && (
@@ -341,6 +271,74 @@ export function EulerMethod() {
             </p>
           )}
         </section>
+      </div>
+
+      <section className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-5 shadow-[var(--shadow)] sm:p-6">
+        <div className="mb-5 flex items-start justify-between gap-4 border-b border-[var(--line)] pb-4">
+          <div>
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[.14em] text-[var(--muted)]">
+              Method / Formulalar
+            </span>
+            <h2 className="mt-1 text-lg font-semibold tracking-tight">
+              Hisoblash usullari
+            </h2>
+          </div>
+          <span className="font-mono text-xs text-[var(--muted)]">02</span>
+        </div>
+        <div className="grid min-w-0 gap-3 xl:grid-cols-2">
+          <article className="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] p-4">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
+              Oddiy Eyler
+            </span>
+            <div className="mt-3 min-h-10">
+              <Formula html={formulaMarkup.euler} />
+            </div>
+            <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+              Hosila joriy nuqtada baholanadi.
+            </p>
+          </article>
+          <article className="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] p-4">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
+              Takomillashgan · Heun
+            </span>
+            <div className="mt-3 min-h-10">
+              <Formula html={formulaMarkup.improved} />
+            </div>
+            <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+              Pretsenzor bashorati va korrektor aniqlashtirishi.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div className="grid gap-6 xl:grid-cols-2">
+        <article className="min-w-0 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-5">
+          <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
+            Aniq yechim
+          </span>
+          <div className="mt-4 min-h-12">
+            <Formula html={formulaMarkup.exact} />
+          </div>
+          <p className="mt-3 text-xs leading-5 text-[var(--muted)]">
+            C = y₀ − x₀/2 + 1/4; standart boshlang‘ich qiymatlarda C = 7/4.
+          </p>
+        </article>
+        <article className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-5">
+          <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
+            Qadamlar soni
+          </span>
+          <strong className="mt-3 block font-mono text-3xl text-[var(--brand)]">
+            {result ? result.steps : '—'}
+          </strong>
+          <p className="mt-2 min-w-0 overflow-hidden text-xs text-[var(--muted)]">
+            <MathInline html={formulaMarkup.steps} />
+          </p>
+          <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+            {result
+              ? `${numeric(Number(calculationInputs.xEnd) - Number(calculationInputs.x0))} oraliq, oxirgi qadam chegaraga moslanadi.`
+              : 'Parametrlarni tekshiring.'}
+          </p>
+        </article>
       </div>
 
       <section className="overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--panel)] shadow-[var(--shadow)]">
@@ -356,12 +354,12 @@ export function EulerMethod() {
             {rows.length ? `${rows.length} ta nuqta` : 'Natija yo‘q'}
           </span>
         </div>
-        <div className="max-h-[460px] overflow-auto">
-          <table className="w-full min-w-[760px] border-collapse text-right font-mono text-xs">
+        <div className="max-h-[500px] overflow-x-auto overflow-y-auto">
+          <table className="w-full min-w-max border-collapse text-right font-mono text-xs">
             <thead className="sticky top-0 z-10 bg-[var(--bg-2)] text-[var(--muted)]">
               <tr>
                 {tableHeadings.map(({ label, html }) => (
-                  <th className="border-b border-[var(--line)] px-4 py-3 font-semibold" key={label}>
+                  <th className="border-b border-[var(--line)] px-6 py-3 font-semibold" key={label}>
                     <MathInline html={html} />
                   </th>
                 ))}
@@ -369,13 +367,13 @@ export function EulerMethod() {
             </thead>
             <tbody>
               {rows.map((row) => (
-                <tr className="border-b border-[var(--line)]/70 last:border-0" key={row.step}>
-                  <td className="px-4 py-3 text-[var(--muted)]">{row.step}</td>
-                  <td className="px-4 py-3">{numeric(row.x)}</td>
-                  <td className="px-4 py-3 text-[#ef4444]">{numeric(row.yEuler)}</td>
-                  <td className="px-4 py-3 text-[#3b82f6]">{numeric(row.yImproved)}</td>
-                  <td className="px-4 py-3 text-[#22a06b]">{numeric(row.yExact)}</td>
-                  <td className="px-4 py-3">{numeric(row.difference)}</td>
+                <tr className="border-b border-[var(--line)]" key={row.step}>
+                  <td className="px-6 py-3 text-[var(--muted)]">{row.step}</td>
+                  <td className="px-6 py-3">{numeric(row.x)}</td>
+                  <td className="px-6 py-3 text-[#ef4444]">{numeric(row.yEuler)}</td>
+                  <td className="px-6 py-3 text-[#3b82f6]">{numeric(row.yImproved)}</td>
+                  <td className="px-6 py-3 text-[#22a06b]">{numeric(row.yExact)}</td>
+                  <td className="px-6 py-3">{numeric(row.difference)}</td>
                 </tr>
               ))}
               {!rows.length && (

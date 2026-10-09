@@ -402,7 +402,7 @@ const CSS = `
 /* hero */
 .bm-hero{ display:flex; align-items:flex-end; justify-content:space-between; gap:32px; margin:34px 0 8px; }
 .bm-eyebrow{ display:block; font:600 12px/1.2 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
-.bm-title{ margin:12px 0; font-size:clamp(44px,7vw,84px); font-weight:700; line-height:.94; letter-spacing:-.06em; }
+.bm-title{ margin:20px 0; font-size:clamp(44px,7vw,84px); font-weight:700; line-height:.94; letter-spacing:-.06em; }
 .bm-title em{ font-style:normal; color:var(--cyan); position:relative; }
 .bm-title em::after{ content:""; position:absolute; left:0; right:0; bottom:-.06em; height:.07em; background:var(--brand); }
 .bm-lead{ margin:0; color:var(--muted); font-size:17px; max-width:520px; }
