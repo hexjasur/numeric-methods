@@ -247,7 +247,7 @@ export function BisectionMethod() {
               <li><i className="lg-curve" />f(x)</li>
               <li><i className="lg-ab" />[a, b]</li>
               <li><i className="lg-cut" />c nuqtalar</li>
-              <li><i className="lg-root" />ildiz</li>
+              <li><i className="lg-root" />ildiz: f(x) = 0</li>
             </ul>
           </div>
 
@@ -450,7 +450,7 @@ const CSS = `
 
 /* fields */
 .bm-field{ display:block; margin:0 0 16px; }
-.bm-label{ display:flex; justify-content:space-between; align-items:baseline; font-size:13.5px; font-weight:650; color:var(--ink); }
+.bm-label{ display:flex; justify-content:space-around; align-items:baseline; font-size:13.5px; font-weight:650; color:var(--ink); }
 .bm-label em{ font:500 12px/1 var(--mono); font-style:normal; color:var(--muted); }
 .bm-input,.bm-fx{ margin-top:8px; width:100%; border:1px solid var(--line-2); background:var(--bg-2); border-radius:8px; color:var(--ink);
   font:500 15px/1.2 var(--mono); outline:none; transition:border-color .15s, box-shadow .15s, background .15s; }
@@ -496,8 +496,6 @@ const CSS = `
 .bm-plot-empty{ display:grid; place-items:center; min-height:160px; padding:20px; text-align:center; color:var(--muted); font:500 13.5px var(--mono);
   border:1px dashed var(--line-2); border-radius:8px; }
 .bm-grid{ stroke:var(--line); stroke-width:1; }
-.bm-tick{ fill:var(--muted); font:500 11.5px var(--mono); }
-.bm-zero{ stroke:var(--ink-2); stroke-width:1.2; stroke-dasharray:5 4; opacity:.7; }
 .bm-curve{ fill:none; stroke:var(--cyan); stroke-width:2.6; stroke-linejoin:round; stroke-linecap:round; }
 .bm-band-ab{ fill:var(--cyan); opacity:.07; }
 .bm-band-last{ fill:var(--brand); opacity:.22; }

@@ -245,22 +245,6 @@ export function EulerMethod() {
                 Nuqtalar ustiga olib borib qiymatlarni solishtiring.
               </p>
             </div>
-            <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
-              <span className="inline-flex items-center gap-2 text-[#ef4444]">
-                <i className="h-0.5 w-5 border-t-2 border-dashed border-current" />
-                Oddiy Eyler
-              </span>
-              <span className="inline-flex items-center gap-2 text-[#3b82f6]">
-                <i className="h-0.5 w-5 bg-current" />
-                Takomillashgan
-              </span>
-              {result?.hasExactSolution && (
-                <span className="inline-flex items-center gap-2 text-[#22a06b]">
-                  <i className="h-0.5 w-5 border-t-2 border-dotted border-current" />
-                  Aniq yechim
-                </span>
-              )}
-            </div>
           </div>
           <div className="h-[350px] w-full min-w-0 flex-1">
             {result && <EulerChart result={result} />}
