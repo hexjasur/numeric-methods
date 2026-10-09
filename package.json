@@ -3,7 +3,9 @@
   "version": "3.0.0",
   "private": true,
   "scripts": {
+    "td": "tauri dev",
     "dev": "next dev",
+    "tb": "tauri build",
     "build": "next build",
     "start": "next start",
     "lint": "eslint app components",
@@ -12,7 +14,9 @@
     "tauri:build": "tauri build",
     "tauri:android:init": "tauri android init",
     "tauri:android:dev": "tauri android dev",
-    "tauri:android:build": "tauri android build"
+    "tauri:android:build": "tauri android build",
+    "td:safe": "cross-env CARGO_BUILD_JOBS=1 tauri dev",
+    "tb:safe": "cross-env CARGO_BUILD_JOBS=1 tauri build"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.12.1",
@@ -30,6 +34,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
