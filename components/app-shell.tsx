@@ -4,19 +4,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { LayoutDashboard, Menu, Sigma, X } from 'lucide-react';
+import { Activity, LayoutDashboard, Menu, Sigma, X } from 'lucide-react';
 import logo from '@/public/logo.png';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const navigation = [
   { href: '/', label: 'Dashboard', code: '00', icon: LayoutDashboard },
   { href: '/methods/bisection', label: 'Bisection Method', code: '01', icon: Sigma },
+  { href: '/methods/euler', label: 'Euler Methods', code: '02', icon: Activity },
 ];
 
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const pageTitle = pathname === '/' ? 'Dashboard' : 'Bisection Method';
+  const pageTitle = pathname === '/' ? 'Dashboard' : pathname.startsWith('/methods/euler') ? 'Euler Methods' : 'Bisection Method';
 
   useEffect(() => {
     if (!mobileOpen) return;
