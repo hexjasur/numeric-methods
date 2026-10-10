@@ -18,20 +18,20 @@ import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  // title: {
+  //   default: siteConfig.name,
+  //   template: "%s | ${siteConfig.name}"
+  // },
   title: {
-    default: siteConfig.name,
-    template: "%s | ${siteConfig.name}"
-  },
-  title: {
-    default: "Numeric Methods | Sonli usullar",
+    default: "Numeric Methods",
     template: "%s | Numeric Methods",
   },
-  description: "Sonli usullarni interaktiv hisoblash uchun zamonaviy matematika laboratoriyasi.",
+  description: "Numeric Methods is a web application that provides a collection of numerical methods and algorithms for solving mathematical problems. It offers a user-friendly interface for performing calculations, visualizing results, and learning about various numerical techniques.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uz" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <Script id="theme-init" strategy="beforeInteractive">
           {`try {
