@@ -2,7 +2,12 @@
 
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
-import { PsHero, PsStrip, PsPanel, PsPanelHead } from '@/components/ui/print-stream';
+import {
+  PsHero,
+  PsStrip,
+  PsPanel,
+  PsPanelHead,
+} from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
 
 export default function Home() {
@@ -15,26 +20,52 @@ export default function Home() {
   ];
 
   return (
-    <div className="relative max-w-[1160px] mx-auto px-4 pb-12">
+    <div className="relative ax-w-290 mx-auto px-4 pb-12">
       <PsStrip eyebrow="DSH-000" id="MAIN" name={t('dashboard.strip')} />
 
-      <PsHero 
+      <PsHero
         eyebrow={t('dashboard.hero_eyebrow')}
-        title={<>{t('dashboard.hero_title_1')} <em className="not-italic text-cyan relative after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[.06em] after:h-[.07em] after:bg-brand">{t('dashboard.hero_title_em')}</em><br />{t('dashboard.hero_title_2')}</>}
+        title={
+          <>
+            {t('dashboard.hero_title_1')}{' '}
+            <em className="not-italic text-cyan relative after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[.06em] after:h-[.07em] after:bg-brand">
+              {t('dashboard.hero_title_em')}
+            </em>
+            <br />
+            {t('dashboard.hero_title_2')}
+          </>
+        }
         titleHighlight=""
         lead={t('dashboard.hero_lead')}
       />
 
       <PsPanel className="mb-[18px]">
-        <PsPanelHead eyebrow="01 / OVERVIEW" title={t('dashboard.overview')} idx="SYS" />
+        <PsPanelHead
+          eyebrow="01 / OVERVIEW"
+          title={t('dashboard.overview')}
+          idx="SYS"
+        />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px]">
           {stats.map(([number, label, value, mark]) => (
-            <article className="relative min-h-[140px] rounded-lg border border-line bg-bg-2 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-brand" key={number}>
-              <span className="font-mono text-[11px] font-bold text-brand bg-brand-soft py-1 px-1.5 rounded">{number}</span>
-              <span className="absolute right-[20px] top-[20px] rounded border border-line px-1.5 py-1 font-mono text-[11px] font-bold text-muted bg-panel">{mark}</span>
-              <small className="mt-8 block font-mono text-[11px] font-semibold tracking-wider uppercase text-muted">{label}</small>
-              <strong className="mt-2 block text-xl font-bold tracking-tight text-ink">{value}</strong>
-              <span className="absolute bottom-[22px] right-[20px] text-brand opacity-60">↗</span>
+            <article
+              className="relative min-h-[140px] rounded-lg border border-line bg-bg-2 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-brand"
+              key={number}
+            >
+              <span className="font-mono text-[11px] font-bold text-brand bg-brand-soft py-1 px-1.5 rounded">
+                {number}
+              </span>
+              <span className="absolute right-[20px] top-[20px] rounded border border-line px-1.5 py-1 font-mono text-[11px] font-bold text-muted bg-panel">
+                {mark}
+              </span>
+              <small className="mt-8 block font-mono text-[11px] font-semibold tracking-wider uppercase text-muted">
+                {label}
+              </small>
+              <strong className="mt-2 block text-xl font-bold tracking-tight text-ink">
+                {value}
+              </strong>
+              <span className="absolute bottom-[22px] right-[20px] text-brand opacity-60">
+                ↗
+              </span>
             </article>
           ))}
         </div>
@@ -53,7 +84,10 @@ export default function Home() {
               {t('dashboard.next_desc')}
             </p>
           </div>
-          <Link href="/methods/bisection" className="flex shrink-0 items-center gap-3 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0">
+          <Link
+            href="/methods/bisection"
+            className="flex shrink-0 items-center gap-3 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0"
+          >
             {t('dashboard.start_lab')} <ArrowUpRight size={18} />
           </Link>
         </div>

@@ -4,7 +4,8 @@ import { useMemo, useState } from 'react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Check, Info, Waves } from 'lucide-react';
-import { calculateBisection, format, normalizeExpression, type Result } from '@/lib/bisection';
+import { calculateBisection, format, type Result } from '@/lib/bisection';
+import { normalizeExpression } from '@/lib/math';
 import { BisectionPlot as Plot } from '@/components/bisection/plot';
 import { PsHero, PsStrip, PsMap, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
@@ -32,7 +33,7 @@ export function BisectionMethod() {
   function calculate() {
     setError('');
     try {
-      setResult(calculateBisection(expression, a, b, epsilon));
+      setResult(calculateBisection(expression, a, b, epsilon, t));
     } catch (cause) {
       setResult(null);
       setError(cause instanceof Error ? cause.message : t('bisection.err_calc'));

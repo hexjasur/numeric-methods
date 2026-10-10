@@ -14,7 +14,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { siteConfig } from '@/lib/config';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.name,
+    template: "%s | ${siteConfig.name}"
+  },
   title: {
     default: "Numeric Methods | Sonli usullar",
     template: "%s | Numeric Methods",
@@ -46,3 +53,4 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
+

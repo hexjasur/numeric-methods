@@ -1,24 +1,54 @@
-# AGENTS.md
+﻿# AGENTS.md
+
+## Tech stack
+
+- **Package manager:** Bun only. Never use `npm`, `yarn`, or `pnpm`. Use `bun add`, `bun remove`, `bun run`, etc.
+- **Styling:** Tailwind CSS 4.
+- **Language:** TypeScript (strict mode).
+- **Icons:** `lucide-react`.
+
+## Commands
+
+| Task | Command |
+| --- | --- |
+| Run | `bun dev` |
+| Build | `bun build` |
+| Tauri + Web Run | `bun td` |
+| Tauri + Web Build | `bun tb` |
+| Lint | `bun lint` |
 
 ## Styling rules
 
-- This project uses **Tailwind CSS 4** as the default and preferred styling system.
-- Write visual styles directly in JSX/TSX with Tailwind utility classes. Do not create large custom CSS class systems in `app/globals.css`.
-- Keep `app/globals.css` limited to Tailwind imports, design tokens/theme variables, base resets, and styles that Tailwind cannot express cleanly (for example KaTeX integration, a genuinely custom keyframe animation, or the open-corner border effect).
-- Before adding CSS, check whether the requirement can be expressed with existing Tailwind utilities, arbitrary values, responsive variants, `dark:` variants, or `@theme` tokens. Prefer those approaches.
-- Do not add a new styling dependency unless the task explicitly requires it. Iconography should use the existing `lucide-react` dependency rather than emoji or hand-drawn SVGs.
+- Tailwind CSS 4 is the default and preferred styling system.
+- Write styles directly in JSX/TSX with Tailwind utility classes. Do not build large custom CSS class systems in `app/globals.css`.
+- Keep `app/globals.css` limited to:
+  - Tailwind imports
+  - Design tokens / theme variables (`@theme`)
+  - Base resets
+  - Styles Tailwind cannot express cleanly (e.g. KaTeX integration, genuinely custom keyframes, the open-corner border effect)
+- Before adding any CSS, check whether it can be done with existing utilities, arbitrary values, responsive variants, `dark:` variants, or `@theme` tokens.
+- Do not add new styling dependencies unless the task explicitly requires it.
+- Use `lucide-react` for icons. No emoji or hand-drawn SVGs.
 - Preserve the `dark` variant contract: the app toggles `data-theme="dark"` on `<html>`, and `globals.css` defines the Tailwind v4 custom variant for it.
 
-## Validation
+## TypeScript
 
-- Run `bun lint` after UI changes.
-- Run `bun run build` before committing.
-- Keep changes focused and make one descriptive commit per requested change.
-- Split multi-part requests into logical tasks. After each task is implemented and validated, create its own descriptive commit; do not bundle unrelated fixes into one final commit.
-- Before committing a task, run the relevant lint/build checks and leave the working tree understandable for the next task.
+- **No `any`.** Use explicit, strict types instead (e.g. `Record<string, string | number>`, generics, well-defined interfaces).
+- Rely on strict mode checks; do not weaken them.
 
 ## Multi-target application
 
-- The `tauri-desktop` branch supports one shared codebase for website, Tauri desktop, and Tauri Android targets.
-- Keep the Next.js app compatible with static export (`output: "export"`); do not add server-only routes or APIs without a target-specific adapter.
-- Keep Tauri configuration and Rust entry points under `src-tauri/`. Do not commit `src-tauri/target/`, signing keys, keystores, or platform secrets.
+The `tauri-desktop` branch shares one codebase across website, Tauri desktop, and Tauri Android targets.
+
+- Keep the Next.js app compatible with static export (`output: "export"`). Do not add server-only routes or APIs without a target-specific adapter.
+- Keep Tauri configuration and Rust entry points under `src-tauri/`.
+- Never commit `src-tauri/target/`, signing keys, keystores, or platform secrets.
+
+## Workflow and commits
+
+- Keep changes focused.
+- Split multi-part requests into logical tasks. Implement and validate each task, then make **one descriptive commit per task**. Do not bundle unrelated fixes into a single final commit.
+- Before each commit:
+  1. Run `bun lint` (required after any UI change).
+  2. Run `bun run build`.
+  3. Leave the working tree clean and understandable for the next task.

@@ -4,7 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, useMemo } from 'react';
-import { Activity, LayoutDashboard, Menu, Split, X } from 'lucide-react';
+import {
+  Activity,
+  BookOpenText,
+  LayoutDashboard,
+  Menu,
+  Split,
+  Target,
+  X,
+} from 'lucide-react';
 import logo from '@/public/logo.png';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LangToggle } from '@/components/lang-toggle';
@@ -17,21 +25,41 @@ export function AppShell({
   const [mobileOpen, setMobileOpen] = useState(false);
   const { t } = useI18n();
 
-  const navigation = useMemo(() => [
-    { href: '/', label: t('nav.dashboard'), code: '00', icon: LayoutDashboard },
-    {
-      href: '/methods/bisection',
-      label: t('nav.bisection'),
-      code: '01',
-      icon: Split,
-    },
-    {
-      href: '/methods/euler',
-      label: t('nav.euler'),
-      code: '02',
-      icon: Activity,
-    },
-  ], [t]);
+  const navigation = useMemo(
+    () => [
+      {
+        href: '/',
+        label: t('nav.dashboard'),
+        code: '00',
+        icon: LayoutDashboard,
+      },
+      {
+        href: '/methods/bisection',
+        label: t('nav.bisection'),
+        code: '01',
+        icon: Split,
+      },
+      {
+        href: '/methods/euler',
+        label: t('nav.euler'),
+        code: '02',
+        icon: Activity,
+      },
+      {
+        href: '/methods/newton',
+        label: t('nav.newton'),
+        code: '03',
+        icon: Target,
+      },
+      {
+        href: '/docs/syntax',
+        label: t('nav.syntax'),
+        code: 'DC',
+        icon: BookOpenText,
+      },
+    ],
+    [t],
+  );
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -67,8 +95,12 @@ export function AppShell({
               <Image src={logo} width={40} height={40} alt="Numeric Methods" />
             </span>
             <span className="flex flex-col leading-none">
-              <strong className="text-[15px] font-bold tracking-[.16em]">{t('app.title')}</strong>
-              <small className="mt-[7px] font-mono text-[11.5px] font-semibold tracking-[.08em] text-muted">{t('app.subtitle')}</small>
+              <strong className="text-[15px] font-bold tracking-[.16em]">
+                {t('app.title')}
+              </strong>
+              <small className="mt-[7px] font-mono text-[11.5px] font-semibold tracking-[.08em] text-muted">
+                {t('app.subtitle')}
+              </small>
             </span>
           </Link>
           <button
@@ -82,7 +114,10 @@ export function AppShell({
 
         <div className="relative z-10 flex items-center gap-[10px] p-[0_12px_12px] font-mono text-[12px] font-semibold tracking-[.14em] uppercase text-muted">
           <span>{t('nav.lab')}</span>
-          <i className="flex-1 h-px bg-[repeating-linear-gradient(90deg,var(--line-2)_0_4px,transparent_4px_8px)]" aria-hidden />
+          <i
+            className="flex-1 h-px bg-[repeating-linear-gradient(90deg,var(--line-2)_0_4px,transparent_4px_8px)]"
+            aria-hidden
+          />
         </div>
 
         <nav className="relative z-10 grid gap-[6px]">
@@ -103,9 +138,17 @@ export function AppShell({
                 }`}
                 aria-current={active ? 'page' : undefined}
               >
-                <item.icon size={20} strokeWidth={active ? 2.4 : 2} className={active ? 'text-brand' : ''} />
+                <item.icon
+                  size={20}
+                  strokeWidth={active ? 2.4 : 2}
+                  className={active ? 'text-brand' : ''}
+                />
                 <span className="flex-1">{item.label}</span>
-                <em className={`font-mono text-[12px] font-semibold not-italic ${active ? 'text-brand opacity-100' : 'opacity-60'}`}>{item.code}</em>
+                <em
+                  className={`font-mono text-[12px] font-semibold not-italic ${active ? 'text-brand opacity-100' : 'opacity-60'}`}
+                >
+                  {item.code}
+                </em>
               </Link>
             );
           })}
@@ -116,10 +159,15 @@ export function AppShell({
             <span className="w-2 h-2 rounded-full bg-ok shadow-[0_0_0_4px_color-mix(in_srgb,var(--ok)_18%,transparent)] animate-[pulse_2.4s_ease-in-out_infinite]" />
             <div>
               <strong className="block text-[13.5px]">{t('app.env')}</strong>
-              <small className="block mt-[3px] font-mono text-[12px] font-medium text-muted">Math.js + KaTeX</small>
+              <small className="block mt-[3px] font-mono text-[12px] font-medium text-muted">
+                Math.js + KaTeX
+              </small>
             </div>
           </div>
-          <div className="flex items-center gap-[10px] font-mono text-[11.5px] font-semibold tracking-[.14em] text-muted" aria-hidden>
+          <div
+            className="flex items-center gap-[10px] font-mono text-[11.5px] font-semibold tracking-[.14em] text-muted"
+            aria-hidden
+          >
             <span>SN-3.0</span>
             <i className="ps-barcode flex-1 h-[12px] opacity-50" />
             <span>MK-1</span>
@@ -168,3 +216,4 @@ export function AppShell({
 }
 
 export default AppShell;
+

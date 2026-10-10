@@ -13,7 +13,7 @@ const dictionaries: Record<Locale, Dictionary> = { uz, ru, en };
 interface I18nContextType {
   locale: Locale;
   setLocale: (l: Locale) => void;
-  t: (key: string) => string;
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 const I18nContext = createContext<I18nContextType | null>(null);
@@ -39,14 +39,21 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
   const t = useMemo(() => {
     const dict = dictionaries[locale];
-    return (key: string) => {
+    return (key: string, params?: Record<string, string | number>) => {
       const keys = key.split('.');
       let val: any = dict;
       for (const k of keys) {
         if (val === undefined) break;
         val = val[k as keyof typeof val];
       }
-      return val ?? key;
+      
+      let res = val ?? key;
+      if (typeof res === 'string' && params) {
+        Object.entries(params).forEach(([k, v]) => {
+          res = res.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v));
+        });
+      }
+      return res;
     };
   }, [locale]);
 

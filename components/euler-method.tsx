@@ -81,6 +81,7 @@ export function EulerMethod() {
         Number(calculationInputs.y0),
         Number(calculationInputs.xEnd),
         Number(calculationInputs.h),
+        t,
       );
       return { result, error: '' };
     } catch (cause) {
