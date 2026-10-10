@@ -131,3 +131,15 @@
     background: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 3px, var(--ink) 3px 5px, transparent 5px 6px, var(--ink) 6px 7px, transparent 7px 11px);
   }
 }
+
+/* View Transitions for Theme Toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* By default, new view is on top */
+::view-transition-new(root) {
+  z-index: 9999;
+}
+/* When transitioning to dark, we can either expand the new dark theme, or shrink the old light theme */
