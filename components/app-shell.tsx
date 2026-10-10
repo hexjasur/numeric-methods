@@ -3,32 +3,35 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Activity, LayoutDashboard, Menu, Sigma, X } from 'lucide-react';
+import { useEffect, useState, useMemo } from 'react';
+import { Activity, LayoutDashboard, Menu, Split, X } from 'lucide-react';
 import logo from '@/public/logo.png';
 import { ThemeToggle } from '@/components/theme-toggle';
-
-const navigation = [
-  { href: '/', label: 'Dashboard', code: '00', icon: LayoutDashboard },
-  {
-    href: '/methods/bisection',
-    label: 'Bisection Method',
-    code: '01',
-    icon: Sigma,
-  },
-  {
-    href: '/methods/euler',
-    label: 'Euler Methods',
-    code: '02',
-    icon: Activity,
-  },
-];
+import { LangToggle } from '@/components/lang-toggle';
+import { useI18n } from '@/components/i18n-provider';
 
 export function AppShell({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { t } = useI18n();
+
+  const navigation = useMemo(() => [
+    { href: '/', label: t('nav.dashboard'), code: '00', icon: LayoutDashboard },
+    {
+      href: '/methods/bisection',
+      label: t('nav.bisection'),
+      code: '01',
+      icon: Split,
+    },
+    {
+      href: '/methods/euler',
+      label: t('nav.euler'),
+      code: '02',
+      icon: Activity,
+    },
+  ], [t]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -40,10 +43,10 @@ export function AppShell({
 
   const pageTitle =
     pathname === '/'
-      ? 'Dashboard'
+      ? t('nav.dashboard')
       : pathname.startsWith('/methods/euler')
-        ? 'Euler Methods'
-        : 'Bisection Method';
+        ? t('nav.euler')
+        : t('nav.bisection');
 
   return (
     <div className="flex min-h-screen text-ink font-sans text-[15px] leading-[1.5]">
@@ -64,8 +67,8 @@ export function AppShell({
               <Image src={logo} width={40} height={40} alt="Numeric Methods" />
             </span>
             <span className="flex flex-col leading-none">
-              <strong className="text-[15px] font-bold tracking-[.16em]">NUMERIC</strong>
-              <small className="mt-[7px] font-mono text-[11.5px] font-semibold tracking-[.08em] text-muted">METHODS / 3.0</small>
+              <strong className="text-[15px] font-bold tracking-[.16em]">{t('app.title')}</strong>
+              <small className="mt-[7px] font-mono text-[11.5px] font-semibold tracking-[.08em] text-muted">{t('app.subtitle')}</small>
             </span>
           </Link>
           <button
@@ -78,7 +81,7 @@ export function AppShell({
         </div>
 
         <div className="relative z-10 flex items-center gap-[10px] p-[0_12px_12px] font-mono text-[12px] font-semibold tracking-[.14em] uppercase text-muted">
-          <span>Laboratoriya</span>
+          <span>{t('nav.lab')}</span>
           <i className="flex-1 h-px bg-[repeating-linear-gradient(90deg,var(--line-2)_0_4px,transparent_4px_8px)]" aria-hidden />
         </div>
 
@@ -112,7 +115,7 @@ export function AppShell({
           <div className="flex items-center gap-[12px] p-[14px] border border-line rounded-[9px] bg-bg-2">
             <span className="w-2 h-2 rounded-full bg-ok shadow-[0_0_0_4px_color-mix(in_srgb,var(--ok)_18%,transparent)] animate-[pulse_2.4s_ease-in-out_infinite]" />
             <div>
-              <strong className="block text-[13.5px]">Hisoblash muhiti</strong>
+              <strong className="block text-[13.5px]">{t('app.env')}</strong>
               <small className="block mt-[3px] font-mono text-[12px] font-medium text-muted">Math.js + KaTeX</small>
             </div>
           </div>
@@ -150,7 +153,8 @@ export function AppShell({
             </div>
           </div>
 
-          <div>
+          <div className="flex items-center gap-2.5">
+            <LangToggle />
             <ThemeToggle />
           </div>
         </header>

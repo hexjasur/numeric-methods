@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "@/components/i18n-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     default: "Numeric Methods | Sonli usullar",
     template: "%s | Numeric Methods",
   },
-  description: "Sonli usullarni o‘rganish va interaktiv hisoblash uchun zamonaviy matematika laboratoriyasi.",
+  description: "Sonli usullarni interaktiv hisoblash uchun zamonaviy matematika laboratoriyasi.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -37,7 +38,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 }`}
         </Script>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <I18nProvider>
+          {children}
+        </I18nProvider>
+      </body>
     </html>
   );
 }

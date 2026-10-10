@@ -2,8 +2,10 @@
 
 import { useMemo } from 'react';
 import { compile, type Result } from '@/lib/bisection';
+import { useI18n } from '@/components/i18n-provider';
 
 export function BisectionPlot({ expression, a, b, result }: { expression: string; a: string; b: string; result: Result | null }) {
+  const { t } = useI18n();
   const data = useMemo(() => {
     const left = Number(a), right = Number(b);
     if (!Number.isFinite(left) || !Number.isFinite(right) || left >= right) return null;
@@ -25,7 +27,7 @@ export function BisectionPlot({ expression, a, b, result }: { expression: string
     return { pts, x0, x1, y0: y0 - ypad, y1: y1 + ypad, left, right };
   }, [expression, a, b]);
 
-  if (!data) return <div className="grid place-items-center min-h-[160px] p-5 text-center text-muted font-mono text-[13.5px] font-medium border border-dashed border-line-2 rounded-lg">Grafik uchun to&apos;g&apos;ri funksiya va a &lt; b kiriting</div>;
+  if (!data) return <div className="grid place-items-center min-h-[160px] p-5 text-center text-muted font-mono text-[13.5px] font-medium border border-dashed border-line-2 rounded-lg">{t('bisection.plot_empty')}</div>;
   const W = 640, H = 280, P = { l: 68, r: 16, t: 24, b: 34 };
   const sx = (x: number) => P.l + ((x - data.x0) / (data.x1 - data.x0)) * (W - P.l - P.r);
   const sy = (y: number) => P.t + (1 - (y - data.y0) / (data.y1 - data.y0)) * (H - P.t - P.b);
