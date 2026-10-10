@@ -1,4 +1,5 @@
-﻿import type { MetadataRoute } from 'next';
+﻿export const dynamic = 'force-static';
+import type { MetadataRoute } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { siteConfig } from '@/lib/config';
@@ -48,3 +49,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...methodRoutes,
   ];
 }
+

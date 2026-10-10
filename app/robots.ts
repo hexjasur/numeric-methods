@@ -1,4 +1,5 @@
-﻿import type { MetadataRoute } from 'next';
+﻿export const dynamic = 'force-static';
+import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/lib/config';
 
 export default function robots(): MetadataRoute.Robots {
@@ -11,3 +12,4 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }
+
