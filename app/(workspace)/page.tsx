@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
+import { PsHero, PsStrip, PsPanel, PsPanelHead } from '@/components/ui/print-stream';
 
 const stats = [
   ['01', 'Faol metod', 'Bisection Method', 'A'],
@@ -8,13 +9,50 @@ const stats = [
 ];
 
 export default function Home() {
-  return <div className="mx-auto max-w-[1130px]">
-    <section className="relative flex min-h-[420px] items-center overflow-hidden rounded-[18px] bg-gradient-to-br from-[#202044] via-[#383178] to-brand p-[clamp(34px,6vw,72px)] text-white shadow-[var(--shadow)] max-[620px]:min-h-[510px] max-[620px]:items-start max-[620px]:p-8">
-      <div className="relative z-10 max-w-[590px]"><span className="font-mono text-[10px] uppercase tracking-[.15em] text-[#a8a8dc]">SONLI USULLAR / LABORATORIYA</span><h1 className="my-[18px] text-[clamp(36px,5vw,66px)] font-semibold leading-[.98] tracking-[-.065em] max-[620px]:text-[43px]">Matematikani <em className="text-[#88e5e6] not-italic">hisoblab</em>,<br />har qadamni tushuning.</h1><p className="max-w-[440px] text-[15px] leading-[1.7] text-[#c3c4df]">Sonli usullarni nazariya bilan emas, real interaktiv hisoblash orqali o‘rganing.</p><Link href="/methods/bisection" className="mt-4.5 inline-flex items-center justify-center gap-4 rounded-md bg-[#171739] px-4.25 py-3.25 text-xs font-semibold transition hover:-translate-y-0.5">Bisection Methodni ochish <ArrowUpRight size={18} /></Link></div>
-      <div className="pointer-events-none absolute right-[3%] top-0 h-full w-[44%] opacity-75 max-[620px]:top-[245px] max-[620px]:w-full"><div className="absolute right-[18%] top-[28%] z-10 grid w-[220px] rotate-7 gap-3 rounded-xl border border-white/30 bg-[#171739]/50 p-5 font-mono text-[13px] backdrop-blur-md"><span>f(x) = x³ + x − 1</span><b className="text-lg">c = (a + b) / 2</b><small className="text-[10px] text-[#9ea4d9]">precision / 0.01</small></div><div className="absolute right-[-4%] top-1/4 h-[190px] w-[370px] -rotate-[23deg] rounded-[50%] border border-[#95f6f6]/40" /><div className="absolute right-[5%] top-[12%] h-[260px] w-[260px] rounded-[50%] border border-[#95f6f6]/40" /><div className="absolute right-[7%] top-[18%] font-serif text-[140px] text-[#99f5f3]/30">∫</div></div>
-    </section>
-    <div className="mb-5 mt-[68px] flex items-end justify-between"><div><span className="font-mono text-[10px] uppercase tracking-[.15em] text-muted">01 / OVERVIEW</span><h2 className="mt-2 text-[25px] font-semibold tracking-[-.04em]">Workspace holati</h2></div><span className="font-mono text-[10px] text-muted">LIVE ENVIRONMENT</span></div>
-    <section className="grid grid-cols-3 gap-3 max-[620px]:grid-cols-1">{stats.map(([number, label, value, mark]) => <article className="relative min-h-[165px] rounded-[10px] border border-line bg-surface p-[22px] shadow-sm" key={label}><span className="font-mono text-[11px] text-brand">{number}</span><span className="absolute right-[23px] top-[23px] rounded border border-line px-1.5 py-1 font-mono text-[11px] text-brand">{mark}</span><small className="mt-8 block text-[11px] text-muted max-[620px]:mt-5">{label}</small><strong className="mt-2 block text-xl">{value}</strong><span className="absolute bottom-5 right-[22px] text-muted">↗</span></article>)}</section>
-    <section className="mt-[45px] flex items-center justify-between gap-7 rounded-[10px] border border-line bg-surface p-7 max-[620px]:flex-col max-[620px]:items-start"><div><span className="font-mono text-[10px] uppercase tracking-[.15em] text-muted">KEYINGI QADAM</span><h2 className="mt-2 text-[25px] font-semibold tracking-[-.04em]">Birinchi usulni sinab ko‘ring</h2><p className="mt-2 max-w-[600px] text-[13px] leading-[1.6] text-muted">Funksiya, oraliq va aniqlikni kiriting. Tizim ildizga yaqinlashishning har bir qadamini ko‘rsatadi.</p></div><Link href="/methods/bisection" className="inline-flex shrink-0 items-center gap-4 rounded-md border border-line px-[17px] py-[13px] text-xs font-semibold transition hover:border-brand hover:text-brand">Laboratoriyani boshlash <ArrowUpRight size={16} /></Link></section>
-  </div>;
+  return (
+    <div className="relative max-w-[1160px] mx-auto px-4 pb-12">
+      <PsStrip eyebrow="DSH-000" id="MAIN" name="DASHBOARD / MK-1" />
+
+      <PsHero
+        eyebrow="Sonli usullar / Laboratoriya"
+        title={<>Matematikani <em className="not-italic text-cyan relative after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[.06em] after:h-[.07em] after:bg-brand">hisoblab</em>,<br />har qadamni tushuning.</>}
+        titleHighlight=""
+        lead="Sonli usullarni nazariya bilan emas, real interaktiv hisoblash orqali o&lsquo;rganing."
+      />
+
+      <PsPanel className="mb-[18px]">
+        <PsPanelHead eyebrow="01 / OVERVIEW" title="Workspace holati" idx="SYS" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px]">
+          {stats.map(([number, label, value, mark]) => (
+            <article className="relative min-h-[140px] rounded-lg border border-line bg-bg-2 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-brand" key={label}>
+              <span className="font-mono text-[11px] font-bold text-brand bg-brand-soft py-1 px-1.5 rounded">{number}</span>
+              <span className="absolute right-[20px] top-[20px] rounded border border-line px-1.5 py-1 font-mono text-[11px] font-bold text-muted bg-panel">{mark}</span>
+              <small className="mt-8 block font-mono text-[11px] font-semibold tracking-wider uppercase text-muted">{label}</small>
+              <strong className="mt-2 block text-xl font-bold tracking-tight text-ink">{value}</strong>
+              <span className="absolute bottom-[22px] right-[20px] text-brand opacity-60">↗</span>
+            </article>
+          ))}
+        </div>
+      </PsPanel>
+
+      <PsPanel>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-7">
+          <div>
+            <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
+              Keyingi qadam
+            </span>
+            <h2 className="mt-2 text-[22px] font-[650] tracking-[-.035em]">
+              Birinchi usulni sinab ko&lsquo;ring
+            </h2>
+            <p className="mt-2 max-w-[600px] text-[14px] leading-[1.6] text-muted">
+              Funksiya, oraliq va aniqlikni kiriting. Tizim ildizga yaqinlashishning har bir qadamini ko&lsquo;rsatadi.
+            </p>
+          </div>
+          <Link href="/methods/bisection" className="flex shrink-0 items-center gap-3 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0">
+            Laboratoriyani boshlash <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </PsPanel>
+    </div>
+  );
 }

@@ -5,8 +5,8 @@ Numeric Methods — sonli usullarni interaktiv o‘rganish uchun Next.js ilovasi
 ## Development
 
 ```bash
-npm install
-npm run dev
+bun install
+bun dev
 ```
 
 Website `http://localhost:3000` manzilida ishlaydi.
@@ -14,8 +14,8 @@ Website `http://localhost:3000` manzilida ishlaydi.
 ## Website build
 
 ```bash
-npm run build
-npm run start
+bun build
+bun start
 ```
 
 `next.config.ts` `output: "export"` ishlatadi. Build natijasi `out/` katalogiga yoziladi. Shu static artifact website hosting va Tauri frontend’i uchun umumiy hisoblanadi. Server actions, API routes va server runtime bu targetda ishlatilmasligi kerak.
@@ -25,8 +25,8 @@ npm run start
 Rust toolchain va platformaga tegishli Tauri dependencies o‘rnatilgandan keyin:
 
 ```bash
-npm run tauri:dev
-npm run tauri:build
+bun td
+bun tb
 ```
 
 Tauri konfiguratsiyasi `src-tauri/tauri.conf.json` ichida. `tauri:dev` Next.js dev serverini, `tauri:build` esa avval `out/` static exportni va keyin desktop bundleni yaratadi.
@@ -36,9 +36,9 @@ Tauri konfiguratsiyasi `src-tauri/tauri.conf.json` ichida. `tauri:dev` Next.js d
 Android SDK, Java 17+, Rust Android targets va Tauri Android prerequisites o‘rnatilgandan keyin bir marta initialize qiling:
 
 ```bash
-npm run tauri:android:init
-npm run tauri:android:dev
-npm run tauri:android:build
+bun run tauri:android:init
+bun run tauri:android:dev
+bun run tauri:android:build
 ```
 
 Release signing ma’lumotlari environment secrets sifatida saqlanadi; keystore va parollar repository’ga commit qilinmaydi.

@@ -11,8 +11,8 @@
 
 ## Validation
 
-- Run `npm run lint` after UI changes.
-- Run `npx next build` before committing.
+- Run `bun lint` after UI changes.
+- Run `bun run build` before committing.
 - Keep changes focused and make one descriptive commit per requested change.
 - Split multi-part requests into logical tasks. After each task is implemented and validated, create its own descriptive commit; do not bundle unrelated fixes into one final commit.
 - Before committing a task, run the relevant lint/build checks and leave the working tree understandable for the next task.
