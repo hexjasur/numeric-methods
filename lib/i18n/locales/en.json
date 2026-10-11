@@ -6,7 +6,9 @@
     "lab": "Laboratory",
     "newton": "Newton Method",
     "simpson": "Simpson's Rule",
-    "syntax": "Math.js Syntax"
+    "syntax": "Math.js Syntax",
+    "v2_link": "Switch to v2",
+    "v2_tooltip": "Open legacy v2.sonli-usullar.uz version"
   },
   "app": {
     "title": "NUMERIC",

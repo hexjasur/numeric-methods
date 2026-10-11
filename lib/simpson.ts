@@ -1,4 +1,4 @@
-import { math, normalizeExpression, compileMath } from '@/lib/math';
+import { math, normalizeExpression, compileMath, isSumOperatorNode } from '@/lib/math';
 
 export type SimpsonPoint = {
   i: number;
@@ -150,10 +150,7 @@ export function calculateSimpson(
       .replace(/~/g, ' ')
       .trim();
     const hasDx = /\bdx\b/i.test(expression);
-    const isSum =
-      'isOperatorNode' in node &&
-      node.isOperatorNode &&
-      (node.op === '+' || node.op === '-');
+    const isSum = isSumOperatorNode(node);
 
     if (hasDx) {
       expressionTex = tex;

@@ -6,7 +6,9 @@
     "lab": "Laboratoriya",
     "newton": "Nyuton usuli",
     "simpson": "Simpson usuli",
-    "syntax": "Math.js Sintaksis"
+    "syntax": "Math.js Sintaksis",
+    "v2_link": "v2 talqinga o'tish",
+    "v2_tooltip": "Eski v2.sonli-usullar.uz talqiniga o'tish"
   },
   "app": {
     "title": "NUMERIC",

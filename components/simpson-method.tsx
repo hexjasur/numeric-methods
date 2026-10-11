@@ -5,7 +5,7 @@ import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Info, Sigma } from 'lucide-react';
 import { calculateSimpson, format, type SimpsonResult } from '@/lib/simpson';
-import { math, normalizeExpression } from '@/lib/math';
+import { isSumOperatorNode, math, normalizeExpression } from '@/lib/math';
 import { SimpsonPlot } from '@/components/simpson/plot';
 import { PsHero, PsStrip, PsMap, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
@@ -36,10 +36,7 @@ export function SimpsonMethod() {
         .replace(/~/g, ' ')
         .trim();
       const hasDx = /\bdx\b/i.test(expression);
-      const isSum =
-        'isOperatorNode' in node &&
-        node.isOperatorNode &&
-        (node.op === '+' || node.op === '-');
+      const isSum = isSumOperatorNode(node);
 
       const inner = hasDx ? tex : isSum ? `\\left(${tex}\\right)\\,dx` : `${tex}\\,dx`;
       const lower = a.trim() || 'a';

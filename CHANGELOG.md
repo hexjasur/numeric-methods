@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.0.3] - 2026-10-12
+## [3.0.0] - 2026-10-12
 
 ### 📐 Simpson's Rule (Parabolic Numerical Integration)
 - **Simpson 1/3 Method Implementation (`lib/simpson.ts`):**

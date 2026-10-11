@@ -7,11 +7,11 @@ import { useEffect, useState, useMemo } from 'react';
 import {
   Activity,
   BookOpenText,
+  ExternalLink,
   LayoutDashboard,
   Menu,
   Sigma,
   Split,
-  Target,
   X,
 } from 'lucide-react';
 import logo from '@/public/logo.png';
@@ -51,15 +51,9 @@ export function AppShell({
         icon: Activity,
       },
       {
-        href: '/methods/newton',
-        label: t('nav.newton'),
-        code: '03',
-        icon: Target,
-      },
-      {
         href: '/methods/simpson',
         label: t('nav.simpson'),
-        code: '04',
+        code: '03',
         icon: Sigma,
       },
       {
@@ -85,13 +79,11 @@ export function AppShell({
       ? t('nav.dashboard')
       : pathname.startsWith('/methods/euler')
         ? t('nav.euler')
-        : pathname.startsWith('/methods/newton')
-          ? t('nav.newton')
-          : pathname.startsWith('/methods/simpson')
-            ? t('nav.simpson')
-            : pathname.startsWith('/docs')
-              ? t('nav.syntax')
-              : t('nav.bisection');
+        : pathname.startsWith('/methods/simpson')
+          ? t('nav.simpson')
+          : pathname.startsWith('/docs')
+            ? t('nav.syntax')
+            : t('nav.bisection');
 
   return (
     <UpdateProvider>
@@ -172,6 +164,29 @@ export function AppShell({
           })}
         </nav>
 
+        {/* V2 Old Version Switcher */}
+        <div className="relative z-10 my-3 pt-3 border-t border-line/60">
+          <a
+            href="https://v2.sonli-usullar.uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between min-h-[42px] px-3.5 rounded-lg border border-line bg-bg-2/50 text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 transition-all text-[13px] font-semibold"
+            title={t('nav.v2_tooltip')}
+          >
+            <span className="flex items-center gap-2.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan/40 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan" />
+              </span>
+              <span>{t('nav.v2_link')}</span>
+            </span>
+            <span className="flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded border border-line-2 bg-panel text-muted group-hover:text-brand group-hover:border-brand/40 transition-colors">
+              <span>v2.0</span>
+              <ExternalLink size={12} />
+            </span>
+          </a>
+        </div>
+
         <div className="relative z-10 mt-auto grid gap-[14px]">
           <div className="flex items-center gap-[12px] p-[14px] border border-line rounded-[9px] bg-bg-2">
             <span className="w-2 h-2 rounded-full bg-ok shadow-[0_0_0_4px_color-mix(in_srgb,var(--ok)_18%,transparent)] animate-[pulse_2.4s_ease-in-out_infinite]" />
@@ -219,7 +234,17 @@ export function AppShell({
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
+            <a
+              href="https://v2.sonli-usullar.uz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 h-[38px] px-2.5 rounded-lg border border-line bg-panel text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 font-mono text-[12px] font-semibold transition-all shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+              title={t('nav.v2_tooltip')}
+            >
+              <span>v2</span>
+              <ExternalLink size={12} className="opacity-60" />
+            </a>
             <UpdateCheckButton />
             <LangToggle />
             <ThemeToggle />

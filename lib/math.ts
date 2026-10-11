@@ -29,3 +29,13 @@ export function compileMath(expression: string) {
     return null;
   }
 }
+
+// Type guard for mathjs sum/subtraction operator nodes
+export function isSumOperatorNode(node: unknown): boolean {
+  return (
+    typeof node === 'object' &&
+    node !== null &&
+    'op' in node &&
+    (node.op === '+' || node.op === '-')
+  );
+}

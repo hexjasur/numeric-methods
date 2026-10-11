@@ -6,7 +6,9 @@
     "lab": "Лаборатория",
     "newton": "Метод Ньютона",
     "simpson": "Метод Симпсона",
-    "syntax": "Синтаксис Math.js"
+    "syntax": "Синтаксис Math.js",
+    "v2_link": "Перейти на v2",
+    "v2_tooltip": "Открыть старую версию v2.sonli-usullar.uz"
   },
   "app": {
     "title": "ЧИСЛЕННЫЕ",
