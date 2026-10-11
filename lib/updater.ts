@@ -69,7 +69,9 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
 
     let primaryAsset: GitHubAsset | undefined;
     if (isAndroid) {
-      primaryAsset = release.assets.find((a) => a.name.endsWith('.apk'));
+      primaryAsset =
+        release.assets.find((a) => a.name.includes('arm64') && a.name.endsWith('.apk')) ||
+        release.assets.find((a) => a.name.endsWith('.apk'));
     } else if (isWindows) {
       primaryAsset = release.assets.find((a) => a.name.endsWith('.exe') || a.name.endsWith('.msi'));
     } else {

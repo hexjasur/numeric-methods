@@ -28,13 +28,13 @@ let hasVersionInChangelog = false;
 if (changelogExists) {
   const changelogContent = fs.readFileSync(changelogPath, 'utf8');
   const versionRegex = new RegExp(
-    `##\\s*\\[${pkgVersion.replace(/\./g, '\\.')}\\]([\\s\\S]*?)(?=\\n##\\s*\\[|$)`,
+    `##\\s*\\[${pkgVersion.replace(/\\./g, '\\.')}\\](?:[^\n]*)\\n([\\s\\S]*?)(?=\\n##\\s*\\[|$)`,
     'i',
   );
   const match = changelogContent.match(versionRegex);
   if (match) {
     hasVersionInChangelog = true;
-    changelogBody = match[1].trim();
+    changelogBody = match[1].replace(/---\s*$/, '').trim();
   }
 }
 
