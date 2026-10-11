@@ -6,7 +6,7 @@
     "td": "tauri dev",
     "dev": "next dev",
     "tb": "tauri build",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "bunx serve out",
     "lint": "eslint app components",
     "check:version": "bun run scripts/check-versions.ts",
