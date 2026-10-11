@@ -4,7 +4,7 @@ import { EulerMethod } from '@/components/euler-method';
 export const metadata: Metadata = {
   title: 'Euler Methods',
   description:
-    'Oddiy va takomillashgan Eyler usullari bilan differensial tenglamalarni yeching va taqqoslang.',
+    'Solve and compare differential equations using the standard and improved Euler methods.',
 };
 
 export default function EulerPage() {

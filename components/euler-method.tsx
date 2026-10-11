@@ -12,8 +12,10 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { Activity, Calculator, Info } from 'lucide-react';
+import { Calculator, Info } from 'lucide-react';
 import { solveEulerMethods, type EulerResult } from '@/lib/euler';
+import { PsHero, PsStrip, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
+import { useI18n } from '@/components/i18n-provider';
 
 const initialInputs = {
   expression: 'x - 2*y',
@@ -46,25 +48,13 @@ const formulaMarkup = {
   ),
 };
 
-const tableHeadings = [
-  [String.raw`i`, 'i'],
-  [String.raw`x_i`, 'x_i'],
-  [String.raw`y_i^{\text{Eyler}}`, 'y_i Eyler'],
-  [String.raw`y_i^{\text{Takomil}}`, 'y_i Takomil'],
-  [String.raw`y(x_i)^{\text{Aniq}}`, 'y(x_i) aniq'],
-  [String.raw`\Delta y`, 'Δy'],
-].map(([tex, label]) => ({
-  label,
-  html: katex.renderToString(tex, { throwOnError: false }),
-}));
-
 const numeric = (value: number | null) =>
   value === null || !Number.isFinite(value) ? '—' : value.toFixed(6);
 
 function Formula({ html }: { html: string }) {
   return (
     <div
-      className="w-full min-w-0 overflow-x-auto overflow-y-hidden overscroll-x-contain text-[clamp(.72rem,1.1vw,.9rem)] text-[var(--ink)] [&_.katex-display]:!my-0 [&_.katex-display]:!w-max [&_.katex-display]:!min-w-full [&_.katex]:!max-w-none [&_.katex]:!overflow-visible [&_.katex]:!px-0"
+      className="w-full min-w-0 overflow-x-auto overflow-y-hidden overscroll-x-contain text-[clamp(.72rem,1.1vw,.9rem)] text-ink [&_.katex-display]:!my-0 [&_.katex-display]:!w-max [&_.katex-display]:!min-w-full [&_.katex]:!max-w-none [&_.katex]:!overflow-visible [&_.katex]:!px-0 text-cyan"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
@@ -80,6 +70,7 @@ function MathInline({ html }: { html: string }) {
 }
 
 export function EulerMethod() {
+  const { t } = useI18n();
   const [inputs, setInputs] = useState(initialInputs);
   const [calculationInputs, setCalculationInputs] = useState(initialInputs);
   const calculation = useMemo(() => {
@@ -90,6 +81,7 @@ export function EulerMethod() {
         Number(calculationInputs.y0),
         Number(calculationInputs.xEnd),
         Number(calculationInputs.h),
+        t,
       );
       return { result, error: '' };
     } catch (cause) {
@@ -98,10 +90,10 @@ export function EulerMethod() {
         error:
           cause instanceof Error
             ? cause.message
-            : 'Parametrlarni tekshirib qayta urinib ko‘ring.',
+            : "Parametrlarni tekshirib qayta urinib ko'ring.",
       };
     }
-  }, [calculationInputs]);
+  }, [calculationInputs, t]);
 
   const result = calculation.result;
   const rows = result?.rows ?? [];
@@ -115,253 +107,193 @@ export function EulerMethod() {
       { throwOnError: false },
     );
   }, [inputs.x0, inputs.xEnd]);
+  
   const setValue = (key: keyof typeof initialInputs, value: string) =>
     setInputs((current) => ({ ...current, [key]: value }));
 
+  const tableHeadings = [
+    [String.raw`i`, 'i'],
+    [String.raw`x_i`, 'x_i'],
+    [String.raw`y_i^{\text{Eyler}}`, t('euler.tbl_euler')],
+    [String.raw`y_i^{\text{Takomil}}`, t('euler.tbl_impr')],
+    [String.raw`y(x_i)^{\text{Aniq}}`, t('euler.tbl_exact')],
+    [String.raw`\Delta y`, 'Δy'],
+  ].map(([tex, label]) => ({
+    label: label as string,
+    html: katex.renderToString(tex as string, { throwOnError: false }),
+  }));
+
   return (
-    <div className="mx-auto max-w-[1160px] space-y-6 pb-8">
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <span className="font-mono text-xs font-semibold uppercase tracking-[.14em] text-[var(--muted)]">
-            Numerical ODE / 002
-          </span>
-          <h1 className="mt-3 text-4xl font-semibold tracking-[-.055em] sm:text-5xl">
-            Eyler <span className="text-[var(--brand)]">usullari</span>
-          </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--muted)]">
-            Oddiy va takomillashgan Eyler usullarini analitik yechim bilan
-            taqqoslab, har bir qadamdagi farqni kuzating.
-          </p>
-        </div>
-        <div className="flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--panel)] px-3 py-2 font-mono text-xs text-[var(--muted)]">
-          <Activity size={16} className="text-[var(--brand)]" />
-          <span>ODE · INITIAL VALUE</span>
-        </div>
-      </div>
+    <div className="relative max-w-[1160px] mx-auto px-4 pb-12">
+      <PsStrip eyebrow="ELR-002" id="ODE" name={t('euler.strip')} />
 
-      <div className="grid items-stretch gap-5 xl:grid-cols-2">
-        <form
-          className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-5 shadow-[var(--shadow)] sm:p-6"
-          onSubmit={(event) => {
-            event.preventDefault();
-            setCalculationInputs({ ...inputs });
-          }}
-        >
-          <div className="mb-5 flex items-start justify-between gap-4 border-b border-[var(--line)] pb-4">
-            <div>
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[.14em] text-[var(--muted)]">
-                Input / Parametrlar
-              </span>
-              <h2 className="mt-1 text-lg font-semibold tracking-tight">
-                Masalani sozlang
-              </h2>
-            </div>
-            <span className="font-mono text-xs text-[var(--muted)]">01</span>
-          </div>
+      <PsHero 
+        eyebrow={t('euler.hero_eyebrow')}
+        title={<>{t('euler.hero_title')}</>}
+        titleHighlight={t('euler.hero_titleHighlight')}
+        lead={t('euler.hero_lead')}
+      />
 
-          <label className="mb-4 block">
-            <span className="mb-2 flex items-center justify-between gap-3 text-sm font-semibold">
-              <span>f(x, y) funksiya</span>
-              <span className="font-mono text-[11px] font-normal text-[var(--muted)]">
-                Math.js sintaksisi
-              </span>
-            </span>
-            <span className="flex items-center gap-3 rounded-lg border border-[var(--brand)]/60 bg-[var(--brand)]/5 px-3.5 transition focus-within:border-[var(--brand)] focus-within:ring-4 focus-within:ring-[var(--brand)]/10">
-              <b className="shrink-0 font-mono text-sm text-[var(--brand)]">
-                f(x, y) =
-              </b>
-              <input
-                value={inputs.expression}
-                onChange={(event) => setValue('expression', event.target.value)}
-                aria-label="f(x, y) funksiyasi"
-                className="h-12 min-w-0 flex-1 bg-transparent font-mono text-sm font-semibold text-[var(--ink)] outline-none"
-                placeholder="x - 2*y"
-                spellCheck={false}
-              />
-            </span>
-          </label>
+      <div className="grid grid-cols-1 xl:grid-cols-[minmax(300px,.82fr)_minmax(0,1.4fr)] gap-[18px] items-start mb-[18px]">
+        <PsPanel>
+          <PsPanelHead eyebrow="Input / Parametrlar" title={t('euler.panel_input')} idx="01" />
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            {(
-              [
-                ['x0', 'Boshlanish x₀'],
-                ['y0', 'Boshlang‘ich y₀'],
-                ['xEnd', 'Oxirgi x_end'],
-                ['h', 'Qadam h'],
-              ] as const
-            ).map(([key, label]) => (
-              <label key={key} className="block min-w-0">
-                <span className="mb-1.5 block text-xs font-semibold text-[var(--ink-2)]">
-                  {label}
-                </span>
-                <input
-                  type="number"
-                  step="any"
-                  value={inputs[key]}
-                  onChange={(event) => setValue(key, event.target.value)}
-                  aria-label={label}
-                  className="h-11 w-full rounded-lg border border-[var(--line-2)] bg-[var(--bg-2)] px-3 font-mono text-sm text-[var(--ink)] outline-none transition focus:border-[var(--brand)] focus:bg-[var(--panel)] focus:ring-4 focus:ring-[var(--brand)]/10"
-                />
-              </label>
-            ))}
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] px-3.5 py-2.5">
-            <span className="flex items-center gap-2 text-xs text-[var(--muted)]">
-              <Info size={15} className="shrink-0 text-[var(--cyan)]" />
-              Boshlang‘ich oraliq
-            </span>
-            <span
-              className="rounded-md border border-[var(--line)] bg-[var(--panel)] px-3 py-1.5 font-mono text-sm text-[var(--brand)]"
-              aria-label={`Interval: ${inputs.x0} dan ${inputs.xEnd} gacha`}
-            >
-              <MathInline html={intervalMarkup} />
-            </span>
-          </div>
-
-          <button
-            type="submit"
-            className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--cyan)]"
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setCalculationInputs({ ...inputs });
+            }}
           >
-            <Calculator size={17} />
-            Hisoblash
-          </button>
+            <label className="block mb-4">
+              <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
+                <span>{t('euler.label_fn')}</span>
+                <span className="font-mono text-xs font-medium not-italic text-muted">{t('euler.label_syntax')}</span>
+              </span>
+              <div className="mt-2 w-full border border-brand bg-brand-soft rounded-lg flex items-center gap-2.5 px-3.5 focus-within:ring-4 focus-within:ring-brand-soft focus-within:bg-panel transition-all">
+                <b className="text-brand text-[15px] whitespace-nowrap">f(x, y) =</b>
+                <input
+                  value={inputs.expression}
+                  onChange={(event) => setValue('expression', event.target.value)}
+                  aria-label="f(x, y)"
+                  className="flex-1 min-w-0 border-0 outline-0 bg-transparent text-ink py-[15px] font-mono text-[16px] font-semibold"
+                  placeholder="x - 2*y"
+                  spellCheck={false}
+                />
+              </div>
+            </label>
 
-          {calculation.error && (
-            <div
-              role="alert"
-              className="mt-4 rounded-lg border border-[var(--danger)]/40 bg-[var(--danger)]/10 px-4 py-3 text-sm text-[var(--danger)]"
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {(
+                [
+                  ['x0', t('euler.label_x0')],
+                  ['xEnd', t('euler.label_xEnd')],
+                  ['y0', t('euler.label_y0')],
+                  ['h', t('euler.label_h')],
+                ] as const
+              ).map(([key, label]) => (
+                <label key={key} className="block min-w-0">
+                  <span className="mb-1.5 block text-[13.5px] font-[650] text-ink">
+                    {label}
+                  </span>
+                  <input
+                    type="number"
+                    step="any"
+                    value={inputs[key as keyof typeof initialInputs]}
+                    onChange={(event) => setValue(key as keyof typeof initialInputs, event.target.value)}
+                    aria-label={label}
+                    className="w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-[15px] font-medium p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
+                  />
+                </label>
+              ))}
+            </div>
+
+            <PsNote icon={<Info size={15} />} variant="cyan">
+              <div className="flex justify-between items-center w-full">
+                <span>{t('euler.note_interval')}</span>
+                <span className="font-mono text-brand font-semibold"><MathInline html={intervalMarkup} /></span>
+              </div>
+            </PsNote>
+
+            <button
+              type="submit"
+              className="flex w-full items-center justify-between gap-3 mt-1.5 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
             >
-              {calculation.error}
-            </div>
-          )}
-        </form>
+              {t('euler.btn_calc')} <Calculator size={20} />
+            </button>
 
-        <section className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-5 shadow-[var(--shadow)] sm:p-6">
-          <div className="mb-5 flex items-start justify-between gap-4 border-b border-[var(--line)] pb-4">
-            <div>
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[.14em] text-[var(--muted)]">
-                Method / Formulalar
-              </span>
-              <h2 className="mt-1 text-lg font-semibold tracking-tight">
-                Hisoblash usullari
-              </h2>
+            {calculation.error && (
+              <div className="mt-4 p-[16px_18px] border border-neg border-l-[5px] rounded-lg bg-[color-mix(in_srgb,var(--neg)_10%,transparent)]" role="alert">
+                <b className="text-[14.5px]">{t('euler.err_calc')}</b>
+                <p className="mt-1.5 text-[14px] text-ink-2">{calculation.error}</p>
+              </div>
+            )}
+          </form>
+        </PsPanel>
+
+        <div className="grid gap-[18px] min-w-0">
+          <PsPanel className="flex min-h-[420px] flex-col">
+            <PsPanelHead eyebrow={t('euler.plot_eyebrow')} title={t('euler.plot_title')} idx="02" />
+            <div className="h-[350px] w-full min-w-0 flex-1">
+              {result && <EulerChart result={result} t={t} />}
             </div>
-            <span className="font-mono text-xs text-[var(--muted)]">02</span>
-          </div>
-          <div className="grid min-w-0 gap-3">
-            <article className="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] p-4">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-                Oddiy Eyler
-              </span>
-              <div className="mt-3 min-h-10">
-                <Formula html={formulaMarkup.euler} />
-              </div>
-              <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-                Hosila joriy nuqtada baholanadi.
+            {!result?.hasExactSolution && result && (
+              <p className="mt-4 text-sm text-muted">
+                {t('euler.plot_exact_note')}
               </p>
-            </article>
-            <article className="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] p-4">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-                Takomillashgan · Heun
-              </span>
-              <div className="mt-3 min-h-10">
-                <Formula html={formulaMarkup.improved} />
-              </div>
-              <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-                Pretsenzor bashorati va korrektor aniqlashtirishi.
-              </p>
-            </article>
-          </div>
-        </section>
+            )}
+          </PsPanel>
+        </div>
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,.9fr)_minmax(0,1.25fr)] xl:items-stretch">
-        <section className="grid grid-cols-1 gap-4">
-          <article className="min-w-0 rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-5">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-              Aniq yechim
-            </span>
-            <div className="mt-4 min-h-12">
-              <Formula html={formulaMarkup.exact} />
+      <PsPanel className="mb-[18px]">
+        <PsPanelHead eyebrow={t('euler.method_eyebrow')} title={t('euler.method_title')} idx="03" />
+        <div className="grid min-w-0 gap-4 xl:grid-cols-2">
+          <article className="min-w-0 rounded-lg border border-line bg-bg-2 p-5">
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[.14em] text-muted">{t('euler.method_simple')}</span>
+            <div className="mt-4 mb-2 min-h-[40px]">
+              <Formula html={formulaMarkup.euler} />
             </div>
-            <p className="mt-3 text-xs leading-5 text-[var(--muted)]">
-              C = y₀ − x₀/2 + 1/4; standart boshlang‘ich qiymatlarda C = 7/4.
-            </p>
+            <p className="mt-2 text-[13px] text-muted">{t('euler.method_simple_desc')}</p>
           </article>
-          <article className="rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-5">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
-              Qadamlar soni
-            </span>
-            <strong className="mt-3 block font-mono text-3xl text-[var(--brand)]">
-              {result ? result.steps : '—'}
-            </strong>
-            <p className="mt-2 min-w-0 overflow-hidden text-xs text-[var(--muted)]">
-              <MathInline html={formulaMarkup.steps} />
-            </p>
-            <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-              {result
-                ? `${numeric(Number(calculationInputs.xEnd) - Number(calculationInputs.x0))} oraliq, oxirgi qadam chegaraga moslanadi.`
-                : 'Parametrlarni tekshiring.'}
-            </p>
+          <article className="min-w-0 rounded-lg border border-line bg-bg-2 p-5">
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[.14em] text-muted">{t('euler.method_improved')}</span>
+            <div className="mt-4 mb-2 min-h-[40px]">
+              <Formula html={formulaMarkup.improved} />
+            </div>
+            <p className="mt-2 text-[13px] text-muted">{t('euler.method_improved_desc')}</p>
           </article>
-        </section>
+        </div>
+      </PsPanel>
 
-        <section className="flex min-h-[500px] flex-col rounded-xl border border-[var(--line)] bg-[var(--panel)] p-4 shadow-[var(--shadow)] sm:p-5 xl:min-h-full">
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 className="text-lg font-semibold">Yechimlar grafigi</h2>
-              <p className="mt-1 text-xs text-[var(--muted)]">
-                Nuqtalar ustiga olib borib qiymatlarni solishtiring.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
-              <span className="inline-flex items-center gap-2 text-[#ef4444]">
-                <i className="h-0.5 w-5 border-t-2 border-dashed border-current" />
-                Oddiy Eyler
-              </span>
-              <span className="inline-flex items-center gap-2 text-[#3b82f6]">
-                <i className="h-0.5 w-5 bg-current" />
-                Takomillashgan
-              </span>
-              {result?.hasExactSolution && (
-                <span className="inline-flex items-center gap-2 text-[#22a06b]">
-                  <i className="h-0.5 w-5 border-t-2 border-dotted border-current" />
-                  Aniq yechim
-                </span>
-              )}
-            </div>
+      <div className="grid gap-[18px] xl:grid-cols-2 mb-[18px]">
+        <PsPanel>
+          <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted mb-4">{t('euler.exact_title')}</span>
+          <div className="min-h-[48px] overflow-x-auto text-cyan">
+            <Formula html={formulaMarkup.exact} />
           </div>
-          <div className="min-h-[380px] w-full flex-1">
-            {result && <EulerChart result={result} />}
-          </div>
-          {!result?.hasExactSolution && result && (
-            <p className="mt-2 text-xs text-[var(--muted)]">
-              Aniq yechim faqat f(x, y) = x − 2y tenglamasi uchun mavjud.
-            </p>
-          )}
-        </section>
+          <p className="mt-4 text-[13px] text-muted">
+            {t('euler.exact_desc')}
+          </p>
+        </PsPanel>
+        <PsPanel>
+          <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted mb-4">{t('euler.steps_title')}</span>
+          <strong className="block font-mono text-[36px] font-semibold text-brand mb-2">
+            {result ? result.steps : '—'}
+          </strong>
+          <p className="text-cyan text-[1.1em] mb-2">
+            <MathInline html={formulaMarkup.steps} />
+          </p>
+          <p className="text-[13px] text-muted">
+            {result
+              ? `${numeric(Number(calculationInputs.xEnd) - Number(calculationInputs.x0))} ${t('euler.steps_desc')}`
+              : t('euler.steps_err')}
+          </p>
+        </PsPanel>
       </div>
 
-      <section className="overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--panel)] shadow-[var(--shadow)]">
-        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--line)] p-5">
+      <PsPanel>
+        <div className="flex flex-wrap items-end justify-between gap-3 mb-5 border-b border-line pb-4 relative z-10">
           <div>
-            <h2 className="text-lg font-semibold">Qadamlar jadvali</h2>
-            <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--muted)]">
-              <span>ȳ — pretsenzor bashorati</span>
-              <MathInline html={formulaMarkup.difference} />
+            <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
+              {t('euler.data_eyebrow')}
+            </span>
+            <h2 className="mt-2 text-[22px] font-[650] tracking-[-.035em]">{t('euler.data_title')}</h2>
+            <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-muted">
+              <span>{t('euler.data_desc_1')}</span>
+              <span className="text-brand font-semibold"><MathInline html={formulaMarkup.difference} /></span>
             </p>
           </div>
-          <span className="font-mono text-xs text-[var(--muted)]">
-            {rows.length ? `${rows.length} ta nuqta` : 'Natija yo‘q'}
+          <span className="font-mono text-sm text-muted">
+            {rows.length ? `${rows.length} ${t('euler.data_pts')}` : t('euler.data_empty')}
           </span>
         </div>
-        <div className="max-h-[460px] overflow-auto">
-          <table className="w-full min-w-[760px] border-collapse text-right font-mono text-xs">
-            <thead className="sticky top-0 z-10 bg-[var(--bg-2)] text-[var(--muted)]">
+
+        <div className="max-h-[500px] overflow-x-auto overflow-y-auto relative z-10 rounded-lg border border-line bg-bg-2">
+          <table className="w-full min-w-max border-collapse text-right font-mono text-[13px]">
+            <thead className="sticky top-0 z-10 bg-panel text-muted border-b border-line shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
               <tr>
                 {tableHeadings.map(({ label, html }) => (
-                  <th className="border-b border-[var(--line)] px-4 py-3 font-semibold" key={label}>
+                  <th className="px-5 py-3.5 font-semibold border-b border-line" key={label}>
                     <MathInline html={html} />
                   </th>
                 ))}
@@ -369,31 +301,31 @@ export function EulerMethod() {
             </thead>
             <tbody>
               {rows.map((row) => (
-                <tr className="border-b border-[var(--line)]/70 last:border-0" key={row.step}>
-                  <td className="px-4 py-3 text-[var(--muted)]">{row.step}</td>
-                  <td className="px-4 py-3">{numeric(row.x)}</td>
-                  <td className="px-4 py-3 text-[#ef4444]">{numeric(row.yEuler)}</td>
-                  <td className="px-4 py-3 text-[#3b82f6]">{numeric(row.yImproved)}</td>
-                  <td className="px-4 py-3 text-[#22a06b]">{numeric(row.yExact)}</td>
-                  <td className="px-4 py-3">{numeric(row.difference)}</td>
+                <tr className="border-b border-line last:border-b-0 hover:bg-panel transition-colors" key={row.step}>
+                  <td className="px-5 py-3 text-muted">{row.step}</td>
+                  <td className="px-5 py-3">{numeric(row.x)}</td>
+                  <td className="px-5 py-3 text-neg font-medium">{numeric(row.yEuler)}</td>
+                  <td className="px-5 py-3 text-[#3b82f6] font-medium">{numeric(row.yImproved)}</td>
+                  <td className="px-5 py-3 text-pos font-medium">{numeric(row.yExact)}</td>
+                  <td className="px-5 py-3">{numeric(row.difference)}</td>
                 </tr>
               ))}
               {!rows.length && (
                 <tr>
-                  <td className="px-4 py-8 text-center text-[var(--muted)]" colSpan={6}>
-                    Hisoblash uchun parametrlarni kiriting.
+                  <td className="px-5 py-10 text-center text-muted" colSpan={6}>
+                    {t('euler.tbl_calc_req')}
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
-      </section>
+      </PsPanel>
     </div>
   );
 }
 
-function EulerChart({ result }: { result: EulerResult }) {
+function EulerChart({ result, t }: { result: EulerResult, t: (k: string) => string }) {
   return (
     <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
       <LineChart data={result.rows} margin={{ top: 12, right: 12, left: 4, bottom: 8 }}>
@@ -402,15 +334,15 @@ function EulerChart({ result }: { result: EulerResult }) {
           dataKey="x"
           type="number"
           domain={['dataMin', 'dataMax']}
-          tick={{ fill: 'var(--muted)', fontSize: 11 }}
+          tick={{ fill: 'var(--muted)', fontSize: 11, fontFamily: 'var(--font-mono)' }}
           tickLine={{ stroke: 'var(--line-2)' }}
           axisLine={{ stroke: 'var(--line-2)' }}
           tickFormatter={(value: number) => Number(value).toFixed(2)}
-          label={{ value: 'x', position: 'insideBottomRight', offset: -2, fill: 'var(--muted)' }}
+          label={{ value: 'x', position: 'insideBottomRight', offset: -2, fill: 'var(--muted)', fontSize: 12, fontFamily: 'var(--font-mono)' }}
         />
         <YAxis
           width={54}
-          tick={{ fill: 'var(--muted)', fontSize: 11 }}
+          tick={{ fill: 'var(--muted)', fontSize: 11, fontFamily: 'var(--font-mono)' }}
           tickLine={{ stroke: 'var(--line-2)' }}
           axisLine={{ stroke: 'var(--line-2)' }}
           tickFormatter={(value: number) => Number(value).toFixed(2)}
@@ -422,35 +354,37 @@ function EulerChart({ result }: { result: EulerResult }) {
             borderRadius: 8,
             color: 'var(--ink)',
             fontSize: 12,
+            fontFamily: 'var(--font-mono)'
           }}
           labelStyle={{ color: 'var(--muted)', marginBottom: 4 }}
           labelFormatter={(value) => `x = ${Number(value).toFixed(6)}`}
           formatter={(value, name) => [
             Number(value).toFixed(8),
             name === 'yEuler'
-              ? 'Oddiy Eyler'
+              ? t('euler.method_simple')
               : name === 'yImproved'
-                ? 'Takomillashgan Eyler'
-                : 'Aniq yechim',
+                ? t('euler.method_improved')
+                : t('euler.exact_title'),
           ]}
         />
         <Legend
+          wrapperStyle={{ fontFamily: 'var(--font-sans)', fontSize: 13 }}
           formatter={(value) =>
             value === 'yEuler'
-              ? 'Oddiy Eyler'
+              ? t('euler.method_simple')
               : value === 'yImproved'
-                ? 'Takomillashgan Eyler'
-                : 'Aniq yechim'
+                ? t('euler.method_improved')
+                : t('euler.exact_title')
           }
         />
         <Line
           name="yEuler"
           type="linear"
           dataKey="yEuler"
-          stroke="#ef4444"
+          stroke="var(--neg)"
           strokeWidth={2}
           strokeDasharray="6 4"
-          dot={{ r: 3, fill: '#ef4444' }}
+          dot={{ r: 3, fill: 'var(--neg)' }}
           activeDot={{ r: 6 }}
         />
         <Line
@@ -467,10 +401,10 @@ function EulerChart({ result }: { result: EulerResult }) {
             name="yExact"
             type="monotone"
             dataKey="yExact"
-            stroke="#22a06b"
+            stroke="var(--pos)"
             strokeWidth={1.75}
             strokeDasharray="2 4"
-            dot={{ r: 2, fill: '#22a06b' }}
+            dot={{ r: 2, fill: 'var(--pos)' }}
             activeDot={{ r: 5 }}
           />
         )}

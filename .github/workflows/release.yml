@@ -1,0 +1,246 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - tauri-desktop
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force release even if tag exists'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-version:
+    name: Check Version & Tag
+    runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.check.outputs.should_release }}
+      version: ${{ steps.check.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Verify Version Sync & Check Tag
+        id: check
+        run: |
+          bun run check:version
+          VERSION=$(bun run scripts/check-versions.ts --print)
+          echo "Current project version: v$VERSION"
+          
+          if git rev-parse "v$VERSION" >/dev/null 2>&1 && [ "${{ inputs.force }}" != "true" ]; then
+            echo "Tag v$VERSION already exists. Skipping release."
+            echo "should_release=false" >> $GITHUB_OUTPUT
+          else
+            echo "Proceeding with release for v$VERSION."
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+          fi
+
+  publish-tauri:
+    name: Build & Release (${{ matrix.platform }})
+    needs: check-version
+    if: needs.check-version.outputs.should_release == 'true'
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-latest
+          - platform: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install Node dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Extract Changelog for Release
+        id: changelog
+        run: |
+          {
+            echo 'body<<EOF'
+            bun run scripts/check-versions.ts --changelog
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build Tauri and Publish Release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v${{ needs.check-version.outputs.version }}
+          releaseName: 'Numeric Methods v${{ needs.check-version.outputs.version }}'
+          releaseBody: ${{ steps.changelog.outputs.body }}
+          releaseDraft: false
+          prerelease: false
+
+  build-android:
+    name: Build Android APK
+    needs: [check-version, publish-tauri]
+    if: needs.check-version.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r26d
+          add-to-path: false
+
+      - name: Set Android Environment Variables
+        run: |
+          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+
+      - name: Setup Rust targets for Android
+        run: |
+          rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-android
+
+      - name: Install Node dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Initialize Android Project
+        run: bun run tauri:android:init
+
+      - name: Build Android APKs
+        run: |
+          mkdir -p release_apks
+
+          echo "Building Universal Android APK..."
+          bun run tauri:android:build --apk
+
+          UNIVERSAL_SRC=$(find src-tauri/gen/android/app/build/outputs/apk -type f -name "*universal*release*.apk" -o -name "*release-unsigned.apk" | head -n 1)
+          if [ -z "$UNIVERSAL_SRC" ]; then
+            UNIVERSAL_SRC=$(find src-tauri/gen/android/app/build/outputs/apk -type f -name "*.apk" | head -n 1)
+          fi
+          echo "Universal APK source: $UNIVERSAL_SRC"
+          cp "$UNIVERSAL_SRC" release_apks/universal_raw.apk
+
+          echo "Building Lightweight Split (arm64) Android APK..."
+          bun run tauri:android:build --apk --split-per-abi || true
+
+          ARM64_SRC=$(find src-tauri/gen/android/app/build/outputs/apk -type f -name "*arm64*release*.apk" | head -n 1)
+          if [ -z "$ARM64_SRC" ]; then
+            echo "arm64 split not found via --split-per-abi, compiling target aarch64 directly..."
+            bun run tauri:android:build --apk --target aarch64
+            ARM64_SRC=$(find src-tauri/gen/android/app/build/outputs/apk -type f -name "*release*.apk" -newer release_apks/universal_raw.apk | head -n 1)
+            if [ -z "$ARM64_SRC" ]; then
+              ARM64_SRC=$(find src-tauri/gen/android/app/build/outputs/apk -type f -name "*.apk" | head -n 1)
+            fi
+          fi
+          echo "ARM64 APK source: $ARM64_SRC"
+          cp "$ARM64_SRC" release_apks/arm64_raw.apk
+
+      - name: Sign & Optimize Android APKs
+        env:
+          VERSION: ${{ needs.check-version.outputs.version }}
+        run: |
+          BUILD_TOOLS_DIR=$(find $ANDROID_HOME/build-tools -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)
+          echo "Using Android build-tools from: $BUILD_TOOLS_DIR"
+
+          if [ -n "${{ secrets.ANDROID_KEYSTORE }}" ]; then
+            echo "Using repository secret ANDROID_KEYSTORE"
+            echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 -d > release.jks
+            KEYSTORE_PASS="${{ secrets.KEYSTORE_PASSWORD }}"
+            [ -z "$KEYSTORE_PASS" ] && KEYSTORE_PASS="numericmethods"
+            KEY_ALIAS="${{ secrets.KEY_ALIAS }}"
+            [ -z "$KEY_ALIAS" ] && KEY_ALIAS="numericmethods"
+            KEY_PASS="${{ secrets.KEY_PASSWORD }}"
+            [ -z "$KEY_PASS" ] && KEY_PASS="numericmethods"
+          else
+            echo "Generating release keystore for CI"
+            keytool -genkeypair -v \
+              -keystore release.jks \
+              -alias numericmethods \
+              -keyalg RSA \
+              -keysize 2048 \
+              -validity 10000 \
+              -storepass numericmethods \
+              -keypass numericmethods \
+              -dname "CN=NumericMethods, OU=Mobile, O=JKSoftware, L=Tashkent, C=UZ"
+            KEYSTORE_PASS="numericmethods"
+            KEY_ALIAS="numericmethods"
+            KEY_PASS="numericmethods"
+          fi
+
+          for ARCH in arm64 universal; do
+            RAW="release_apks/${ARCH}_raw.apk"
+            ALIGNED="release_apks/${ARCH}_aligned.apk"
+            FINAL="release_apks/Numeric.Methods_${VERSION}_${ARCH}.apk"
+
+            if [ -f "$RAW" ]; then
+              echo "Aligning and signing $ARCH APK..."
+              $BUILD_TOOLS_DIR/zipalign -f -p 4 "$RAW" "$ALIGNED"
+              $BUILD_TOOLS_DIR/apksigner sign \
+                --ks release.jks \
+                --ks-pass "pass:$KEYSTORE_PASS" \
+                --key-pass "pass:$KEY_PASS" \
+                --ks-key-alias "$KEY_ALIAS" \
+                --out "$FINAL" \
+                "$ALIGNED"
+              $BUILD_TOOLS_DIR/apksigner verify -v "$FINAL"
+              echo "Created signed APK: $FINAL"
+            fi
+          done
+
+          rm -f release_apks/*_raw.apk release_apks/*_aligned.apk release.jks
+
+      - name: Upload APK to Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ needs.check-version.outputs.version }}
+          files: release_apks/Numeric.Methods_*.apk

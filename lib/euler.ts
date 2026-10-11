@@ -1,6 +1,4 @@
-import { all, create } from 'mathjs';
-
-const math = create(all, {});
+﻿import { math, compileMath } from '@/lib/math';
 
 export type EulerRow = {
   step: number;
@@ -27,12 +25,13 @@ export function solveEulerMethods(
   y0: number,
   xEnd: number,
   h: number,
+  t: (k: string, p?: Record<string, string | number>) => string
 ): EulerResult {
   if (![x0, y0, xEnd, h].every(Number.isFinite)) {
-    throw new Error('Barcha parametrlarni son ko‘rinishida kiriting.');
+    throw new Error(t('errors.elr_params'));
   }
   if (xEnd <= x0 || h <= 0) {
-    throw new Error('x_end x₀ dan katta, qadam h esa 0 dan katta bo‘lishi kerak.');
+    throw new Error(t('errors.elr_bounds'));
   }
 
   const stepRatio = (xEnd - x0) / h;
@@ -42,25 +41,21 @@ export function solveEulerMethods(
       ? nearestStepCount
       : Math.ceil(stepRatio);
   if (estimatedSteps > 1000) {
-    throw new Error('Hisoblash uchun qadamlar soni 1000 dan oshmasligi kerak.');
+    throw new Error(t('errors.elr_max'));
   }
 
-  let code;
-  try {
-    code = math.compile(expression);
-  } catch {
-    throw new Error('Funksiya sintaksisini tekshiring. Math.js ifodasidan foydalaning.');
-  }
+  let code = compileMath(expression);
+  if (!code) throw new Error(t('errors.elr_syntax'));
 
   const evaluate = (x: number, y: number) => {
     let value: number;
     try {
-      value = Number(code.evaluate({ x, y }));
+      value = Number(code!.evaluate({ x, y }));
     } catch {
-      throw new Error(`f(${x.toFixed(4)}, ${y.toFixed(4)}) ni hisoblab bo‘lmadi.`);
+      throw new Error(t('errors.elr_eval', { x: x.toFixed(4), y: y.toFixed(4) }));
     }
     if (!Number.isFinite(value)) {
-      throw new Error(`f(${x.toFixed(4)}, ${y.toFixed(4)}) chekli son emas.`);
+      throw new Error(t('errors.elr_finite', { x: x.toFixed(4), y: y.toFixed(4) }));
     }
     return value;
   };
@@ -96,7 +91,7 @@ export function solveEulerMethods(
     yEuler += stepSize * eulerSlope;
     yImproved += (stepSize / 2) * (improvedSlope + correctedSlope);
     if (!Number.isFinite(yEuler) || !Number.isFinite(yImproved)) {
-      throw new Error('Hisoblash natijasi son chegarasidan oshib ketdi.');
+      throw new Error(t('errors.elr_overflow'));
     }
     x = step === estimatedSteps ? xEnd : nextX;
     pushRow(step);
