@@ -1,8 +1,21 @@
 export const dynamic = 'force-static';
+
 import type { MetadataRoute } from 'next';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { siteConfig } from '@/lib/config';
+
+function getFileMtime(relativeFilePath: string): Date {
+  try {
+    const fullPath = path.join(process.cwd(), relativeFilePath);
+    if (fs.existsSync(fullPath)) {
+      return fs.statSync(fullPath).mtime;
+    }
+  } catch {
+    // fallback
+  }
+  return new Date();
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
@@ -23,12 +36,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
           fs.statSync(path.join(methodsDir, f)).isDirectory(),
       );
 
-    methodRoutes = methods.map((method) => ({
-      url: `${baseUrl}/methods/${method}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    }));
+    methodRoutes = methods.map((method) => {
+      const pageFile = path.join('app', '(workspace)', 'methods', method, 'page.tsx');
+      return {
+        url: `${baseUrl}/methods/${method}`,
+        lastModified: getFileMtime(pageFile),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      };
+    });
   } catch {
     //
   }
@@ -36,17 +52,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: getFileMtime(path.join('app', '(workspace)', 'page.tsx')),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${baseUrl}/docs/syntax`,
-      lastModified: new Date(),
+      lastModified: getFileMtime(path.join('app', '(workspace)', 'docs', 'syntax', 'page.tsx')),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     ...methodRoutes,
   ];
 }
-
