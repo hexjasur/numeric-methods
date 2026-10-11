@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "bunx serve out",
     "lint": "eslint app components",
+    "check:version": "bun run scripts/check-versions.ts",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",

@@ -4,9 +4,9 @@
   "version": "3.0.0",
   "identifier": "com.numericmethods.jksoftware",
   "build": {
-    "beforeDevCommand": "npm run dev",
+    "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:3000",
-    "beforeBuildCommand": "npm run build",
+    "beforeBuildCommand": "bun run build",
     "frontendDist": "../out"
   },
   "app": {

@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Verify Multi-Target Version Synchronization
+        run: bun run check:version
+
       - name: Run ESLint
         run: bun run lint
 

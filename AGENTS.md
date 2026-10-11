@@ -17,6 +17,7 @@
 | Tauri + Web Build | `bun tb` |
 | Static Preview | `bun run start` |
 | Lint | `bun lint` |
+| Check Versions | `bun run check:version` |
 
 ## Styling rules
 
@@ -43,6 +44,7 @@ The `tauri-desktop` branch shares one codebase across website, Tauri desktop, an
 
 - Keep the Next.js app compatible with static export (`output: "export"`). Do not add server-only routes or APIs without a target-specific adapter.
 - Keep Tauri configuration and Rust entry points under `src-tauri/`.
+- Always synchronize the `version` field identically across `package.json`, `src-tauri/tauri.conf.json`, and `src-tauri/Cargo.toml`. Run `bun run check:version` to verify.
 - Never commit `src-tauri/target/`, signing keys, keystores, or platform secrets.
 
 ## Workflow and commits
