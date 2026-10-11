@@ -2,3 +2,7 @@ node_modules
 dist
 build
 .env
+.next
+out
+src-tauri
+next-env.d.ts
