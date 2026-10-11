@@ -52,7 +52,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   document.documentElement.dataset.theme = theme;
 } catch {
   document.documentElement.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}`}
+}
+try {
+  if (typeof navigator !== "undefined" && /android/i.test(navigator.userAgent)) {
+    document.documentElement.style.setProperty("--sat", "max(env(safe-area-inset-top, 0px), 36px)");
+    document.documentElement.style.setProperty("--sab", "max(env(safe-area-inset-bottom, 0px), 16px)");
+  }
+} catch {}`}
         </Script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
