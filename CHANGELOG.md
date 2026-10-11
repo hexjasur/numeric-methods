@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.3] - 2026-10-12
+
+### 📐 Simpson's Rule (Parabolic Numerical Integration)
+- **Simpson 1/3 Method Implementation (`lib/simpson.ts`):**
+  - Integrated complete quadratic parabolic quadrature algorithm migrated from `v2/src/Sonli-Usullar/Integral-Simpson.html`.
+  - Automatically verifies even partition counts ($n \pmod 2 = 0$), computes step size $h = \frac{b - a}{n}$, endpoints sum $Y_{\text{chet}}$, odd indices sum $\sum Y_{\text{toq}}$, and even indices sum $\sum Y_{\text{juft}}$.
+  - Computes benchmark high-precision integral ($n = 10000$) and scientific error estimate $\Delta$.
+- **Interactive Laboratory Interface (`components/simpson-method.tsx`):**
+  - Live KaTeX formula preview for $\int_a^b f(x) dx$.
+  - 4 formatted step-by-step mathematical cards with KaTeX rendering.
+  - Interactive SVG plot (`SimpsonPlot`) with function curve, shaded integral region, and color-coded partition nodes (endpoints, odd, even).
+  - Detailed nodes table with index, $x_i$, $y_i$, coefficients, and node category badges.
+- **Navigation & Multi-lingual Support:**
+  - Added Simpson rule (`04` / `Sigma`) to sidebar navigation and header breadcrumb in Uzbek, Russian, and English.
+
+---
+
 ## [3.0.2] - 2026-10-11
 
 ### 🔄 Auto-Updater Enhancements, Markdown Viewer & Dynamic Versioning

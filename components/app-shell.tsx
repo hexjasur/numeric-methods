@@ -9,6 +9,7 @@ import {
   BookOpenText,
   LayoutDashboard,
   Menu,
+  Sigma,
   Split,
   Target,
   X,
@@ -56,6 +57,12 @@ export function AppShell({
         icon: Target,
       },
       {
+        href: '/methods/simpson',
+        label: t('nav.simpson'),
+        code: '04',
+        icon: Sigma,
+      },
+      {
         href: '/docs/syntax',
         label: t('nav.syntax'),
         code: 'DC',
@@ -78,7 +85,13 @@ export function AppShell({
       ? t('nav.dashboard')
       : pathname.startsWith('/methods/euler')
         ? t('nav.euler')
-        : t('nav.bisection');
+        : pathname.startsWith('/methods/newton')
+          ? t('nav.newton')
+          : pathname.startsWith('/methods/simpson')
+            ? t('nav.simpson')
+            : pathname.startsWith('/docs')
+              ? t('nav.syntax')
+              : t('nav.bisection');
 
   return (
     <UpdateProvider>

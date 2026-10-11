@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n-provider";
@@ -44,8 +43,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`try {
+        <script
+          id="theme-init"
+          dangerouslySetInnerHTML={{
+            __html: `try {
   const stored = localStorage.getItem("numeric-theme");
   const theme = stored === "dark" || stored === "light"
     ? stored
@@ -59,8 +60,9 @@ try {
     document.documentElement.style.setProperty("--sat", "max(env(safe-area-inset-top, 0px), 36px)");
     document.documentElement.style.setProperty("--sab", "max(env(safe-area-inset-bottom, 0px), 16px)");
   }
-} catch {}`}
-        </Script>
+} catch {}`,
+          }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <TopLoader />
