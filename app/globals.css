@@ -24,6 +24,10 @@
   --shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(13,15,18,.06), 0 18px 36px -26px rgba(13,15,18,.35);
   --stripe: repeating-linear-gradient(135deg, transparent 0 7px, rgba(13,15,18,.04) 7px 8px);
   --page-glow: radial-gradient(900px 400px at 85% -10%, rgba(8,145,178,.10), transparent 60%);
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
 }
 
 :root[data-theme="dark"] {

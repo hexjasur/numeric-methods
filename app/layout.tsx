@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -27,6 +27,16 @@ export const metadata: Metadata = {
     template: "%s | Numeric Methods",
   },
   description: "Numeric Methods is a web application that provides a collection of numerical methods and algorithms for solving mathematical problems. It offers a user-friendly interface for performing calculations, visualizing results, and learning about various numerical techniques.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#eceef0" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b0d" },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

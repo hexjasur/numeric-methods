@@ -81,7 +81,7 @@ export function AppShell({
     <div className="flex min-h-screen text-ink font-sans text-[15px] leading-[1.5]">
       {/* ───────── SIDEBAR ───────── */}
       <aside
-        className={`ps-side-panel fixed inset-y-0 left-0 z-30 w-[272px] flex flex-col p-[26px_18px_18px] bg-panel border-r border-line transition-transform duration-220 ease-out overflow-hidden max-md:w-[min(300px,86vw)] max-md:shadow-[var(--shadow)] ${
+        className={`ps-side-panel fixed inset-y-0 left-0 z-30 w-[272px] flex flex-col p-[26px_18px_18px] max-md:pt-[calc(20px+var(--sat))] max-md:pb-[calc(18px+var(--sab))] bg-panel border-r border-line transition-transform duration-220 ease-out overflow-hidden max-md:w-[min(300px,86vw)] max-md:shadow-[var(--shadow)] ${
           mobileOpen ? 'max-md:translate-x-0' : 'max-md:-translate-x-full'
         }`}
         aria-label="Asosiy navigatsiya"
@@ -186,7 +186,7 @@ export function AppShell({
 
       {/* ───────── CONTENT ───────── */}
       <div className="flex-1 min-w-0 flex flex-col min-h-screen md:ml-[272px]">
-        <header className="sticky top-0 z-20 flex items-center justify-between h-[76px] px-[clamp(22px,5vw,70px)] bg-head-bg backdrop-blur-[12px] border-b border-line max-md:h-[66px] max-md:px-[16px] after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[1px] after:h-[1px] after:bg-[linear-gradient(90deg,var(--brand)_0_64px,transparent_64px)]">
+        <header className="sticky top-0 z-20 flex items-center justify-between h-[76px] px-[clamp(22px,5vw,70px)] bg-head-bg backdrop-blur-[12px] border-b border-line max-md:h-[calc(66px+var(--sat))] max-md:pt-[var(--sat)] max-md:px-[16px] after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[1px] after:h-[1px] after:bg-[linear-gradient(90deg,var(--brand)_0_64px,transparent_64px)]">
           <div className="flex items-center gap-[10px]">
             <button
               className="hidden max-md:grid place-items-center w-[42px] h-[42px] cursor-pointer border border-line-2 rounded-md bg-panel text-ink transition-all hover:border-brand hover:text-brand hover:bg-brand-soft"
@@ -208,7 +208,7 @@ export function AppShell({
           </div>
         </header>
 
-        <main className="w-full max-w-[1420px] mx-auto flex-1 p-[clamp(28px,5vw,68px)_clamp(22px,5vw,70px)] max-md:p-[24px_16px]">
+        <main className="w-full max-w-[1420px] mx-auto flex-1 p-[clamp(28px,5vw,68px)_clamp(22px,5vw,70px)] max-md:p-[24px_16px] max-md:pb-[calc(24px+var(--sab))]">
           {children}
         </main>
         <UpdaterHost />

@@ -20,6 +20,7 @@
 # production
 /build
 /src-tauri/target/
+/src-tauri/gen/android/
 
 # misc
 .DS_Store

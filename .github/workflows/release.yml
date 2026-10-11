@@ -151,8 +151,10 @@ jobs:
       - name: Install Node dependencies
         run: bun install --frozen-lockfile
 
-      - name: Initialize Android Project
-        run: bun run tauri:android:init
+      - name: Initialize Android Project & Apply Insets Patch
+        run: |
+          bun run tauri:android:init
+          bun run scripts/patch-android.ts
 
       - name: Build Android APKs
         run: |

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.1] - 2026-10-11
+
+### 📱 Android Status Bar & Safe Area Insets Fix
+- **Native Android Window Insets (`MainActivity.kt`):**
+  - Configured `WindowCompat.setDecorFitsSystemWindows(window, true)` to guarantee the WebView is placed cleanly below the phone's status bar and notch, and above the navigation bar.
+  - Themed native status bar and navigation bar background (`#0a0b0d`) to seamlessly match the application's dark mode palette.
+- **Modern Web Safe Area Support:**
+  - Added `viewportFit: "cover"` to Next.js viewport metadata to activate standard CSS safe area environment variables (`env(safe-area-inset-top)` / `env(safe-area-inset-bottom)`).
+  - Padded mobile app header, sidebar drawer, and main container dynamically, eliminating any visual collision with system clock, battery, or network icons.
+- **Automated Android Initialization Patch:**
+  - Added `scripts/patch-android.ts` script executed automatically during `tauri:android:init` and CI builds to keep native Kotlin files consistent.
+
+---
+
 ## [3.0.0] - 2026-10-11
 
 ### 🚀 Overview: The Next-Gen Rebuild
