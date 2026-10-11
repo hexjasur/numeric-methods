@@ -1,0 +1,47 @@
+{
+  "name": "sonli-usullar",
+  "version": "2.9.12",
+  "description": "Elementar Matematika va sonli usullar bo'yicha o'quv qo'llanma",
+  "keywords": [
+    "math",
+    "matematika",
+    "sonli-usullar",
+    "mathemtic-methods",
+    "mathematics",
+    "elementary-mathematics",
+    "matematika-qollanma",
+    "matematika-oquv-qollanma",
+    "matematika-kitob",
+    "matematika-darslik",
+    "matematika-resurs",
+    "matematika-oquv-resurs",
+    "matematika-oquv-materiallar",
+    "matematika-oquv-resurslari-uz",
+    "matematika-oquv-resurslari-uzbek"
+  ],
+  "homepage": "https://github.com/jas-kha/math.yolnoma#readme",
+  "bugs": {
+    "url": "https://github.com/jas-kha/math.yolnoma/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jas-kha/math.yolnoma.git"
+  },
+  "license": "ISC",
+  "author": "Jasurbek Haydarov",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "sync-version": "node sync-version.js",
+    "dev": "node sync-version.js && concurrently -n \"serve\",\"tailwindcss\" -c \"green\",\"blue\" \"npx serve . -p 3000\" \"npx @tailwindcss/cli -i ./src/assets/css/input.css -o ./src/assets/css/output.css --watch\""
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "serve": "^14.2.6"
+  }
+}

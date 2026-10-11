@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --bg: #eceef0;
+  --bg-2: #f6f7f8;
+  --panel: #fbfbfc;
+  --panel-2: #f1f2f4;
+  --ink: #0d0f12;
+  --ink-2: #2a2e35;
+  --muted: #5d646e;
+  --line: #d5d9de;
+  --line-2: #b9bfc7;
+  --cyan: #0891b2;
+  --cyan-soft: rgba(8,145,178,.09);
+  --brand: #e8480c;
+  --brand-ink: #ffffff;
+  --brand-soft: rgba(232,72,12,.09);
+  --pos: #0f9d6b;
+  --neg: #d6293e;
+  --ok: #0f9d6b;
+  --head-bg: rgba(236,238,240,.82);
+  --shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(13,15,18,.06), 0 18px 36px -26px rgba(13,15,18,.35);
+  --stripe: repeating-linear-gradient(135deg, transparent 0 7px, rgba(13,15,18,.04) 7px 8px);
+  --page-glow: radial-gradient(900px 400px at 85% -10%, rgba(8,145,178,.10), transparent 60%);
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a0b0d;
+  --bg-2: #0f1114;
+  --panel: #14161a;
+  --panel-2: #1a1d22;
+  --ink: #eef0f2;
+  --ink-2: #c3c8cf;
+  --muted: #8d949d;
+  --line: #272b32;
+  --line-2: #363b44;
+  --cyan: #22d3ee;
+  --cyan-soft: rgba(34,211,238,.1);
+  --brand: #ff6a2b;
+  --brand-ink: #0a0b0d;
+  --brand-soft: rgba(255,106,43,.12);
+  --pos: #34d399;
+  --neg: #fb7185;
+  --ok: #34d399;
+  --head-bg: rgba(10,11,13,.82);
+  --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 20px 40px -24px rgba(0,0,0,.8);
+  --stripe: repeating-linear-gradient(135deg, transparent 0 7px, rgba(255,255,255,.035) 7px 8px);
+  --page-glow: radial-gradient(900px 400px at 85% -10%, rgba(34,211,238,.08), transparent 60%);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-cyan: var(--cyan);
+  --color-cyan-soft: var(--cyan-soft);
+  --color-pos: var(--pos);
+  --color-neg: var(--neg);
+  --color-ok: var(--ok);
+  --font-sans: ui-sans-serif, "Inter", "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color-scheme: light; }
+  html[data-theme="dark"] { color-scheme: dark; }
+  body {
+    margin: 0; min-width: 320px;
+    background: var(--page-glow), var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    transition: background .2s ease, color .2s ease;
+  }
+  button, input { font: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+}
+
+@layer utilities {
+  .katex { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 8px; }
+
+  /* Print Stream Base Components */
+  .ps-panel {
+    position: relative;
+    padding: 24px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .ps-panel::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 46px; height: 46px;
+    background: linear-gradient(135deg, var(--ink) 0 50%, transparent 50%);
+    opacity: .92; border-top-left-radius: 10px;
+  }
+  .ps-panel::after {
+    content: ""; position: absolute; right: 0; bottom: 0; width: 120px; height: 120px;
+    background: var(--stripe); pointer-events: none;
+    -webkit-mask: linear-gradient(315deg, #000, transparent 70%);
+    mask: linear-gradient(315deg, #000, transparent 70%);
+  }
+  .ps-panel > * { position: relative; z-index: 1; }
+
+  .ps-side-panel::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 54px; height: 54px;
+    background: linear-gradient(135deg, var(--ink) 0 50%, transparent 50%);
+    pointer-events: none;
+  }
+  .ps-side-panel::after {
+    content: ""; position: absolute; right: 0; bottom: 0; width: 100%; height: 240px;
+    background: var(--stripe); pointer-events: none;
+    -webkit-mask: linear-gradient(0deg, #000, transparent);
+    mask: linear-gradient(0deg, #000, transparent);
+  }
+
+  .ps-barcode {
+    background: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 3px, var(--ink) 3px 5px, transparent 5px 6px, var(--ink) 6px 7px, transparent 7px 11px);
+  }
+}
+
+/* View Transitions for Theme Toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* By default, new view is on top */
+::view-transition-new(root) {
+  z-index: 9999;
+}
+/* When transitioning to dark, we can either expand the new dark theme, or shrink the old light theme */
+
+/* Print Stream Navigation Top Loader */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  top: var(--sat, 0px) !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, var(--brand) 0%, #ff8c42 55%, var(--cyan) 100%) !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 14px var(--brand), 0 0 6px var(--cyan) !important;
+  opacity: 1 !important;
+}
+

@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "path": "/", "title": "Dashboard" },
+    { "path": "/methods/bisection", "title": "Bisection Method" }
+  ]
+}
