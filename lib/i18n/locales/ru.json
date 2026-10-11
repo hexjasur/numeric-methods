@@ -193,5 +193,21 @@
     "fn_exp": "Экспонента",
     "fn_ln": "Логарифм (Натуральный)",
     "fn_log10": "Логарифм (Основание 10)"
+  },
+  "updater": {
+    "strip": "АВТО-ОБНОВЛЕНИЕ / OTA",
+    "modal_title": "Доступна новая версия!",
+    "modal_eyebrow": "ДОСТУПНО ОБНОВЛЕНИЕ",
+    "modal_desc": "Вышла новая версия {version}. Текущая версия: {current}.",
+    "changelog_title": "Список изменений:",
+    "btn_update": "Обновить сейчас",
+    "btn_later": "Позже",
+    "screen_title_accent": "Numeric",
+    "screen_title_rest": "Updating",
+    "status_checking": "Проверка...",
+    "status_downloading": "Загрузка обновления: {percent}%",
+    "status_installing": "Проверка и установка пакета...",
+    "status_ready": "Успешно установлено! Перезапуск приложения...",
+    "status_error": "Произошла ошибка при обновлении."
   }
 }

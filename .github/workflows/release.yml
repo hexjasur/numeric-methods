@@ -91,6 +91,15 @@ jobs:
       - name: Install Node dependencies
         run: bun install --frozen-lockfile
 
+      - name: Extract Changelog for Release
+        id: changelog
+        run: |
+          {
+            echo 'body<<EOF'
+            bun run scripts/check-versions.ts --changelog
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
       - name: Build Tauri and Publish Release
         uses: tauri-apps/tauri-action@v0
         env:
@@ -98,6 +107,6 @@ jobs:
         with:
           tagName: v${{ needs.check-version.outputs.version }}
           releaseName: 'Numeric Methods v${{ needs.check-version.outputs.version }}'
-          releaseBody: 'Automated multi-target release for Windows and Linux.'
+          releaseBody: ${{ steps.changelog.outputs.body }}
           releaseDraft: false
           prerelease: false

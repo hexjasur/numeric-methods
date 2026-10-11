@@ -19,19 +19,49 @@ const cargoContent = fs.readFileSync(cargoPath, 'utf8');
 const cargoMatch = cargoContent.match(/\[package\][\s\S]*?version\s*=\s*["']([^"']+)["']/);
 const cargoVersion: string | null = cargoMatch ? cargoMatch[1] : null;
 
-const args = process.argv.slice(2);
+// 4. Verify CHANGELOG.md
+const changelogPath = path.join(rootDir, 'CHANGELOG.md');
+const changelogExists = fs.existsSync(changelogPath);
+let changelogBody = '';
+let hasVersionInChangelog = false;
 
-if (args.includes('--print')) {
-  if (pkgVersion === tauriVersion && pkgVersion === cargoVersion) {
-    console.log(pkgVersion);
-    process.exit(0);
+if (changelogExists) {
+  const changelogContent = fs.readFileSync(changelogPath, 'utf8');
+  const versionRegex = new RegExp(
+    `##\\s*\\[${pkgVersion.replace(/\./g, '\\.')}\\]([\\s\\S]*?)(?=\\n##\\s*\\[|$)`,
+    'i',
+  );
+  const match = changelogContent.match(versionRegex);
+  if (match) {
+    hasVersionInChangelog = true;
+    changelogBody = match[1].trim();
   }
 }
 
-console.log('--- Multi-Target Version Verification ---');
-console.log(`package.json:            ${pkgVersion}`);
-console.log(`src-tauri/tauri.conf.json: ${tauriVersion}`);
-console.log(`src-tauri/Cargo.toml:     ${cargoVersion ?? 'NOT FOUND'}`);
+const args = process.argv.slice(2);
+
+if (args.includes('--print')) {
+  if (pkgVersion === tauriVersion && pkgVersion === cargoVersion && hasVersionInChangelog) {
+    console.log(pkgVersion);
+    process.exit(0);
+  }
+  process.exit(1);
+}
+
+if (args.includes('--changelog')) {
+  if (hasVersionInChangelog && changelogBody) {
+    console.log(changelogBody);
+    process.exit(0);
+  }
+  console.error(`No changelog entry found for v${pkgVersion}`);
+  process.exit(1);
+}
+
+console.log('--- Multi-Target Version & Changelog Verification ---');
+console.log(`package.json:              ${pkgVersion}`);
+console.log(`src-tauri/tauri.conf.json:   ${tauriVersion}`);
+console.log(`src-tauri/Cargo.toml:       ${cargoVersion ?? 'NOT FOUND'}`);
+console.log(`CHANGELOG.md [${pkgVersion}]:     ${hasVersionInChangelog ? 'FOUND ✅' : 'MISSING ❌'}`);
 
 if (!cargoVersion) {
   console.error('❌ Could not extract version from src-tauri/Cargo.toml');
@@ -43,5 +73,19 @@ if (pkgVersion !== tauriVersion || pkgVersion !== cargoVersion) {
   process.exit(1);
 }
 
-console.log(`✅ All target versions are synchronized: v${pkgVersion}`);
+if (!changelogExists) {
+  console.error('❌ CHANGELOG.md file is missing in project root!');
+  process.exit(1);
+}
+
+if (!hasVersionInChangelog) {
+  console.error(
+    `❌ CHANGELOG.md does not have an entry for version [${pkgVersion}]! Please document changes before releasing.`,
+  );
+  process.exit(1);
+}
+
+console.log(
+  `✅ All target versions are synchronized (v${pkgVersion}) and verified against CHANGELOG.md`,
+);
 process.exit(0);

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,6 +17,7 @@ import logo from '@/public/logo.png';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LangToggle } from '@/components/lang-toggle';
 import { useI18n } from '@/components/i18n-provider';
+import { UpdaterHost } from '@/components/updater/updater-host';
 
 export function AppShell({
   children,
@@ -210,6 +211,7 @@ export function AppShell({
         <main className="w-full max-w-[1420px] mx-auto flex-1 p-[clamp(28px,5vw,68px)_clamp(22px,5vw,70px)] max-md:p-[24px_16px]">
           {children}
         </main>
+        <UpdaterHost />
       </div>
     </div>
   );

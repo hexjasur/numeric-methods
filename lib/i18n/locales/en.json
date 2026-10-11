@@ -193,5 +193,21 @@
     "fn_exp": "Exponential",
     "fn_ln": "Logarithm (Natural)",
     "fn_log10": "Logarithm (Base 10)"
+  },
+  "updater": {
+    "strip": "AUTO-UPDATE / OTA",
+    "modal_title": "New version available!",
+    "modal_eyebrow": "UPDATE AVAILABLE",
+    "modal_desc": "New version {version} is now available. Current version: {current}.",
+    "changelog_title": "Release notes:",
+    "btn_update": "Update Now",
+    "btn_later": "Later",
+    "screen_title_accent": "Numeric",
+    "screen_title_rest": "Updating",
+    "status_checking": "Checking...",
+    "status_downloading": "Downloading update: {percent}%",
+    "status_installing": "Verifying and installing package...",
+    "status_ready": "Successfully installed! Restarting application...",
+    "status_error": "An error occurred during update."
   }
 }

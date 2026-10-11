@@ -193,5 +193,21 @@
     "fn_exp": "Eksponenta",
     "fn_ln": "Logarifm (Natural)",
     "fn_log10": "Logarifm (10 asos)"
+  },
+  "updater": {
+    "strip": "AUTO-UPDATE / OTA",
+    "modal_title": "Yangi versiya mavjud!",
+    "modal_eyebrow": "UPDATE AVAILABLE",
+    "modal_desc": "Dasturning yangi {version} talqini chiqdi. Hozirgi talqin: {current}.",
+    "changelog_title": "O'zgarishlar va yangiliklar:",
+    "btn_update": "Hozir yangilash",
+    "btn_later": "Keyinroq",
+    "screen_title_accent": "Numeric",
+    "screen_title_rest": "Updating",
+    "status_checking": "Tekshirilmoqda...",
+    "status_downloading": "Yangilanish yuklab olinmoqda: {percent}%",
+    "status_installing": "Paket tekshirilmoqda va o'rnatilmoqda...",
+    "status_ready": "Muvaffaqiyatli o'rnatildi! Dastur qayta ishga tushmoqda...",
+    "status_error": "Yangilashda xatolik yuz berdi."
   }
 }
