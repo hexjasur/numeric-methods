@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n-provider";
+import { TopLoader } from "@/components/top-loader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -62,6 +63,7 @@ try {
         </Script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <TopLoader />
         <I18nProvider>
           {children}
         </I18nProvider>

@@ -18,6 +18,9 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { LangToggle } from '@/components/lang-toggle';
 import { useI18n } from '@/components/i18n-provider';
 import { UpdaterHost } from '@/components/updater/updater-host';
+import { UpdateProvider } from '@/components/updater/update-context';
+import { UpdateCheckButton } from '@/components/updater/update-check-button';
+import packageJson from '@/package.json';
 
 export function AppShell({
   children,
@@ -78,7 +81,8 @@ export function AppShell({
         : t('nav.bisection');
 
   return (
-    <div className="flex min-h-screen text-ink font-sans text-[15px] leading-[1.5]">
+    <UpdateProvider>
+      <div className="flex min-h-screen text-ink font-sans text-[15px] leading-[1.5]">
       {/* ───────── SIDEBAR ───────── */}
       <aside
         className={`ps-side-panel fixed inset-y-0 left-0 z-30 w-[272px] flex flex-col p-[26px_18px_18px] max-md:pt-[calc(20px+var(--sat))] max-md:pb-[calc(18px+var(--sab))] bg-panel border-r border-line transition-transform duration-220 ease-out overflow-hidden max-md:w-[min(300px,86vw)] max-md:shadow-[var(--shadow)] ${
@@ -169,7 +173,7 @@ export function AppShell({
             className="flex items-center gap-[10px] font-mono text-[11.5px] font-semibold tracking-[.14em] text-muted"
             aria-hidden
           >
-            <span>SN-3.0</span>
+            <span>v{packageJson.version}</span>
             <i className="ps-barcode flex-1 h-[12px] opacity-50" />
             <span>MK-1</span>
           </div>
@@ -203,6 +207,7 @@ export function AppShell({
           </div>
 
           <div className="flex items-center gap-2.5">
+            <UpdateCheckButton />
             <LangToggle />
             <ThemeToggle />
           </div>
@@ -214,6 +219,7 @@ export function AppShell({
         <UpdaterHost />
       </div>
     </div>
+    </UpdateProvider>
   );
 }
 

@@ -147,3 +147,21 @@
   z-index: 9999;
 }
 /* When transitioning to dark, we can either expand the new dark theme, or shrink the old light theme */
+
+/* Print Stream Navigation Top Loader */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  top: var(--sat, 0px) !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, var(--brand) 0%, #ff8c42 55%, var(--cyan) 100%) !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 14px var(--brand), 0 0 6px var(--cyan) !important;
+  opacity: 1 !important;
+}
+

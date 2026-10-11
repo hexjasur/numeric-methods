@@ -11,6 +11,7 @@ export interface GitHubRelease {
   name: string;
   body: string;
   published_at: string;
+  html_url?: string;
   assets: GitHubAsset[];
 }
 
@@ -22,6 +23,10 @@ export interface UpdateInfo {
   releaseNotes: string;
   publishedAt: string;
   downloadUrl?: string;
+  assetName?: string;
+  isAndroid: boolean;
+  isWindows: boolean;
+  isTauriDesktop: boolean;
   tauriAvailable: boolean;
 }
 
@@ -63,9 +68,11 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
     const latestVersion = release.tag_name.replace(/^v/, '');
     const available = isNewerVersion(currentVersion, latestVersion);
 
-    // Smart platform-aware asset selection (Android, Windows, Linux)
+    // Platform detection
     const isAndroid = typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent);
     const isWindows = typeof navigator !== 'undefined' && /windows/i.test(navigator.userAgent);
+    const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+    const isTauriDesktop = isTauri && !isAndroid;
 
     let primaryAsset: GitHubAsset | undefined;
     if (isAndroid) {
@@ -84,9 +91,11 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
       primaryAsset = release.assets[0];
     }
 
+    const fallbackUrl = release.html_url || 'https://github.com/hexjasur/numeric-methods/releases/latest';
+    const downloadUrl = primaryAsset?.browser_download_url || fallbackUrl;
+
     let tauriAvailable = false;
-    // Check if running inside Tauri
-    if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+    if (isTauriDesktop) {
       try {
         const { check } = await import('@tauri-apps/plugin-updater');
         const update = await check();
@@ -105,10 +114,15 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
       releaseTitle: release.name || `v${latestVersion}`,
       releaseNotes: release.body || '',
       publishedAt: release.published_at,
-      downloadUrl: primaryAsset?.browser_download_url,
+      downloadUrl,
+      assetName: primaryAsset?.name,
+      isAndroid,
+      isWindows,
+      isTauriDesktop,
       tauriAvailable,
     };
   } catch {
     return null;
   }
 }
+

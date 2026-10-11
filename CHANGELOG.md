@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.2] - 2026-10-11
+
+### 🔄 Auto-Updater Enhancements, Markdown Viewer & Dynamic Versioning
+- **Formatted Markdown Changelog Viewer:**
+  - Added dedicated `MarkdownViewer` component rendering release notes with styled headings, bold text, nested bullet dots, and inline code badges rather than raw markdown syntax.
+- **Platform-Aware Update & Android Installation Guidance:**
+  - Enhanced update workflow distinguishing between Tauri Desktop (native background update + relaunch) and Android / Web (direct `.apk` / `.exe` download with clear installation instructions).
+  - Added session-based snooze so dismissing or initiating an update prevents repeated modal popups upon page refreshes.
+- **Navbar Update Check Button:**
+  - Added a responsive spinning check button (`RotateCw`) in the top navigation header providing one-click manual update verification with non-intrusive toast feedback.
+- **Dynamic Sidebar Versioning:**
+  - Replaced hardcoded version display with dynamic reading from `package.json` (`v3.0.2`).
+- **Print Stream Navigation Top Loader (GitHub-style Progress Bar):**
+  - Integrated sleek 3px top loading bar with brand vermilion-to-cyan gradient and glowing head for instantaneous route transition feedback.
+
+---
+
 ## [3.0.1] - 2026-10-11
 
 ### 📱 Android Status Bar & Safe Area Insets Fix
@@ -16,6 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Dynamically padded mobile app header, sidebar drawer, and main layout so that navigation controls (menu button, title, language selector) never collide with the system clock or status bar.
 - **Reliable Webpack Static Compilation:**
   - Standardized Next.js export build to webpack engine to avoid memory allocation bottlenecks across CI and local environments.
+- **Print Stream Navigation Top Loader (GitHub-style Progress Bar):**
+  - Integrated `nextjs-toploader` with custom Print Stream visual theme (brand orange to high-tech cyan gradient, 3px sleek height, glowing advancing head).
+  - Synchronized route transitions with `usePathname()` so navigation between methods, docs, and dashboard feels instantaneous and never appears frozen.
+  - Automatically respects mobile status bar safe-area insets (`--sat`) on Android and edge-to-edge screens.
 
 ---
 
