@@ -63,10 +63,24 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
     const latestVersion = release.tag_name.replace(/^v/, '');
     const available = isNewerVersion(currentVersion, latestVersion);
 
-    // Pick a primary download asset if available
-    const primaryAsset = release.assets.find(
-      (a) => a.name.endsWith('.exe') || a.name.endsWith('.msi') || a.name.endsWith('.apk') || a.name.endsWith('.AppImage'),
-    );
+    // Smart platform-aware asset selection (Android, Windows, Linux)
+    const isAndroid = typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent);
+    const isWindows = typeof navigator !== 'undefined' && /windows/i.test(navigator.userAgent);
+
+    let primaryAsset: GitHubAsset | undefined;
+    if (isAndroid) {
+      primaryAsset = release.assets.find((a) => a.name.endsWith('.apk'));
+    } else if (isWindows) {
+      primaryAsset = release.assets.find((a) => a.name.endsWith('.exe') || a.name.endsWith('.msi'));
+    } else {
+      primaryAsset = release.assets.find(
+        (a) => a.name.endsWith('.AppImage') || a.name.endsWith('.deb') || a.name.endsWith('.apk'),
+      );
+    }
+
+    if (!primaryAsset && release.assets.length > 0) {
+      primaryAsset = release.assets[0];
+    }
 
     let tauriAvailable = false;
     // Check if running inside Tauri
