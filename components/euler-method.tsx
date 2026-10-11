@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useMemo, useState } from 'react';
 import katex from 'katex';
@@ -93,7 +93,7 @@ export function EulerMethod() {
             : "Parametrlarni tekshirib qayta urinib ko'ring.",
       };
     }
-  }, [calculationInputs]);
+  }, [calculationInputs, t]);
 
   const result = calculation.result;
   const rows = result?.rows ?? [];

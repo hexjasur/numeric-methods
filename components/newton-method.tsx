@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useMemo, useState } from 'react';
 import katex from 'katex';
@@ -38,7 +38,7 @@ export function NewtonMethod() {
     } catch {
       return '';
     }
-  }, [result?.derivativeExpr]);
+  }, [result]);
 
   function calculate() {
     setError('');

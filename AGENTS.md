@@ -1,4 +1,4 @@
-﻿# AGENTS.md
+# AGENTS.md
 
 ## Tech stack
 
@@ -15,6 +15,7 @@
 | Build | `bun build` |
 | Tauri + Web Run | `bun td` |
 | Tauri + Web Build | `bun tb` |
+| Static Preview | `bun run start` |
 | Lint | `bun lint` |
 
 ## Styling rules
@@ -48,6 +49,7 @@ The `tauri-desktop` branch shares one codebase across website, Tauri desktop, an
 
 - Keep changes focused.
 - Split multi-part requests into logical tasks. Implement and validate each task, then make **one descriptive commit per task**. Do not bundle unrelated fixes into a single final commit.
+- End each commit subject line with an appropriate emoji matching the task (e.g., 🚀, 🛠️, ✨, 🧹, 🐛).
 - Before each commit:
   1. Run `bun lint` (required after any UI change).
   2. Run `bun run build`.

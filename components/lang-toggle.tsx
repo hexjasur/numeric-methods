@@ -1,6 +1,6 @@
-﻿'use client';
+'use client';
 
-import { useI18n } from '@/components/i18n-provider';
+import { useI18n, type Locale } from '@/components/i18n-provider';
 import { Languages, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
@@ -19,7 +19,7 @@ export function LangToggle() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const options = [
+  const options: { value: Locale; label: string }[] = [
     { value: 'uz', label: 'UZB' },
     { value: 'ru', label: 'RUS' },
     { value: 'en', label: 'ENG' },
@@ -54,7 +54,7 @@ export function LangToggle() {
               <button
                 key={opt.value}
                 onClick={() => {
-                  setLocale(opt.value as any);
+                  setLocale(opt.value);
                   setOpen(false);
                 }}
                 className={`group flex w-full items-center justify-center rounded-md px-2 py-2 font-mono text-xs font-bold transition-all ${

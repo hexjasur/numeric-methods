@@ -7,7 +7,7 @@
     "dev": "next dev",
     "tb": "tauri build",
     "build": "next build",
-    "start": "next start",
+    "start": "bunx serve out",
     "lint": "eslint app components",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",

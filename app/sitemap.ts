@@ -1,4 +1,4 @@
-﻿export const dynamic = 'force-static';
+export const dynamic = 'force-static';
 import type { MetadataRoute } from 'next';
 import fs from 'fs';
 import path from 'path';
@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     }));
-  } catch (e) {
+  } catch {
     //
   }
 

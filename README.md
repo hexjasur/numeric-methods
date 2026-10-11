@@ -18,7 +18,7 @@ The website runs at `http://localhost:3000`.
 ## Website build & start
 
 ```bash
-bun build
+bun run build
 bun start
 ```
 
