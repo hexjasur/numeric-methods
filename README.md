@@ -24,6 +24,16 @@ bun start
 
 `next.config.ts` uses `output: "export"`. The build output is written to the `out/` directory. This static artifact is shared between website hosting and the Tauri frontend. Server actions, API routes, and server runtime features must not be used with this target.
 
+## Netlify hosting
+
+`netlify.toml` configures Netlify to run `bun run build` and publish only the generated `out/` directory. Deploy through the connected repository so the build runs before publishing. Do not upload the repository root as a static site: it contains source files rather than the generated homepage and produces a “Not Found” response at `/`.
+
+## Vercel hosting
+
+`vercel.json` explicitly selects Next.js, installs dependencies with Bun, and runs `bun run build`. The output directory uses the framework default so Vercel can handle `output: "export"` without a custom output-directory override. The shared static export for Tauri remains unchanged.
+
+Set the Vercel project's Root Directory to the repository root, not `v2` or `v2/app`, so it reads this configuration and the current Next.js application. Redeploy the branch containing `vercel.json` after these changes. If `404 NOT_FOUND` persists, check that deployment's build logs and domain assignment; adding configuration alone does not prove the cause of an existing 404.
+
 ## Tauri desktop
 
 After installing the Rust toolchain and platform-specific Tauri dependencies:
