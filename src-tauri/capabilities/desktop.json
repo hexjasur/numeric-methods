@@ -1,8 +1,9 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "default",
-  "description": "Default capabilities for desktop application",
+  "identifier": "desktop",
+  "description": "Capabilities for desktop platforms",
   "windows": ["main"],
+  "platforms": ["windows", "linux", "macOS"],
   "permissions": [
     "core:default",
     "process:default",
