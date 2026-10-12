@@ -154,14 +154,14 @@ export function AboutPage() {
 
   const history = [
     {
-      version: 'v3.0 (Joriy)',
+      version: `v${packageJson.version} (${t('about.status_current')})`,
       date: '2026',
       title: t('about.v3_title'),
       desc: t('about.v3_desc'),
       active: true,
     },
     {
-      version: 'v2.0 (Arxiv)',
+      version: `v2.0 (${t('about.status_archive')})`,
       date: '2026',
       title: t('about.v2_title'),
       desc: t('about.v2_desc'),
@@ -169,7 +169,7 @@ export function AboutPage() {
       active: false,
     },
     {
-      version: 'v1.0 (Boshlang‘ich)',
+      version: `v1.0 (${t('about.status_initial')})`,
       date: '2026-03',
       title: t('about.v1_title'),
       desc: t('about.v1_desc'),
@@ -204,7 +204,7 @@ export function AboutPage() {
                   {t('about.author_name')}
                 </h3>
                 <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-brand text-brand-ink">
-                  QarDU · 2026
+                  {t('about.author_badge')}
                 </span>
                 <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded border border-line bg-panel text-muted">
                   v{packageJson.version}
@@ -341,7 +341,7 @@ export function AboutPage() {
                 <span className="font-mono text-xs text-muted">({h.date})</span>
                 {h.active && (
                   <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-brand-soft text-brand border border-brand/30">
-                    CURRENT
+                    {t('about.status_badge_current')}
                   </span>
                 )}
                 {h.link && (
@@ -364,13 +364,13 @@ export function AboutPage() {
 
         <div className="mt-8 pt-5 border-t border-line flex flex-wrap items-center justify-between gap-4">
           <span className="font-mono text-xs text-muted">
-            Qarshi Davlat Universiteti · 2026
+            {t('about.footer_univ')}
           </span>
           <Link
             href="/methods/bisection"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-brand text-brand-ink font-semibold text-xs transition-all hover:brightness-110"
           >
-            <span>Laboratoriyani boshlash</span>
+            <span>{t('about.btn_start_lab')}</span>
             <ArrowUpRight size={14} />
           </Link>
         </div>

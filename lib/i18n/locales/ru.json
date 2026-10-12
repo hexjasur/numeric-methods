@@ -52,7 +52,14 @@
     "v2_title": "v2.0 — Классический портал",
     "v2_desc": "Расширенная версия с теорией и методами (доступна на v2.sonli-usullar.uz).",
     "v3_title": "v3.0 — Современная экосистема Next.js + Tauri",
-    "v3_desc": "Строгий TypeScript, Tailwind CSS 4, статический экспорт и кроссплатформенная сборка."
+    "v3_desc": "Строгий TypeScript, Tailwind CSS 4, статический экспорт и кроссплатформенная сборка.",
+    "author_badge": "КарГУ · 2026",
+    "status_current": "Текущая",
+    "status_archive": "Архив",
+    "status_initial": "Начальная",
+    "status_badge_current": "ТЕКУЩАЯ",
+    "footer_univ": "Каршинский Государственный Университет · 2026",
+    "btn_start_lab": "Начать лабораторную"
   },
   "app": {
     "title": "ЧИСЛЕННЫЕ",

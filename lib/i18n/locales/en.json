@@ -52,7 +52,14 @@
     "v2_title": "v2.0 — Classic Web Portal",
     "v2_desc": "Expanded portal with broad method suite and theory (archived at v2.sonli-usullar.uz).",
     "v3_title": "v3.0 — Next.js + Tauri Multi-Platform System",
-    "v3_desc": "Strict TypeScript, Tailwind CSS 4, static export, and multi-target native desktop/mobile application."
+    "v3_desc": "Strict TypeScript, Tailwind CSS 4, static export, and multi-target native desktop/mobile application.",
+    "author_badge": "KarSU · 2026",
+    "status_current": "Current",
+    "status_archive": "Archive",
+    "status_initial": "Initial",
+    "status_badge_current": "CURRENT",
+    "footer_univ": "Karshi State University · 2026",
+    "btn_start_lab": "Start Laboratory"
   },
   "app": {
     "title": "NUMERIC",

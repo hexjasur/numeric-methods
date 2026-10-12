@@ -52,7 +52,14 @@
     "v2_title": "v2.0 — Klassik veb portal",
     "v2_desc": "Ko'plab usullar va nazariy materiallar bilan kengaytirilgan veb talqin (hozirda v2.sonli-usullar.uz).",
     "v3_title": "v3.0 — Zamonaviy Next.js + Tauri ekotizimi",
-    "v3_desc": "To'liq TypeScript, Tailwind CSS 4, static export va multi-platform ilova formatiga o'tkazildi."
+    "v3_desc": "To'liq TypeScript, Tailwind CSS 4, static export va multi-platform ilova formatiga o'tkazildi.",
+    "author_badge": "QarDU · 2026",
+    "status_current": "Joriy",
+    "status_archive": "Arxiv",
+    "status_initial": "Boshlang‘ich",
+    "status_badge_current": "JORIY",
+    "footer_univ": "Qarshi Davlat Universiteti · 2026",
+    "btn_start_lab": "Laboratoriyani boshlash"
   },
   "app": {
     "title": "NUMERIC",

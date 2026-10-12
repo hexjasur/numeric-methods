@@ -1,8 +1,9 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Numeric Methods",
+  "mainBinaryName": "numeric-methods",
   "version": "3.0.0",
-  "identifier": "com.numericmethods.jksoftware",
+  "identifier": "com.jksoftware.numericmethods",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:3000",
@@ -18,7 +19,9 @@
         "minWidth": 960,
         "minHeight": 640,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "center": true,
+        "dragDropEnabled": false
       }
     ],
     "security": {
@@ -36,8 +39,18 @@
       "icons/icon.ico"
     ],
     "category": "Education",
+    "copyright": "Copyright © 2026 HexJasur. All rights reserved.",
+    "publisher": "Jasurbek Haydarov",
+    "homepage": "https://sonli-usullar.uz",
     "shortDescription": "Numeric Methods - numeric methods and root-finding algorithms for desktop and mobile.",
-    "longDescription": "Numeric Methods is a desktop and mobile application that provides a comprehensive collection of numeric methods and root-finding algorithms. It is designed to assist students, engineers, and researchers in solving mathematical problems efficiently. The application offers a user-friendly interface, interactive visualizations, and step-by-step explanations of various numerical techniques. Whether you are looking to understand the fundamentals of numerical analysis or apply advanced algorithms to real-world problems, Numeric Methods is your go-to resource for learning and applying numerical methods effectively."
+    "longDescription": "Numeric Methods is a desktop and mobile application that provides a comprehensive collection of numeric methods and root-finding algorithms. It is designed to assist students, engineers, and researchers in solving mathematical problems efficiently. The application offers a user-friendly interface, interactive visualizations, and step-by-step explanations of various numerical techniques. Whether you are looking to understand the fundamentals of numerical analysis or apply advanced algorithms to real-world problems, Numeric Methods is your go-to resource for learning and applying numerical methods effectively.",
+    "windows": {
+      "nsis": {
+        "installMode": "both",
+        "displayLanguageSelector": false,
+        "installerIcon": "icons/icon.ico"
+      }
+    }
   },
   "plugins": {
     "updater": {
