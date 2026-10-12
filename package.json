@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "td": "tauri dev",
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "tb": "tauri build",
     "build": "next build",
     "start": "bunx serve out",
@@ -33,6 +33,7 @@
     "recharts": "^3.10.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/turbopack": "^4",
     "@tauri-apps/cli": "^2.8.4",
     "@types/katex": "^0.16.8",
