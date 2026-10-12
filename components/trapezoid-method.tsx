@@ -17,38 +17,69 @@ const EXAMPLE = {
   n: '8',
 };
 
-function MathOutput({ tex, display = false }: { tex: string; display?: boolean }) {
+function MathOutput({
+  tex,
+  display = false,
+  className = '',
+}: {
+  tex: string;
+  display?: boolean;
+  className?: string;
+}) {
+  const normalizedTex = useMemo(() => {
+    // Fix unescaped double-backslashes passed from JSX string attributes
+    return tex.replace(/\\\\([a-zA-Z]+)/g, '\\$1');
+  }, [tex]);
+
   const html = useMemo(() => {
     try {
-      return katex.renderToString(tex, { throwOnError: false, displayMode: display });
+      return katex.renderToString(normalizedTex, { throwOnError: false, displayMode: display });
     } catch {
-      return tex;
+      return normalizedTex;
     }
-  }, [tex, display]);
+  }, [normalizedTex, display]);
 
-  return <span dangerouslySetInnerHTML={{ __html: html }} />;
+  return (
+    <span
+      className={`[&_.katex]:!max-w-none [&_.katex]:!overflow-visible [&_.katex]:!px-0 ${className}`}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }
 
 function NodeTable({ result }: { result: TrapezoidResult }) {
   const { t } = useI18n();
   return (
     <div className="overflow-x-auto rounded-lg border border-line">
-      <table className="w-full min-w-[520px] border-collapse text-left font-mono text-[12px]">
+      <table className="w-full min-w-[660px] border-collapse text-left font-mono text-[12px]">
         <thead className="bg-bg-2 text-muted">
           <tr>
-            <th className="px-3 py-2.5">{t('trapezoid.tbl_i')}</th>
-            <th className="px-3 py-2.5">{t('trapezoid.tbl_x')}</th>
-            <th className="px-3 py-2.5">{t('trapezoid.tbl_eval')}</th>
-            <th className="px-3 py-2.5 text-right">{t('trapezoid.tbl_y')}</th>
+            <th className="px-3 py-2.5 text-center w-12">{t('trapezoid.tbl_i')}</th>
+            <th className="px-3 py-2.5 min-w-[190px]">{t('trapezoid.tbl_x')}</th>
+            <th className="px-3 py-2.5 min-w-[280px]">{t('trapezoid.tbl_eval')}</th>
+            <th className="px-3 py-2.5 text-right w-28">{t('trapezoid.tbl_y')}</th>
           </tr>
         </thead>
         <tbody>
           {result.points.map((point) => (
-            <tr className="border-t border-line" key={point.index}>
-              <td className="px-3 py-2 text-brand">{point.index}</td>
-              <td className="px-3 py-2"><MathOutput tex={`x_{${point.index}} = ${formatTrapezoid(result.a, 4)} + ${point.index}\\cdot ${formatTrapezoid(result.h, 5)} = ${formatTrapezoid(point.x, 6)}`} /></td>
-              <td className="px-3 py-2"><MathOutput tex={`f(${formatTrapezoid(point.x, 5)})`} /></td>
-              <td className="px-3 py-2 text-right font-semibold">{formatTrapezoid(point.y, 8)}</td>
+            <tr className="border-t border-line hover:bg-bg-2/50 transition-colors" key={point.index}>
+              <td className="px-3 py-2 text-center font-bold text-brand">{point.index}</td>
+              <td className="px-3 py-2">
+                <MathOutput
+                  tex={`x_{${point.index}} = ${formatTrapezoid(result.a, 4)} + ${point.index}\\cdot ${formatTrapezoid(result.h, 4)} = ${formatTrapezoid(point.x, 4)}`}
+                />
+              </td>
+              <td className="px-3 py-2 text-ink">
+                <MathOutput
+                  tex={
+                    point.expandedTex ||
+                    `f(${formatTrapezoid(point.x, 4)}) = ${formatTrapezoid(point.y, 4)}`
+                  }
+                />
+              </td>
+              <td className="px-3 py-2 text-right font-semibold text-brand">
+                {formatTrapezoid(point.y, 6)}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -134,16 +165,16 @@ export function TrapezoidMethod() {
         title={t('trapezoid.hero_title')}
         titleHighlight={t('trapezoid.hero_highlight')}
         lead={t('trapezoid.hero_lead')}
-        conditionMain={<MathOutput tex="I_T = h\\sum_{i=0}^{n-1}\\frac{f(x_i)+f(x_{i+1})}{2}" />}
+        conditionMain={<MathOutput tex={String.raw`I_T = h\sum_{i=0}^{n-1}\frac{f(x_i)+f(x_{i+1})}{2}`} />}
         conditionSub={t('trapezoid.hero_condition')}
       />
       <PsMap
         eyebrow="Method map"
         title={t('trapezoid.map_title')}
         steps={[
-          { n: '01', t: t('trapezoid.map_1_title'), s: <MathOutput tex="h=\\frac{b-a}{n}" /> },
+          { n: '01', t: t('trapezoid.map_1_title'), s: <MathOutput tex={String.raw`h=\frac{b-a}{n}`} /> },
           { n: '02', t: t('trapezoid.map_2_title'), s: t('trapezoid.map_2_desc') },
-          { n: '03', t: t('trapezoid.map_3_title'), s: <MathOutput tex="I_T=h\\sum\\frac{y_i+y_{i+1}}{2}" /> },
+          { n: '03', t: t('trapezoid.map_3_title'), s: <MathOutput tex={String.raw`I_T=h\sum\frac{y_i+y_{i+1}}{2}`} /> },
         ]}
       />
 
@@ -267,7 +298,9 @@ export function TrapezoidMethod() {
 
                   <section className="rounded-lg border border-line bg-bg-2 p-4">
                     <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">03 · {t('trapezoid.step_areas')}</h3>
-                    <div className="mb-3 overflow-x-auto text-center text-ink"><MathOutput display tex="A_i=\\frac{f(x_i)+f(x_{i+1})}{2}\\cdot h" /></div>
+                    <div className="mb-3 overflow-x-auto text-center text-ink">
+                      <MathOutput display tex={String.raw`A_i = \frac{f(x_i) + f(x_{i+1})}{2} \cdot h`} />
+                    </div>
                     <TrapezoidTable result={{ ...result, slices: visibleSlices }} />
                     {visibleSlices.length !== result.slices.length && (
                       <details className="mt-3 rounded-lg border border-line bg-panel p-3">

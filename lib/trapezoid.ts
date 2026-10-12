@@ -4,6 +4,7 @@ export type TrapezoidPoint = {
   index: number;
   x: number;
   y: number;
+  expandedTex?: string;
 };
 
 export type TrapezoidSlice = {
@@ -35,6 +36,19 @@ const BENCHMARK_SUBINTERVALS = 10_000;
 export function formatTrapezoid(value: number, digits = 6): string {
   if (!Number.isFinite(value)) return '—';
   return Number(value.toFixed(digits)).toString();
+}
+
+export function buildExpandedFormulaTex(expression: string, x: number, y: number): string {
+  const xStr = formatTrapezoid(x, 4);
+  const yStr = formatTrapezoid(y, 4);
+  try {
+    const normalized = normalizeExpression(expression).replace(/\bdx\b/g, '1');
+    const substituted = normalized.replace(/\bx\b/g, `(${xStr})`);
+    const exprTex = math.parse(substituted).toTex({ parenthesis: 'auto' });
+    return `f(${xStr}) = ${exprTex} = ${yStr}`;
+  } catch {
+    return `f(${xStr}) = ${yStr}`;
+  }
 }
 
 function compileIntegrand(expression: string) {
@@ -94,7 +108,9 @@ export function calculateTrapezoid(
   const points: TrapezoidPoint[] = [];
   for (let index = 0; index <= n; index++) {
     const x = index === n ? b : a + index * h;
-    points.push({ index, x, y: evaluate(x) });
+    const y = evaluate(x);
+    const expandedTex = buildExpandedFormulaTex(expression, x, y);
+    points.push({ index, x, y, expandedTex });
   }
 
   const slices: TrapezoidSlice[] = [];

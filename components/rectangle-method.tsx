@@ -14,7 +14,14 @@ type PlotShape = 'left-rectangle' | 'right-rectangle';
 const EXAMPLE = { expression: 'dx/sqrt(1+2*x^2)', a: '0.6', b: '1.6', n: '8' };
 
 function MathOutput({ tex, display = false }: { tex: string; display?: boolean }) {
-  const html = useMemo(() => katex.renderToString(tex, { throwOnError: false, displayMode: display }), [tex, display]);
+  const normalized = useMemo(() => tex.replace(/\\\\([a-zA-Z]+)/g, '\\$1'), [tex]);
+  const html = useMemo(() => {
+    try {
+      return katex.renderToString(normalized, { throwOnError: false, displayMode: display });
+    } catch {
+      return normalized;
+    }
+  }, [normalized, display]);
   return <span dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
@@ -92,12 +99,12 @@ export function RectangleMethod() {
     <div className="relative mx-auto max-w-[1160px] px-4 pb-12">
       <PsStrip eyebrow="INTEGRAL / 006" id="QUADRATURE" name={t('rectangle.strip')} />
       <PsHero eyebrow={t('rectangle.hero_eyebrow')} title={t('rectangle.hero_title')} titleHighlight={t('rectangle.hero_highlight')} lead={t('rectangle.hero_lead')}
-        conditionMain={<MathOutput tex="I_L=h\\sum_{i=0}^{n-1}f(x_i),\\quad I_R=h\\sum_{i=1}^{n}f(x_i),\\quad I_M=\\frac{I_L+I_R}{2}" />}
+        conditionMain={<MathOutput tex={String.raw`I_L=h\sum_{i=0}^{n-1}f(x_i),\quad I_R=h\sum_{i=1}^{n}f(x_i),\quad I_M=\frac{I_L+I_R}{2}`} />}
         conditionSub={t('rectangle.hero_condition')} />
       <PsMap eyebrow="Method map" title={t('rectangle.map_title')} steps={[
-        { n: '01', t: t('rectangle.map_1_title'), s: <MathOutput tex="h=\\frac{b-a}{n}" /> },
+        { n: '01', t: t('rectangle.map_1_title'), s: <MathOutput tex={String.raw`h=\frac{b-a}{n}`} /> },
         { n: '02', t: t('rectangle.map_2_title'), s: t('rectangle.map_2_desc') },
-        { n: '03', t: t('rectangle.map_3_title'), s: <MathOutput tex="I_M=\\frac{I_L+I_R}{2}" /> },
+        { n: '03', t: t('rectangle.map_3_title'), s: <MathOutput tex={String.raw`I_M=\frac{I_L+I_R}{2}`} /> },
       ]} />
 
       <div className="grid grid-cols-1 items-start gap-[18px] lg:grid-cols-[minmax(290px,.78fr)_minmax(0,1.5fr)]">

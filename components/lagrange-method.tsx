@@ -22,7 +22,14 @@ const EXAMPLES = [
 ];
 
 function MathOutput({ tex, display = false }: { tex: string; display?: boolean }) {
-  const html = useMemo(() => katex.renderToString(tex, { throwOnError: false, displayMode: display }), [tex, display]);
+  const normalized = useMemo(() => tex.replace(/\\\\([a-zA-Z]+)/g, '\\$1'), [tex]);
+  const html = useMemo(() => {
+    try {
+      return katex.renderToString(normalized, { throwOnError: false, displayMode: display });
+    } catch {
+      return normalized;
+    }
+  }, [normalized, display]);
   return <span dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
@@ -97,12 +104,12 @@ export function LagrangeMethod() {
     <div className="relative mx-auto max-w-[1160px] px-4 pb-12">
       <PsStrip eyebrow="INTERPOLATION / 007" id="POLYNOMIAL" name={t('lagrange.strip')} />
       <PsHero eyebrow={t('lagrange.hero_eyebrow')} title={t('lagrange.hero_title')} titleHighlight={t('lagrange.hero_highlight')} lead={t('lagrange.hero_lead')}
-        conditionMain={<MathOutput tex="P_n(x)=\\sum_{i=0}^{n} y_i\\,\\ell_i(x)" />}
+        conditionMain={<MathOutput tex={String.raw`P_n(x)=\sum_{i=0}^{n} y_i\,\ell_i(x)`} />}
         conditionSub={t('lagrange.hero_condition')} />
       <PsMap eyebrow="Method map" title={t('lagrange.map_title')} steps={[
         { n: '01', t: t('lagrange.map_1_title'), s: t('lagrange.map_1_desc') },
-        { n: '02', t: t('lagrange.map_2_title'), s: <MathOutput tex="\\ell_i(x)=\\prod_{j\\ne i}\\frac{x-x_j}{x_i-x_j}" /> },
-        { n: '03', t: t('lagrange.map_3_title'), s: <MathOutput tex="P_n(x)=\\sum y_i\\ell_i(x)" /> },
+        { n: '02', t: t('lagrange.map_2_title'), s: <MathOutput tex={String.raw`\ell_i(x)=\prod_{j\ne i}\frac{x-x_j}{x_i-x_j}`} /> },
+        { n: '03', t: t('lagrange.map_3_title'), s: <MathOutput tex={String.raw`P_n(x)=\sum y_i\ell_i(x)`} /> },
       ]} />
 
       <div className="grid grid-cols-1 items-start gap-[18px] lg:grid-cols-[minmax(330px,.82fr)_minmax(0,1.45fr)]">

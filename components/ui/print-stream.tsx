@@ -41,8 +41,8 @@ export function PsHero({
         </p>
       </div>
       {conditionMain && (
-        <div className="border border-line bg-panel rounded-[10px] py-4 px-5 shadow-[var(--shadow)] relative overflow-x-auto overflow-y-hidden max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap before:content-[''] before:absolute before:inset-0 before:bg-[var(--stripe)] before:pointer-events-none mt-5">
-          <span className="relative block font-mono text-2xl font-semibold text-ink [&>b]:text-brand">
+        <div className="border border-line bg-panel rounded-[10px] py-3.5 px-4.5 shadow-[var(--shadow)] relative overflow-x-auto overflow-y-hidden max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap before:content-[''] before:absolute before:inset-0 before:bg-[var(--stripe)] before:pointer-events-none mt-5">
+          <span className="relative block font-mono text-lg sm:text-xl font-semibold text-ink [&>b]:text-brand [&_.katex]:font-normal [&_.katex]:text-[0.92em]">
             {conditionMain}
           </span>
           {conditionSub && (
