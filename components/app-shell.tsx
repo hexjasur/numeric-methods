@@ -69,6 +69,12 @@ export function AppShell({
         icon: Sigma,
       },
       {
+        href: '/methods/lagrange',
+        label: t('nav.lagrange'),
+        code: '06',
+        icon: Sigma,
+      },
+      {
         href: '/docs/syntax',
         label: t('nav.syntax'),
         code: 'DC',
@@ -94,12 +100,14 @@ export function AppShell({
         : pathname.startsWith('/methods/simpson')
           ? t('nav.simpson')
           : pathname.startsWith('/methods/trapezoid')
-          ? t('nav.trapezoid')
+            ? t('nav.trapezoid')
             : pathname.startsWith('/methods/rectangles')
               ? t('nav.rectangles')
-              : pathname.startsWith('/docs')
-                ? t('nav.syntax')
-                : t('nav.bisection');
+              : pathname.startsWith('/methods/lagrange')
+                ? t('nav.lagrange')
+                : pathname.startsWith('/docs')
+                  ? t('nav.syntax')
+                  : t('nav.bisection');
 
   return (
     <UpdateProvider>

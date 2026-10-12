@@ -1,6 +1,12 @@
 {
   "routes": [
     { "path": "/", "title": "Dashboard" },
-    { "path": "/methods/bisection", "title": "Bisection Method" }
+    { "path": "/methods/bisection", "title": "Bisection Method" },
+    { "path": "/methods/euler", "title": "Euler Methods" },
+    { "path": "/methods/simpson", "title": "Simpson's Rule" },
+    { "path": "/methods/trapezoid", "title": "Trapezoidal Rule" },
+    { "path": "/methods/rectangles", "title": "Rectangles Rule" },
+    { "path": "/methods/lagrange", "title": "Lagrange Interpolation" },
+    { "path": "/docs/syntax", "title": "Math.js Syntax" }
   ]
 }
