@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { useI18n } from '@/components/i18n-provider';
 import { checkForAppUpdates, type UpdateInfo } from '@/lib/updater';
 import packageJson from '@/package.json';
@@ -21,6 +21,9 @@ interface UpdateContextType {
 const UpdateContext = createContext<UpdateContextType | null>(null);
 
 const SNOOZE_KEY = 'numeric_update_snoozed';
+const LAST_CHECK_KEY = 'numeric_update_last_checked';
+// 1 hour cooldown for automatic quiet checks to prevent hitting GitHub 60 req/hr rate limits
+const AUTO_CHECK_COOLDOWN_MS = 60 * 60 * 1000;
 
 export function UpdateProvider({ children }: { children: React.ReactNode }) {
   const { t } = useI18n();
@@ -32,6 +35,8 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
   const [statusText, setStatusText] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  const isCheckingRef = useRef(false);
+
   const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
@@ -41,11 +46,28 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
 
   const checkForUpdates = useCallback(
     async (manual = false) => {
-      if (isChecking) return;
+      if (isCheckingRef.current) return;
+
+      // Rate limit / throttle automatic quiet checks
+      if (!manual && typeof window !== 'undefined') {
+        const lastChecked = localStorage.getItem(LAST_CHECK_KEY);
+        if (lastChecked) {
+          const elapsed = Date.now() - Number(lastChecked);
+          if (elapsed < AUTO_CHECK_COOLDOWN_MS) {
+            return;
+          }
+        }
+      }
+
+      isCheckingRef.current = true;
       setIsChecking(true);
 
       try {
         const info = await checkForAppUpdates();
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LAST_CHECK_KEY, String(Date.now()));
+        }
+
         if (info?.available) {
           setUpdateInfo(info);
           const snoozedVersion = typeof window !== 'undefined' ? sessionStorage.getItem(SNOOZE_KEY) : null;
@@ -53,28 +75,40 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
           if (manual || snoozedVersion !== info.latestVersion) {
             setShowModal(true);
           }
+        } else if (info) {
+          // Successfully checked: app is on latest version or repo has no releases yet
+          if (manual) {
+            showToast(t('updater.status_up_to_date', { version: `v${packageJson.version}` }));
+          }
         } else if (manual) {
-          showToast(t('updater.status_up_to_date', { version: `v${packageJson.version}` }));
+          // info is null (e.g. rate limit exceeded or network failure)
+          showToast(t('updater.status_error'));
         }
       } catch {
         if (manual) {
           showToast(t('updater.status_error'));
         }
       } finally {
+        isCheckingRef.current = false;
         setIsChecking(false);
       }
     },
-    [isChecking, showToast, t],
+    [showToast, t],
   );
 
+  const checkForUpdatesRef = useRef(checkForUpdates);
   useEffect(() => {
-    // Initial quiet check after mount
+    checkForUpdatesRef.current = checkForUpdates;
+  }, [checkForUpdates]);
+
+  useEffect(() => {
+    // Initial quiet check after mount (run strictly once)
     const timer = setTimeout(() => {
-      checkForUpdates(false);
+      checkForUpdatesRef.current(false);
     }, 2500);
 
     return () => clearTimeout(timer);
-  }, [checkForUpdates]);
+  }, []);
 
   const closeModal = useCallback(() => {
     if (updateInfo) {

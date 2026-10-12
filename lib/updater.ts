@@ -50,6 +50,12 @@ export function isNewerVersion(current: string, remote: string): boolean {
 export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
   const currentVersion = packageJson.version;
 
+  // Platform detection
+  const isAndroid = typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent);
+  const isWindows = typeof navigator !== 'undefined' && /windows/i.test(navigator.userAgent);
+  const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+  const isTauriDesktop = isTauri && !isAndroid;
+
   try {
     // 1. Try checking via GitHub Releases API
     const response = await fetch(
@@ -60,6 +66,23 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
       },
     );
 
+    // If repository has no published releases yet, GitHub returns 404 Not Found.
+    // In this case, the app is already on the latest available version.
+    if (response.status === 404) {
+      return {
+        available: false,
+        currentVersion,
+        latestVersion: currentVersion,
+        releaseTitle: `v${currentVersion}`,
+        releaseNotes: '',
+        publishedAt: '',
+        isAndroid,
+        isWindows,
+        isTauriDesktop,
+        tauriAvailable: false,
+      };
+    }
+
     if (!response.ok) {
       return null;
     }
@@ -67,12 +90,6 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
     const release = (await response.json()) as GitHubRelease;
     const latestVersion = release.tag_name.replace(/^v/, '');
     const available = isNewerVersion(currentVersion, latestVersion);
-
-    // Platform detection
-    const isAndroid = typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent);
-    const isWindows = typeof navigator !== 'undefined' && /windows/i.test(navigator.userAgent);
-    const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
-    const isTauriDesktop = isTauri && !isAndroid;
 
     let primaryAsset: GitHubAsset | undefined;
     if (isAndroid) {
