@@ -242,7 +242,7 @@ export function SimpsonMethod() {
             <>
               <ResultActions
                 summaryText={`Simpson usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${format(result.integral, 6)}`}
-                csvData={result.steps.map((s) => ({
+                csvData={result.points.map((s) => ({
                   i: s.i,
                   x_i: format(s.x, 6),
                   y_i: format(s.y, 6),

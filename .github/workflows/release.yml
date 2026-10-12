@@ -42,6 +42,13 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Quality Gate (Lint & Build Verification)
+        run: |
+          echo "Checking ESLint rules..."
+          bun run lint
+          echo "Verifying Next.js TypeScript & Static Export build..."
+          bun run build
+
       - name: Verify Version Sync & Check Tag
         id: check
         run: |
@@ -64,7 +71,7 @@ jobs:
     if: needs.check-version.outputs.should_release == 'true'
     runs-on: ${{ matrix.platform }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         include:
           - platform: windows-latest

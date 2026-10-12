@@ -147,7 +147,7 @@ export function RectangleMethod() {
             <ResultActions
               summaryText={`To'g'ri to'rtburchaklar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> O'rta I_M ≈ ${formatRectangle(result.meanIntegral, 10)}, Chap I_L ≈ ${formatRectangle(result.leftIntegral, 10)}, O'ng I_R ≈ ${formatRectangle(result.rightIntegral, 10)}`}
               csvData={result.points.map((p) => ({
-                i: p.i,
+                i: p.index,
                 x_i: formatRectangle(p.x),
                 y_i: formatRectangle(p.y),
               }))}

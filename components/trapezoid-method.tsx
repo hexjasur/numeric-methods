@@ -259,10 +259,10 @@ export function TrapezoidMethod() {
                 summaryText={`Trapetsiyalar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${formatTrapezoid(result.integral, 10)}`}
                 csvData={result.slices.map((s) => ({
                   Index: s.index,
-                  x_left: formatTrapezoid(s.left),
-                  x_right: formatTrapezoid(s.right),
-                  y_left: formatTrapezoid(s.leftY),
-                  y_right: formatTrapezoid(s.rightY),
+                  x_left: formatTrapezoid(s.x0),
+                  x_right: formatTrapezoid(s.x1),
+                  y_left: formatTrapezoid(s.y0),
+                  y_right: formatTrapezoid(s.y1),
                   Area: formatTrapezoid(s.area),
                 }))}
                 csvFileName="trapetsiya-integral.csv"

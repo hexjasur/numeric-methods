@@ -276,12 +276,12 @@ export function EulerMethod() {
         <ResultActions
           summaryText={`Eyler usuli: y' = ${calculationInputs.expression}, x0 = ${calculationInputs.x0}, y0 = ${calculationInputs.y0}, h = ${calculationInputs.h} -> qadamlar soni: ${result.steps}`}
           csvData={rows.map((r) => ({
-            i: r.index,
+            i: r.step,
             x_i: numeric(r.x),
-            y_Eyler: numeric(r.eulerY),
-            y_Takomillashgan: numeric(r.improvedY),
-            y_Aniq: numeric(r.exactY),
-            Xatolik: numeric(r.delta),
+            y_Eyler: numeric(r.yEuler),
+            y_Takomillashgan: numeric(r.yImproved),
+            y_Aniq: r.yExact !== null ? numeric(r.yExact) : '—',
+            Xatolik: numeric(r.difference),
           }))}
           csvFileName="eyler-differensial.csv"
           imageFileName="eyler-differensial.png"
