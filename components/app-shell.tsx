@@ -8,6 +8,7 @@ import {
   Activity,
   BookOpenText,
   ExternalLink,
+  Info,
   LayoutDashboard,
   Menu,
   Sigma,
@@ -34,51 +35,57 @@ export function AppShell({
     () => [
       {
         href: '/',
-        label: t('nav.dashboard'),
-        code: '00',
+        label: t('nav.workspace'),
+        code: '01',
         icon: LayoutDashboard,
+      },
+      {
+        href: '/about',
+        label: t('nav.about'),
+        code: '02',
+        icon: Info,
+      },
+      {
+        href: '/docs/syntax',
+        label: t('nav.syntax'),
+        code: '03',
+        icon: BookOpenText,
       },
       {
         href: '/methods/bisection',
         label: t('nav.bisection'),
-        code: '01',
+        code: '04',
         icon: Split,
       },
       {
-        href: '/methods/euler',
-        label: t('nav.euler'),
-        code: '02',
-        icon: Activity,
-      },
-      {
-        href: '/methods/simpson',
-        label: t('nav.simpson'),
-        code: '03',
-        icon: Sigma,
-      },
-      {
-        href: '/methods/trapezoid',
-        label: t('nav.trapezoid'),
-        code: '04',
+        href: '/methods/lagrange',
+        label: t('nav.lagrange'),
+        code: '05',
         icon: Sigma,
       },
       {
         href: '/methods/rectangles',
         label: t('nav.rectangles'),
-        code: '05',
-        icon: Sigma,
-      },
-      {
-        href: '/methods/lagrange',
-        label: t('nav.lagrange'),
         code: '06',
         icon: Sigma,
       },
       {
-        href: '/docs/syntax',
-        label: t('nav.syntax'),
-        code: 'DC',
-        icon: BookOpenText,
+        href: '/methods/trapezoid',
+        label: t('nav.trapezoid'),
+        code: '07',
+        icon: Sigma,
+      },
+      {
+        href: '/methods/simpson',
+        label: t('nav.simpson'),
+        code: '08',
+        icon: Sigma,
+      },
+      {
+        href: '/methods/euler',
+        label: t('nav.euler'),
+        code: '09',
+        icon: Activity,
       },
     ],
     [t],
@@ -94,20 +101,24 @@ export function AppShell({
 
   const pageTitle =
     pathname === '/'
-      ? t('nav.dashboard')
-      : pathname.startsWith('/methods/euler')
-        ? t('nav.euler')
-        : pathname.startsWith('/methods/simpson')
-          ? t('nav.simpson')
-          : pathname.startsWith('/methods/trapezoid')
-            ? t('nav.trapezoid')
-            : pathname.startsWith('/methods/rectangles')
-              ? t('nav.rectangles')
-              : pathname.startsWith('/methods/lagrange')
-                ? t('nav.lagrange')
-                : pathname.startsWith('/docs')
-                  ? t('nav.syntax')
-                  : t('nav.bisection');
+      ? t('nav.workspace')
+      : pathname.startsWith('/about')
+        ? t('nav.about')
+        : pathname.startsWith('/docs')
+          ? t('nav.syntax')
+          : pathname.startsWith('/methods/bisection')
+            ? t('nav.bisection')
+            : pathname.startsWith('/methods/lagrange')
+              ? t('nav.lagrange')
+              : pathname.startsWith('/methods/rectangles')
+                ? t('nav.rectangles')
+                : pathname.startsWith('/methods/trapezoid')
+                  ? t('nav.trapezoid')
+                  : pathname.startsWith('/methods/simpson')
+                    ? t('nav.simpson')
+                    : pathname.startsWith('/methods/euler')
+                      ? t('nav.euler')
+                      : t('nav.workspace');
 
   return (
     <UpdateProvider>
