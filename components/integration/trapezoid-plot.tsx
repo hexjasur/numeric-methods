@@ -2,7 +2,21 @@
 
 import { useMemo } from 'react';
 import { math, normalizeExpression } from '@/lib/math';
-import type { TrapezoidResult } from '@/lib/trapezoid';
+
+type QuadraturePlotResult = {
+  n: number;
+  points: { index: number; x: number; y: number }[];
+  slices: { index: number; x0: number; x1: number; y0: number; y1: number }[];
+};
+
+type QuadraturePlotProps = {
+  expression: string;
+  a: string;
+  b: string;
+  result: QuadraturePlotResult | null;
+  emptyLabel: string;
+  shape?: 'trapezoid' | 'left-rectangle' | 'right-rectangle';
+};
 
 function shortNumber(value: number): string {
   if (value === 0) return '0';
@@ -12,19 +26,14 @@ function shortNumber(value: number): string {
     : Number(value.toPrecision(4)).toString();
 }
 
-export function TrapezoidPlot({
+export function QuadraturePlot({
   expression,
   a,
   b,
   result,
   emptyLabel,
-}: {
-  expression: string;
-  a: string;
-  b: string;
-  result: TrapezoidResult | null;
-  emptyLabel: string;
-}) {
+  shape = 'trapezoid',
+}: QuadraturePlotProps) {
   const data = useMemo(() => {
     const left = Number(a);
     const right = Number(b);
@@ -113,7 +122,7 @@ export function TrapezoidPlot({
       className="block h-auto w-full rounded-lg border border-line bg-bg-2"
       viewBox={`0 0 ${width} ${height}`}
       role="img"
-      aria-label="f(x) grafigi va trapetsiya usuli bilan hisoblangan yuzalar"
+      aria-label="f(x) grafigi va sonli integrallash yuzalari"
     >
       {xTicks.map((tick, index) => (
         <line key={`x-grid-${index}`} className="stroke-line" x1={scaleX(tick)} x2={scaleX(tick)} y1={pad.top} y2={height - pad.bottom} />
@@ -131,8 +140,10 @@ export function TrapezoidPlot({
       />
 
       {result?.slices.map((slice) => {
-        const top0 = Math.min(Math.max(slice.y0, data.y0), data.y1);
-        const top1 = Math.min(Math.max(slice.y1, data.y0), data.y1);
+        const height0 = shape === 'right-rectangle' ? slice.y1 : slice.y0;
+        const height1 = shape === 'trapezoid' ? slice.y1 : height0;
+        const top0 = Math.min(Math.max(height0, data.y0), data.y1);
+        const top1 = Math.min(Math.max(height1, data.y0), data.y1);
         const points = [
           `${scaleX(slice.x0).toFixed(1)},${baseline.toFixed(1)}`,
           `${scaleX(slice.x0).toFixed(1)},${scaleY(top0).toFixed(1)}`,
@@ -182,4 +193,8 @@ export function TrapezoidPlot({
       ))}
     </svg>
   );
+}
+
+export function TrapezoidPlot(props: Omit<QuadraturePlotProps, 'shape'>) {
+  return <QuadraturePlot {...props} shape="trapezoid" />;
 }
