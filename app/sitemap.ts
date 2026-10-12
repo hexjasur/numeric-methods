@@ -57,10 +57,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${baseUrl}/about`,
+      lastModified: getFileMtime(path.join('app', '(workspace)', 'about', 'page.tsx')),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/docs/syntax`,
       lastModified: getFileMtime(path.join('app', '(workspace)', 'docs', 'syntax', 'page.tsx')),
       changeFrequency: 'monthly',
-      priority: 0.5,
+      priority: 0.6,
     },
     ...methodRoutes,
   ];
