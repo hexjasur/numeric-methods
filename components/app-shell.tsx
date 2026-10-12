@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import {
   Activity,
   BookOpenText,
@@ -30,6 +30,7 @@ export function AppShell({
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { t } = useI18n();
+  const activeLinkRef = useRef<HTMLAnchorElement | null>(null);
 
   const navigation = useMemo(
     () => [
@@ -99,6 +100,12 @@ export function AppShell({
     return () => window.removeEventListener('keydown', onKey);
   }, [mobileOpen]);
 
+  useEffect(() => {
+    activeLinkRef.current?.scrollIntoView({
+      block: 'nearest',
+    });
+  }, [pathname]);
+
   const pageTitle =
     pathname === '/'
       ? t('nav.workspace')
@@ -130,7 +137,7 @@ export function AppShell({
         }`}
         aria-label="Asosiy navigatsiya"
       >
-        <div className="relative z-10 flex items-center justify-between p-[6px_4px_30px_18px]">
+        <div className="relative z-10 flex items-center justify-between p-[6px_4px_20px_18px] shrink-0">
           <Link
             href="/"
             className="flex items-center gap-[12px]"
@@ -157,72 +164,77 @@ export function AppShell({
           </button>
         </div>
 
-        <div className="relative z-10 flex items-center gap-[10px] p-[0_12px_12px] font-mono text-[12px] font-semibold tracking-[.14em] uppercase text-muted">
-          <span>{t('nav.lab')}</span>
-          <i
-            className="flex-1 h-px bg-[repeating-linear-gradient(90deg,var(--line-2)_0_4px,transparent_4px_8px)]"
-            aria-hidden
-          />
-        </div>
+        {/* Scrollable navigation area */}
+        <div className="relative z-10 flex-1 min-h-0 -mx-[18px] px-[18px] overflow-y-auto overflow-x-hidden [scrollbar-width:thin] [scrollbar-color:var(--line-2)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-line-2/60 hover:[&::-webkit-scrollbar-thumb]:bg-line-2 [&::-webkit-scrollbar-track]:bg-transparent">
+          <div className="flex items-center gap-[10px] p-[0_12px_12px] font-mono text-[12px] font-semibold tracking-[.14em] uppercase text-muted">
+            <span>{t('nav.lab')}</span>
+            <i
+              className="flex-1 h-px bg-[repeating-linear-gradient(90deg,var(--line-2)_0_4px,transparent_4px_8px)]"
+              aria-hidden
+            />
+          </div>
 
-        <nav className="relative z-10 grid gap-[6px]">
-          {navigation.map((item) => {
-            const active =
-              item.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`group relative flex items-center gap-[12px] min-h-[48px] px-[14px] border border-transparent rounded-[9px] text-[15px] font-semibold transition-all duration-150 ${
-                  active
-                    ? 'bg-ink text-panel border-ink font-bold shadow-[0_10px_22px_-14px_var(--ink)] before:content-[""] before:absolute before:-left-[18px] before:top-[10px] before:bottom-[10px] before:w-[4px] before:rounded-r-[3px] before:bg-brand'
-                    : 'text-muted hover:bg-bg-2 hover:text-ink hover:border-line hover:translate-x-[2px]'
-                }`}
-                aria-current={active ? 'page' : undefined}
-              >
-                <item.icon
-                  size={20}
-                  strokeWidth={active ? 2.4 : 2}
-                  className={active ? 'text-brand' : ''}
-                />
-                <span className="flex-1">{item.label}</span>
-                <em
-                  className={`font-mono text-[12px] font-semibold not-italic ${active ? 'text-brand opacity-100' : 'opacity-60'}`}
+          <nav className="grid gap-[6px]">
+            {navigation.map((item) => {
+              const active =
+                item.href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  ref={active ? activeLinkRef : undefined}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`group relative flex items-center gap-[12px] min-h-[48px] px-[14px] border border-transparent rounded-[9px] text-[15px] font-semibold transition-all duration-150 ${
+                    active
+                      ? 'bg-ink text-panel border-ink font-bold shadow-[0_10px_22px_-14px_var(--ink)] before:content-[""] before:absolute before:-left-[18px] before:top-[10px] before:bottom-[10px] before:w-[4px] before:rounded-r-[3px] before:bg-brand'
+                      : 'text-muted hover:bg-bg-2 hover:text-ink hover:border-line hover:translate-x-[2px]'
+                  }`}
+                  aria-current={active ? 'page' : undefined}
                 >
-                  {item.code}
-                </em>
-              </Link>
-            );
-          })}
-        </nav>
+                  <item.icon
+                    size={20}
+                    strokeWidth={active ? 2.4 : 2}
+                    className={active ? 'text-brand' : ''}
+                  />
+                  <span className="flex-1">{item.label}</span>
+                  <em
+                    className={`font-mono text-[12px] font-semibold not-italic ${active ? 'text-brand opacity-100' : 'opacity-60'}`}
+                  >
+                    {item.code}
+                  </em>
+                </Link>
+              );
+            })}
+          </nav>
 
-        {/* V2 Old Version Switcher */}
-        <div className="relative z-10 my-3 pt-3 border-t border-line/60">
-          <a
-            href="https://v2.sonli-usullar.uz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center justify-between min-h-[42px] px-3.5 rounded-lg border border-line bg-bg-2/50 text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 transition-all text-[13px] font-semibold"
-            title={t('nav.v2_tooltip')}
-          >
-            <span className="flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan/40 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan" />
+          {/* V2 Old Version Switcher */}
+          <div className="my-3 pt-3 border-t border-line/60">
+            <a
+              href="https://v2.sonli-usullar.uz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between min-h-[42px] px-3.5 rounded-lg border border-line bg-bg-2/50 text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 transition-all text-[13px] font-semibold"
+              title={t('nav.v2_tooltip')}
+            >
+              <span className="flex items-center gap-2.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan/40 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan" />
+                </span>
+                <span>{t('nav.v2_link')}</span>
               </span>
-              <span>{t('nav.v2_link')}</span>
-            </span>
-            <span className="flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded border border-line-2 bg-panel text-muted group-hover:text-brand group-hover:border-brand/40 transition-colors">
-              <span>v2.0</span>
-              <ExternalLink size={12} />
-            </span>
-          </a>
+              <span className="flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded border border-line-2 bg-panel text-muted group-hover:text-brand group-hover:border-brand/40 transition-colors">
+                <span>v2.0</span>
+                <ExternalLink size={12} />
+              </span>
+            </a>
+          </div>
         </div>
 
-        <div className="relative z-10 mt-auto grid gap-[14px]">
+        {/* Bottom footer: "Hisoblash muhiti" + Version */}
+        <div className="relative z-10 mt-auto pt-3 shrink-0 grid gap-[14px]">
           <div className="flex items-center gap-[12px] p-[14px] border border-line rounded-[9px] bg-bg-2">
             <span className="w-2 h-2 rounded-full bg-ok shadow-[0_0_0_4px_color-mix(in_srgb,var(--ok)_18%,transparent)] animate-[pulse_2.4s_ease-in-out_infinite]" />
             <div>
