@@ -127,8 +127,8 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
       sessionStorage.setItem(SNOOZE_KEY, updateInfo.latestVersion);
     } catch {}
 
-    // 1. If running inside Tauri Desktop with native updater support
-    if (updateInfo.isTauriDesktop && updateInfo.tauriAvailable) {
+    // 1. If running inside Tauri Desktop, attempt native in-app updater first
+    if (updateInfo.isTauriDesktop) {
       setShowModal(false);
       setIsUpdating(true);
       setProgress(5);
