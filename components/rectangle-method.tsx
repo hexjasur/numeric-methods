@@ -9,6 +9,7 @@ import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/componen
 import { QuadraturePlot } from '@/components/integration/trapezoid-plot';
 import { calculateRectangles, formatRectangle, type RectangleResult } from '@/lib/rectangles';
 import { math, normalizeExpression } from '@/lib/math';
+import { ResultActions } from '@/components/ui/result-actions';
 
 type PlotShape = 'left-rectangle' | 'right-rectangle';
 const EXAMPLE = { expression: 'dx/sqrt(1+2*x^2)', a: '0.6', b: '1.6', n: '8' };
@@ -143,10 +144,21 @@ export function RectangleMethod() {
           </PsPanel>
 
           {result ? <>
+            <ResultActions
+              summaryText={`To'g'ri to'rtburchaklar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> O'rta I_M ≈ ${formatRectangle(result.meanIntegral, 10)}, Chap I_L ≈ ${formatRectangle(result.leftIntegral, 10)}, O'ng I_R ≈ ${formatRectangle(result.rightIntegral, 10)}`}
+              csvData={result.points.map((p) => ({
+                i: p.i,
+                x_i: formatRectangle(p.x),
+                y_i: formatRectangle(p.y),
+              }))}
+              csvFileName="tortburchaklar-integral.csv"
+              imageFileName="tortburchaklar-integral.png"
+            />
+
             <PsPanel>
               <PsPanelHead eyebrow={t('rectangle.result_eyebrow')} title={t('rectangle.result_title')} idx="03" />
               <div className="grid gap-3 sm:grid-cols-3">
-                <div className="rounded-lg border border-brand bg-brand-soft p-4 sm:col-span-3"><span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('rectangle.mean_label')}</span><strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand">{formatRectangle(result.meanIntegral, 10)}</strong></div>
+                <div className="rounded-lg border border-brand bg-brand-soft p-4 sm:col-span-3"><span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('rectangle.mean_label')}</span><strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">{formatRectangle(result.meanIntegral, 10)}</strong></div>
                 {[
                   [t('rectangle.left_label'), result.leftIntegral],
                   [t('rectangle.right_label'), result.rightIntegral],

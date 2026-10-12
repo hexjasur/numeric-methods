@@ -16,6 +16,7 @@ import { Calculator, Info } from 'lucide-react';
 import { solveEulerMethods, type EulerResult } from '@/lib/euler';
 import { PsHero, PsStrip, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
+import { ResultActions } from '@/components/ui/result-actions';
 
 const initialInputs = {
   expression: 'x - 2*y',
@@ -270,6 +271,22 @@ export function EulerMethod() {
           </p>
         </PsPanel>
       </div>
+
+      {result && rows.length > 0 && (
+        <ResultActions
+          summaryText={`Eyler usuli: y' = ${calculationInputs.expression}, x0 = ${calculationInputs.x0}, y0 = ${calculationInputs.y0}, h = ${calculationInputs.h} -> qadamlar soni: ${result.steps}`}
+          csvData={rows.map((r) => ({
+            i: r.index,
+            x_i: numeric(r.x),
+            y_Eyler: numeric(r.eulerY),
+            y_Takomillashgan: numeric(r.improvedY),
+            y_Aniq: numeric(r.exactY),
+            Xatolik: numeric(r.delta),
+          }))}
+          csvFileName="eyler-differensial.csv"
+          imageFileName="eyler-differensial.png"
+        />
+      )}
 
       <PsPanel>
         <div className="flex flex-wrap items-end justify-between gap-3 mb-5 border-b border-line pb-4 relative z-10">

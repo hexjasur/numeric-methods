@@ -1,6 +1,6 @@
 [package]
 name = "numeric-methods"
-version = "3.0.0"
+version = "3.0.1"
 description = "Numeric Methods desktop and mobile application"
 authors = ["Numeric Methods"]
 edition = "2021"

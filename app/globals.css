@@ -165,3 +165,50 @@
   opacity: 1 !important;
 }
 
+/* Print Media Styles for Clean Laboratory Reports */
+@media print {
+  aside,
+  header,
+  nav,
+  .no-print,
+  #nprogress,
+  button,
+  .ps-barcode,
+  .ps-strip {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .ps-panel {
+    border: 1px solid #d5d9de !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 16px !important;
+  }
+
+  .ps-panel::before,
+  .ps-panel::after {
+    display: none !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+}
+

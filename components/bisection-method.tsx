@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useMemo, useState } from 'react';
 import katex from 'katex';
@@ -9,6 +9,7 @@ import { normalizeExpression } from '@/lib/math';
 import { BisectionPlot as Plot } from '@/components/bisection/plot';
 import { PsHero, PsStrip, PsMap, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
+import { ResultActions } from '@/components/ui/result-actions';
 
 export function BisectionMethod() {
   const { t } = useI18n();
@@ -174,17 +175,34 @@ export function BisectionMethod() {
 
         {/* OUTPUT */}
         <div className="grid gap-[18px] min-w-0">
-          <div className={`flex items-center justify-between gap-5 min-h-[150px] p-6 border border-line rounded-[10px] shadow-[var(--shadow)] transition-all duration-300 ${result ? 'bg-[linear-gradient(135deg,var(--brand-soft),var(--panel)_70%)] border-brand' : 'bg-panel'}`}>
-            <div>
+          {result && (
+            <ResultActions
+              summaryText={`Biseksiya usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], eps = ${epsilon} -> x ≈ ${format(result.root, 8)} (${result.iterations} iteratsiyada)`}
+              csvData={result.steps.map((s) => ({
+                Iteration: s.iteration,
+                a: format(s.a),
+                b: format(s.b),
+                c: format(s.c),
+                'f(a)': format(s.fa),
+                'f(c)': format(s.fc),
+                '|b-a|': format(s.width),
+              }))}
+              csvFileName="biseksiya-hisobot.csv"
+              imageFileName="biseksiya-hisobot.png"
+            />
+          )}
+
+          <div className={`flex items-center justify-between gap-5 min-h-[130px] p-6 border border-line rounded-[10px] shadow-[var(--shadow)] transition-all duration-300 ${result ? 'bg-[linear-gradient(135deg,var(--brand-soft),var(--panel)_70%)] border-brand' : 'bg-panel'}`}>
+            <div className="min-w-0 flex-1">
               <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted">{t('bisection.res_eyebrow')}</span>
-              <strong className="block my-3 font-mono text-[clamp(30px,4.4vw,48px)] leading-none tracking-[-.06em] text-brand break-all">
+              <strong className="block my-2.5 font-mono text-[clamp(28px,3.8vw,44px)] leading-none tracking-[-.04em] text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">
                 {result ? format(result.root, 8) : t('bisection.res_empty')}
               </strong>
               <small className="text-[13.5px] text-muted">{result ? t('bisection.res_desc_done') : t('bisection.res_desc_wait')}</small>
             </div>
-            <div className="text-right pl-6 border-l border-line">
+            <div className="text-right pl-6 border-l border-line shrink-0">
               <span className="block text-[13px] text-muted">{t('bisection.res_iter')}</span>
-              <b className="block mt-1.5 font-mono text-[32px] font-semibold leading-none">{result?.iterations ?? t('bisection.res_empty')}</b>
+              <b className="block mt-1 font-mono text-[36px] font-semibold leading-none text-ink">{result?.iterations ?? t('bisection.res_empty')}</b>
             </div>
           </div>
 

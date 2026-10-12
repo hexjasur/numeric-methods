@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.1] - 2026-10-13
+
+### 🎨 UI & UX Improvements
+- **Interactive Methods Catalog Hub (`/`):**
+  - Integrated full methods catalog on the workspace dashboard with category filter pills (`All`, `Equations`, `Interpolation`, `Quadrature`, `ODEs`).
+  - Added live instant search filtering, KaTeX-rendered mathematical formulas, convergence order badges, and direct laboratory launch buttons.
+- **Standalone Export & Tools Toolbar (`ResultActions`):**
+  - Refactored calculation result layout across all 6 methods to eliminate number wrapping and crowding.
+  - Added high-resolution (Retina 2x) PNG screenshot export capturing the method workspace without sidebars or navbars.
+  - Added official `sonli-usullar.uz` watermark badge stamped on exported PNGs.
+  - Enhanced 1-click clipboard result copy and UTF-8 BOM CSV export for laboratory spreadsheets.
+  - Added dedicated `@media print` CSS rules for clean academic laboratory PDF reports.
+
+### 📱 Android Platform & CI Fixes
+- **Native Android Launcher Icon & Splash Screen:**
+  - Injected custom Android mipmap density assets (`ic_launcher.png`, `ic_launcher_round.png`, `ic_launcher_foreground.png`) into `src-tauri/gen/android/app/src/main/res/` immediately after `tauri android init`.
+  - Resolved default Tauri rocket icon and splash screen issue on Android APK builds.
+
+---
+
 ## [3.0.0] - 2026-10-13
 
 ### 🚀 Overview: The Next-Gen Multi-Target Rebuild

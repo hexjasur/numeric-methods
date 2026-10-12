@@ -8,6 +8,7 @@ import { useI18n } from '@/components/i18n-provider';
 import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/components/ui/print-stream';
 import { calculateLagrange, formatLagrange, type LagrangeInputPoint, type LagrangeResult } from '@/lib/lagrange';
 import { math } from '@/lib/math';
+import { ResultActions } from '@/components/ui/result-actions';
 
 const DEFAULT_POINTS: LagrangeInputPoint[] = [
   { x: '-1', y: '0' },
@@ -133,6 +134,17 @@ export function LagrangeMethod() {
 
         <div className="grid min-w-0 gap-[18px]">
           {result ? <>
+            <ResultActions
+              summaryText={`Lagranj interpolyatsiyasi: x* = ${formatLagrange(result.xValue, 6)}, P_n(x*) = ${formatLagrange(result.interpolatedValue, 10)}, Nuqtalar: ${result.points.length}`}
+              csvData={result.points.map((p) => ({
+                i: p.index,
+                x_i: formatLagrange(p.x),
+                y_i: formatLagrange(p.y),
+              }))}
+              csvFileName="lagranj-nuqtalar.csv"
+              imageFileName="lagranj-interpolyatsiya.png"
+            />
+
             <PsPanel>
               <PsPanelHead eyebrow={t('lagrange.result_eyebrow')} title={t('lagrange.result_title')} idx="02" />
               <div className="rounded-lg border border-brand bg-brand-soft p-4"><span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('lagrange.result_poly')}</span><div className="mt-2 overflow-x-auto text-center text-brand"><MathOutput display tex={`P_{${result.points.length - 1}}(x)=${polynomialToTex(result.coefficients)}`} /></div></div>

@@ -9,6 +9,7 @@ import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/componen
 import { TrapezoidPlot } from '@/components/integration/trapezoid-plot';
 import { calculateTrapezoid, formatTrapezoid, type TrapezoidResult } from '@/lib/trapezoid';
 import { math, normalizeExpression } from '@/lib/math';
+import { ResultActions } from '@/components/ui/result-actions';
 
 const EXAMPLE = {
   expression: 'dx/sqrt(1+2*x^2)',
@@ -254,12 +255,26 @@ export function TrapezoidMethod() {
 
           {result ? (
             <>
+              <ResultActions
+                summaryText={`Trapetsiyalar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${formatTrapezoid(result.integral, 10)}`}
+                csvData={result.slices.map((s) => ({
+                  Index: s.index,
+                  x_left: formatTrapezoid(s.left),
+                  x_right: formatTrapezoid(s.right),
+                  y_left: formatTrapezoid(s.leftY),
+                  y_right: formatTrapezoid(s.rightY),
+                  Area: formatTrapezoid(s.area),
+                }))}
+                csvFileName="trapetsiya-integral.csv"
+                imageFileName="trapetsiya-integral.png"
+              />
+
               <PsPanel>
                 <PsPanelHead eyebrow={t('trapezoid.result_eyebrow')} title={t('trapezoid.result_title')} idx="03" />
                 <div className="grid gap-3 sm:grid-cols-3">
                   <div className="rounded-lg border border-brand bg-brand-soft p-4 sm:col-span-3">
                     <span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('trapezoid.result_value')}</span>
-                    <strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand">{formatTrapezoid(result.integral, 10)}</strong>
+                    <strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">{formatTrapezoid(result.integral, 10)}</strong>
                   </div>
                   <div className="rounded-lg border border-line bg-bg-2 p-3">
                     <span className="block text-xs text-muted">h</span>

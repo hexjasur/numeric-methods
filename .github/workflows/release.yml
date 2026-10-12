@@ -156,6 +156,17 @@ jobs:
       - name: Initialize Android Project
         run: bun run tauri:android:init
 
+      - name: Apply Custom Android Icons & Splash Assets
+        run: |
+          echo "Syncing icons using Tauri CLI..."
+          bun run tauri icon src-tauri/icons/icon.png || true
+          if [ -d "src-tauri/icons/android" ]; then
+            echo "Copying pre-rendered Android mipmaps into native project..."
+            cp -rf src-tauri/icons/android/* src-tauri/gen/android/app/src/main/res/
+          fi
+          echo "Verified Android res mipmap contents:"
+          ls -la src-tauri/gen/android/app/src/main/res/mipmap-* || true
+
       - name: Build Android APKs
         run: |
           mkdir -p release_apks

@@ -9,6 +9,7 @@ import { isSumOperatorNode, math, normalizeExpression } from '@/lib/math';
 import { SimpsonPlot } from '@/components/simpson/plot';
 import { PsHero, PsStrip, PsMap, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
+import { ResultActions } from '@/components/ui/result-actions';
 
 function MathInline({ tex, className = '' }: { tex: string; className?: string }) {
   const html = useMemo(() => {
@@ -239,12 +240,25 @@ export function SimpsonMethod() {
         <div className="space-y-[18px]">
           {result ? (
             <>
+              <ResultActions
+                summaryText={`Simpson usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${format(result.integral, 6)}`}
+                csvData={result.steps.map((s) => ({
+                  i: s.i,
+                  x_i: format(s.x, 6),
+                  y_i: format(s.y, 6),
+                  Turi: s.type,
+                  Koeffitsiyent: s.coeff,
+                }))}
+                csvFileName="simpson-integral.csv"
+                imageFileName="simpson-integral.png"
+              />
+
               {/* PRIMARY RESULT CARD */}
               <PsPanel>
                 <PsPanelHead eyebrow={t('simpson.res_eyebrow')} title={t('simpson.res_val')} idx="02" />
 
                 <div className="flex flex-wrap items-baseline gap-4 mb-4">
-                  <div className="font-mono text-[36px] font-extrabold text-brand tracking-tight">
+                  <div className="font-mono text-[36px] font-extrabold text-brand tracking-tight whitespace-nowrap overflow-x-auto [scrollbar-width:none]">
                     {format(result.integral, 6)}
                   </div>
                   <div className="font-mono text-xs px-2.5 py-1 rounded-full border border-cyan/40 bg-cyan-soft text-cyan font-bold flex items-center gap-1.5">

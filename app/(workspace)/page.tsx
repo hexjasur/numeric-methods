@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import {
   PsPanelHead,
 } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
+import { MethodsHub } from '@/components/dashboard/methods-hub';
 
 export default function Home() {
   const { t } = useI18n();
@@ -70,6 +71,8 @@ export default function Home() {
           ))}
         </div>
       </PsPanel>
+
+      <MethodsHub />
 
       <PsPanel>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-7">
