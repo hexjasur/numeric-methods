@@ -10,6 +10,23 @@ import { SimpsonPlot } from '@/components/simpson/plot';
 import { PsHero, PsStrip, PsMap, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
 
+function MathInline({ tex, className = '' }: { tex: string; className?: string }) {
+  const html = useMemo(() => {
+    try {
+      return katex.renderToString(tex, { throwOnError: false });
+    } catch {
+      return tex;
+    }
+  }, [tex]);
+
+  return (
+    <span
+      className={`[&_.katex]:!px-0 [&_.katex]:!overflow-visible [&_.katex]:!max-w-none ${className}`}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+}
+
 export function SimpsonMethod() {
   const { t } = useI18n();
   const [expression, setExpression] = useState('dx / sqrt(1 + 2x^2)');
@@ -71,7 +88,7 @@ export function SimpsonMethod() {
         title={<>{t('simpson.hero_title')}</>}
         titleHighlight={t('simpson.hero_titleHighlight')}
         lead={t('simpson.hero_lead')}
-        conditionMain={<>n mod 2 = 0</>}
+        conditionMain={<MathInline tex="n \equiv 0 \pmod 2" />}
         conditionSub={t('simpson.hero_condSub')}
       />
 
@@ -79,9 +96,42 @@ export function SimpsonMethod() {
         eyebrow="Method map"
         title={t('simpson.map_title')}
         steps={[
-          { n: '01', t: t('simpson.map_1_t'), s: t('simpson.map_1_s') },
-          { n: '02', t: t('simpson.map_2_t'), s: t('simpson.map_2_s') },
-          { n: '03', t: t('simpson.map_3_t'), s: t('simpson.map_3_s') },
+          {
+            n: '01',
+            t: t('simpson.map_1_t'),
+            s: (
+              <div className="space-y-1">
+                <span className="block text-muted text-[13px]">{t('simpson.map_1_desc')}</span>
+                <span className="block text-ink font-semibold text-[13px] whitespace-nowrap overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5">
+                  <MathInline tex="h = \frac{b - a}{n}" />
+                </span>
+              </div>
+            ),
+          },
+          {
+            n: '02',
+            t: t('simpson.map_2_t'),
+            s: (
+              <div className="space-y-1">
+                <span className="block text-muted text-[13px]">{t('simpson.map_2_desc')}</span>
+                <span className="block text-ink font-semibold text-[13px] whitespace-nowrap overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5">
+                  <MathInline tex="Y_{\mathrm{chet}},\; \sum Y_{\mathrm{toq}},\; \sum Y_{\mathrm{juft}}" />
+                </span>
+              </div>
+            ),
+          },
+          {
+            n: '03',
+            t: t('simpson.map_3_t'),
+            s: (
+              <div className="space-y-1">
+                <span className="block text-muted text-[13px]">{t('simpson.map_3_desc')}</span>
+                <span className="block text-ink font-semibold text-[13px] whitespace-nowrap overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5">
+                  <MathInline tex="I \approx \frac{h}{3} \Big[ Y_{\mathrm{chet}} + 4\sum Y_{\mathrm{toq}} + 2\sum Y_{\mathrm{juft}} \Big]" />
+                </span>
+              </div>
+            ),
+          },
         ]}
       />
 
@@ -91,8 +141,8 @@ export function SimpsonMethod() {
           <PsPanelHead eyebrow="Input / Parametrlar" title={t('simpson.panel_input')} idx="01" />
 
           <PsNote icon={<Info size={18} />}>
-            <p>
-              <b>f(x)</b> — {t('simpson.note_fn')}
+            <p className="flex flex-wrap items-center gap-1.5">
+              <b><MathInline tex="f(x)" /></b> — <span>{t('simpson.note_fn')}</span>
             </p>
           </PsNote>
 
@@ -101,7 +151,7 @@ export function SimpsonMethod() {
               {t('simpson.label_fn')}
             </span>
             <div className="mt-2 w-full border border-brand bg-brand-soft rounded-lg flex items-center gap-2.5 px-3.5 focus-within:ring-4 focus-within:ring-brand-soft focus-within:bg-panel transition-all">
-              <b className="text-brand text-[15px] whitespace-nowrap">f(x) =</b>
+              <b className="text-brand text-[15px] whitespace-nowrap"><MathInline tex="f(x) =" /></b>
               <input
                 value={expression}
                 onChange={(e) => setExpression(e.target.value)}
@@ -126,8 +176,9 @@ export function SimpsonMethod() {
 
           <div className="grid grid-cols-2 gap-3 mb-4">
             <label className="block">
-              <span className="block text-[13.5px] font-[650] text-ink mb-1.5">
-                {t('simpson.label_a')}
+              <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
+                <span>{t('simpson.label_a_text')}</span>
+                <MathInline tex="a" />
               </span>
               <input
                 value={a}
@@ -138,8 +189,9 @@ export function SimpsonMethod() {
               />
             </label>
             <label className="block">
-              <span className="block text-[13.5px] font-[650] text-ink mb-1.5">
-                {t('simpson.label_b')}
+              <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
+                <span>{t('simpson.label_b_text')}</span>
+                <MathInline tex="b" />
               </span>
               <input
                 value={b}
@@ -152,8 +204,10 @@ export function SimpsonMethod() {
           </div>
 
           <label className="block mb-5">
-            <span className="block text-[13.5px] font-[650] text-ink mb-1.5">
-              {t('simpson.label_n')}
+            <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
+              <span>{t('simpson.label_n_text')}</span>
+              <MathInline tex="n" />
+              <span className="text-muted font-normal text-xs">({t('simpson.label_n_even')})</span>
             </span>
             <input
               value={n}
@@ -193,8 +247,8 @@ export function SimpsonMethod() {
                   <div className="font-mono text-[36px] font-extrabold text-brand tracking-tight">
                     {format(result.integral, 6)}
                   </div>
-                  <div className="font-mono text-xs px-2.5 py-1 rounded-full border border-cyan/40 bg-cyan-soft text-cyan font-bold">
-                    h = {format(result.h, 5)}
+                  <div className="font-mono text-xs px-2.5 py-1 rounded-full border border-cyan/40 bg-cyan-soft text-cyan font-bold flex items-center gap-1.5">
+                    <MathInline tex={`h = ${format(result.h, 5)}`} />
                   </div>
                 </div>
 
@@ -204,7 +258,9 @@ export function SimpsonMethod() {
                     <strong className="text-ink text-[13px]">{format(result.exactIntegral, 6)}</strong>
                   </div>
                   <div className="p-2.5 rounded bg-bg-2 border border-line">
-                    <span className="text-muted block mb-1">{t('simpson.res_err')}:</span>
+                    <span className="text-muted block mb-1 flex items-center gap-1">
+                      <span>{t('simpson.res_err')}</span> <MathInline tex="(\Delta)" />:
+                    </span>
                     <strong className="text-pos text-[13px]">{result.errorMargin.toExponential(4)}</strong>
                   </div>
                 </div>
@@ -219,10 +275,13 @@ export function SimpsonMethod() {
                   <div className="p-3.5 rounded-lg border border-line bg-bg-2">
                     <h4 className="font-mono text-xs font-bold text-muted uppercase tracking-wider mb-2 flex items-center gap-2">
                       <span className="w-4 h-4 rounded-full bg-brand text-white flex items-center justify-center text-[10px]">1</span>
-                      {t('simpson.step_1_title')}
+                      <span className="flex items-center gap-1.5">
+                        <span>{t('simpson.step_1_title')}</span>
+                        <MathInline tex="(h)" />
+                      </span>
                     </h4>
                     <div
-                      className="text-ink overflow-x-auto text-sm"
+                      className="text-ink overflow-x-auto overflow-y-hidden text-sm [scrollbar-width:thin]"
                       dangerouslySetInnerHTML={{
                         __html: renderKatex(
                           `h = \\frac{b - a}{n} = \\frac{${format(result.b, 4)} - ${format(result.a, 4)}}{${result.n}} = ${format(result.h, 6)}`,
@@ -238,7 +297,7 @@ export function SimpsonMethod() {
                       {t('simpson.step_2_title')}
                     </h4>
                     <div
-                      className="text-ink overflow-x-auto text-sm"
+                      className="text-ink overflow-x-auto overflow-y-hidden text-sm [scrollbar-width:thin]"
                       dangerouslySetInnerHTML={{
                         __html: renderKatex(
                           `\\begin{aligned}
@@ -258,7 +317,7 @@ export function SimpsonMethod() {
                       {t('simpson.step_3_title')}
                     </h4>
                     <div
-                      className="text-ink overflow-x-auto text-sm"
+                      className="text-ink overflow-x-auto overflow-y-hidden text-sm [scrollbar-width:thin]"
                       dangerouslySetInnerHTML={{
                         __html: renderKatex(
                           `\\begin{aligned}
@@ -275,10 +334,13 @@ export function SimpsonMethod() {
                   <div className="p-3.5 rounded-lg border border-brand/20 bg-brand-soft">
                     <h4 className="font-mono text-xs font-bold text-brand uppercase tracking-wider mb-2 flex items-center gap-2">
                       <span className="w-4 h-4 rounded-full bg-brand text-white flex items-center justify-center text-[10px]">4</span>
-                      {t('simpson.step_4_title')}
+                      <span className="flex items-center gap-1.5">
+                        <span>{t('simpson.step_4_title')}</span>
+                        <MathInline tex="(\Delta)" />
+                      </span>
                     </h4>
                     <div
-                      className="text-ink overflow-x-auto text-sm"
+                      className="text-ink overflow-x-auto overflow-y-hidden text-sm [scrollbar-width:thin]"
                       dangerouslySetInnerHTML={{
                         __html: renderKatex(
                           `\\begin{aligned}
@@ -304,12 +366,21 @@ export function SimpsonMethod() {
 
                 <div className="overflow-x-auto max-h-[360px] border border-line rounded-lg">
                   <table className="w-full font-mono text-xs text-left">
-                    <thead className="sticky top-0 bg-panel border-b border-line text-muted uppercase tracking-wider">
+                    <thead className="sticky top-0 bg-panel border-b border-line text-muted uppercase tracking-wider text-[12.5px]">
                       <tr>
-                        <th className="py-2.5 px-3">{t('simpson.tbl_i')}</th>
-                        <th className="py-2.5 px-3">{t('simpson.tbl_xi')}</th>
-                        <th className="py-2.5 px-3">{t('simpson.tbl_yi')}</th>
-                        <th className="py-2.5 px-3">{t('simpson.tbl_coeff')}</th>
+                        <th className="py-2.5 px-3">
+                          <MathInline tex="i" />
+                        </th>
+                        <th className="py-2.5 px-3">
+                          <MathInline tex="x_i" />
+                        </th>
+                        <th className="py-2.5 px-3">
+                          <MathInline tex="y_i = f(x_i)" />
+                        </th>
+                        <th className="py-2.5 px-3">
+                          <span className="mr-1">{t('simpson.tbl_coeff_label')}</span>
+                          <MathInline tex="c_i" />
+                        </th>
                         <th className="py-2.5 px-3">{t('simpson.tbl_type')}</th>
                       </tr>
                     </thead>
@@ -326,7 +397,7 @@ export function SimpsonMethod() {
                             <td className="py-2 px-3 font-bold text-brand">{p.coeff}</td>
                             <td className="py-2 px-3">
                               <span
-                                className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
+                                className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10.5px] font-bold ${
                                   isEnd
                                     ? 'bg-brand-soft text-brand'
                                     : isOdd
@@ -334,11 +405,23 @@ export function SimpsonMethod() {
                                       : 'bg-line-2/20 text-muted'
                                 }`}
                               >
-                                {isEnd
-                                  ? t('simpson.type_end')
-                                  : isOdd
-                                    ? t('simpson.type_odd')
-                                    : t('simpson.type_even')}
+                                <span>
+                                  {isEnd
+                                    ? t('simpson.type_end_label')
+                                    : isOdd
+                                      ? t('simpson.type_odd_label')
+                                      : t('simpson.type_even_label')}
+                                </span>
+                                <MathInline
+                                  tex={
+                                    isEnd
+                                      ? '(c = 1)'
+                                      : isOdd
+                                        ? '(c = 4)'
+                                        : '(c = 2)'
+                                  }
+                                  className="font-normal opacity-90 text-[10px]"
+                                />
                               </span>
                             </td>
                           </tr>

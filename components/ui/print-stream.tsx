@@ -41,7 +41,7 @@ export function PsHero({
         </p>
       </div>
       {conditionMain && (
-        <div className="border border-line bg-panel rounded-[10px] py-4 px-5 shadow-[var(--shadow)] relative overflow-hidden whitespace-nowrap before:content-[''] before:absolute before:inset-0 before:bg-[var(--stripe)] before:pointer-events-none mt-5">
+        <div className="border border-line bg-panel rounded-[10px] py-4 px-5 shadow-[var(--shadow)] relative overflow-x-auto overflow-y-hidden max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap before:content-[''] before:absolute before:inset-0 before:bg-[var(--stripe)] before:pointer-events-none mt-5">
           <span className="relative block font-mono text-2xl font-semibold text-ink [&>b]:text-brand">
             {conditionMain}
           </span>
@@ -57,25 +57,25 @@ export function PsHero({
 }
 
 // Step Map
-export function PsMap({ steps, title = "3 ta oddiy qadam", eyebrow = "Method map" }: { steps: {n: string, t: string, s: string}[], title?: string, eyebrow?: string }) {
+export function PsMap({ steps, title = "3 ta oddiy qadam", eyebrow = "Method map" }: { steps: {n: string, t: React.ReactNode, s: React.ReactNode}[], title?: string, eyebrow?: string }) {
   return (
-    <section className="flex flex-wrap items-stretch gap-4 my-6 py-4 px-4 bg-panel border border-line rounded-[10px] shadow-[var(--shadow)] sm:flex-nowrap">
-      <div className="grid gap-1.5 content-center sm:pr-4 sm:border-r border-dashed border-line-2 shrink-0 pb-3 sm:pb-0 border-b sm:border-b-0 w-full sm:w-auto">
+    <section className="flex flex-col lg:flex-row items-stretch gap-4 my-6 p-4 bg-panel border border-line rounded-[10px] shadow-[var(--shadow)]">
+      <div className="grid gap-1.5 content-center pb-3 lg:pb-0 border-b lg:border-b-0 lg:border-r border-dashed border-line-2 shrink-0 lg:pr-5 w-full lg:w-auto min-w-[170px]">
         <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
           {eyebrow}
         </span>
-        <strong className="text-[15px]">{title}</strong>
+        <strong className="text-[15px] text-ink">{title}</strong>
       </div>
-      <div className="flex flex-wrap sm:flex-nowrap flex-1 items-stretch gap-4 relative">
+      <div className="grid grid-cols-1 md:grid-cols-3 flex-1 gap-4 items-stretch relative min-w-0">
         {steps.map((step, i) => (
-          <div className="relative flex-1 flex gap-3 items-start min-w-[200px]" key={step.n}>
-            {i > 0 && <i className="hidden sm:block absolute -left-3 top-2.5 w-2 h-px bg-line-2" aria-hidden />}
-            <span className="font-mono text-sm font-bold text-brand py-1 px-1.5 border border-brand rounded bg-brand-soft">
+          <div className="relative flex gap-3 items-start min-w-0" key={step.n}>
+            {i > 0 && <i className="hidden md:block absolute -left-2.5 top-3 w-1.5 h-px bg-line-2" aria-hidden />}
+            <span className="font-mono text-sm font-bold text-brand py-1 px-1.5 border border-brand rounded bg-brand-soft shrink-0">
               {step.n}
             </span>
-            <div>
-              <b className="block text-sm font-bold">{step.t}</b>
-              <small className="block mt-1 text-[13px] text-muted leading-[1.4]">{step.s}</small>
+            <div className="flex-1 min-w-0">
+              <b className="block text-sm font-bold text-ink">{step.t}</b>
+              <div className="mt-1 text-[13px] text-muted leading-[1.4]">{step.s}</div>
             </div>
           </div>
         ))}
