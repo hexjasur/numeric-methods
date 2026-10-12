@@ -2,15 +2,23 @@
 
 import {
   ArrowUpRight,
+  Atom,
+  Binary,
+  Calculator,
   CheckCircle2,
   Code2,
   Cpu,
   ExternalLink,
+  FileCode2,
   Globe,
   GraduationCap,
   Layers,
+  LineChart,
   Mail,
+  MonitorSmartphone,
+  Palette,
   Send,
+  Shapes,
   Sparkles,
   Zap,
 } from 'lucide-react';
@@ -62,15 +70,86 @@ export function AboutPage() {
   ];
 
   const techStack = [
-    { name: 'Next.js 16', cat: 'Framework', bg: 'bg-ink text-panel' },
-    { name: 'React 19', cat: 'UI Library', bg: 'bg-cyan-soft text-cyan border border-cyan/30' },
-    { name: 'Tailwind CSS 4', cat: 'Styling', bg: 'bg-brand-soft text-brand border border-brand/30' },
-    { name: 'TypeScript', cat: 'Strict Mode', bg: 'bg-line/40 text-ink border border-line-2' },
-    { name: 'Tauri 2.0', cat: 'Desktop & Mobile', bg: 'bg-ink text-white' },
-    { name: 'KaTeX', cat: 'Math Typography', bg: 'bg-bg-2 text-ink border border-line' },
-    { name: 'Math.js', cat: 'Symbolic & Eval', bg: 'bg-bg-2 text-ink border border-line' },
-    { name: 'Bun', cat: 'Runtime & PM', bg: 'bg-brand-soft text-brand border border-brand/30' },
-    { name: 'Lucide Icons', cat: 'Iconography', bg: 'bg-line/40 text-ink border border-line-2' },
+    {
+      name: 'Next.js 16',
+      cat: 'Framework',
+      desc: 'App Router · Turbopack · Static Export',
+      icon: Globe,
+      color: 'text-brand bg-brand-soft border-brand/20',
+      tag: 'Core',
+    },
+    {
+      name: 'React 19',
+      cat: 'UI Library',
+      desc: 'Hooks · Concurrent UI · Components',
+      icon: Atom,
+      color: 'text-cyan bg-cyan-soft border-cyan/20',
+      tag: 'Frontend',
+    },
+    {
+      name: 'Tailwind CSS 4',
+      cat: 'Styling',
+      desc: 'High-performance utility styling',
+      icon: Palette,
+      color: 'text-cyan bg-cyan-soft border-cyan/20',
+      tag: 'Design',
+    },
+    {
+      name: 'TypeScript',
+      cat: 'Strict Mode',
+      desc: 'Strict type safety throughout codebase',
+      icon: FileCode2,
+      color: 'text-brand bg-brand-soft border-brand/20',
+      tag: 'Language',
+    },
+    {
+      name: 'Tauri 2.0',
+      cat: 'Desktop & Mobile',
+      desc: 'Rust runtime for Windows, Linux & Android',
+      icon: MonitorSmartphone,
+      color: 'text-brand bg-brand-soft border-brand/20',
+      tag: 'Native App',
+    },
+    {
+      name: 'KaTeX',
+      cat: 'Math Typography',
+      desc: 'Ultra-fast client-side formula rendering',
+      icon: Binary,
+      color: 'text-cyan bg-cyan-soft border-cyan/20',
+      tag: 'LaTeX',
+    },
+    {
+      name: 'Math.js',
+      cat: 'Symbolic & Eval',
+      desc: 'Mathematical parsing & numerical solver',
+      icon: Calculator,
+      color: 'text-brand bg-brand-soft border-brand/20',
+      tag: 'Engine',
+    },
+    {
+      name: 'Bun',
+      cat: 'Runtime & PM',
+      desc: 'Speedy package manager & build pipeline',
+      icon: Zap,
+      color: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
+      tag: 'Tooling',
+    },
+    {
+      name: 'Recharts',
+      cat: 'Visualization',
+      desc: 'Dynamic SVG function graphs & traces',
+      icon: LineChart,
+      color: 'text-cyan bg-cyan-soft border-cyan/20',
+      tag: 'Charts',
+    },
+    {
+      name: 'Lucide Icons',
+      cat: 'Iconography',
+      desc: 'Clean & accessible vector icons',
+      icon: Shapes,
+      color: 'text-ink bg-bg-2 border-line-2',
+      tag: 'Icons',
+    },
   ];
 
   const history = [
@@ -208,14 +287,33 @@ export function AboutPage() {
       <PsPanel className="mb-[18px]">
         <PsPanelHead eyebrow={t('about.tech_eyebrow')} title={t('about.tech_title')} idx="03" />
 
-        <div className="flex flex-wrap gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {techStack.map((tech) => (
             <div
               key={tech.name}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold ${tech.bg}`}
+              className="group flex items-start gap-3 p-3.5 rounded-xl border border-line bg-bg-2 hover:border-brand/40 hover:bg-panel transition-all"
             >
-              <span className="font-mono opacity-70 text-[10px] uppercase">{tech.cat}:</span>
-              <strong>{tech.name}</strong>
+              <span
+                className={`w-9 h-9 rounded-lg grid place-items-center shrink-0 border transition-transform group-hover:scale-105 ${tech.color}`}
+              >
+                <tech.icon size={18} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <strong className="text-[13.5px] font-bold text-ink truncate">
+                    {tech.name}
+                  </strong>
+                  <span className="font-mono text-[10px] font-semibold text-muted px-1.5 py-0.5 rounded border border-line bg-panel shrink-0">
+                    {tech.tag}
+                  </span>
+                </div>
+                <span className="block font-mono text-[11px] font-semibold text-brand mt-0.5">
+                  {tech.cat}
+                </span>
+                <p className="text-[11.5px] text-muted leading-relaxed mt-1 line-clamp-1">
+                  {tech.desc}
+                </p>
+              </div>
             </div>
           ))}
         </div>
