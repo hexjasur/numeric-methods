@@ -57,6 +57,12 @@ export function AppShell({
         icon: Sigma,
       },
       {
+        href: '/methods/trapezoid',
+        label: t('nav.trapezoid'),
+        code: '04',
+        icon: Sigma,
+      },
+      {
         href: '/docs/syntax',
         label: t('nav.syntax'),
         code: 'DC',
@@ -81,6 +87,8 @@ export function AppShell({
         ? t('nav.euler')
         : pathname.startsWith('/methods/simpson')
           ? t('nav.simpson')
+          : pathname.startsWith('/methods/trapezoid')
+            ? t('nav.trapezoid')
           : pathname.startsWith('/docs')
             ? t('nav.syntax')
             : t('nav.bisection');
@@ -262,4 +270,3 @@ export function AppShell({
 }
 
 export default AppShell;
-
