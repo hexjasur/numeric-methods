@@ -6,6 +6,8 @@
   "platforms": ["android", "iOS"],
   "permissions": [
     "core:default",
-    "process:default"
+    "process:default",
+    "opener:allow-open-url",
+    "opener:allow-default-urls"
   ]
 }

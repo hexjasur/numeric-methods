@@ -182,6 +182,30 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
+    if (updateInfo.isAndroid && '__TAURI_INTERNALS__' in window) {
+      if (!updateInfo.downloadUrl) {
+        showToast(t('updater.android_download_failed'));
+        return;
+      }
+
+      try {
+        const { openUrl } = await import('@tauri-apps/plugin-opener');
+        const downloadUrl = new URL(updateInfo.downloadUrl);
+        if (
+          downloadUrl.protocol !== 'https:' ||
+          downloadUrl.hostname !== 'github.com'
+        ) {
+          throw new Error('Unexpected APK download URL host.');
+        }
+        await openUrl(downloadUrl.toString());
+        showToast(t('updater.android_download_opened'));
+      } catch (error) {
+        console.error('Could not open the Android APK download:', error);
+        showToast(t('updater.android_download_failed'));
+      }
+      return;
+    }
+
     // 2. Direct browser / Android APK download
     setShowModal(false);
     if (updateInfo.downloadUrl) {

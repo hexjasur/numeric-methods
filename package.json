@@ -1,6 +1,6 @@
 {
   "name": "numeric-methods",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "private": true,
   "scripts": {
     "td": "tauri dev",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^2.12.1",
+    "@tauri-apps/plugin-opener": "^2",
     "@tauri-apps/plugin-process": "^2.4.0",
     "@tauri-apps/plugin-updater": "^2.13.3",
     "html-to-image": "^1.11.13",

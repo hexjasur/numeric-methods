@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.4] - 2026-10-13
+
+### Fixed
+- Corrected the signed Windows updater manifest to use the exact installer URL published in GitHub Releases.
+- Opened Android APK downloads in the system browser and clarified the Android install confirmation steps.
+
+---
+
 ## [3.0.3] - 2026-10-13
 
 ### Added
