@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.5] - 2026-10-13
+
+### Added
+- Added the Haydash (Thomas/TDMA) method for tridiagonal systems, with editable coefficients, forward and backward walkthroughs, and full-precision residual verification.
+
+---
+
 ## [3.0.4] - 2026-10-13
 
 ### Fixed

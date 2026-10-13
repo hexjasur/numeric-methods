@@ -14,12 +14,12 @@ import katex from 'katex';
 import { useI18n } from '@/components/i18n-provider';
 import { PsPanel, PsPanelHead } from '@/components/ui/print-stream';
 
-type MethodCategory = 'all' | 'equations' | 'interpolation' | 'quadrature' | 'odes';
+type MethodCategory = 'all' | 'equations' | 'linear' | 'interpolation' | 'quadrature' | 'odes';
 
 interface MethodDef {
   id: string;
   code: string;
-  category: 'equations' | 'interpolation' | 'quadrature' | 'odes';
+  category: 'equations' | 'linear' | 'interpolation' | 'quadrature' | 'odes';
   categoryKey: string;
   titleKey: string;
   descKey: string;
@@ -58,8 +58,21 @@ const METHODS: MethodDef[] = [
     accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
   },
   {
+    id: 'sweep',
+    code: '03 / LIN',
+    category: 'linear',
+    categoryKey: 'dashboard.cat_linear',
+    titleKey: 'nav.sweep',
+    descKey: 'dashboard.desc_sweep',
+    href: '/methods/sweep',
+    formulaTex: 'a_i x_{i-1} + b_i x_i + c_i x_{i+1} = d_i',
+    orderTex: 'O(n)',
+    icon: Sigma,
+    accentClass: 'text-violet-600 dark:text-violet-400 bg-violet-500/10 border-violet-500/25',
+  },
+  {
     id: 'lagrange',
-    code: '03 / INT',
+    code: '04 / INT',
     category: 'interpolation',
     categoryKey: 'dashboard.cat_interpolation',
     titleKey: 'nav.lagrange',
@@ -72,7 +85,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'rectangles',
-    code: '04 / QUA',
+    code: '05 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.rectangles',
@@ -85,7 +98,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'trapezoid',
-    code: '05 / QUA',
+    code: '06 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.trapezoid',
@@ -98,7 +111,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'simpson',
-    code: '06 / QUA',
+    code: '07 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.simpson',
@@ -111,7 +124,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'euler',
-    code: '07 / ODE',
+    code: '08 / ODE',
     category: 'odes',
     categoryKey: 'dashboard.cat_odes',
     titleKey: 'nav.euler',
@@ -137,16 +150,23 @@ export function MethodsHub() {
   const [selectedCategory, setSelectedCategory] = useState<MethodCategory>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = useMemo(
-    () => [
-      { id: 'all' as MethodCategory, label: t('dashboard.cat_all') || 'Barchasi', count: METHODS.length },
-      { id: 'equations' as MethodCategory, label: t('dashboard.cat_equations') || 'Tenglamalar', count: 2 },
-      { id: 'interpolation' as MethodCategory, label: t('dashboard.cat_interpolation') || 'Interpolyatsiya', count: 1 },
-      { id: 'quadrature' as MethodCategory, label: t('dashboard.cat_quadrature') || 'Integrallash', count: 3 },
-      { id: 'odes' as MethodCategory, label: t('dashboard.cat_odes') || 'Differensial', count: 1 },
-    ],
-    [t],
-  );
+  const categories = useMemo(() => {
+    const definitions: { id: MethodCategory; label: string }[] = [
+      { id: 'all', label: t('dashboard.cat_all') || 'Barchasi' },
+      { id: 'equations', label: t('dashboard.cat_equations') || 'Tenglamalar' },
+      { id: 'linear', label: t('dashboard.cat_linear') || 'Chiziqli sistemalar' },
+      { id: 'interpolation', label: t('dashboard.cat_interpolation') || 'Interpolyatsiya' },
+      { id: 'quadrature', label: t('dashboard.cat_quadrature') || 'Integrallash' },
+      { id: 'odes', label: t('dashboard.cat_odes') || 'Differensial' },
+    ];
+    return definitions.map((category) => ({
+      ...category,
+      count:
+        category.id === 'all'
+          ? METHODS.length
+          : METHODS.filter((method) => method.category === category.id).length,
+    }));
+  }, [t]);
 
   const filteredMethods = useMemo(() => {
     return METHODS.filter((m) => {
