@@ -538,6 +538,7 @@
     "status_downloading": "Downloading update: {percent}%",
     "status_installing": "Verifying and installing package...",
     "status_ready": "Successfully installed! Restarting application...",
-    "status_error": "An error occurred during update."
+    "status_error": "An error occurred during update.",
+    "native_update_failed": "The signed update could not be installed. Check the release package and signature, then try again."
   }
 }

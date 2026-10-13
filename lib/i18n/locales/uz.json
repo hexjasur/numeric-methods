@@ -538,6 +538,7 @@
     "status_downloading": "Yangilanish yuklab olinmoqda: {percent}%",
     "status_installing": "Paket tekshirilmoqda va o'rnatilmoqda...",
     "status_ready": "Muvaffaqiyatli o'rnatildi! Dastur qayta ishga tushmoqda...",
-    "status_error": "Yangilashda xatolik yuz berdi."
+    "status_error": "Yangilashda xatolik yuz berdi.",
+    "native_update_failed": "Imzolangan yangilanishni o‘rnatib bo‘lmadi. Release paketi va imzosini tekshirib, yana urinib ko‘ring."
   }
 }

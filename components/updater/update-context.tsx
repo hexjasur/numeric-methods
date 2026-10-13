@@ -170,11 +170,16 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
             }
           }, 1500);
           return;
+        } else {
+          throw new Error('The signed updater endpoint returned no update.');
         }
       } catch (err) {
         console.error('Tauri update error:', err);
+        setIsUpdating(false);
+        setShowModal(true);
+        showToast(t('updater.native_update_failed'));
+        return;
       }
-      setIsUpdating(false);
     }
 
     // 2. Direct browser / Android APK download

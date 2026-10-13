@@ -57,6 +57,24 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
   const isTauriDesktop = isTauri && !isAndroid;
 
   try {
+    // Desktop installs must use Tauri's signed updater manifest, not a browser installer download.
+    if (isTauriDesktop) {
+      const { check } = await import('@tauri-apps/plugin-updater');
+      const update = await check();
+      return {
+        available: Boolean(update),
+        currentVersion,
+        latestVersion: update?.version ?? currentVersion,
+        releaseTitle: update ? `v${update.version}` : `v${currentVersion}`,
+        releaseNotes: update?.body ?? '',
+        publishedAt: update?.date ?? '',
+        isAndroid,
+        isWindows,
+        isTauriDesktop,
+        tauriAvailable: Boolean(update),
+      };
+    }
+
     // 1. Try checking via GitHub Releases API
     const response = await fetch(
       'https://api.github.com/repos/hexjasur/numeric-methods/releases/latest',
@@ -111,19 +129,6 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
     const fallbackUrl = release.html_url || 'https://github.com/hexjasur/numeric-methods/releases/latest';
     const downloadUrl = primaryAsset?.browser_download_url || fallbackUrl;
 
-    let tauriAvailable = false;
-    if (isTauriDesktop) {
-      try {
-        const { check } = await import('@tauri-apps/plugin-updater');
-        const update = await check();
-        if (update?.available) {
-          tauriAvailable = true;
-        }
-      } catch {
-        // Tauri updater not configured with signer or endpoint yet
-      }
-    }
-
     return {
       available,
       currentVersion,
@@ -136,10 +141,9 @@ export async function checkForAppUpdates(): Promise<UpdateInfo | null> {
       isAndroid,
       isWindows,
       isTauriDesktop,
-      tauriAvailable,
+      tauriAvailable: false,
     };
   } catch {
     return null;
   }
 }
-

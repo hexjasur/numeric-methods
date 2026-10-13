@@ -130,6 +130,17 @@ jobs:
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
+      - name: Validate Tauri updater signing key
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:TAURI_SIGNING_PRIVATE_KEY)) {
+            Write-Error "TAURI_SIGNING_PRIVATE_KEY is required to create signed in-app updates."
+            exit 1
+          }
+
       - name: Build Tauri and Publish Release
         uses: tauri-apps/tauri-action@v0
         env:
@@ -143,11 +154,41 @@ jobs:
           releaseDraft: false
           prerelease: false
 
+      - name: Generate and publish Tauri updater manifest
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_NOTES: ${{ steps.changelog.outputs.body }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          $version = "${{ needs.check-version.outputs.version }}"
+          $tag = "v$version"
+          $repo = $env:GITHUB_REPOSITORY
+          $nsisDir = "src-tauri/target/release/bundle/nsis"
+          $exe = Get-ChildItem -Path $nsisDir -Filter "*-setup.exe" | Select-Object -First 1
+          if (-not $exe) { throw "NSIS updater installer was not found in $nsisDir." }
+
+          $signaturePath = "$($exe.FullName).sig"
+          if (-not (Test-Path $signaturePath)) {
+            $signatureFile = Get-ChildItem -Path "src-tauri/target/release/bundle" -Filter "$($exe.Name).sig" -Recurse | Select-Object -First 1
+            if ($signatureFile) { $signaturePath = $signatureFile.FullName }
+          }
+          if (-not (Test-Path $signaturePath)) { throw "Tauri signature for $($exe.Name) is missing." }
+
+          bun run scripts/generate-updater-manifest.ts $version $repo $tag $exe.FullName $signaturePath "latest.json"
+          if ($LASTEXITCODE -ne 0) { throw "Failed to generate Tauri updater manifest." }
+
+          gh release upload $tag $exe.FullName $signaturePath "latest.json" --repo $repo --clobber
+          if ($LASTEXITCODE -ne 0) { throw "Failed to upload signed updater assets for $tag." }
+
   build-android:
     name: Build Android APK
     needs: [check-version, publish-tauri]
     if: needs.check-version.outputs.should_release == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -247,34 +288,22 @@ jobs:
       - name: Sign & Optimize Android APKs
         env:
           VERSION: ${{ needs.check-version.outputs.version }}
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           BUILD_TOOLS_DIR=$(find $ANDROID_HOME/build-tools -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)
           echo "Using Android build-tools from: $BUILD_TOOLS_DIR"
 
-          if [ -n "${{ secrets.ANDROID_KEYSTORE }}" ]; then
-            echo "Using repository secret ANDROID_KEYSTORE"
-            echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 -d > release.jks
-            KEYSTORE_PASS="${{ secrets.KEYSTORE_PASSWORD }}"
-            [ -z "$KEYSTORE_PASS" ] && KEYSTORE_PASS="numericmethods"
-            KEY_ALIAS="${{ secrets.KEY_ALIAS }}"
-            [ -z "$KEY_ALIAS" ] && KEY_ALIAS="numericmethods"
-            KEY_PASS="${{ secrets.KEY_PASSWORD }}"
-            [ -z "$KEY_PASS" ] && KEY_PASS="numericmethods"
-          else
-            echo "Generating release keystore for CI"
-            keytool -genkeypair -v \
-              -keystore release.jks \
-              -alias numericmethods \
-              -keyalg RSA \
-              -keysize 2048 \
-              -validity 10000 \
-              -storepass numericmethods \
-              -keypass numericmethods \
-              -dname "CN=NumericMethods, OU=Mobile, O=JKSoftware, L=Tashkent, C=UZ"
-            KEYSTORE_PASS="numericmethods"
-            KEY_ALIAS="numericmethods"
-            KEY_PASS="numericmethods"
+          if [ -z "$ANDROID_KEYSTORE" ]; then
+            echo "::error::ANDROID_KEYSTORE is required. Run the Generate Android Keystore workflow and save it as a repository secret."
+            exit 1
           fi
+          echo "$ANDROID_KEYSTORE" | base64 -d > release.jks
+          KEYSTORE_PASS="${KEYSTORE_PASSWORD:-numericmethods}"
+          KEY_ALIAS_VALUE="${KEY_ALIAS:-numericmethods}"
+          KEY_PASS="${KEY_PASSWORD:-numericmethods}"
 
           for ARCH in arm64 universal; do
             RAW="release_apks/${ARCH}_raw.apk"
@@ -288,7 +317,7 @@ jobs:
                 --ks release.jks \
                 --ks-pass "pass:$KEYSTORE_PASS" \
                 --key-pass "pass:$KEY_PASS" \
-                --ks-key-alias "$KEY_ALIAS" \
+                --ks-key-alias "$KEY_ALIAS_VALUE" \
                 --out "$FINAL" \
                 "$ALIGNED"
               $BUILD_TOOLS_DIR/apksigner verify -v "$FINAL"
@@ -299,9 +328,7 @@ jobs:
           rm -f release_apks/*_raw.apk release_apks/*_aligned.apk release.jks
 
       - name: Upload APK to Release
-        uses: softprops/action-gh-release@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ needs.check-version.outputs.version }}
-          files: release_apks/Numeric.Methods_*.apk
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "v${{ needs.check-version.outputs.version }}" release_apks/Numeric.Methods_*.apk --repo "$GITHUB_REPOSITORY" --clobber

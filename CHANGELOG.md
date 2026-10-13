@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.2] - 2026-10-13
+
+### Fixed
+- Enabled signed Tauri updater artifacts and publication of the `latest.json` manifest required for in-app Windows updates.
+- Kept desktop updates on the signed native updater path instead of silently downloading a standalone installer in a browser.
+- Uploaded Android APKs to existing GitHub Releases through the GitHub CLI and required a persistent signing keystore for upgrade compatibility.
+
+---
+
 ## [3.0.1] - 2026-10-13
 
 ### 🎨 UI & UX Improvements
