@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import {
   Activity,
+  ArrowUpRight,
   BookOpenText,
   ExternalLink,
   Info,
@@ -59,33 +60,39 @@ export function AppShell({
         icon: Split,
       },
       {
+        href: '/methods/newton',
+        label: t('nav.newton'),
+        code: '05',
+        icon: ArrowUpRight,
+      },
+      {
         href: '/methods/lagrange',
         label: t('nav.lagrange'),
-        code: '05',
+        code: '06',
         icon: Sigma,
       },
       {
         href: '/methods/rectangles',
         label: t('nav.rectangles'),
-        code: '06',
+        code: '07',
         icon: Sigma,
       },
       {
         href: '/methods/trapezoid',
         label: t('nav.trapezoid'),
-        code: '07',
+        code: '08',
         icon: Sigma,
       },
       {
         href: '/methods/simpson',
         label: t('nav.simpson'),
-        code: '08',
+        code: '09',
         icon: Sigma,
       },
       {
         href: '/methods/euler',
         label: t('nav.euler'),
-        code: '09',
+        code: '10',
         icon: Activity,
       },
     ],
@@ -115,17 +122,19 @@ export function AppShell({
           ? t('nav.syntax')
           : pathname.startsWith('/methods/bisection')
             ? t('nav.bisection')
-            : pathname.startsWith('/methods/lagrange')
-              ? t('nav.lagrange')
-              : pathname.startsWith('/methods/rectangles')
-                ? t('nav.rectangles')
-                : pathname.startsWith('/methods/trapezoid')
-                  ? t('nav.trapezoid')
-                  : pathname.startsWith('/methods/simpson')
-                    ? t('nav.simpson')
-                    : pathname.startsWith('/methods/euler')
-                      ? t('nav.euler')
-                      : t('nav.workspace');
+            : pathname.startsWith('/methods/newton')
+              ? t('nav.newton')
+              : pathname.startsWith('/methods/lagrange')
+                ? t('nav.lagrange')
+                : pathname.startsWith('/methods/rectangles')
+                  ? t('nav.rectangles')
+                  : pathname.startsWith('/methods/trapezoid')
+                    ? t('nav.trapezoid')
+                    : pathname.startsWith('/methods/simpson')
+                      ? t('nav.simpson')
+                      : pathname.startsWith('/methods/euler')
+                        ? t('nav.euler')
+                        : t('nav.workspace');
 
   return (
     <UpdateProvider>

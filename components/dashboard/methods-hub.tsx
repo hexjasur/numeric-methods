@@ -45,8 +45,21 @@ const METHODS: MethodDef[] = [
     accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
   },
   {
+    id: 'newton',
+    code: '02 / ALG',
+    category: 'equations',
+    categoryKey: 'dashboard.cat_equations',
+    titleKey: 'nav.newton',
+    descKey: 'dashboard.desc_newton',
+    href: '/methods/newton',
+    formulaTex: "x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
+    orderTex: 'O(\\log\\log(1/\\varepsilon))',
+    icon: ArrowUpRight,
+    accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
+  },
+  {
     id: 'lagrange',
-    code: '02 / INT',
+    code: '03 / INT',
     category: 'interpolation',
     categoryKey: 'dashboard.cat_interpolation',
     titleKey: 'nav.lagrange',
@@ -59,7 +72,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'rectangles',
-    code: '03 / QUA',
+    code: '04 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.rectangles',
@@ -72,7 +85,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'trapezoid',
-    code: '04 / QUA',
+    code: '05 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.trapezoid',
@@ -85,7 +98,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'simpson',
-    code: '05 / QUA',
+    code: '06 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.simpson',
@@ -98,7 +111,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'euler',
-    code: '06 / ODE',
+    code: '07 / ODE',
     category: 'odes',
     categoryKey: 'dashboard.cat_odes',
     titleKey: 'nav.euler',
@@ -127,7 +140,7 @@ export function MethodsHub() {
   const categories = useMemo(
     () => [
       { id: 'all' as MethodCategory, label: t('dashboard.cat_all') || 'Barchasi', count: METHODS.length },
-      { id: 'equations' as MethodCategory, label: t('dashboard.cat_equations') || 'Tenglamalar', count: 1 },
+      { id: 'equations' as MethodCategory, label: t('dashboard.cat_equations') || 'Tenglamalar', count: 2 },
       { id: 'interpolation' as MethodCategory, label: t('dashboard.cat_interpolation') || 'Interpolyatsiya', count: 1 },
       { id: 'quadrature' as MethodCategory, label: t('dashboard.cat_quadrature') || 'Integrallash', count: 3 },
       { id: 'odes' as MethodCategory, label: t('dashboard.cat_odes') || 'Differensial', count: 1 },

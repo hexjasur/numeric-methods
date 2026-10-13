@@ -2,6 +2,7 @@
   "routes": [
     { "path": "/", "title": "Dashboard" },
     { "path": "/methods/bisection", "title": "Bisection Method" },
+    { "path": "/methods/newton", "title": "Newton Method" },
     { "path": "/methods/euler", "title": "Euler Methods" },
     { "path": "/methods/simpson", "title": "Simpson's Rule" },
     { "path": "/methods/trapezoid", "title": "Trapezoidal Rule" },

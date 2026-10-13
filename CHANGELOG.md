@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.3] - 2026-10-13
+
+### Added
+- Added the Newton tangent method with finite-difference derivatives, V2-compatible starting-point selection, and a detailed iteration walkthrough.
+
+---
+
 ## [3.0.2] - 2026-10-13
 
 ### Fixed
