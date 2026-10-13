@@ -176,7 +176,10 @@ jobs:
           }
           if (-not (Test-Path $signaturePath)) { throw "Tauri signature for $($exe.Name) is missing." }
 
-          bun run scripts/generate-updater-manifest.ts $version $repo $tag $exe.FullName $signaturePath "latest.json"
+          $installerDownloadUrl = gh release view $tag --repo $repo --json assets --jq '.assets[] | select(.name | endswith("-setup.exe")) | .url' | Select-Object -First 1
+          if (-not $installerDownloadUrl) { throw "Published Windows installer URL for $tag was not found." }
+
+          bun run scripts/generate-updater-manifest.ts $version $repo $tag $exe.FullName $signaturePath $installerDownloadUrl "latest.json"
           if ($LASTEXITCODE -ne 0) { throw "Failed to generate Tauri updater manifest." }
 
           gh release upload $tag $exe.FullName $signaturePath "latest.json" --repo $repo --clobber
