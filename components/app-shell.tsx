@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import {
   Activity,
+  ArrowRightLeft,
   ArrowUpRight,
   BookOpenText,
   ExternalLink,
@@ -13,6 +14,7 @@ import {
   LayoutDashboard,
   Menu,
   Sigma,
+  Spline,
   Split,
   X,
 } from 'lucide-react';
@@ -69,13 +71,13 @@ export function AppShell({
         href: '/methods/sweep',
         label: t('nav.sweep'),
         code: '06',
-        icon: Sigma,
+        icon: ArrowRightLeft,
       },
       {
         href: '/methods/lagrange',
         label: t('nav.lagrange'),
         code: '07',
-        icon: Sigma,
+        icon: Spline,
       },
       {
         href: '/methods/rectangles',

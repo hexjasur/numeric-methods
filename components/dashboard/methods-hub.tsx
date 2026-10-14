@@ -4,9 +4,11 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Activity,
+  ArrowRightLeft,
   ArrowUpRight,
   Search,
   Sigma,
+  Spline,
   Split,
   type LucideIcon,
 } from 'lucide-react';
@@ -67,7 +69,7 @@ const METHODS: MethodDef[] = [
     href: '/methods/sweep',
     formulaTex: 'a_i x_{i-1} + b_i x_i + c_i x_{i+1} = d_i',
     orderTex: 'O(n)',
-    icon: Sigma,
+    icon: ArrowRightLeft,
     accentClass: 'text-violet-600 dark:text-violet-400 bg-violet-500/10 border-violet-500/25',
   },
   {
@@ -80,7 +82,7 @@ const METHODS: MethodDef[] = [
     href: '/methods/lagrange',
     formulaTex: 'L_n(x) = \\sum_{i=0}^n y_i \\prod_{j \\neq i} \\frac{x - x_j}{x_i - x_j}',
     orderTex: 'O(n^2)',
-    icon: Sigma,
+    icon: Spline,
     accentClass: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/25',
   },
   {
