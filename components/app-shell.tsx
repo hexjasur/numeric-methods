@@ -103,6 +103,12 @@ export function AppShell({
         code: '11',
         icon: Activity,
       },
+      {
+        href: '/methods/runge-kutta',
+        label: t('nav.rungeKutta'),
+        code: '12',
+        icon: Activity,
+      },
     ],
     [t],
   );
@@ -144,7 +150,9 @@ export function AppShell({
                         ? t('nav.simpson')
                         : pathname.startsWith('/methods/euler')
                           ? t('nav.euler')
-                          : t('nav.workspace');
+                          : pathname.startsWith('/methods/runge-kutta')
+                            ? t('nav.rungeKutta')
+                            : t('nav.workspace');
 
   return (
     <UpdateProvider>

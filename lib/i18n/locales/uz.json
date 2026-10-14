@@ -14,7 +14,8 @@
     "newton": "Nyuton usuli",
     "v2_link": "v2 talqinga o'tish",
     "v2_tooltip": "Eski v2.sonli-usullar.uz talqiniga o'tish",
-    "sweep": "Haydash usuli"
+    "sweep": "Haydash usuli",
+    "rungeKutta": "Runge–Kutta 4-tartibli usuli"
   },
   "about": {
     "strip": "DOC-002 / HAQIDA",
@@ -75,7 +76,7 @@
     "hero_title_2": ", har qadamni tushuning.",
     "hero_lead": "Sonli usullarni nazariya bilan emas, real interaktiv hisoblash orqali o'rganing.",
     "stat1_label": "Faol usullar",
-    "stat1_val": "08 ta metod",
+    "stat1_val": "09 ta metod",
     "stat2_label": "Hisoblash sohalari",
     "stat2_val": "5 ta toifa",
     "stat3_label": "Hisoblash muhiti",
@@ -83,7 +84,7 @@
     "overview": "Workspace holati",
     "catalog_eyebrow": "02 / METODLAR KATALOGI",
     "catalog_title": "Interaktiv sonli usullar laboratoriyasi",
-    "catalog_desc": "Barcha 8 ta asosiy hisoblash algoritmlari, ularning matematik formulalari va interaktiv parametrlari.",
+    "catalog_desc": "Barcha 9 ta asosiy hisoblash algoritmlari, ularning matematik formulalari va interaktiv parametrlari.",
     "cat_all": "Barchasi",
     "cat_equations": "Tenglamalar",
     "cat_interpolation": "Interpolyatsiya",
@@ -105,7 +106,8 @@
     "next_desc": "Funksiya, oraliq va aniqlikni kiriting. Tizim ildizga yaqinlashishning har bir qadamini ko'rsatadi.",
     "start_lab": "Laboratoriyani boshlash",
     "desc_sweep": "Uch diagonalli chiziqli tenglamalar sistemasini to‘g‘ri va teskari yurish bilan yechish.",
-    "cat_linear": "Chiziqli sistemalar"
+    "cat_linear": "Chiziqli sistemalar",
+    "desc_rungeKutta": "Birinchi tartibli Koshi masalasini klassik to‘rtinchi tartibli Runge–Kutta usuli bilan yeching."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",
@@ -677,5 +679,25 @@
     "tbl_beta": "βᵢ",
     "tbl_x": "xᵢ",
     "tbl_residual": "rᵢ"
+  },
+  "rk4": {
+    "strip": "Runge–Kutta 4-tartibli usuli",
+    "eyebrow": "ODT / TO‘RTINCHI TARTIB",
+    "title": "Runge–Kutta",
+    "highlight": "RK4 usuli",
+    "lead": "Har qadamda hosilaning to‘rtta qiymati bilan Koshi masalasini hisoblang; barcha oraliq koeffitsientlar va yechim grafigini ko‘ring.",
+    "condition": "Klassik oshkor to‘rtinchi tartibli Runge–Kutta sxemasi.",
+    "parameters": "Koshi masalasi parametrlari",
+    "calculate": "RK4 hisoblash",
+    "formulas": "RK4 bosqich formulalari",
+    "chart_title": "Sonli yechim grafigi",
+    "exact": "Analitik yechim",
+    "chart_note": "RK4 yaqinlashuvini ushbu misolning aniq yechimi bilan solishtiring.",
+    "table_title": "Qadamlar va koeffitsientlar",
+    "final_value": "Yakuniy yaqinlashuv",
+    "no_results": "Ko‘rsatish uchun natija yo‘q.",
+    "no_chart": "Grafikni ko‘rish uchun to‘g‘ri parametrlarni kiriting.",
+    "error": "RK4 yechimini hisoblab bo‘lmadi.",
+    "exact_label": "Aniq"
   }
 }
