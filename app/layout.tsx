@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n-provider";
 import { TopLoader } from "@/components/top-loader";
+import { siteConfig } from "@/lib/config";
+import { RootJsonLd } from "@/components/seo/json-ld";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,19 +16,61 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-import { siteConfig } from '@/lib/config';
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  // title: {
-  //   default: siteConfig.name,
-  //   template: "%s | ${siteConfig.name}"
-  // },
   title: {
-    default: "Numeric Methods",
-    template: "%s | Numeric Methods",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "Numeric Methods is a web application that provides a collection of numerical methods and algorithms for solving mathematical problems. It offers a user-friendly interface for performing calculations, visualizing results, and learning about various numerical techniques.",
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.author.name, url: siteConfig.author.url }],
+  creator: siteConfig.creator,
+  publisher: siteConfig.publisher,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: siteConfig.locale,
+    alternateLocale: siteConfig.alternateLocales,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [
+      {
+        url: '/images/og-thumbail-1280x640.png',
+        width: 1280,
+        height: 640,
+        alt: `${siteConfig.name} — Matematik va Muhandislik Hisoblash Platformasi`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ['/images/og-thumbail-1280x640.png'],
+    creator: '@hexjasur',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export const viewport: Viewport = {
@@ -41,8 +85,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="uz" suppressHydrationWarning>
       <head>
+        <RootJsonLd />
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
@@ -52,6 +97,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     ? stored
     : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   document.documentElement.dataset.theme = theme;
+  const savedLocale = localStorage.getItem("app-locale");
+  if (savedLocale) {
+    document.documentElement.lang = savedLocale;
+  }
 } catch {
   document.documentElement.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
@@ -73,4 +122,3 @@ try {
     </html>
   );
 }
-
