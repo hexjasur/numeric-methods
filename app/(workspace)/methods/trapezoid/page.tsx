@@ -29,7 +29,14 @@ export const metadata: Metadata = {
     description:
       "Aniq integrallarni trapetsiyalar usulida sonli hisoblang va qadam-baqam natijalarni ko'ring.",
     url: `${siteConfig.url}/methods/trapezoid`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/trapezoid.png', width: 1200, height: 630, alt: 'Trapetsiyalar usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Trapetsiyalar usuli | Метод трапеций | Trapezoidal Rule',
+    description:
+      "Aniq integrallarni trapetsiyalar usulida sonli hisoblang va qadam-baqam natijalarni ko'ring.",
+    images: ['/images/og/trapezoid.png'],
   },
 };
 

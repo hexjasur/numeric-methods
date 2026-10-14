@@ -33,7 +33,14 @@ export const metadata: Metadata = {
     description:
       "Uch diagonalli matritsalarni Progonka usulida to'g'ri va teskari yurish bosqichlari bilan yeching.",
     url: `${siteConfig.url}/methods/sweep`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/sweep.png', width: 1200, height: 630, alt: 'Progonka usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Progonka usuli (Quvib o'tish) | Метод прогонки | Thomas Algorithm",
+    description:
+      "Uch diagonalli matritsalarni Progonka usulida to'g'ri va teskari yurish bosqichlari bilan yeching.",
+    images: ['/images/og/sweep.png'],
   },
 };
 

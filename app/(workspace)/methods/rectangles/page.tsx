@@ -30,7 +30,14 @@ export const metadata: Metadata = {
     description:
       "Aniq integrallarni to'g'ri to'rtburchaklar usuli yordamida online hisoblang va geometrik yuzalarni ko'ring.",
     url: `${siteConfig.url}/methods/rectangles`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/rectangles.png', width: 1200, height: 630, alt: "To'g'ri to'rtburchaklar usuli" }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "To'g'ri to'rtburchaklar usuli | Метод прямоугольников",
+    description:
+      "Aniq integrallarni to'g'ri to'rtburchaklar usuli yordamida online hisoblang va geometrik yuzalarni ko'ring.",
+    images: ['/images/og/rectangles.png'],
   },
 };
 

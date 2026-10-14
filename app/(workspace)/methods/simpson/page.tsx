@@ -30,7 +30,14 @@ export const metadata: Metadata = {
     description:
       "Aniq integrallarni Simpson formulasi orqali parabolik approksimatsiya bilan yuqori aniqlikda hisoblang.",
     url: `${siteConfig.url}/methods/simpson`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/simpson.png', width: 1200, height: 630, alt: 'Simpson usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Simpson usuli (Parabolalar) | Метод Симпсона | Simpson's Rule",
+    description:
+      "Aniq integrallarni Simpson formulasi orqali parabolik approksimatsiya bilan yuqori aniqlikda hisoblang.",
+    images: ['/images/og/simpson.png'],
   },
 };
 

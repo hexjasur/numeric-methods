@@ -19,7 +19,6 @@ function getFileMtime(relativeFilePath: string): Date {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
-  const ogImage = `${baseUrl}/images/og-thumbail-1280x640.png`;
 
   let methodRoutes: MetadataRoute.Sitemap = [];
   try {
@@ -44,7 +43,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: getFileMtime(pageFile),
         changeFrequency: 'weekly',
         priority: 0.9,
-        images: [ogImage],
       };
     });
   } catch {
@@ -57,7 +55,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: getFileMtime(path.join('app', '(workspace)', 'page.tsx')),
       changeFrequency: 'weekly',
       priority: 1.0,
-      images: [ogImage],
     },
     ...methodRoutes,
     {
@@ -65,14 +62,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: getFileMtime(path.join('app', '(workspace)', 'docs', 'syntax', 'page.tsx')),
       changeFrequency: 'monthly',
       priority: 0.7,
-      images: [ogImage],
     },
     {
       url: `${baseUrl}/about`,
       lastModified: getFileMtime(path.join('app', '(workspace)', 'about', 'page.tsx')),
       changeFrequency: 'monthly',
       priority: 0.6,
-      images: [ogImage],
     },
   ];
 }

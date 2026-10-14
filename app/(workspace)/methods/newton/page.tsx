@@ -30,7 +30,14 @@ export const metadata: Metadata = {
     description:
       "Chiziqli bo'lmagan tenglamalarni Nyuton (urinmalar) usuli bilan yuqori tezlikda aniq yeching.",
     url: `${siteConfig.url}/methods/newton`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/newton.png', width: 1200, height: 630, alt: 'Nyuton usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nyuton usuli (Urinmalar) | Метод Ньютона | Newton-Raphson',
+    description:
+      "Chiziqli bo'lmagan tenglamalarni Nyuton (urinmalar) usuli bilan yuqori tezlikda aniq yeching.",
+    images: ['/images/og/newton.png'],
   },
 };
 

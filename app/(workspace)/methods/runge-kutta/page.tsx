@@ -31,7 +31,14 @@ export const metadata: Metadata = {
     description:
       "Oddiy differensial tenglamalarni klassik Runge-Kutta 4 usuli bilan yuqori aniqlikda online yeching.",
     url: `${siteConfig.url}/methods/runge-kutta`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/runge-kutta.png', width: 1200, height: 630, alt: 'Runge-Kutta 4 usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Runge-Kutta 4-tartibli usuli (RK4) | Метод Рунге-Кутты 4',
+    description:
+      "Oddiy differensial tenglamalarni klassik Runge-Kutta 4 usuli bilan yuqori aniqlikda online yeching.",
+    images: ['/images/og/runge-kutta.png'],
   },
 };
 

@@ -28,7 +28,14 @@ export const metadata: Metadata = {
     description:
       "Tenglamalarning taqribiy ildizlarini Biseksiya usulida interaktiv hisoblash va jadvalini ko'rish.",
     url: `${siteConfig.url}/methods/bisection`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/bisection.png', width: 1200, height: 630, alt: 'Biseksiya usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Biseksiya usuli (Teng ikkiga bo'lish) | Метод бисекции",
+    description:
+      "Tenglamalarning taqribiy ildizlarini Biseksiya usulida interaktiv hisoblash va jadvalini ko'rish.",
+    images: ['/images/og/bisection.png'],
   },
 };
 

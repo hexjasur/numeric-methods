@@ -6,7 +6,9 @@
     "td": "tauri dev",
     "dev": "next dev --webpack",
     "tb": "tauri build",
-    "build": "next build --webpack",
+    "build": "bun run scripts/generate-og-images.ts && next build --webpack",
+    "og:generate": "bun run scripts/generate-og-images.ts",
+    "og:force": "bun run scripts/generate-og-images.ts --force",
     "start": "bunx serve out",
     "lint": "eslint app components",
     "check:version": "bun run scripts/check-versions.ts",
@@ -45,6 +47,7 @@
     "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "mathjax-full": "^3.2.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

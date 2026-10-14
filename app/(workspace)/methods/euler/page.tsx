@@ -31,7 +31,14 @@ export const metadata: Metadata = {
     description:
       "Oddiy differensial tenglamalarni standart va takomillashtirilgan Eyler usullari bilan yeching.",
     url: `${siteConfig.url}/methods/euler`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/euler.png', width: 1200, height: 630, alt: 'Eyler usullari' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eyler usullari (ODU) | Метод Эйлера | Euler Methods',
+    description:
+      "Oddiy differensial tenglamalarni standart va takomillashtirilgan Eyler usullari bilan yeching.",
+    images: ['/images/og/euler.png'],
   },
 };
 

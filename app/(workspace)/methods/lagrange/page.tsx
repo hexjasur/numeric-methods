@@ -29,7 +29,14 @@ export const metadata: Metadata = {
     description:
       "Nuqtalar orqali Lagranj interpolyatsion polinomini qadam-baqam hisoblang va grafigini ko'ring.",
     url: `${siteConfig.url}/methods/lagrange`,
-    images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
+    images: [{ url: '/images/og/lagrange.png', width: 1200, height: 630, alt: 'Lagranj interpolyatsiyasi' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lagranj interpolyatsiyasi | Интерполяция Лагранжа | Lagrange Interpolation',
+    description:
+      "Nuqtalar orqali Lagranj interpolyatsion polinomini qadam-baqam hisoblang va grafigini ko'ring.",
+    images: ['/images/og/lagrange.png'],
   },
 };
 

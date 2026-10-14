@@ -17,12 +17,19 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: '/images/og-thumbail-1280x640.png',
-        width: 1280,
-        height: 640,
+        url: '/images/og/main.png',
+        width: 1200,
+        height: 630,
         alt: 'Sonli Usullar platformasi',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sonli Usullar — Matematik va Muhandislik Hisoblash Platformasi',
+    description:
+      'Matematik modellashtirish, differensial tenglamalar va sonli usullarni qadam-baqam yechuvchi interaktiv online laboratoriya.',
+    images: ['/images/og/main.png'],
   },
 };
 
