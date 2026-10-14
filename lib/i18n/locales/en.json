@@ -698,6 +698,15 @@
     "no_results": "No result rows to display.",
     "no_chart": "Enter valid parameters to display the chart.",
     "error": "Unable to calculate RK4 solution.",
-    "exact_label": "Exact"
+    "exact_label": "Exact",
+    "expression": "Right-hand side f(x, y)",
+    "expression_hint": "Math.js syntax; for example: x^2 + y, x-y, or sin(x)+y.",
+    "exact_title": "Analytical solution",
+    "exact_unavailable": "An exact solution could not be derived for this expression. The RK4 numerical result is still available.",
+    "chart_note_no_exact": "Only the RK4 numerical approximation is shown because no exact solution was derived.",
+    "exact_value": "exact",
+    "exact_description": "Symbolically derived from the entered first-order differential equation and initial condition.",
+    "exact_col": "y exact",
+    "error_col": "|error|"
   }
 }

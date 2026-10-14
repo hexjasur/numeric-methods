@@ -1,3 +1,5 @@
+import { compileMath } from '@/lib/math';
+
 export interface RK4Result {
   step: number;
   x: number;
@@ -15,15 +17,24 @@ export interface RK4Options {
   h: number;
 }
 
-const derivative = (x: number, y: number): number => x * x + y;
-
-export function calculateRK4({ x0, y0, xEnd, h }: RK4Options): RK4Result[] {
+export function calculateRK4(expression: string, { x0, y0, xEnd, h }: RK4Options): RK4Result[] {
   if (![x0, y0, xEnd, h].every(Number.isFinite)) {
-    throw new Error('All parameters must be finite numbers.');
+    throw new Error('Parameters must be finite numbers.');
   }
   if (h <= 0 || xEnd <= x0) {
     throw new Error('The step must be positive and the interval must increase.');
   }
+  const compiled = compileMath(expression);
+  if (!compiled) {
+    throw new Error('Check the expression syntax.');
+  }
+  const evaluate = (x: number, y: number): number => {
+    const value = compiled.evaluate({ x, y });
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+      throw new Error('The expression must return a finite real number.');
+    }
+    return value;
+  };
 
   const stepCount = Math.ceil((xEnd - x0) / h - 1e-12);
   if (stepCount > 5000) {
@@ -42,10 +53,14 @@ export function calculateRK4({ x0, y0, xEnd, h }: RK4Options): RK4Result[] {
     let k3 = 0;
 
     if (i < stepCount && stepSize > 0) {
-      k0 = stepSize * derivative(x, y);
-      k1 = stepSize * derivative(x + stepSize / 2, y + k0 / 2);
-      k2 = stepSize * derivative(x + stepSize / 2, y + k1 / 2);
-      k3 = stepSize * derivative(x + stepSize, y + k2);
+      k0 = stepSize * evaluate(x, y);
+      k1 = stepSize * evaluate(x + stepSize / 2, y + k0 / 2);
+      k2 = stepSize * evaluate(x + stepSize / 2, y + k1 / 2);
+      k3 = stepSize * evaluate(x + stepSize, y + k2);
+    }
+
+    if (![y, k0, k1, k2, k3].every(Number.isFinite)) {
+      throw new Error('The calculation produced a non-finite value.');
     }
 
     results.push({
@@ -65,9 +80,4 @@ export function calculateRK4({ x0, y0, xEnd, h }: RK4Options): RK4Result[] {
   }
 
   return results;
-}
-
-export function exactRK4Example(x: number, x0: number, y0: number): number {
-  const primitive = (value: number) => -(value * value + 2 * value + 2) * Math.exp(-value);
-  return Math.exp(x) * (y0 * Math.exp(-x0) + primitive(x) - primitive(x0));
 }

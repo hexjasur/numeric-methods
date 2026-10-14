@@ -698,6 +698,15 @@
     "no_results": "Ko‘rsatish uchun natija yo‘q.",
     "no_chart": "Grafikni ko‘rish uchun to‘g‘ri parametrlarni kiriting.",
     "error": "RK4 yechimini hisoblab bo‘lmadi.",
-    "exact_label": "Aniq"
+    "exact_label": "Aniq",
+    "expression": "f(x, y) funksiyasining o‘ng tomoni",
+    "expression_hint": "Math.js sintaksisi; masalan: x^2 + y, x-y yoki sin(x)+y.",
+    "exact_title": "Aniq (analitik) yechim",
+    "exact_unavailable": "Bu ifoda uchun aniq yechimni chiqarib bo‘lmadi. RK4 sonli natijasi baribir hisoblanadi.",
+    "chart_note_no_exact": "Aniq yechim chiqarilmagani uchun faqat RK4 sonli yaqinlashuvi ko‘rsatilgan.",
+    "exact_value": "aniq",
+    "exact_description": "Kiritilgan birinchi tartibli differensial tenglama va boshlang‘ich shartdan analitik chiqarildi.",
+    "exact_col": "y aniq",
+    "error_col": "|xatolik|"
   }
 }
