@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "recharts", "katex"],
+    cpus: 2,
+    memoryBasedWorkersCount: true,
+  },
 };
 
 export default nextConfig;

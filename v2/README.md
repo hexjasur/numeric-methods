@@ -115,11 +115,14 @@
 
 ```bash
 # Repositoriyani klonlang
-git clone https://github.com/jas-kha/math.yolnoma.git
+git clone https://github.com/hexjasur/numeric-methods.git
 cd sonli-usullar
 
 # Bog'lanishlarni o'rnatish
 npm install
+
+# Git branchni almashtirish
+git switch v2
 
 # Ishga tushirish (development rejimida)
 npm run dev
@@ -188,7 +191,7 @@ Batafsil dokumentatsiya ushbu repositoriyadagi `/docs` papkasida mavjud:
 ## 🤝 Contributing
 
 Loyihaga hissa qo'shishga taklif qilamiz! Agar siz:
-- **Bug topgan bo'lsangiz**: [Issues](https://github.com/jas-kha/math.yolnoma/issues) bo'limida xabar bering
+- **Bug topgan bo'lsangiz**: [Issues](https://github.com/hexjasur/numeric-methods/issues) bo'limida xabar bering
 - **Yangi funksiya taklif qilmoqchi bo'lsangiz**: Pull Request yuboring
 - **Tarjima qilmoqchi bo'lsangiz**: Biz bilan bog'laning
 
