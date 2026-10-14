@@ -14,7 +14,8 @@
     "newton": "Newton Method",
     "v2_link": "Switch to v2",
     "v2_tooltip": "Open legacy v2.sonli-usullar.uz version",
-    "sweep": "Thomas Method"
+    "sweep": "Thomas Method",
+    "rungeKutta": "Runge–Kutta 4th Order"
   },
   "about": {
     "strip": "DOC-002 / ABOUT",
@@ -75,7 +76,7 @@
     "hero_title_2": ", step by step.",
     "hero_lead": "Learn numerical methods through real interactive computation, not just theory.",
     "stat1_label": "Active methods",
-    "stat1_val": "08 Methods",
+    "stat1_val": "09 Methods",
     "stat2_label": "Domains",
     "stat2_val": "5 Categories",
     "stat3_label": "Compute environment",
@@ -83,7 +84,7 @@
     "overview": "Workspace status",
     "catalog_eyebrow": "02 / METHODS HUB",
     "catalog_title": "Interactive Numerical Methods Catalog",
-    "catalog_desc": "Explore all 8 core numerical computation algorithms, their mathematical formulas, and live interactive labs.",
+    "catalog_desc": "Explore all 9 core numerical computation algorithms, their mathematical formulas, and live interactive labs.",
     "cat_all": "All",
     "cat_equations": "Equations",
     "cat_interpolation": "Interpolation",
@@ -105,7 +106,8 @@
     "next_desc": "Enter a function, interval, and precision. The system will show every step of approaching the root.",
     "start_lab": "Start laboratory",
     "desc_sweep": "Solve tridiagonal linear systems with forward and backward sweeps.",
-    "cat_linear": "Linear systems"
+    "cat_linear": "Linear systems",
+    "desc_rungeKutta": "Solve a first-order initial value problem with the classical fourth-order Runge–Kutta method."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",
@@ -677,5 +679,34 @@
     "tbl_beta": "βᵢ",
     "tbl_x": "xᵢ",
     "tbl_residual": "rᵢ"
+  },
+  "rk4": {
+    "strip": "Runge–Kutta 4th Order Method",
+    "eyebrow": "ODE / FOURTH-ORDER INTEGRATOR",
+    "title": "Runge–Kutta",
+    "highlight": "RK4 Method",
+    "lead": "Advance a first-order initial value problem with four slope estimates per step, then inspect the full calculation table and solution curve.",
+    "condition": "Classical explicit fourth-order Runge–Kutta scheme.",
+    "parameters": "Initial-value problem",
+    "calculate": "Calculate RK4",
+    "formulas": "RK4 stage formulas",
+    "chart_title": "Numerical solution curve",
+    "exact": "Analytical solution",
+    "chart_note": "Compare the RK4 approximation with the exact solution of this example.",
+    "table_title": "Step-by-step coefficients",
+    "final_value": "Final approximation",
+    "no_results": "No result rows to display.",
+    "no_chart": "Enter valid parameters to display the chart.",
+    "error": "Unable to calculate RK4 solution.",
+    "exact_label": "Exact",
+    "expression": "Right-hand side f(x, y)",
+    "expression_hint": "Math.js syntax; for example: x^2 + y, x-y, or sin(x)+y.",
+    "exact_title": "Analytical solution",
+    "exact_unavailable": "An exact solution could not be derived for this expression. The RK4 numerical result is still available.",
+    "chart_note_no_exact": "Only the RK4 numerical approximation is shown because no exact solution was derived.",
+    "exact_value": "exact",
+    "exact_description": "Symbolically derived from the entered first-order differential equation and initial condition.",
+    "exact_col": "y exact",
+    "error_col": "|error|"
   }
 }

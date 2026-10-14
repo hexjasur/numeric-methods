@@ -56,6 +56,23 @@ function formatCoeff(n: number): string {
   return Object.is(rounded, -0) ? '0' : rounded.toString();
 }
 
+function formatPolynomial(a2: number, a1: number, a0: number): string {
+  const terms: string[] = [];
+  for (const [coefficient, variable, power] of [
+    [a2, 'x', 2],
+    [a1, 'x', 1],
+    [a0, '', 0],
+  ] as const) {
+    if (coefficient === 0) continue;
+    const magnitude = Math.abs(coefficient);
+    const value = variable && magnitude === 1 ? '' : formatCoeff(magnitude);
+    const term = `${value}${variable}${power === 2 ? '^2' : ''}`;
+    const sign = coefficient < 0 ? '-' : '+';
+    terms.push(terms.length === 0 ? (coefficient < 0 ? `-${term}` : term) : ` ${sign} ${term}`);
+  }
+  return terms.join('') || '0';
+}
+
 export function findExactSolution(
   expression: string,
   x0: number,
@@ -146,6 +163,46 @@ export function findExactSolution(
           tex: `y(x) = ${rhs || 'y_0'}`,
           description: `Ajraladigan ODT: y' = ${formatCoeff(B)}x + ${formatCoeff(C)} bevosita integrallandi.`,
         };
+      }
+    }
+
+    // Case 1b: y' = A*y + a2*x^2 + a1*x + a0, solved by a polynomial particular solution.
+    if (s_d2_y === '0' && math.simplify(math.derivative(d_y, 'x')).toString() === '0') {
+      const A = Number(math.simplify(d_y).evaluate());
+      if (A !== 0 && Number.isFinite(A)) {
+        const forcingNode = math.parse(`(${cleanExpr}) - ((${s_d_y}) * y)`);
+        const forcingFirst = math.derivative(forcingNode, 'x');
+        const forcingSecond = math.derivative(forcingFirst, 'x');
+        const forcingThird = math.derivative(forcingSecond, 'x');
+        if (math.simplify(forcingThird).toString() === '0') {
+          const forcing = forcingNode.compile();
+          const a0 = Number(forcing.evaluate({ x: 0, y: 0 }));
+          const a1 = Number(forcingFirst.compile().evaluate({ x: 0, y: 0 }));
+          const a2 = Number(forcingSecond.compile().evaluate({ x: 0, y: 0 })) / 2;
+          if ([a0, a1, a2].every(Number.isFinite)) {
+            const p2 = -a2 / A;
+            const p1 = (2 * p2 - a1) / A;
+            const p0 = (p1 - a0) / A;
+            const particular = (x: number) => p2 * x * x + p1 * x + p0;
+            const K = y0 - particular(x0);
+            const polynomialTex = formatPolynomial(p2, p1, p0);
+            const exponent = A === 1
+              ? '(x - x_0)'
+              : A === -1
+                ? '-(x - x_0)'
+                : `${formatCoeff(A)}(x - x_0)`;
+            const exponentialTerm = `${formatCoeff(Math.abs(K))}e^{${exponent}}`;
+            const solutionTex = K === 0
+              ? polynomialTex
+              : `${polynomialTex} ${K < 0 ? '-' : '+'} ${exponentialTerm}`;
+            return {
+              hasExact: true,
+              fn: (x: number) => particular(x) + K * Math.exp(A * (x - x0)),
+              tex: `y(x) = ${solutionTex}`,
+              description: 'Birinchi tartibli chiziqli ODT kvadratik x-ko‘phad bilan analitik yechildi.',
+            };
+          }
+        }
       }
     }
 

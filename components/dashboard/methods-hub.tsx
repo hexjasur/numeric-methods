@@ -137,6 +137,19 @@ const METHODS: MethodDef[] = [
     icon: Activity,
     accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
   },
+  {
+    id: 'runge-kutta',
+    code: '09 / ODE',
+    category: 'odes',
+    categoryKey: 'dashboard.cat_odes',
+    titleKey: 'nav.rungeKutta',
+    descKey: 'dashboard.desc_rungeKutta',
+    href: '/methods/runge-kutta',
+    formulaTex: String.raw`y_{i+1}=y_i+\frac{k_0+2k_1+2k_2+k_3}{6}`,
+    orderTex: 'O(h^4)',
+    icon: Activity,
+    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+  },
 ];
 
 function renderKatexSafe(tex: string, displayMode = false): string {
