@@ -108,20 +108,30 @@ export function EulerMethod() {
       { throwOnError: false },
     );
   }, [inputs.x0, inputs.xEnd]);
+
+  const exactMarkup = useMemo(() => {
+    if (result?.exactResult.hasExact) {
+      return katex.renderToString(result.exactResult.tex, {
+        throwOnError: false,
+        displayMode: true,
+      });
+    }
+    return '';
+  }, [result]);
   
   const setValue = (key: keyof typeof initialInputs, value: string) =>
     setInputs((current) => ({ ...current, [key]: value }));
 
   const tableHeadings = [
-    [String.raw`i`, 'i'],
-    [String.raw`x_i`, 'x_i'],
-    [String.raw`y_i^{\text{Eyler}}`, t('euler.tbl_euler')],
-    [String.raw`y_i^{\text{Takomil}}`, t('euler.tbl_impr')],
-    [String.raw`y(x_i)^{\text{Aniq}}`, t('euler.tbl_exact')],
-    [String.raw`\Delta y`, 'Δy'],
-  ].map(([tex, label]) => ({
-    label: label as string,
-    html: katex.renderToString(tex as string, { throwOnError: false }),
+    { tex: String.raw`i`, label: 'i' },
+    { tex: String.raw`x_i`, label: 'x_i' },
+    { tex: String.raw`y_i^{\text{${t('euler.sub_euler')}}}`, label: t('euler.tbl_euler') },
+    { tex: String.raw`y_i^{\text{${t('euler.sub_impr')}}}`, label: t('euler.tbl_impr') },
+    { tex: String.raw`y(x_i)^{\text{${t('euler.sub_exact')}}}`, label: t('euler.tbl_exact') },
+    { tex: String.raw`\Delta y`, label: t('euler.tbl_diff') },
+  ].map(({ tex, label }) => ({
+    label,
+    html: katex.renderToString(tex, { throwOnError: false }),
   }));
 
   return (
@@ -218,8 +228,9 @@ export function EulerMethod() {
               {result && <EulerChart result={result} t={t} />}
             </div>
             {!result?.hasExactSolution && result && (
-              <p className="mt-4 text-sm text-muted">
-                {t('euler.plot_exact_note')}
+              <p className="mt-4 text-[13px] leading-relaxed text-muted">
+                <span className="font-semibold text-brand mr-1.5">●</span>
+                {result.exactResult.hasExact ? '' : result.exactResult.reasonText}
               </p>
             )}
           </PsPanel>
@@ -248,13 +259,53 @@ export function EulerMethod() {
 
       <div className="grid gap-[18px] xl:grid-cols-2 mb-[18px]">
         <PsPanel>
-          <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted mb-4">{t('euler.exact_title')}</span>
-          <div className="min-h-[48px] overflow-x-auto text-cyan">
-            <Formula html={formulaMarkup.exact} />
+          <div className="flex items-center justify-between mb-4">
+            <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted">
+              {t('euler.exact_title')}
+            </span>
+            {result && (
+              <span
+                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-semibold ${
+                  result.hasExactSolution
+                    ? 'border-pos/30 bg-pos/10 text-pos'
+                    : 'border-brand/30 bg-brand-soft text-brand'
+                }`}
+              >
+                {result.hasExactSolution
+                  ? t('euler.exact_badge_available')
+                  : t('euler.exact_badge_numerical_only')}
+              </span>
+            )}
           </div>
-          <p className="mt-4 text-[13px] text-muted">
-            {t('euler.exact_desc')}
-          </p>
+
+          {result?.hasExactSolution && exactMarkup ? (
+            <>
+              <div className="min-h-[48px] overflow-x-auto text-cyan">
+                <Formula html={exactMarkup} />
+              </div>
+              <p className="mt-4 text-[13px] text-muted leading-relaxed">
+                {result.exactResult.description}
+              </p>
+            </>
+          ) : result ? (
+            <div className="space-y-3">
+              <div className="rounded-lg border border-line bg-bg-2 p-3.5 text-[13px]">
+                <b className="block text-brand mb-1">
+                  {t('euler.exact_not_found')}:
+                </b>
+                <p className="leading-relaxed text-ink-2">
+                  {result.exactResult.hasExact ? '' : result.exactResult.reasonText}
+                </p>
+              </div>
+              <p className="text-[12px] leading-relaxed text-muted">
+                {t('euler.exact_numerical_hint')}
+              </p>
+            </div>
+          ) : (
+            <div className="min-h-[48px] overflow-x-auto text-cyan">
+              <Formula html={formulaMarkup.exact} />
+            </div>
+          )}
         </PsPanel>
         <PsPanel>
           <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted mb-4">{t('euler.steps_title')}</span>
@@ -278,10 +329,10 @@ export function EulerMethod() {
           csvData={rows.map((r) => ({
             i: r.step,
             x_i: numeric(r.x),
-            y_Eyler: numeric(r.yEuler),
-            y_Takomillashgan: numeric(r.yImproved),
-            y_Aniq: r.yExact !== null ? numeric(r.yExact) : '—',
-            Xatolik: numeric(r.difference),
+            [t('euler.tbl_euler')]: numeric(r.yEuler),
+            [t('euler.tbl_impr')]: numeric(r.yImproved),
+            [t('euler.tbl_exact')]: r.yExact !== null ? numeric(r.yExact) : '—',
+            [t('euler.tbl_diff')]: numeric(r.difference),
           }))}
           csvFileName="eyler-differensial.csv"
           imageFileName="eyler-differensial.png"
