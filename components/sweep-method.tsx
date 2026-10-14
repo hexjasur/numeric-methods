@@ -202,103 +202,186 @@ export function SweepMethod() {
         ]}
       />
 
-      <div className="grid items-start gap-[18px] xl:grid-cols-[minmax(290px,.76fr)_minmax(0,1.5fr)]">
-        <PsPanel>
-          <PsPanelHead eyebrow={t('sweep.input_eyebrow')} title={t('sweep.panel_input')} idx="01" />
-          <PsNote icon={<Info size={16} />}>
-            <p><b>{t('sweep.note_method_title')}</b> — {t('sweep.note_method')}</p>
-            <p className="mt-2">{t('sweep.note_precision')}</p>
-          </PsNote>
+      <div className="grid items-start gap-[18px] lg:grid-cols-[minmax(290px,340px)_minmax(0,1fr)]">
+        <aside className="space-y-[18px] lg:sticky lg:top-4">
+          <PsPanel>
+            <PsPanelHead
+              eyebrow={t('sweep.panel_settings_eyebrow')}
+              title={t('sweep.panel_settings_title')}
+              idx="01"
+            />
 
-          <form onSubmit={calculate}>
-            <div className="mb-4 grid grid-cols-2 gap-3">
-              <label className="block min-w-0">
-                <span className="mb-1.5 block text-[13.5px] font-[650] text-ink">{t('sweep.label_size')}</span>
-                <select
-                  value={size}
-                  onChange={(event) => resizeSystem(Number(event.target.value))}
-                  className="w-full rounded-lg border border-line-2 bg-bg-2 p-[13px_14px] font-mono text-[15px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
-                >
-                  {Array.from({ length: MAX_SIZE - MIN_SIZE + 1 }, (_, index) => index + MIN_SIZE).map((n) => (
-                    <option key={n} value={n}>{n} × {n}</option>
-                  ))}
-                </select>
-              </label>
-              <label className="block min-w-0">
-                <span className="mb-1.5 block text-[13.5px] font-[650] text-ink">{t('sweep.label_precision')}</span>
-                <select
-                  value={precision}
-                  onChange={(event) => setPrecision(Number(event.target.value))}
-                  className="w-full rounded-lg border border-line-2 bg-bg-2 p-[13px_14px] font-mono text-[15px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
-                >
-                  {PRECISION_OPTIONS.map((digits) => <option key={digits} value={digits}>{digits}</option>)}
-                </select>
-              </label>
-            </div>
-
-            <div className="mb-4 overflow-x-auto rounded-lg border border-line bg-bg-2">
-              <table className="w-full min-w-[510px] border-collapse text-right font-mono text-[12px]">
-                <thead className="sticky top-0 z-10 border-b border-line bg-panel text-muted">
-                  <tr>
-                    <th className="px-2 py-3 text-center">i</th>
-                    <th className="px-2 py-3">aᵢ</th>
-                    <th className="px-2 py-3">bᵢ</th>
-                    <th className="px-2 py-3">cᵢ</th>
-                    <th className="px-2 py-3">dᵢ</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((row, index) => (
-                    <tr className="border-b border-line last:border-b-0" key={index}>
-                      <td className="px-2 py-2 text-center text-muted">{index + 1}</td>
-                      {(['a', 'b', 'c', 'd'] as const).map((key) => {
-                        const fixedBoundary = (key === 'a' && index === 0) || (key === 'c' && index === size - 1);
-                        return (
-                          <td className="p-1" key={key}>
-                            <input
-                              aria-label={`${key}_${index + 1}`}
-                              type="number"
-                              step="any"
-                              value={row[key]}
-                              disabled={fixedBoundary}
-                              onChange={(event) => updateCoefficient(index, key, event.target.value)}
-                              className={`w-full min-w-[76px] rounded-md border px-2 py-2 text-right font-mono text-[13px] outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand-soft ${fixedBoundary ? 'cursor-not-allowed border-transparent bg-panel text-muted' : 'border-line bg-panel text-ink'}`}
-                            />
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <p className="mb-4 text-[12px] leading-[1.55] text-muted">{t('sweep.matrix_hint')}</p>
-            <button
-              type="submit"
-              className="flex w-full items-center justify-between gap-3 rounded-lg border border-ink bg-ink p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-            >
-              {t('sweep.btn_calc')} <Calculator size={20} />
-            </button>
-
-            <div className="mt-[22px] border-t border-line pt-[16px]">
-              <strong className="mb-2.5 block font-mono text-xs font-semibold uppercase tracking-[.1em] text-muted">{t('sweep.examples_title')}</strong>
-              <div className="flex flex-wrap gap-2">
-                <button type="button" onClick={() => applyExample('exact')} className="rounded-md border border-line-2 bg-bg-2 px-2.5 py-1.5 font-mono text-[12px] font-semibold text-brand transition-all hover:-translate-y-px hover:border-brand hover:bg-brand-soft focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan">{t('sweep.example_exact')}</button>
-                <button type="button" onClick={() => applyExample('v2')} className="rounded-md border border-line-2 bg-bg-2 px-2.5 py-1.5 font-mono text-[12px] font-semibold text-brand transition-all hover:-translate-y-px hover:border-brand hover:bg-brand-soft focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan">{t('sweep.example_v2')}</button>
+            <div className="space-y-4">
+              <div className="border-b border-line pb-3">
+                <span className="text-[11.5px] font-bold uppercase tracking-wider text-muted">
+                  {t('sweep.goal_label')}:
+                </span>
+                <p className="mt-1 text-[13.5px] leading-relaxed text-ink">
+                  {t('sweep.goal_text')}
+                </p>
               </div>
-            </div>
-          </form>
 
-          {error && (
-            <div className="mt-4 rounded-lg border border-neg border-l-[5px] bg-[color-mix(in_srgb,var(--neg)_10%,transparent)] p-[16px_18px]" role="alert">
-              <b className="text-[14.5px]">{t('sweep.err_calc')}</b>
-              <p className="mt-1.5 text-[14px] text-ink-2">{error}</p>
+              <div className="grid grid-cols-2 gap-3">
+                <label className="block min-w-0">
+                  <span className="mb-1.5 block text-[13px] font-[650] text-ink">{t('sweep.label_size')}</span>
+                  <select
+                    value={size}
+                    onChange={(event) => resizeSystem(Number(event.target.value))}
+                    className="w-full rounded-lg border border-line-2 bg-bg-2 p-[10px_12px] font-mono text-[14px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
+                  >
+                    {Array.from({ length: MAX_SIZE - MIN_SIZE + 1 }, (_, index) => index + MIN_SIZE).map((n) => (
+                      <option key={n} value={n}>{n} × {n}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="block min-w-0">
+                  <span className="mb-1.5 block text-[13px] font-[650] text-ink">{t('sweep.label_precision')}</span>
+                  <select
+                    value={precision}
+                    onChange={(event) => setPrecision(Number(event.target.value))}
+                    className="w-full rounded-lg border border-line-2 bg-bg-2 p-[10px_12px] font-mono text-[14px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
+                  >
+                    {PRECISION_OPTIONS.map((digits) => <option key={digits} value={digits}>{digits}</option>)}
+                  </select>
+                </label>
+              </div>
+
+              <div>
+                <strong className="mb-2 block font-mono text-[11px] font-semibold uppercase tracking-[.1em] text-muted">
+                  {t('sweep.examples_title')}
+                </strong>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => applyExample('exact')}
+                    className="rounded-md border border-line-2 bg-bg-2 px-2.5 py-1.5 font-mono text-[12px] font-semibold text-brand transition-all hover:-translate-y-px hover:border-brand hover:bg-brand-soft focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan cursor-pointer"
+                  >
+                    {t('sweep.example_exact')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => applyExample('v2')}
+                    className="rounded-md border border-line-2 bg-bg-2 px-2.5 py-1.5 font-mono text-[12px] font-semibold text-brand transition-all hover:-translate-y-px hover:border-brand hover:bg-brand-soft focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan cursor-pointer"
+                  >
+                    {t('sweep.example_v2')}
+                  </button>
+                </div>
+              </div>
+
+              <div className="border-t border-line pt-3">
+                <span className="text-[12px] font-semibold text-muted">
+                  {t('sweep.residual_formula_title')}
+                </span>
+                <div className="my-2 overflow-x-auto rounded-lg border border-line bg-bg-2 p-2.5 text-center text-[13px] text-cyan">
+                  <MathMarkup tex="r_i = d_i - (a_i x_{i-1} + b_i x_i + c_i x_{i+1})" displayMode />
+                </div>
+                <p className="text-[11.5px] leading-relaxed text-muted">
+                  {t('sweep.residual_formula_note')}
+                </p>
+              </div>
+
+              <PsNote icon={<Info size={16} />}>
+                <p><b>{t('sweep.note_method_title')}</b> — {t('sweep.note_method')}</p>
+                <p className="mt-1.5">{t('sweep.note_precision')}</p>
+              </PsNote>
             </div>
-          )}
-        </PsPanel>
+          </PsPanel>
+        </aside>
 
         <div className="grid min-w-0 gap-[18px]">
+          <PsPanel>
+            <header className="relative mb-5 flex items-start justify-between border-b border-line pl-7 pt-1.5 pb-4">
+              <div>
+                <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
+                  {t('sweep.matrix_eyebrow')}
+                </span>
+                <h2 className="mt-2 text-[22px] font-[650] tracking-[-.035em]">
+                  {t('sweep.matrix_title')}
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="rounded border border-line-2 bg-bg-2 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider text-muted">
+                  {t('sweep.matrix_badge')}
+                </span>
+                <span className="font-mono text-[13px] font-semibold text-muted">02</span>
+              </div>
+            </header>
+
+            <form onSubmit={calculate}>
+              <div className="mb-4 overflow-x-auto rounded-lg border border-line bg-bg-2">
+                <table className="w-full min-w-[480px] border-collapse font-mono text-[13px]">
+                  <thead className="sticky top-0 z-10 border-b border-line bg-panel text-muted">
+                    <tr>
+                      <th className="w-12 px-3 py-3 text-center font-semibold">i</th>
+                      <th className="px-3 py-3 text-center font-semibold">
+                        <span className="text-ink">aᵢ</span>
+                        <span className="ml-1 text-[11px] font-normal text-muted">(a[i])</span>
+                      </th>
+                      <th className="px-3 py-3 text-center font-semibold">
+                        <span className="text-ink">bᵢ</span>
+                        <span className="ml-1 text-[11px] font-normal text-muted">(b[i])</span>
+                      </th>
+                      <th className="px-3 py-3 text-center font-semibold">
+                        <span className="text-ink">cᵢ</span>
+                        <span className="ml-1 text-[11px] font-normal text-muted">(c[i])</span>
+                      </th>
+                      <th className="px-3 py-3 text-center font-semibold">
+                        <span className="text-ink">dᵢ</span>
+                        <span className="ml-1 text-[11px] font-normal text-muted">(d[i])</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row, index) => (
+                      <tr className="border-b border-line last:border-b-0" key={index}>
+                        <td className="px-3 py-2.5 text-center font-bold text-muted">{index + 1}</td>
+                        {(['a', 'b', 'c', 'd'] as const).map((key) => {
+                          const fixedBoundary = (key === 'a' && index === 0) || (key === 'c' && index === size - 1);
+                          return (
+                            <td className="p-1.5" key={key}>
+                              <input
+                                aria-label={`${key}_${index + 1}`}
+                                type="number"
+                                step="any"
+                                value={row[key]}
+                                disabled={fixedBoundary}
+                                onChange={(event) => updateCoefficient(index, key, event.target.value)}
+                                className={`w-full min-w-[70px] rounded-md border px-3 py-2 text-center sm:text-right font-mono text-[14px] outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand-soft ${
+                                  fixedBoundary
+                                    ? 'cursor-not-allowed border-transparent bg-panel/50 text-muted select-none'
+                                    : 'border-line bg-panel text-ink hover:border-line-2 focus:bg-bg-2'
+                                }`}
+                              />
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
+                <p className="text-[12px] leading-relaxed text-muted">
+                  {t('sweep.matrix_hint')}
+                </p>
+                <button
+                  type="submit"
+                  className="flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-lg border border-ink bg-ink px-7 py-3 font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan shrink-0 cursor-pointer"
+                >
+                  <span>{t('sweep.btn_calc')}</span>
+                  <Calculator size={18} />
+                </button>
+              </div>
+            </form>
+
+            {error && (
+              <div className="mt-4 rounded-lg border border-neg border-l-[5px] bg-[color-mix(in_srgb,var(--neg)_10%,transparent)] p-[16px_18px]" role="alert">
+                <b className="text-[14.5px]">{t('sweep.err_calc')}</b>
+                <p className="mt-1.5 text-[14px] text-ink-2">{error}</p>
+              </div>
+            )}
+          </PsPanel>
           {result && (
             <ResultActions
               summaryText={`Haydash (Thomas) method: n=${result.rows.length}, x=[${result.rows.map((row) => formatSweep(row.x, precision)).join(', ')}], max residual=${formatSweep(result.maxResidual, precision + 2)}`}
@@ -340,7 +423,7 @@ export function SweepMethod() {
 
           {result && (
             <PsPanel>
-              <PsPanelHead eyebrow={t('sweep.summary_eyebrow')} title={t('sweep.summary_title')} idx="02" />
+              <PsPanelHead eyebrow={t('sweep.summary_eyebrow')} title={t('sweep.summary_title')} idx="03" />
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-pos/30 bg-pos/10 px-3 py-1.5 text-[12px] font-semibold text-pos"><Check size={14} />{t('sweep.verified')}</span>
                 <span className={`rounded-full border px-3 py-1.5 text-[12px] font-semibold ${result.diagonallyDominant ? 'border-cyan/30 bg-cyan-soft text-cyan' : 'border-brand/30 bg-brand-soft text-brand'}`}>{toleranceChip}</span>
@@ -351,7 +434,7 @@ export function SweepMethod() {
 
           {result && (
             <PsPanel>
-              <PsPanelHead eyebrow={t('sweep.forward_eyebrow')} title={t('sweep.forward_title')} idx="03" />
+              <PsPanelHead eyebrow={t('sweep.forward_eyebrow')} title={t('sweep.forward_title')} idx="04" />
               <div className="mb-4 overflow-x-auto rounded-lg border border-line bg-bg-2">
                 <table className="w-full min-w-[440px] border-collapse text-right font-mono text-[12px]">
                   <thead className="border-b border-line bg-panel text-muted"><tr>{forwardHeadings.map(({ tex, label }) => <th className="px-4 py-3 font-semibold" key={label}><MathMarkup tex={tex} /></th>)}</tr></thead>
@@ -378,7 +461,7 @@ export function SweepMethod() {
 
           {result && (
             <PsPanel>
-              <PsPanelHead eyebrow={t('sweep.backward_eyebrow')} title={t('sweep.backward_title')} idx="04" />
+              <PsPanelHead eyebrow={t('sweep.backward_eyebrow')} title={t('sweep.backward_title')} idx="05" />
               <div className="grid gap-3">
                 {result.backwardSteps.map((step) => (
                   <article className="rounded-lg border border-line bg-bg-2 p-4" key={step.index}>
@@ -392,7 +475,7 @@ export function SweepMethod() {
 
           {result && (
             <PsPanel>
-              <PsPanelHead eyebrow={t('sweep.check_eyebrow')} title={t('sweep.check_title')} idx="05" />
+              <PsPanelHead eyebrow={t('sweep.check_eyebrow')} title={t('sweep.check_title')} idx="06" />
               <PsNote icon={<Check size={16} />}>
                 <p>{t('sweep.check_note')}</p>
               </PsNote>
