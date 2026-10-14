@@ -143,6 +143,8 @@ export function EulerMethod() {
         title={<>{t('euler.hero_title')}</>}
         titleHighlight={t('euler.hero_titleHighlight')}
         lead={t('euler.hero_lead')}
+        conditionMain={<>y&apos; = f(x, y),&nbsp;&nbsp;y(x₀) = y₀</>}
+        conditionSub={t('euler.hero_condition')}
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(300px,.82fr)_minmax(0,1.4fr)] gap-[18px] items-start mb-[18px]">
@@ -203,6 +205,9 @@ export function EulerMethod() {
                 <span>{t('euler.note_interval')}</span>
                 <span className="font-mono text-brand font-semibold"><MathInline html={intervalMarkup} /></span>
               </div>
+              <p className="mt-1.5 text-[12px] text-muted">
+                {t('euler.hero_condition')}
+              </p>
             </PsNote>
 
             <button

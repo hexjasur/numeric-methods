@@ -176,6 +176,7 @@
     "hero_title": "Eyler",
     "hero_titleHighlight": "usullari",
     "hero_lead": "Oddiy va takomillashgan Eyler usullarini analitik yechim bilan taqqoslab, har bir qadamdagi farqni kuzating.",
+    "hero_condition": "1-tartibli Oddiy Differensial Tenglama (ODT) — Koshi masalasi uchun ishlaydi.",
     "panel_input": "Masalani sozlang",
     "label_fn": "f(x, y) funksiya",
     "label_syntax": "Math.js sintaksisi",

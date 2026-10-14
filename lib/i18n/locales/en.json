@@ -176,6 +176,7 @@
     "hero_title": "Euler",
     "hero_titleHighlight": "Methods",
     "hero_lead": "Compare standard and improved Euler methods with the analytical solution, observing the difference at each step.",
+    "hero_condition": "Designed for 1st-order Ordinary Differential Equations (ODEs) — Cauchy initial value problems.",
     "panel_input": "Configure the problem",
     "label_fn": "Function f(x, y)",
     "label_syntax": "Math.js syntax",
