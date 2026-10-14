@@ -19,13 +19,13 @@
     "matematika-oquv-resurslari-uz",
     "matematika-oquv-resurslari-uzbek"
   ],
-  "homepage": "https://github.com/jas-kha/math.yolnoma#readme",
+  "homepage": "https://github.com/hexjasur/numeric-methods#readme",
   "bugs": {
-    "url": "https://github.com/jas-kha/math.yolnoma/issues"
+    "url": "https://github.com/hexjasur/numeric-methods/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jas-kha/math.yolnoma.git"
+    "url": "git+https://github.com/hexjasur/numeric-methods.git"
   },
   "license": "ISC",
   "author": "Jasurbek Haydarov",
