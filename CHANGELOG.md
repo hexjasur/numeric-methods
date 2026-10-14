@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.6] - 2026-10-14
+
+### Added
+- **Euler Method Step-by-Step Derivation Panel (`/methods/euler`):**
+  - Added an academic "Daftarga ko'chirish uchun bosqichma-bosqich yechim" collapsible panel detailing Cauchy problem parameters, iterative arithmetic substitution for each step $i$, predictor-corrector calculations, and formatted copyable result tables.
+  - Implemented dynamic analytical ODE solving for separable and 1st-order linear differential equations, computing exact closed-form solutions $y(x)$, exact values $y^*(x_i)$, and absolute error tracking.
+  - Added informative status badges explaining when an ODE does not admit an elementary closed-form analytical solution.
+  - Added localized Cauchy condition badges and refined step table localization (Takomillashgan Eyler / Heun).
+
+### Fixed
+- **Lagrange Interpolation Table Layout (`/methods/lagrange`):**
+  - Redesigned the node input table (`PointTable`) using fixed-width table layout and responsive input paddings to completely eliminate horizontal scrolling.
+  - Balanced the section 01 input nodes table columns (`w-1/3 text-center`) to fix right-skewing and ensure symmetrical alignment.
+
+### Changed
+- **Navigation & Methods Hub Icons:**
+  - Assigned mathematically appropriate icons across navigation and the dashboard methods hub:
+    - **Haydash (Thomas/TDMA) Method:** Updated to `ArrowRightLeft` representing forward and backward elimination sweep passes.
+    - **Lagrange Interpolation:** Updated to `Spline` representing continuous polynomial curve fitting through interpolation nodes.
+- **Haydash (Thomas/TDMA) Method Workspace (`/methods/sweep`):**
+  - Refactored layout to follow spacious V2 layout conventions with separate dimension controls and streamlined coefficient matrices.
+
+---
+
 ## [3.0.5] - 2026-10-13
 
 ### Added
