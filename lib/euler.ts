@@ -39,10 +39,17 @@ export type EulerStepDetail = {
 export type EulerResult = {
   rows: EulerRow[];
   steps: number;
-  hasExactSolution: boolean;
-  exactResult: ExactODEResult;
   detailedSteps: EulerStepDetail[];
-};
+} & (
+  | {
+      hasExactSolution: true;
+      exactResult: Extract<ExactODEResult, { hasExact: true }>;
+    }
+  | {
+      hasExactSolution: false;
+      exactResult: Extract<ExactODEResult, { hasExact: false }>;
+    }
+);
 
 function formatCoeff(n: number): string {
   const rounded = Number(n.toFixed(4));
@@ -316,7 +323,23 @@ export function solveEulerMethods(
     pushRow(step);
   }
 
-  return { rows, steps: estimatedSteps, hasExactSolution, exactResult, detailedSteps };
+  if (exactResult.hasExact) {
+    return {
+      rows,
+      steps: estimatedSteps,
+      hasExactSolution: true,
+      exactResult,
+      detailedSteps,
+    };
+  }
+
+  return {
+    rows,
+    steps: estimatedSteps,
+    hasExactSolution: false,
+    exactResult,
+    detailedSteps,
+  };
 }
 
 export function formatNum(n: number, maxDigits = 4): string {

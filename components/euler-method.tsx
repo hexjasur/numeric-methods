@@ -279,10 +279,10 @@ export function EulerMethod() {
             <div className="h-[350px] w-full min-w-0 flex-1">
               {result && <EulerChart result={result} t={t} />}
             </div>
-            {!result?.hasExactSolution && result && (
+            {result && !result.hasExactSolution && (
               <p className="mt-4 text-[13px] leading-relaxed text-muted">
                 <span className="font-semibold text-brand mr-1.5">●</span>
-                {result.exactResult.hasExact ? '' : result.exactResult.reasonText}
+                {result.exactResult.reasonText}
               </p>
             )}
           </PsPanel>
@@ -346,7 +346,7 @@ export function EulerMethod() {
                   {t('euler.exact_not_found')}:
                 </b>
                 <p className="leading-relaxed text-ink-2">
-                  {result.exactResult.hasExact ? '' : result.exactResult.reasonText}
+                  {!result.exactResult.hasExact ? result.exactResult.reasonText : ''}
                 </p>
               </div>
               <p className="text-[12px] leading-relaxed text-muted">
