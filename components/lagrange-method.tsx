@@ -63,14 +63,38 @@ function fractionTex(value: number): string {
 function PointTable({ points, onChange }: { points: LagrangeInputPoint[]; onChange: (index: number, axis: 'x' | 'y', value: string) => void }) {
   const { t } = useI18n();
   return (
-    <div className="overflow-x-auto rounded-lg border border-line">
-      <table className="w-full min-w-[340px] border-collapse text-left font-mono text-sm">
-        <thead className="bg-bg-2 text-muted"><tr><th className="px-3 py-2.5">№</th><th className="px-3 py-2.5">xᵢ</th><th className="px-3 py-2.5">yᵢ</th></tr></thead>
-        <tbody>{points.map((point, index) => <tr key={index} className="border-t border-line">
-          <td className="px-3 py-2 text-xs text-muted">{index + 1}</td>
-          <td className="p-1"><input aria-label={t('lagrange.point_x', { index: index + 1 })} value={point.x} onChange={(event) => onChange(index, 'x', event.target.value)} className="w-full min-w-[90px] border-b border-line-2 bg-transparent px-2 py-2 text-center font-mono text-ink outline-none focus:border-brand" /></td>
-          <td className="p-1"><input aria-label={t('lagrange.point_y', { index: index + 1 })} value={point.y} onChange={(event) => onChange(index, 'y', event.target.value)} className="w-full min-w-[90px] border-b border-line-2 bg-transparent px-2 py-2 text-center font-mono text-ink outline-none focus:border-brand" /></td>
-        </tr>)}</tbody>
+    <div className="overflow-hidden rounded-lg border border-line">
+      <table className="w-full table-fixed border-collapse font-mono text-sm">
+        <thead className="bg-bg-2 text-muted">
+          <tr>
+            <th className="w-10 px-1.5 py-2 text-center text-xs font-semibold border-b border-line">№</th>
+            <th className="px-2 py-2 text-center font-semibold border-b border-line">xᵢ</th>
+            <th className="px-2 py-2 text-center font-semibold border-b border-line">yᵢ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {points.map((point, index) => (
+            <tr key={index} className="border-b border-line last:border-b-0 hover:bg-bg-2/30 transition-colors">
+              <td className="px-1.5 py-1.5 text-center text-xs text-muted font-bold">{index + 1}</td>
+              <td className="p-1">
+                <input
+                  aria-label={t('lagrange.point_x', { index: index + 1 })}
+                  value={point.x}
+                  onChange={(event) => onChange(index, 'x', event.target.value)}
+                  className="w-full min-w-0 rounded border border-line-2 bg-transparent px-2 py-1.5 text-center font-mono text-ink text-sm outline-none focus:border-brand focus:bg-bg transition-colors"
+                />
+              </td>
+              <td className="p-1">
+                <input
+                  aria-label={t('lagrange.point_y', { index: index + 1 })}
+                  value={point.y}
+                  onChange={(event) => onChange(index, 'y', event.target.value)}
+                  className="w-full min-w-0 rounded border border-line-2 bg-transparent px-2 py-1.5 text-center font-mono text-ink text-sm outline-none focus:border-brand focus:bg-bg transition-colors"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
@@ -155,7 +179,31 @@ export function LagrangeMethod() {
             <PsPanel>
               <PsPanelHead eyebrow="Trace / Qadamlar" title={t('lagrange.steps_title')} idx="03" />
               <div className="space-y-4">
-                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-brand">01 · {t('lagrange.step_points')}</h3><div className="overflow-x-auto rounded-lg border border-line"><table className="w-full min-w-[370px] border-collapse font-mono text-sm"><thead className="bg-panel text-muted"><tr><th className="px-3 py-2">i</th><th className="px-3 py-2">xᵢ</th><th className="px-3 py-2">yᵢ</th></tr></thead><tbody>{result.points.map((point) => <tr key={point.index} className="border-t border-line"><td className="px-3 py-2 text-brand">{point.index}</td><td className="px-3 py-2">{formatLagrange(point.x, 8)}</td><td className="px-3 py-2">{formatLagrange(point.y, 8)}</td></tr>)}</tbody></table></div></section>
+                <section className="rounded-lg border border-line bg-bg-2 p-4">
+                  <h3 className="mb-3 font-mono text-xs font-bold uppercase tracking-wider text-brand">
+                    01 · {t('lagrange.step_points')}
+                  </h3>
+                  <div className="overflow-hidden rounded-lg border border-line">
+                    <table className="w-full table-fixed border-collapse font-mono text-sm">
+                      <thead className="bg-panel text-muted">
+                        <tr>
+                          <th className="w-1/3 px-3 py-2.5 text-center font-semibold border-b border-line">i</th>
+                          <th className="w-1/3 px-3 py-2.5 text-center font-semibold border-b border-line">xᵢ</th>
+                          <th className="w-1/3 px-3 py-2.5 text-center font-semibold border-b border-line">yᵢ</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {result.points.map((point) => (
+                          <tr key={point.index} className="border-b border-line last:border-b-0 hover:bg-panel/40 transition-colors">
+                            <td className="px-3 py-2.5 text-center font-bold text-brand">{point.index}</td>
+                            <td className="px-3 py-2.5 text-center text-ink">{formatLagrange(point.x, 8)}</td>
+                            <td className="px-3 py-2.5 text-center text-ink">{formatLagrange(point.y, 8)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
                 <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">02 · {t('lagrange.step_basis')}</h3><div className="mb-3 overflow-x-auto text-center"><MathOutput display tex="\\ell_i(x)=\\prod_{j\\ne i}\\frac{x-x_j}{x_i-x_j}" /></div><div className="space-y-3">{result.bases.map((basis) => { const numerator = result.points.filter((_, index) => index !== basis.index).map((other) => `(x-(${fractionTex(other.x)}))`).join('\\cdot'); return <div key={basis.index} className="overflow-x-auto rounded-lg border border-line bg-panel p-3"><p className="mb-2 font-mono text-xs font-bold text-brand">ℓ{basis.index}(x) · {t('lagrange.point_label', { index: basis.index })}</p><div className="text-center"><MathOutput display tex={`\\ell_{${basis.index}}(x)=\\frac{${numerator}}{${fractionTex(basis.denominator)}}=${polynomialToTex(basis.coefficients)}`} /></div><div className="mt-2 border-t border-dashed border-line pt-2 text-center text-sm"><span className="mr-1 text-muted">y{basis.index}ℓ{basis.index}(x) =</span><MathOutput tex={polynomialToTex(basis.weightedCoefficients)} /></div></div>; })}</div></section>
                 <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">03 · {t('lagrange.step_sum')}</h3><p className="mb-3 text-xs leading-relaxed text-muted">{t('lagrange.step_sum_desc')}</p><div className="overflow-x-auto rounded-lg border border-dashed border-line-2 bg-panel p-4 text-center text-brand"><MathOutput display tex={`P_{${result.points.length - 1}}(x)=\\sum_{i=0}^{${result.points.length - 1}} y_i\\ell_i(x)=${polynomialToTex(result.coefficients)}`} /></div></section>
                 <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">04 · {t('lagrange.step_eval')}</h3><div className="overflow-x-auto text-center"><MathOutput display tex={`P(${formatLagrange(result.xValue, 6)})=${formatLagrange(result.interpolatedValue, 10)}`} /></div>{result.targetValue !== null && <><p className="my-3 text-xs text-muted">{t('lagrange.error_substitution')}</p><div className="overflow-x-auto rounded-lg border border-cyan/20 bg-panel p-3 text-center"><MathOutput display tex={`f(${formatLagrange(result.xValue, 6)})=${formatLagrange(result.targetValue, 10)},\\qquad |f(x^*)-P(x^*)|=${formatLagrange(result.absoluteError ?? 0, 10)}`} /></div></>}
