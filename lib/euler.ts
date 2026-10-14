@@ -20,11 +20,28 @@ export type ExactODEResult = {
   reasonText: string;
 };
 
+export type EulerStepDetail = {
+  i: number;
+  x: number;
+  y: number;
+  f_xy: number;
+  h: number;
+  nextX: number;
+  nextY: number;
+  xImproved: number;
+  yImproved: number;
+  k1: number;
+  yPred: number;
+  k2: number;
+  nextYImproved: number;
+};
+
 export type EulerResult = {
   rows: EulerRow[];
   steps: number;
   hasExactSolution: boolean;
   exactResult: ExactODEResult;
+  detailedSteps: EulerStepDetail[];
 };
 
 function formatCoeff(n: number): string {
@@ -241,6 +258,7 @@ export function solveEulerMethods(
 
   const exactResult = findExactSolution(expression, x0, y0, t);
   const hasExactSolution = exactResult.hasExact;
+  const detailedSteps: EulerStepDetail[] = [];
   const rows: EulerRow[] = [];
   let x = x0;
   let yEuler = y0;
@@ -261,20 +279,190 @@ export function solveEulerMethods(
   pushRow(0);
   for (let step = 1; step <= estimatedSteps; step++) {
     const stepSize = Math.min(h, xEnd - x);
-    const nextX = x + stepSize;
+    const nextX = step === estimatedSteps ? xEnd : x + stepSize;
+
+    // Simple Euler slopes & next value
     const eulerSlope = evaluate(x, yEuler);
+    const nextYEuler = yEuler + stepSize * eulerSlope;
+
+    // Improved Euler (Heun) slopes & next value
     const improvedSlope = evaluate(x, yImproved);
     const predictedY = yImproved + stepSize * improvedSlope;
     const correctedSlope = evaluate(nextX, predictedY);
+    const nextYImproved = yImproved + (stepSize / 2) * (improvedSlope + correctedSlope);
 
-    yEuler += stepSize * eulerSlope;
-    yImproved += (stepSize / 2) * (improvedSlope + correctedSlope);
+    detailedSteps.push({
+      i: step - 1,
+      x,
+      y: yEuler,
+      f_xy: eulerSlope,
+      h: stepSize,
+      nextX,
+      nextY: nextYEuler,
+      xImproved: x,
+      yImproved,
+      k1: improvedSlope,
+      yPred: predictedY,
+      k2: correctedSlope,
+      nextYImproved,
+    });
+
+    yEuler = nextYEuler;
+    yImproved = nextYImproved;
     if (!Number.isFinite(yEuler) || !Number.isFinite(yImproved)) {
       throw new Error(t('errors.elr_overflow'));
     }
-    x = step === estimatedSteps ? xEnd : nextX;
+    x = nextX;
     pushRow(step);
   }
 
-  return { rows, steps: estimatedSteps, hasExactSolution, exactResult };
+  return { rows, steps: estimatedSteps, hasExactSolution, exactResult, detailedSteps };
+}
+
+export function formatNum(n: number, maxDigits = 4): string {
+  if (Math.abs(n) < 1e-12) return '0';
+  const rounded = Number(n.toFixed(maxDigits));
+  return Object.is(rounded, -0) ? '0' : rounded.toString();
+}
+
+export function substituteExpr(expr: string, xVal: string, yVal: string): string {
+  try {
+    const formattedX = xVal.startsWith('-') ? `(${xVal})` : xVal;
+    const formattedY = yVal.startsWith('-') ? `(${yVal})` : `(${yVal})`;
+    return expr
+      .replace(/(\d)([xy])/g, '$1 * $2')
+      .replace(/(^|[^a-zA-Z0-9_])x(?![a-zA-Z0-9_])/g, `$1${formattedX}`)
+      .replace(/(^|[^a-zA-Z0-9_])y(?![a-zA-Z0-9_])/g, `$1${formattedY}`);
+  } catch {
+    return `f(${xVal}, ${yVal})`;
+  }
+}
+
+export function substituteLatex(expr: string, xVal: string, yVal: string): string {
+  try {
+    const formattedX = xVal.startsWith('-') ? `(${xVal})` : xVal;
+    const formattedY = yVal.startsWith('-') ? `(${yVal})` : `(${yVal})`;
+    return expr
+      .replace(/(\d)([xy])/g, '$1 \\cdot $2')
+      .replace(/\*/g, ' \\cdot ')
+      .replace(/(^|[^a-zA-Z0-9_])x(?![a-zA-Z0-9_])/g, `$1${formattedX}`)
+      .replace(/(^|[^a-zA-Z0-9_])y(?![a-zA-Z0-9_])/g, `$1${formattedY}`);
+  } catch {
+    return `f(${xVal}, ${yVal})`;
+  }
+}
+
+export function generateNotebookText(
+  type: 'simple' | 'improved',
+  expression: string,
+  x0: number,
+  y0: number,
+  xEnd: number,
+  h: number,
+  detailedSteps: EulerStepDetail[],
+  t: (k: string, p?: Record<string, string | number>) => string
+): string {
+  const isSimple = type === 'simple';
+  const title = isSimple
+    ? `--- ${t('euler.notebook_tab_simple').toUpperCase()} BO'YICHA YECHIM ---`
+    : `--- ${t('euler.notebook_tab_improved').toUpperCase()} BO'YICHA YECHIM ---`;
+
+  const sec1 = t('euler.notebook_sec_1');
+  const sec2 = t('euler.notebook_sec_2');
+  const sec3 = t('euler.notebook_sec_3');
+  const intervalWord = t('euler.notebook_interval');
+
+  const lines: string[] = [
+    title,
+    '',
+    `${sec1}:`,
+    `   - f(x, y) = ${expression}`,
+    `   - x_0 = ${formatNum(x0)}, y_0 = ${formatNum(y0)}`,
+    `   - h = ${formatNum(h)}, ${intervalWord}: [${formatNum(x0)}, ${formatNum(xEnd)}]`,
+    '',
+    `${sec2}:`,
+    '',
+  ];
+
+  if (isSimple) {
+    for (const step of detailedSteps) {
+      const i = step.i;
+      const x_i = formatNum(step.x);
+      const y_i = formatNum(step.y);
+      const f_val = formatNum(step.f_xy);
+      const h_val = formatNum(step.h);
+      const nextY = formatNum(step.nextY);
+      const nextX = formatNum(step.nextX);
+      const subExpr = substituteExpr(expression, x_i, y_i);
+
+      lines.push(`   i = ${i}:`);
+      lines.push(`     x_${i} = ${x_i}, y_${i} = ${y_i}`);
+      lines.push(`     f(x_${i}, y_${i}) = ${subExpr} = ${f_val}`);
+      lines.push(
+        `     y_${i + 1} = y_${i} + h * f(x_${i}, y_${i}) = ${y_i} + ${h_val} * (${f_val}) = ${nextY}`
+      );
+      lines.push(`     x_${i + 1} = x_${i} + h = ${x_i} + ${h_val} = ${nextX}`);
+      lines.push('');
+    }
+
+    lines.push(`${sec3}:`);
+    lines.push(`   |  i  |   x_i   |   y_i   | f(x_i, y_i) |`);
+    lines.push(`   |-----|---------|---------|-------------|`);
+    for (const step of detailedSteps) {
+      lines.push(
+        `   | ${String(step.i).padEnd(3)} | ${formatNum(step.x).padEnd(7)} | ${formatNum(step.y).padEnd(7)} | ${formatNum(step.f_xy).padEnd(11)} |`
+      );
+    }
+    if (detailedSteps.length > 0) {
+      const last = detailedSteps[detailedSteps.length - 1];
+      lines.push(
+        `   | ${String(last.i + 1).padEnd(3)} | ${formatNum(last.nextX).padEnd(7)} | ${formatNum(last.nextY).padEnd(7)} | —           |`
+      );
+    }
+  } else {
+    for (const step of detailedSteps) {
+      const i = step.i;
+      const x_i = formatNum(step.xImproved);
+      const y_i = formatNum(step.yImproved);
+      const k1 = formatNum(step.k1);
+      const h_val = formatNum(step.h);
+      const yPred = formatNum(step.yPred);
+      const nextX = formatNum(step.nextX);
+      const k2 = formatNum(step.k2);
+      const nextY = formatNum(step.nextYImproved);
+
+      const subExpr1 = substituteExpr(expression, x_i, y_i);
+      const subExpr2 = substituteExpr(expression, nextX, yPred);
+
+      lines.push(`   i = ${i}:`);
+      lines.push(`     x_${i} = ${x_i}, y_${i} = ${y_i}`);
+      lines.push(`     k_1 = f(x_${i}, y_${i}) = ${subExpr1} = ${k1}`);
+      lines.push(
+        `     ȳ_${i + 1} = y_${i} + h * k_1 = ${y_i} + ${h_val} * (${k1}) = ${yPred}`
+      );
+      lines.push(`     k_2 = f(x_${i + 1}, ȳ_${i + 1}) = ${subExpr2} = ${k2}`);
+      lines.push(
+        `     y_${i + 1} = y_${i} + (h / 2) * (k_1 + k_2) = ${y_i} + (${h_val} / 2) * (${k1} + ${k2}) = ${nextY}`
+      );
+      lines.push(`     x_${i + 1} = x_${i} + h = ${x_i} + ${h_val} = ${nextX}`);
+      lines.push('');
+    }
+
+    lines.push(`${sec3}:`);
+    lines.push(`   |  i  |   x_i   |   y_i   |   k_1   |  ȳ_{i+1} |   k_2   |`);
+    lines.push(`   |-----|---------|---------|---------|----------|---------|`);
+    for (const step of detailedSteps) {
+      lines.push(
+        `   | ${String(step.i).padEnd(3)} | ${formatNum(step.xImproved).padEnd(7)} | ${formatNum(step.yImproved).padEnd(7)} | ${formatNum(step.k1).padEnd(7)} | ${formatNum(step.yPred).padEnd(8)} | ${formatNum(step.k2).padEnd(7)} |`
+      );
+    }
+    if (detailedSteps.length > 0) {
+      const last = detailedSteps[detailedSteps.length - 1];
+      lines.push(
+        `   | ${String(last.i + 1).padEnd(3)} | ${formatNum(last.nextX).padEnd(7)} | ${formatNum(last.nextYImproved).padEnd(7)} | —       | —        | —       |`
+      );
+    }
+  }
+
+  return lines.join('\n');
 }
