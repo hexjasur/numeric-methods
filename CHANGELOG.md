@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.7] - 2026-10-15
+
+### Added
+- **Runge-Kutta Fourth-Order ODE Solver (`/methods/runge-kutta`):**
+  - Added a dedicated RK4 workspace with editable initial conditions, step-by-step iteration calculations, and localized interface text.
+  - Added support for custom first-order ODEs and comparison with exact solutions, including absolute error reporting when an analytical solution is available.
+- **Multilingual SEO and Social Previews:**
+  - Added localized page metadata and structured data across the dashboard, documentation, and numerical-method workspaces.
+  - Added generated Open Graph images for the dashboard and individual methods, integrated with the build.
+  - Updated sitemap and robots metadata for the application routes.
+- **Localized Not-Found Page:**
+  - Added a translated 404 page with links back to the dashboard and popular numerical methods.
+
+### Changed
+- Configured release publishing to use the NM Actions GitHub App token for GitHub Releases, desktop/updater assets, and Android APK uploads.
+
+---
+
 ## [3.0.6] - 2026-10-14
 
 ### Added
