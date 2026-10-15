@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Copy, Check, Printer, FileSpreadsheet, Download, Loader2 } from 'lucide-react';
-import { toCanvas } from 'html-to-image';
+import { domToCanvas } from 'modern-screenshot';
 import { useI18n } from '@/components/i18n-provider';
 
 interface ResultActionsProps {
@@ -12,6 +12,23 @@ interface ResultActionsProps {
   imageFileName?: string;
   targetId?: string;
   className?: string;
+}
+
+/** Returns a compact timestamp string like "20261015_205301" */
+function getTimestamp(): string {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return (
+    `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}` +
+    `_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`
+  );
+}
+
+/** Injects timestamp before the .ext of a filename, e.g. "report.png" → "report_20261015_205301.png" */
+function withTimestamp(fileName: string): string {
+  const dot = fileName.lastIndexOf('.');
+  if (dot === -1) return `${fileName}_${getTimestamp()}`;
+  return `${fileName.slice(0, dot)}_${getTimestamp()}${fileName.slice(dot)}`;
 }
 
 export function ResultActions({
@@ -94,9 +111,12 @@ export function ResultActions({
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       const bgColor = isDark ? '#0a0b0d' : '#eceef0';
 
-      const canvas = await toCanvas(targetNode, {
+      // modern-screenshot correctly resolves CSS custom properties and computed
+      // styles, which fixes the "black SVG graph" bug caused by html-to-image
+      // failing to inline Tailwind CSS variable-based colours.
+      const canvas = await domToCanvas(targetNode, {
         backgroundColor: bgColor,
-        pixelRatio: 2, // High DPI for crisp math and formulas
+        scale: 2, // High DPI for crisp math and formulas
         filter: (node) => {
           if (node instanceof HTMLElement) {
             // Exclude toolbars and print-hidden elements from the screenshot
@@ -165,7 +185,8 @@ export function ResultActions({
 
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = imageFileName;
+      // Add timestamp so repeated downloads don't overwrite each other
+      link.download = withTimestamp(imageFileName);
       link.href = dataUrl;
       document.body.appendChild(link);
       link.click();
