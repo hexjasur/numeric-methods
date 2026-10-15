@@ -26,6 +26,7 @@ import {
   type RK4Options,
   type RK4Result,
 } from '@/lib/runge-kutta';
+import { ResultActions } from '@/components/ui/result-actions';
 
 const initialInputs = {
   expression: 'x^2 + y',
@@ -224,6 +225,31 @@ export function RungeKuttaMethod() {
               </p>
             )}
           </PsPanel>
+
+          {rows.length > 0 && (
+            <ResultActions
+              summaryText={`Runge-Kutta 4-tartib: f(x,y) = ${calculationInputs.expression}, x₀=${calculationInputs.x0}, y₀=${calculationInputs.y0}, xEnd=${calculationInputs.xEnd}, h=${calculationInputs.h} → y(${rows[rows.length - 1].x.toFixed(4)}) ≈ ${rows[rows.length - 1].y.toFixed(8)}`}
+              csvData={rows.map((row) => {
+                const exactValue = exactSolution?.fn(row.x);
+                const base: Record<string, string | number> = {
+                  i: row.step,
+                  x: row.x.toFixed(6),
+                  'y (RK4)': row.y.toFixed(8),
+                  k0: row.k0.toFixed(8),
+                  k1: row.k1.toFixed(8),
+                  k2: row.k2.toFixed(8),
+                  k3: row.k3.toFixed(8),
+                };
+                if (exactValue !== undefined) {
+                  base['y (exact)'] = exactValue.toFixed(8);
+                  base['|error|'] = Math.abs(row.y - exactValue).toFixed(8);
+                }
+                return base;
+              })}
+              csvFileName="runge-kutta-natija.csv"
+              imageFileName="runge-kutta-natija.png"
+            />
+          )}
 
           <PsPanel>
             <PsPanelHead
