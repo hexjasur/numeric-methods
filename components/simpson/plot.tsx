@@ -3,6 +3,8 @@
 import { useMemo } from 'react';
 import { compile, type SimpsonResult } from '@/lib/simpson';
 import { useI18n } from '@/components/i18n-provider';
+import { CoordinateAxes } from '@/components/ui/coordinate-axes';
+import { getPlotXDomain } from '@/lib/plot';
 
 export function SimpsonPlot({
   expression,
@@ -25,10 +27,8 @@ export function SimpsonPlot({
     const f = compile(expression);
     if (!f) return null;
 
-    const span = right - left;
-    const pad = Math.max(span * 0.15, 0.5);
-    const x0 = left - pad;
-    const x1 = right + pad;
+    const xDomain = getPlotXDomain(left, right, 0.15, 0.5);
+    const { min: x0, max: x1 } = xDomain;
 
     const pts: { x: number; y: number }[] = [];
     const samples = 260;
@@ -76,7 +76,7 @@ export function SimpsonPlot({
   }
 
   const W = 640;
-  const H = 280;
+  const H = 340;
   const P = { l: 68, r: 16, t: 24, b: 34 };
 
   const sx = (x: number) => P.l + ((x - data.x0) / (data.x1 - data.x0)) * (W - P.l - P.r);
@@ -113,20 +113,6 @@ export function SimpsonPlot({
     areaPath += `L ${lastX.toFixed(1)} ${clampedZeroY.toFixed(1)} Z`;
   }
 
-  const zeroX = sx(0);
-  const hasYAxis = data.x0 <= 0 && data.x1 >= 0;
-
-  const xt = Array.from({ length: 5 }, (_, i) => data.x0 + ((data.x1 - data.x0) * i) / 4);
-  const yt = Array.from({ length: 5 }, (_, i) => data.y0 + ((data.y1 - data.y0) * i) / 4);
-
-  const short = (v: number) => {
-    if (v === 0) return '0';
-    const abs = Math.abs(v);
-    return abs >= 10000 || abs < 0.001
-      ? v.toExponential(1)
-      : Number(v.toPrecision(4)).toString();
-  };
-
   return (
     <svg
       className="block w-full h-auto border border-line rounded-lg bg-bg-2"
@@ -134,28 +120,6 @@ export function SimpsonPlot({
       role="img"
       aria-label="f(x) funksiya va Simpson integrali grafigi"
     >
-      {/* Grid lines */}
-      {xt.map((v, i) => (
-        <line
-          key={`x${i}`}
-          className="stroke-line stroke-1"
-          x1={sx(v)}
-          x2={sx(v)}
-          y1={P.t}
-          y2={H - P.b}
-        />
-      ))}
-      {yt.map((v, i) => (
-        <line
-          key={`y${i}`}
-          className="stroke-line stroke-1"
-          x1={P.l}
-          x2={W - P.r}
-          y1={sy(v)}
-          y2={sy(v)}
-        />
-      ))}
-
       {/* Shaded Integral Area */}
       {areaPath && (
         <path
@@ -173,29 +137,17 @@ export function SimpsonPlot({
         height={H - P.t - P.b}
       />
 
-      {/* Zero X Axis */}
-      {zeroY >= P.t && zeroY <= H - P.b && (
-        <line
-          stroke="var(--ink)"
-          strokeWidth={2}
-          x1={P.l}
-          x2={W - P.r}
-          y1={zeroY}
-          y2={zeroY}
-        />
-      )}
-
-      {/* Zero Y Axis */}
-      {hasYAxis && (
-        <line
-          stroke="var(--ink)"
-          strokeWidth={2}
-          x1={zeroX}
-          x2={zeroX}
-          y1={P.t}
-          y2={H - P.b}
-        />
-      )}
+      <CoordinateAxes
+        width={W}
+        height={H}
+        bounds={{ left: P.l, right: P.r, top: P.t, bottom: P.b }}
+        xMin={data.x0}
+        xMax={data.x1}
+        yMin={data.y0}
+        yMax={data.y1}
+        scaleX={sx}
+        scaleY={sy}
+      />
 
       {/* Function curve */}
       <path
@@ -236,50 +188,6 @@ export function SimpsonPlot({
         );
       })}
 
-      {/* Axis text values */}
-      {xt.map((v, i) => (
-        <text
-          key={`xt${i}`}
-          className="font-mono text-xs font-semibold fill-ink-2"
-          x={sx(v)}
-          y={H - 13}
-          textAnchor="middle"
-        >
-          {short(v)}
-        </text>
-      ))}
-      {yt.map((v, i) => (
-        <text
-          key={`yt${i}`}
-          className="font-mono text-xs font-semibold fill-ink-2"
-          x={P.l - 9}
-          y={sy(v) + 4}
-          textAnchor="end"
-        >
-          {short(v)}
-        </text>
-      ))}
-
-      {zeroY >= P.t && zeroY <= H - P.b && (
-        <text
-          className="font-mono text-sm font-bold fill-ink"
-          x={W - P.r + 5}
-          y={zeroY - 8}
-          textAnchor="end"
-        >
-          X
-        </text>
-      )}
-      {hasYAxis && (
-        <text
-          className="font-mono text-sm font-bold fill-ink"
-          x={zeroX + (zeroX > W / 2 ? -7 : 7)}
-          y={P.t + 13}
-          textAnchor={zeroX > W / 2 ? 'end' : 'start'}
-        >
-          Y
-        </text>
-      )}
     </svg>
   );
 }

@@ -2,6 +2,8 @@
 
 import { useMemo } from 'react';
 import { math, normalizeExpression } from '@/lib/math';
+import { CoordinateAxes } from '@/components/ui/coordinate-axes';
+import { getPlotXDomain } from '@/lib/plot';
 
 type QuadraturePlotResult = {
   n: number;
@@ -17,14 +19,6 @@ type QuadraturePlotProps = {
   emptyLabel: string;
   shape?: 'trapezoid' | 'left-rectangle' | 'right-rectangle';
 };
-
-function shortNumber(value: number): string {
-  if (value === 0) return '0';
-  const absolute = Math.abs(value);
-  return absolute >= 10_000 || absolute < 0.001
-    ? value.toExponential(1)
-    : Number(value.toPrecision(4)).toString();
-}
 
 export function QuadraturePlot({
   expression,
@@ -47,10 +41,8 @@ export function QuadraturePlot({
       return null;
     }
 
-    const span = right - left;
-    const padding = Math.max(span * 0.12, 0.15);
-    const x0 = left - padding;
-    const x1 = right + padding;
+    const xDomain = getPlotXDomain(left, right, 0.12, 0.15);
+    const { min: x0, max: x1 } = xDomain;
     const curve = Array.from({ length: 241 }, (_, index) => {
       const x = x0 + ((x1 - x0) * index) / 240;
       let y = Number.NaN;
@@ -93,7 +85,7 @@ export function QuadraturePlot({
   }
 
   const width = 640;
-  const height = 290;
+  const height = 340;
   const pad = { left: 66, right: 20, top: 22, bottom: 36 };
   const scaleX = (x: number) =>
     pad.left + ((x - data.x0) / (data.x1 - data.x0)) * (width - pad.left - pad.right);
@@ -112,11 +104,6 @@ export function QuadraturePlot({
     penDown = true;
   }
 
-  const xTicks = Array.from({ length: 5 }, (_, index) => data.x0 + ((data.x1 - data.x0) * index) / 4);
-  const yTicks = Array.from({ length: 5 }, (_, index) => data.y0 + ((data.y1 - data.y0) * index) / 4);
-  const hasYAxis = data.x0 <= 0 && data.x1 >= 0;
-  const hasZeroAxis = scaleY(0) >= pad.top && scaleY(0) <= height - pad.bottom;
-
   return (
     <svg
       className="block h-auto w-full rounded-lg border border-line bg-bg-2"
@@ -124,13 +111,6 @@ export function QuadraturePlot({
       role="img"
       aria-label="f(x) grafigi va sonli integrallash yuzalari"
     >
-      {xTicks.map((tick, index) => (
-        <line key={`x-grid-${index}`} className="stroke-line" x1={scaleX(tick)} x2={scaleX(tick)} y1={pad.top} y2={height - pad.bottom} />
-      ))}
-      {yTicks.map((tick, index) => (
-        <line key={`y-grid-${index}`} className="stroke-line" x1={pad.left} x2={width - pad.right} y1={scaleY(tick)} y2={scaleY(tick)} />
-      ))}
-
       <rect
         className="fill-cyan opacity-[0.04]"
         x={scaleX(data.left)}
@@ -153,12 +133,17 @@ export function QuadraturePlot({
         return <polygon key={slice.index} className="fill-cyan/15 stroke-cyan/60 stroke-[1.2px]" points={points} />;
       })}
 
-      {hasZeroAxis && (
-        <line className="stroke-ink stroke-2" x1={pad.left} x2={width - pad.right} y1={scaleY(0)} y2={scaleY(0)} />
-      )}
-      {hasYAxis && (
-        <line className="stroke-ink stroke-2" x1={scaleX(0)} x2={scaleX(0)} y1={pad.top} y2={height - pad.bottom} />
-      )}
+      <CoordinateAxes
+        width={width}
+        height={height}
+        bounds={{ left: pad.left, right: pad.right, top: pad.top, bottom: pad.bottom }}
+        xMin={data.x0}
+        xMax={data.x1}
+        yMin={data.y0}
+        yMax={data.y1}
+        scaleX={scaleX}
+        scaleY={scaleY}
+      />
 
       <path className="fill-none stroke-cyan stroke-[2.6px] stroke-linejoin-round stroke-linecap-round" d={curvePath} />
 
@@ -181,16 +166,6 @@ export function QuadraturePlot({
         </g>
       ))}
 
-      {xTicks.map((tick, index) => (
-        <text key={`x-label-${index}`} className="fill-ink-2 font-mono text-xs font-semibold" x={scaleX(tick)} y={height - 12} textAnchor="middle">
-          {shortNumber(tick)}
-        </text>
-      ))}
-      {yTicks.map((tick, index) => (
-        <text key={`y-label-${index}`} className="fill-ink-2 font-mono text-xs font-semibold" x={pad.left - 9} y={scaleY(tick) + 4} textAnchor="end">
-          {shortNumber(tick)}
-        </text>
-      ))}
     </svg>
   );
 }
