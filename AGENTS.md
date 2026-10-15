@@ -13,11 +13,12 @@
 | --- | --- |
 | Run | `bun dev` |
 | Build | `bun build` |
-| Tauri + Web Run | `bun td` |
-| Tauri + Web Build | `bun tb` |
+| Tauri Dev | `bun td` |
+| Tauri Build | `bun tb` |
 | Static Preview | `bun run start` |
 | Lint | `bun lint` |
 | Check Versions | `bun run check:version` |
+| OG:Generator  | `bun run og:generate` |
 
 ## Styling rules
 
@@ -47,15 +48,84 @@ The `tauri-desktop` branch shares one codebase across website, Tauri desktop, an
 - Always synchronize the `version` field identically across `package.json`, `src-tauri/tauri.conf.json`, and `src-tauri/Cargo.toml`. Run `bun run check:version` to verify.
 - Never commit `src-tauri/target/`, signing keys, keystores, or platform secrets.
 
+## PowerShell (Windows) — running bun
+
+On Windows, `bun` is installed as a `.cmd` shim under `%APPDATA%\npm\`. PowerShell's execution policy blocks unsigned `.ps1` scripts, so the bare `bun` alias may fail. **Always invoke bun through its `.cmd` path** when running lint, build, or any other script in PowerShell:
+
+```powershell
+# Lint
+& "$env:APPDATA\npm\bun.cmd" run lint
+
+# Build
+& "$env:APPDATA\npm\bun.cmd" run build
+
+# Lint then build (bail on lint failure)
+& "$env:APPDATA\npm\bun.cmd" run lint; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & "$env:APPDATA\npm\bun.cmd" run build; exit $LASTEXITCODE
+```
+
+> **Why not `cmd /c "bun ..."`?** `cmd` works but disables prefix-matching for auto-approval in the agent sandbox. Prefer the PowerShell form above.
+
 ## Workflow and commits
 
 - Keep changes focused.
 - Split multi-part requests into logical tasks. Implement and validate each task, then make **one descriptive commit per task**. Do not bundle unrelated fixes into a single final commit.
-- End each commit subject line with an appropriate emoji matching the task (e.g., 🚀, 🛠️, ✨, 🧹, 🐛).
 - Before each commit:
-  1. Run `bun lint` (required after any UI change).
-  2. Run `bun run build`.
-  3. Leave the working tree clean and understandable for the next task.
+  1. Run lint (see PowerShell section above for the correct invocation).
+  2. Run build and confirm it exits with code 0.
+  3. Run `bun run check:version` if `package.json` or Tauri configs were touched.
+  4. Leave the working tree clean and understandable for the next task.
+
+### Commit message structure
+
+Follow **Conventional Commits** with a trailing emoji:
+
+```
+<type>(<scope>): <short imperative subject> <emoji>
+
+[optional body — what and why, not how]
+
+[optional footer — breaking changes, issue refs]
+```
+
+**Types:**
+
+| Type | When to use |
+| --- | --- |
+| `feat` | New user-facing feature |
+| `fix` | Bug fix |
+| `refactor` | Code restructure with no behaviour change |
+| `perf` | Performance improvement |
+| `style` | Formatting / whitespace only |
+| `chore` | Tooling, deps, config, CI |
+| `docs` | Documentation only |
+| `test` | Adding or fixing tests |
+
+**Scope** (optional): the affected area, e.g. `export`, `trapezoid`, `rk4`, `i18n`, `deps`.
+
+**Emoji** — end the subject line with one emoji that matches the intent:
+
+| Emoji | Meaning |
+| --- | --- |
+| ✨ | New feature |
+| 🐛 | Bug fix |
+| ♻️ | Refactor |
+| ⚡️ | Performance |
+| 🎨 | Style / UI polish |
+| 🧹 | Chore / cleanup |
+| 📝 | Docs |
+| 🚀 | Deploy / release |
+| 🔧 | Config / tooling |
+| ➕ | Add dependency |
+| ➖ | Remove dependency |
+
+**Examples:**
+
+```
+fix(export): replace html-to-image with modern-screenshot, add PNG timestamp 🐛
+feat(rk4): add CSV/PNG export toolbar to Runge-Kutta page ✨
+chore(deps): bump modern-screenshot to 4.7.0 ➕
+refactor(plot): extract QuadraturePlot into shared integration component ♻️
+```
 
 <!-- BEGIN:nextjs-agent-rules -->
 
