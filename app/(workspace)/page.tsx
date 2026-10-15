@@ -3,14 +3,14 @@ import { DashboardView } from '@/components/dashboard/dashboard-view';
 import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
-  title: 'Bosh sahifa | Sonli Usullar va Algoritmlar Laboratoriyasi',
+  title: 'Sonli Usullar — Onlayn kalkulyator va o‘zbekcha qo‘llanma',
   description:
-    "Matematik tenglamalar, differensial tenglamalar (Eyler, Runge-Kutta 4), sonli integrallash (Simpson, Trapetsiya, To'g'ri to'rtburchak), Lagranj interpolyatsiyasi va Progonka usullarini bepul onlayn hisoblang.",
+    "Sonli usullarni o‘zbek tilida o‘rganing va hisoblang: biseksiya, Nyuton, Eyler, Runge–Kutta, Simpson, trapetsiyalar va Lagranj usullari bo‘yicha bepul kalkulyatorlar hamda ishlangan misollar.",
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Sonli Usullar — Matematik va Muhandislik Hisoblash Platformasi',
+    title: 'Sonli Usullar — Onlayn kalkulyator va o‘zbekcha qo‘llanma',
     description:
       'Matematik modellashtirish, differensial tenglamalar va sonli usullarni qadam-baqam yechuvchi interaktiv online laboratoriya.',
     url: siteConfig.url,
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sonli Usullar — Matematik va Muhandislik Hisoblash Platformasi',
+    title: 'Sonli Usullar — Onlayn kalkulyator va o‘zbekcha qo‘llanma',
     description:
       'Matematik modellashtirish, differensial tenglamalar va sonli usullarni qadam-baqam yechuvchi interaktiv online laboratoriya.',
     images: ['/images/og/main.png'],

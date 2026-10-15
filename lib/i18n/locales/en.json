@@ -15,7 +15,8 @@
     "v2_link": "Switch to v2",
     "v2_tooltip": "Open legacy v2.sonli-usullar.uz version",
     "sweep": "Thomas Method",
-    "rungeKutta": "Runge–Kutta 4th Order"
+    "rungeKutta": "Runge–Kutta 4th Order",
+    "learn": "Uzbek learning guides"
   },
   "about": {
     "strip": "DOC-002 / ABOUT",
@@ -64,8 +65,8 @@
     "btn_start_lab": "Start Laboratory"
   },
   "app": {
-    "title": "NUMERIC",
-    "subtitle": "METHODS / 3.0",
+    "title": "SONLI",
+    "subtitle": "USULLAR / 3.0",
     "env": "Compute Engine"
   },
   "dashboard": {
@@ -105,6 +106,7 @@
     "next_title": "Try the first method",
     "next_desc": "Enter a function, interval, and precision. The system will show every step of approaching the root.",
     "start_lab": "Start laboratory",
+    "learn_cta": "Read the guides",
     "desc_sweep": "Solve tridiagonal linear systems with forward and backward sweeps.",
     "cat_linear": "Linear systems",
     "desc_rungeKutta": "Solve a first-order initial value problem with the classical fourth-order Runge–Kutta method."
@@ -719,5 +721,8 @@
     "back_home": "Back to Dashboard",
     "popular_title": "Popular Numerical Methods",
     "explore_btn": "Launch Method Lab"
+  },
+  "a11y": {
+    "backToTop": "Back to top"
   }
 }

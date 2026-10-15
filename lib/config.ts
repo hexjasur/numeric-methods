@@ -2,9 +2,9 @@ export const siteConfig = {
   name: 'Sonli Usullar',
   shortName: 'SonliUsullar',
   alternateNames: ['Numeric Methods', 'Численные методы', 'sonli-usullar.uz'],
-  title: 'Sonli Usullar — Matematik va Muhandislik Hisoblash Platformasi',
+  title: 'Sonli Usullar — O‘zbekcha onlayn qo‘llanma va kalkulyator',
   description:
-    "Matematik tenglamalar, differensial tenglamalar, sonli integrallash va interpolyatsiya masalalarini qadam-baqam yechuvchi interaktiv online platforma. Biseksiya, Nyuton, Eyler, Runge-Kutta, Simpson, Lagranj va boshqa usullar.",
+    "Sonli usullarni o‘zbek tilida o‘rganing va hisoblang: tenglama ildizlari, sonli integrallar, differensial tenglamalar va interpolyatsiya uchun qadam-baqadam misollar hamda bepul online kalkulyatorlar.",
   url: 'https://sonli-usullar.uz',
   ogImage: 'https://sonli-usullar.uz/images/og-thumbail-1280x640.png',
   locale: 'uz_UZ',
@@ -19,6 +19,8 @@ export const siteConfig = {
     // O'zbekcha
     'sonli usullar',
     'sonli usullar online',
+    'sonli usullar qo‘llanmasi',
+    'sonli usullar misollar bilan',
     'sonli usullar kalkulyatori',
     'matematik hisoblash',
     'biseksiya usuli',

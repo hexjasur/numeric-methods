@@ -4,6 +4,7 @@ import type { MetadataRoute } from 'next';
 import fs from 'node:fs';
 import path from 'node:path';
 import { siteConfig } from '@/lib/config';
+import { learningGuides } from '@/lib/learning-guides';
 
 function getFileMtime(relativeFilePath: string): Date {
   try {
@@ -57,6 +58,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     ...methodRoutes,
+    {
+      url: `${baseUrl}/learn`,
+      lastModified: getFileMtime(path.join('app', '(workspace)', 'learn', 'page.tsx')),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    ...learningGuides.map((guide) => ({
+      url: `${baseUrl}/learn/${guide.slug}`,
+      lastModified: getFileMtime(path.join('lib', 'learning-guides.ts')),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     {
       url: `${baseUrl}/docs/syntax`,
       lastModified: getFileMtime(path.join('app', '(workspace)', 'docs', 'syntax', 'page.tsx')),

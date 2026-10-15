@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, BookOpenText } from 'lucide-react';
 import Link from 'next/link';
 import {
   PsHero,
@@ -87,12 +87,21 @@ export function DashboardView() {
               {t('dashboard.next_desc')}
             </p>
           </div>
-          <Link
-            href="/methods/bisection"
-            className="flex shrink-0 items-center gap-3 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0"
-          >
-            {t('dashboard.start_lab')} <ArrowUpRight size={18} />
-          </Link>
+          <div className="flex shrink-0 flex-wrap gap-3">
+            <Link
+              href="/learn"
+              className="flex min-h-12 items-center gap-2 rounded-lg border border-line bg-panel px-4 font-sans text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand"
+            >
+              <BookOpenText aria-hidden="true" size={17} />
+              {t('dashboard.learn_cta')}
+            </Link>
+            <Link
+              href="/methods/bisection"
+              className="flex min-h-12 items-center gap-3 rounded-lg border border-ink bg-ink px-5 font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0"
+            >
+              {t('dashboard.start_lab')} <ArrowUpRight aria-hidden="true" size={18} />
+            </Link>
+          </div>
         </div>
       </PsPanel>
     </div>

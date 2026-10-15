@@ -1,5 +1,6 @@
 import React from 'react';
 import { siteConfig } from '@/lib/config';
+import type { LearningGuide } from '@/lib/learning-guides';
 
 export function RootJsonLd() {
   const websiteSchema = {
@@ -103,5 +104,71 @@ export function MethodJsonLd({
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
+  );
+}
+
+export function LearningGuideJsonLd({ guide }: { guide: LearningGuide }) {
+  const url = `${siteConfig.url}/learn/${guide.slug}`;
+  const resourceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'LearningResource',
+    name: guide.title,
+    description: guide.description,
+    url,
+    inLanguage: 'uz',
+    learningResourceType: 'Tutorial',
+    educationalLevel: 'Higher Education',
+    teaches: [guide.area, guide.title],
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      url: siteConfig.author.url,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+  };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: siteConfig.name,
+        item: siteConfig.url,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Qo‘llanmalar',
+        item: `${siteConfig.url}/learn`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: guide.title,
+        item: url,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(resourceSchema).replace(/</g, '\\u003c'),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c'),
+        }}
+      />
+    </>
   );
 }

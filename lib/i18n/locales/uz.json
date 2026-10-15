@@ -15,7 +15,8 @@
     "v2_link": "v2 talqinga o'tish",
     "v2_tooltip": "Eski v2.sonli-usullar.uz talqiniga o'tish",
     "sweep": "Haydash usuli",
-    "rungeKutta": "Runge–Kutta 4-tartibli usuli"
+    "rungeKutta": "Runge–Kutta 4-tartibli usuli",
+    "learn": "O‘zbekcha qo‘llanma"
   },
   "about": {
     "strip": "DOC-002 / HAQIDA",
@@ -64,8 +65,8 @@
     "btn_start_lab": "Laboratoriyani boshlash"
   },
   "app": {
-    "title": "NUMERIC",
-    "subtitle": "METHODS / 3.0",
+    "title": "SONLI",
+    "subtitle": "USULLAR / 3.0",
     "env": "Hisoblash muhiti"
   },
   "dashboard": {
@@ -105,6 +106,7 @@
     "next_title": "Birinchi usulni sinab ko'ring",
     "next_desc": "Funksiya, oraliq va aniqlikni kiriting. Tizim ildizga yaqinlashishning har bir qadamini ko'rsatadi.",
     "start_lab": "Laboratoriyani boshlash",
+    "learn_cta": "Qo‘llanmani o‘qish",
     "desc_sweep": "Uch diagonalli chiziqli tenglamalar sistemasini to‘g‘ri va teskari yurish bilan yechish.",
     "cat_linear": "Chiziqli sistemalar",
     "desc_rungeKutta": "Birinchi tartibli Koshi masalasini klassik to‘rtinchi tartibli Runge–Kutta usuli bilan yeching."
@@ -719,5 +721,8 @@
     "back_home": "Bosh sahifaga qaytish",
     "popular_title": "Ommabop sonli usullar",
     "explore_btn": "Laboratoriyaga o'tish"
+  },
+  "a11y": {
+    "backToTop": "Sahifa boshiga qaytish"
   }
 }

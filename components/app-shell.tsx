@@ -25,6 +25,7 @@ import { useI18n } from '@/components/i18n-provider';
 import { UpdaterHost } from '@/components/updater/updater-host';
 import { UpdateProvider } from '@/components/updater/update-context';
 import { UpdateCheckButton } from '@/components/updater/update-check-button';
+import { BackToTop } from '@/components/back-to-top';
 import packageJson from '@/package.json';
 
 export function AppShell({
@@ -56,57 +57,63 @@ export function AppShell({
         icon: BookOpenText,
       },
       {
+        href: '/learn',
+        label: t('nav.learn'),
+        code: '04',
+        icon: BookOpenText,
+      },
+      {
         href: '/methods/bisection',
         label: t('nav.bisection'),
-        code: '04',
+        code: '05',
         icon: Split,
       },
       {
         href: '/methods/newton',
         label: t('nav.newton'),
-        code: '05',
+        code: '06',
         icon: ArrowUpRight,
       },
       {
         href: '/methods/sweep',
         label: t('nav.sweep'),
-        code: '06',
+        code: '07',
         icon: ArrowRightLeft,
       },
       {
         href: '/methods/lagrange',
         label: t('nav.lagrange'),
-        code: '07',
+        code: '08',
         icon: Spline,
       },
       {
         href: '/methods/rectangles',
         label: t('nav.rectangles'),
-        code: '08',
+        code: '09',
         icon: Sigma,
       },
       {
         href: '/methods/trapezoid',
         label: t('nav.trapezoid'),
-        code: '09',
+        code: '10',
         icon: Sigma,
       },
       {
         href: '/methods/simpson',
         label: t('nav.simpson'),
-        code: '10',
+        code: '11',
         icon: Sigma,
       },
       {
         href: '/methods/euler',
         label: t('nav.euler'),
-        code: '11',
+        code: '12',
         icon: Activity,
       },
       {
         href: '/methods/runge-kutta',
         label: t('nav.rungeKutta'),
-        code: '12',
+        code: '13',
         icon: Activity,
       },
     ],
@@ -134,6 +141,8 @@ export function AppShell({
         ? t('nav.about')
         : pathname.startsWith('/docs')
           ? t('nav.syntax')
+          : pathname.startsWith('/learn')
+            ? t('nav.learn')
           : pathname.startsWith('/methods/bisection')
             ? t('nav.bisection')
             : pathname.startsWith('/methods/newton')
@@ -168,10 +177,10 @@ export function AppShell({
           <Link
             href="/"
             className="flex items-center gap-[12px]"
-            aria-label="Numeric Methods bosh sahifasi"
+            aria-label="Sonli Usullar bosh sahifasi"
           >
             <span className="grid place-items-center w-[46px] h-[46px]">
-              <Image src={logo} width={40} height={40} alt="Numeric Methods" />
+              <Image src={logo} width={40} height={40} alt="Sonli Usullar" />
             </span>
             <span className="flex flex-col leading-none">
               <strong className="text-[15px] font-bold tracking-[.16em]">
@@ -303,7 +312,7 @@ export function AppShell({
               <Menu size={20} />
             </button>
             <div className="flex items-center gap-[10px] text-[14px] text-muted">
-              <span className="max-md:hidden">Numeric Methods</span>
+              <span className="max-md:hidden">Sonli Usullar</span>
               <b className="font-normal text-line-2 max-md:hidden">/</b>
               <strong className="font-[650] text-ink">{pageTitle}</strong>
             </div>
@@ -329,6 +338,7 @@ export function AppShell({
         <main className="w-full max-w-[1420px] mx-auto flex-1 p-[clamp(28px,5vw,68px)_clamp(22px,5vw,70px)] max-md:p-[24px_16px] max-md:pb-[calc(24px+var(--sab))]">
           {children}
         </main>
+        <BackToTop />
         <UpdaterHost />
       </div>
     </div>
