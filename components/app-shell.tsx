@@ -75,46 +75,60 @@ export function AppShell({
         icon: ArrowUpRight,
       },
       {
+        href: '/methods/iteration',
+        label: t('nav.iteration'),
+        code: '07',
+        icon: ArrowUpRight,
+      },
+      {
         href: '/methods/sweep',
         label: t('nav.sweep'),
-        code: '07',
+        code: '08',
         icon: ArrowRightLeft,
       },
       {
         href: '/methods/lagrange',
         label: t('nav.lagrange'),
-        code: '08',
+        code: '09',
+        icon: Spline,
+      },
+      {
+        href: '/methods/spline',
+        label: t('nav.spline'),
+        code: '10',
         icon: Spline,
       },
       {
         href: '/methods/rectangles',
         label: t('nav.rectangles'),
-        code: '09',
+        code: '11',
         icon: Sigma,
       },
       {
         href: '/methods/trapezoid',
         label: t('nav.trapezoid'),
-        code: '10',
+        code: '12',
         icon: Sigma,
       },
       {
         href: '/methods/simpson',
         label: t('nav.simpson'),
-        code: '11',
+        code: '13',
         icon: Sigma,
       },
       {
         href: '/methods/euler',
         label: t('nav.euler'),
-        code: '12',
+        code: '14',
         icon: Activity,
+        isNew: true,
       },
       {
         href: '/methods/runge-kutta',
         label: t('nav.rungeKutta'),
-        code: '13',
+        code: '15',
         icon: Activity,
+        isNew: true,
       },
     ],
     [t],
@@ -147,21 +161,25 @@ export function AppShell({
             ? t('nav.bisection')
             : pathname.startsWith('/methods/newton')
               ? t('nav.newton')
-              : pathname.startsWith('/methods/sweep')
-                ? t('nav.sweep')
-                : pathname.startsWith('/methods/lagrange')
-                  ? t('nav.lagrange')
-                  : pathname.startsWith('/methods/rectangles')
-                    ? t('nav.rectangles')
-                    : pathname.startsWith('/methods/trapezoid')
-                      ? t('nav.trapezoid')
-                      : pathname.startsWith('/methods/simpson')
-                        ? t('nav.simpson')
-                        : pathname.startsWith('/methods/euler')
-                          ? t('nav.euler')
-                          : pathname.startsWith('/methods/runge-kutta')
-                            ? t('nav.rungeKutta')
-                            : t('nav.workspace');
+              : pathname.startsWith('/methods/iteration')
+                ? t('nav.iteration')
+                : pathname.startsWith('/methods/sweep')
+                  ? t('nav.sweep')
+                  : pathname.startsWith('/methods/lagrange')
+                    ? t('nav.lagrange')
+                    : pathname.startsWith('/methods/spline')
+                      ? t('nav.spline')
+                      : pathname.startsWith('/methods/rectangles')
+                        ? t('nav.rectangles')
+                        : pathname.startsWith('/methods/trapezoid')
+                          ? t('nav.trapezoid')
+                          : pathname.startsWith('/methods/simpson')
+                            ? t('nav.simpson')
+                            : pathname.startsWith('/methods/euler')
+                              ? t('nav.euler')
+                              : pathname.startsWith('/methods/runge-kutta')
+                                ? t('nav.rungeKutta')
+                                : t('nav.workspace');
 
   return (
     <UpdateProvider>
@@ -236,6 +254,7 @@ export function AppShell({
                     className={active ? 'text-brand' : ''}
                   />
                   <span className="flex-1">{item.label}</span>
+                  {'isNew' in item && item.isNew && <span className="rounded-full bg-amber-400/15 px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider text-amber-700 dark:text-amber-300">{t('dashboard.badge_new')}</span>}
                   <em
                     className={`font-mono text-[12px] font-semibold not-italic ${active ? 'text-brand opacity-100' : 'opacity-60'}`}
                   >

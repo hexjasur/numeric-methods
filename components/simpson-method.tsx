@@ -89,7 +89,7 @@ export function SimpsonMethod() {
         title={<>{t('simpson.hero_title')}</>}
         titleHighlight={t('simpson.hero_titleHighlight')}
         lead={t('simpson.hero_lead')}
-        conditionMain={<MathInline tex="n \equiv 0 \pmod 2" />}
+        conditionMain={<MathInline tex={String.raw`n \equiv 0 \pmod 2`} />}
         conditionSub={t('simpson.hero_condSub')}
       />
 
@@ -104,7 +104,7 @@ export function SimpsonMethod() {
               <div className="space-y-1">
                 <span className="block text-muted text-[13px]">{t('simpson.map_1_desc')}</span>
                 <span className="block text-ink font-semibold text-[13px] whitespace-nowrap overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5">
-                  <MathInline tex="h = \frac{b - a}{n}" />
+                  <MathInline tex={String.raw`h = \frac{b - a}{n}`} />
                 </span>
               </div>
             ),
@@ -116,7 +116,7 @@ export function SimpsonMethod() {
               <div className="space-y-1">
                 <span className="block text-muted text-[13px]">{t('simpson.map_2_desc')}</span>
                 <span className="block text-ink font-semibold text-[13px] whitespace-nowrap overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5">
-                  <MathInline tex="Y_{\mathrm{chet}},\; \sum Y_{\mathrm{toq}},\; \sum Y_{\mathrm{juft}}" />
+                  <MathInline tex={String.raw`Y_{\mathrm{chet}},\; \sum Y_{\mathrm{toq}},\; \sum Y_{\mathrm{juft}}`} />
                 </span>
               </div>
             ),
@@ -128,7 +128,7 @@ export function SimpsonMethod() {
               <div className="space-y-1">
                 <span className="block text-muted text-[13px]">{t('simpson.map_3_desc')}</span>
                 <span className="block text-ink font-semibold text-[13px] whitespace-nowrap overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5">
-                  <MathInline tex="I \approx \frac{h}{3} \Big[ Y_{\mathrm{chet}} + 4\sum Y_{\mathrm{toq}} + 2\sum Y_{\mathrm{juft}} \Big]" />
+                  <MathInline tex={String.raw`I \approx \frac{h}{3} \Big[ Y_{\mathrm{chet}} + 4\sum Y_{\mathrm{toq}} + 2\sum Y_{\mathrm{juft}} \Big]`} />
                 </span>
               </div>
             ),
@@ -273,7 +273,7 @@ export function SimpsonMethod() {
                   </div>
                   <div className="p-2.5 rounded bg-bg-2 border border-line">
                     <span className="text-muted block mb-1 flex items-center gap-1">
-                      <span>{t('simpson.res_err')}</span> <MathInline tex="(\Delta)" />:
+                      <span>{t('simpson.res_err')}</span> <MathInline tex={String.raw`(\Delta)`} />:
                     </span>
                     <strong className="text-pos text-[13px]">{result.errorMargin.toExponential(4)}</strong>
                   </div>
@@ -350,7 +350,7 @@ export function SimpsonMethod() {
                       <span className="w-4 h-4 rounded-full bg-brand text-white flex items-center justify-center text-[10px]">4</span>
                       <span className="flex items-center gap-1.5">
                         <span>{t('simpson.step_4_title')}</span>
-                        <MathInline tex="(\Delta)" />
+                        <MathInline tex={String.raw`(\Delta)`} />
                       </span>
                     </h4>
                     <div

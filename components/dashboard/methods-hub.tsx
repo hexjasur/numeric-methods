@@ -30,6 +30,7 @@ interface MethodDef {
   orderTex: string;
   icon: LucideIcon;
   accentClass: string;
+  isNew?: boolean;
 }
 
 const METHODS: MethodDef[] = [
@@ -136,6 +137,7 @@ const METHODS: MethodDef[] = [
     orderTex: 'O(h)',
     icon: Activity,
     accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+    isNew: true,
   },
   {
     id: 'runge-kutta',
@@ -149,6 +151,33 @@ const METHODS: MethodDef[] = [
     orderTex: 'O(h^4)',
     icon: Activity,
     accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+    isNew: true,
+  },
+  {
+    id: 'iteration',
+    code: '10 / ALG',
+    category: 'equations',
+    categoryKey: 'dashboard.cat_equations',
+    titleKey: 'nav.iteration',
+    descKey: 'dashboard.desc_iteration',
+    href: '/methods/iteration',
+    formulaTex: String.raw`x_{k+1}=x_k-\frac{f(x_k)}{M}`,
+    orderTex: 'O(k)',
+    icon: ArrowUpRight,
+    accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
+  },
+  {
+    id: 'spline',
+    code: '11 / INT',
+    category: 'interpolation',
+    categoryKey: 'dashboard.cat_interpolation',
+    titleKey: 'nav.spline',
+    descKey: 'dashboard.desc_spline',
+    href: '/methods/spline',
+    formulaTex: 'S_i(x)=a_i+b_i x+c_i x^2+d_i x^3',
+    orderTex: 'O(n)',
+    icon: Spline,
+    accentClass: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/25',
   },
 ];
 
@@ -194,7 +223,7 @@ export function MethodsHub() {
       const desc = t(m.descKey).toLowerCase();
       const code = m.code.toLowerCase();
       return title.includes(q) || desc.includes(q) || code.includes(q);
-    });
+    }).sort((left, right) => Number(right.isNew ?? false) - Number(left.isNew ?? false));
   }, [selectedCategory, searchQuery, t]);
 
   return (
@@ -277,11 +306,10 @@ export function MethodsHub() {
                     <span className="font-mono text-[10px] font-bold text-muted bg-panel border border-line px-1.5 py-0.5 rounded">
                       {method.code}
                     </span>
-                    <span
-                      className={`font-mono text-[10.5px] font-semibold px-2 py-0.5 rounded-full border ${method.accentClass}`}
-                    >
-                      {categoryLabel}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      {method.isNew && <span className="rounded-full border border-amber-400/50 bg-amber-400/15 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider text-amber-700 dark:text-amber-300">{t('dashboard.badge_new')}</span>}
+                      <span className={`font-mono text-[10.5px] font-semibold px-2 py-0.5 rounded-full border ${method.accentClass}`}>{categoryLabel}</span>
+                    </div>
                   </div>
 
                   {/* Title with Icon */}

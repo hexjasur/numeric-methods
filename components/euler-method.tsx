@@ -746,7 +746,7 @@ export function EulerMethod() {
                                 <MathKatex tex="k_1" />
                               </th>
                               <th className="px-4 py-2.5 font-semibold border-b border-line">
-                                <MathKatex tex="\bar{y}_{i+1}" />
+                                <MathKatex tex={String.raw`\bar{y}_{i+1}`} />
                               </th>
                               <th className="px-4 py-2.5 font-semibold border-b border-line">
                                 <MathKatex tex="k_2" />
