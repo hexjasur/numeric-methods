@@ -268,6 +268,7 @@ export function MethodsHub() {
               <Link
                 key={method.id}
                 href={method.href}
+                prefetch={false}
                 className="group relative flex flex-col justify-between p-5 rounded-xl border border-line bg-bg-2 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-brand hover:bg-panel hover:shadow-md cursor-pointer"
               >
                 <div>

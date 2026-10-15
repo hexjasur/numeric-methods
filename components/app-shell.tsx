@@ -18,7 +18,7 @@ import {
   Split,
   X,
 } from 'lucide-react';
-import logo from '@/public/logo.png';
+import logo from '@/public/logo.webp';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LangToggle } from '@/components/lang-toggle';
 import { useI18n } from '@/components/i18n-provider';
@@ -212,6 +212,7 @@ export function AppShell({
                   key={item.href}
                   ref={active ? activeLinkRef : undefined}
                   href={item.href}
+                  prefetch={false}
                   onClick={() => setMobileOpen(false)}
                   className={`group relative flex items-center gap-[12px] min-h-[48px] px-[14px] border border-transparent rounded-[9px] text-[15px] font-semibold transition-all duration-150 ${
                     active

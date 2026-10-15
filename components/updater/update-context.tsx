@@ -102,6 +102,10 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
   }, [checkForUpdates]);
 
   useEffect(() => {
+    if (typeof window === 'undefined' || !('__TAURI_INTERNALS__' in window)) {
+      return;
+    }
+
     // Initial quiet check after mount (run strictly once)
     const timer = setTimeout(() => {
       checkForUpdatesRef.current(false);

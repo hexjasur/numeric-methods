@@ -88,6 +88,36 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="uz" suppressHydrationWarning>
       <head>
         <RootJsonLd />
+        <style>{`
+          @font-face {
+            font-family: "KaTeX_Main";
+            src: url("/fonts/KaTeX_Main-Regular.woff2") format("woff2");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+          }
+          @font-face {
+            font-family: "KaTeX_Math";
+            src: url("/fonts/KaTeX_Math-Italic.woff2") format("woff2");
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+          }
+          @font-face {
+            font-family: "KaTeX_Size1";
+            src: url("/fonts/KaTeX_Size1-Regular.woff2") format("woff2");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+          }
+          @font-face {
+            font-family: "KaTeX_Size4";
+            src: url("/fonts/KaTeX_Size4-Regular.woff2") format("woff2");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+          }
+        `}</style>
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
