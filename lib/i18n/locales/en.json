@@ -708,5 +708,16 @@
     "exact_description": "Symbolically derived from the entered first-order differential equation and initial condition.",
     "exact_col": "y exact",
     "error_col": "|error|"
+  },
+  "not_found": {
+    "eyebrow": "ERR // 404 - PAGE NOT FOUND",
+    "title_main": "404",
+    "title_sub": "Page Not Found",
+    "desc": "The page you are looking for does not exist, has been removed, or was moved to another location. You can return to the dashboard or explore our solvers below.",
+    "code_label": "STATUS",
+    "code_val": "RESOURCE_NOT_FOUND",
+    "back_home": "Back to Dashboard",
+    "popular_title": "Popular Numerical Methods",
+    "explore_btn": "Launch Method Lab"
   }
 }

@@ -708,5 +708,16 @@
     "exact_description": "Kiritilgan birinchi tartibli differensial tenglama va boshlang‘ich shartdan analitik chiqarildi.",
     "exact_col": "y aniq",
     "error_col": "|xatolik|"
+  },
+  "not_found": {
+    "eyebrow": "ERR // 404 - SAHIFA TOPILMADI",
+    "title_main": "404",
+    "title_sub": "Bunday sahifa mavjud emas",
+    "desc": "Siz so'ragan manzil topilmadi, o'chirilgan yoki ko'chirilgan bo'lishi mumkin. Qidiruvni bosh sahifadan yoki quyidagi asosiy metodlardan davom ettirishingiz mumkin.",
+    "code_label": "STATUS",
+    "code_val": "RESOURCE_NOT_FOUND",
+    "back_home": "Bosh sahifaga qaytish",
+    "popular_title": "Ommabop sonli usullar",
+    "explore_btn": "Laboratoriyaga o'tish"
   }
 }
