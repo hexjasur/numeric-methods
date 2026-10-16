@@ -709,7 +709,13 @@
     "exact_value": "aniq",
     "exact_description": "Kiritilgan birinchi tartibli differensial tenglama va boshlang‘ich shartdan analitik chiqarildi.",
     "exact_col": "y aniq",
-    "error_col": "|xatolik|"
+    "error_col": "|xatolik|",
+    "notebook_title": "Daftarga yechish bayonnomasi",
+    "notebook_intro": "Har bir qadam avval umumiy formula, keyin boshlang‘ich qiymatlarni o‘rniga qo‘yish, f(x,y) ifodasini ochish va navbatdagi xᵢ₊₁, yᵢ₊₁ qiymatlarini hisoblash tartibida berilgan.",
+    "notebook_step": "{step}-qadam: xᵢ = {x}, yᵢ = {y}",
+    "notebook_substitution": "Ifodaga qiymatlarni qo‘yish ({stage}):",
+    "notebook_more": "Keyingi {count} qadamni ko‘rsatish",
+    "notebook_complete": "Barcha {count} ta qadam ko‘rsatildi."
   },
   "not_found": {
     "eyebrow": "ERR // 404 - SAHIFA TOPILMADI",

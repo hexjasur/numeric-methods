@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import katex from 'katex';
-import { Activity, Calculator } from 'lucide-react';
+import { Activity, BookOpen, Calculator, ChevronDown } from 'lucide-react';
 import {
   CartesianGrid,
   Legend,
@@ -65,6 +65,8 @@ export function RungeKuttaMethod() {
   const { t } = useI18n();
   const [inputs, setInputs] = useState(initialInputs);
   const [calculationInputs, setCalculationInputs] = useState(initialInputs);
+  const [notebookOpen, setNotebookOpen] = useState(false);
+  const [visibleNotebookSteps, setVisibleNotebookSteps] = useState(20);
   const calculation = useMemo(() => {
     const options: RK4Options = {
       x0: Number(calculationInputs.x0),
@@ -429,6 +431,130 @@ export function RungeKuttaMethod() {
                   </span>
                 )}
               </p>
+            )}
+            {rows.length > 1 && (
+              <section className="mt-5 border-t border-line pt-4">
+                <button
+                  type="button"
+                  aria-expanded={notebookOpen}
+                  onClick={() => setNotebookOpen((open) => !open)}
+                  className="flex w-full items-center justify-between gap-3 rounded-lg border border-brand/30 bg-brand-soft px-4 py-3 text-left font-semibold text-ink transition-colors hover:border-brand/60"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <BookOpen size={18} className="text-brand" aria-hidden="true" />
+                    {t('rk4.notebook_title')}
+                  </span>
+                  <ChevronDown
+                    size={18}
+                    className={`shrink-0 text-brand transition-transform ${notebookOpen ? 'rotate-180' : ''}`}
+                    aria-hidden="true"
+                  />
+                </button>
+                {notebookOpen && (
+                  <div className="mt-3 space-y-3">
+                    <p className="rounded-lg border border-line bg-bg-2 px-3 py-2.5 text-sm leading-relaxed text-muted">
+                      {t('rk4.notebook_intro')}
+                    </p>
+                    {rows.slice(0, -1).slice(0, visibleNotebookSteps).map((row, index) => {
+                      const nextRow = rows[index + 1];
+                      const stepH = Math.min(
+                        Number(calculationInputs.h),
+                        Number(calculationInputs.xEnd) - row.x,
+                      );
+                      const halfStep = stepH / 2;
+                      const stages = [
+                        { index: 0, x: row.x, y: row.y, k: row.k0 },
+                        {
+                          index: 1,
+                          x: row.x + halfStep,
+                          y: row.y + row.k0 / 2,
+                          k: row.k1,
+                        },
+                        {
+                          index: 2,
+                          x: row.x + halfStep,
+                          y: row.y + row.k1 / 2,
+                          k: row.k2,
+                        },
+                        {
+                          index: 3,
+                          x: row.x + stepH,
+                          y: row.y + row.k2,
+                          k: row.k3,
+                        },
+                      ];
+                      const substituted = (x: number, y: number) =>
+                        calculationInputs.expression
+                          .replace(/\bx\b/g, `(${number(x)})`)
+                          .replace(/\by\b/g, `(${number(y)})`);
+                      return (
+                        <article
+                          key={row.step}
+                          className="rounded-lg border border-line bg-panel p-3 sm:p-4"
+                        >
+                          <h3 className="mb-3 font-mono text-sm font-bold text-brand">
+                            {t('rk4.notebook_step', {
+                              step: row.step,
+                              x: number(row.x),
+                              y: number(row.y),
+                            })}
+                          </h3>
+                          <div className="space-y-3">
+                            {stages.map((stage) => {
+                              const stageLabel = `k_${stage.index}`;
+                              const stageTex = stage.index === 0
+                                ? String.raw`k_0 = h_i f(x_i,y_i) = ${number(stepH)}\cdot f(${number(row.x)},${number(row.y)}) = ${number(stage.k)}`
+                                : stage.index === 1
+                                  ? String.raw`k_1 = h_i f\left(x_i+\frac{h_i}{2},y_i+\frac{k_0}{2}\right) = ${number(stepH)}\cdot f(${number(stage.x)},${number(stage.y)}) = ${number(stage.k)}`
+                                  : stage.index === 2
+                                    ? String.raw`k_2 = h_i f\left(x_i+\frac{h_i}{2},y_i+\frac{k_1}{2}\right) = ${number(stepH)}\cdot f(${number(stage.x)},${number(stage.y)}) = ${number(stage.k)}`
+                                    : String.raw`k_3 = h_i f(x_i+h_i,y_i+k_2) = ${number(stepH)}\cdot f(${number(stage.x)},${number(stage.y)}) = ${number(stage.k)}`;
+                              return (
+                                <div key={stage.index} className="rounded-md border border-line/70 bg-bg-2/60 p-2.5">
+                                  <MathFormula html={safeMathMarkup(stageTex)} />
+                                  <p className="mt-1 break-words text-xs leading-relaxed text-muted">
+                                    {t('rk4.notebook_substitution', { stage: stageLabel })}{' '}
+                                    <code className="font-mono text-ink-2">
+                                      f({number(stage.x)}, {number(stage.y)}) = {substituted(stage.x, stage.y)} = {number(stage.k / stepH)}
+                                    </code>
+                                  </p>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          <div className="mt-3 space-y-2 border-t border-dashed border-line pt-3">
+                            <MathFormula
+                              html={safeMathMarkup(
+                                String.raw`y_{i+1} = y_i + \frac{k_0+2k_1+2k_2+k_3}{6} = ${number(row.y)} + \frac{${number(row.k0)}+2(${number(row.k1)})+2(${number(row.k2)})+${number(row.k3)}}{6} = ${number(nextRow.y)}`,
+                              )}
+                            />
+                            <MathFormula
+                              html={safeMathMarkup(
+                                String.raw`x_{i+1} = x_i + h_i = ${number(row.x)} + ${number(stepH)} = ${number(nextRow.x)}`,
+                              )}
+                            />
+                          </div>
+                        </article>
+                      );
+                    })}
+                    {visibleNotebookSteps < rows.length - 1 ? (
+                      <button
+                        type="button"
+                        onClick={() => setVisibleNotebookSteps((visible) => Math.min(visible + 20, rows.length - 1))}
+                        className="w-full rounded-lg border border-line px-4 py-2.5 text-sm font-semibold text-brand transition-colors hover:bg-brand-soft"
+                      >
+                        {t('rk4.notebook_more', {
+                          count: Math.min(20, rows.length - 1 - visibleNotebookSteps),
+                        })}
+                      </button>
+                    ) : (
+                      <p className="text-center text-xs text-muted">
+                        {t('rk4.notebook_complete', { count: rows.length - 1 })}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </section>
             )}
           </PsPanel>
         </div>

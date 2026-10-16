@@ -709,7 +709,13 @@
     "exact_value": "exact",
     "exact_description": "Symbolically derived from the entered first-order differential equation and initial condition.",
     "exact_col": "y exact",
-    "error_col": "|error|"
+    "error_col": "|error|",
+    "notebook_title": "Step-by-step notebook solution",
+    "notebook_intro": "Each step shows the general formula first, then substitutes the current values, expands f(x,y), and calculates the next xᵢ₊₁ and yᵢ₊₁ values.",
+    "notebook_step": "Step {step}: xᵢ = {x}, yᵢ = {y}",
+    "notebook_substitution": "Substitute into the function ({stage}):",
+    "notebook_more": "Show the next {count} steps",
+    "notebook_complete": "All {count} steps are shown."
   },
   "not_found": {
     "eyebrow": "ERR // 404 - PAGE NOT FOUND",
