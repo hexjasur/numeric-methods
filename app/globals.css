@@ -134,6 +134,55 @@
   .ps-barcode {
     background: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 3px, var(--ink) 3px 5px, transparent 5px 6px, var(--ink) 6px 7px, transparent 7px 11px);
   }
+
+  /* 1950s-inspired alternate surface for the workspace dashboard */
+  .retro-console {
+    position: relative;
+    overflow: hidden;
+    color: #30251b;
+    border: 1px solid #6f5a42;
+    border-radius: 4px;
+    background: #d9c39c;
+    box-shadow: 6px 6px 0 rgba(48,37,27,.18), inset 0 0 0 5px rgba(255,245,214,.22);
+  }
+  [data-theme="dark"] .retro-console {
+    color: #f4d7a2;
+    border-color: #b27b43;
+    background: #2a211b;
+    box-shadow: 6px 6px 0 rgba(0,0,0,.35), inset 0 0 0 5px rgba(255,177,83,.06);
+  }
+  .retro-console::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .3;
+    background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(48,37,27,.12) 3px 4px);
+    mix-blend-mode: multiply;
+  }
+  .retro-console__topline, .retro-console__body { position: relative; z-index: 1; }
+  .retro-console__topline {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 10px 18px; border-bottom: 1px solid currentColor;
+    font: 700 10px/1 var(--font-mono); letter-spacing: .15em; text-transform: uppercase;
+  }
+  .retro-console__eyebrow, .retro-console__signal { display: inline-flex; align-items: center; gap: 7px; }
+  .retro-console__signal { opacity: .72; letter-spacing: .08em; }
+  .retro-console__signal span { width: 7px; height: 7px; border-radius: 50%; background: #c54a28; box-shadow: 0 0 0 3px rgba(197,74,40,.2); }
+  .retro-console__body { display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: clamp(22px, 4vw, 36px); }
+  .retro-console__copy { max-width: 680px; }
+  .retro-console__kicker { margin: 0 0 10px; font: 700 10px/1 var(--font-mono); letter-spacing: .2em; opacity: .65; }
+  .retro-console h2 { margin: 0; font: 700 clamp(28px, 4vw, 48px)/.95 Georgia, serif; letter-spacing: -.04em; }
+  .retro-console h2 em { color: #b54828; font-style: italic; }
+  [data-theme="dark"] .retro-console h2 em { color: #ffad60; }
+  .retro-console__copy > p:not(.retro-console__kicker) { max-width: 580px; margin: 16px 0 0; font: 500 14px/1.6 Georgia, serif; opacity: .8; }
+  .retro-console__actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; font: 700 10px/1 var(--font-mono); letter-spacing: .08em; }
+  .retro-console__actions span { display: inline-flex; align-items: center; gap: 6px; }
+  .retro-console__dial { display: grid; place-items: center; flex: 0 0 132px; width: 132px; height: 132px; border: 1px solid currentColor; border-radius: 50%; transform: rotate(-8deg); opacity: .8; }
+  .retro-console__dial-ring { display: grid; place-items: center; width: 92px; height: 92px; border: 5px double currentColor; border-radius: 50%; }
+  .retro-console__dial b { font: 500 48px/1 Georgia, serif; }
+  .retro-console__dial > span { position: absolute; bottom: 11px; font: 700 8px/1 var(--font-mono); letter-spacing: .16em; }
+  @media (max-width: 560px) { .retro-console__dial { display: none; } .retro-console__topline { padding-inline: 13px; } .retro-console__body { padding: 24px 18px; } }
 }
 
 /* View Transitions for Theme Toggle */
