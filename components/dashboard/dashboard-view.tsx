@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, BookOpenText, Clock3, Radio, Sparkles } from 'lucide-react';
+import { ArrowUpRight, BookOpenText } from 'lucide-react';
 import Link from 'next/link';
 import {
   PsHero,
@@ -39,28 +39,6 @@ export function DashboardView() {
         titleHighlight=""
         lead={t('dashboard.hero_lead')}
       />
-
-      <section className="retro-console mb-[18px]" aria-labelledby="retro-console-title">
-        <div className="retro-console__topline">
-          <span className="retro-console__eyebrow"><Radio size={14} aria-hidden="true" /> 1957 / CONTROL ROOM</span>
-          <span className="retro-console__signal"><span aria-hidden="true" /> signal: stable</span>
-        </div>
-        <div className="retro-console__body">
-          <div className="retro-console__copy">
-            <p className="retro-console__kicker">SONLI USULLAR PRESENTS</p>
-            <h2 id="retro-console-title">Hisoblash — <em>kelajakdan</em> kelgan.</h2>
-            <p>1950-yillar ilmiy laboratoriyasi ruhi bilan sonli usullarni qayta kashf eting. Har bir formula — kichik bir ixtiro.</p>
-            <div className="retro-console__actions">
-              <span><Clock3 size={15} aria-hidden="true" /> 09:42:16 UTC</span>
-              <span><Sparkles size={15} aria-hidden="true" /> MK-1 ONLINE</span>
-            </div>
-          </div>
-          <div className="retro-console__dial" aria-hidden="true">
-            <div className="retro-console__dial-ring"><b>∞</b></div>
-            <span>PRECISION</span>
-          </div>
-        </div>
-      </section>
 
       <PsPanel className="mb-[18px]">
         <PsPanelHead
