@@ -3,7 +3,7 @@ import React from 'react';
 // Barcode strip component
 export function PsStrip({ eyebrow, id, name }: { eyebrow: string; id: string; name: string }) {
   return (
-    <div className="flex items-center gap-3.5 font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted py-2.5 px-3.5 border border-line rounded-lg bg-panel shadow-[var(--shadow)]">
+    <div className="ps-strip flex items-center gap-3.5 font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted py-2.5 px-3.5 border border-line bg-panel shadow-[var(--shadow)]">
       <span>{eyebrow}</span>
       <i className="ps-barcode flex-1 h-[14px] opacity-55" aria-hidden />
       <span>{id} · {name}</span>
@@ -28,7 +28,7 @@ export function PsHero({
   conditionSub?: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-wrap items-end justify-between gap-8 my-8">
+    <section className="ps-hero flex flex-wrap items-end justify-between gap-8 my-8">
       <div>
         <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
           {eyebrow}
@@ -59,7 +59,7 @@ export function PsHero({
 // Step Map
 export function PsMap({ steps, title = "3 ta oddiy qadam", eyebrow = "Method map" }: { steps: {n: string, t: React.ReactNode, s: React.ReactNode}[], title?: string, eyebrow?: string }) {
   return (
-    <section className="flex flex-col lg:flex-row items-stretch gap-4 my-6 p-4 bg-panel border border-line rounded-[10px] shadow-[var(--shadow)]">
+    <section className="ps-map flex flex-col lg:flex-row items-stretch gap-4 my-6 p-4 bg-panel border border-line shadow-[var(--shadow)]">
       <div className="grid gap-1.5 content-center pb-3 lg:pb-0 border-b lg:border-b-0 lg:border-r border-dashed border-line-2 shrink-0 lg:pr-5 w-full lg:w-auto min-w-[170px]">
         <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
           {eyebrow}
