@@ -3,20 +3,21 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  --bg: #eceef0;
-  --bg-2: #f6f7f8;
-  --panel: #fbfbfc;
-  --panel-2: #f1f2f4;
-  --ink: #0d0f12;
-  --ink-2: #2a2e35;
-  --muted: #5d646e;
-  --line: #d5d9de;
-  --line-2: #b9bfc7;
-  --cyan: #0891b2;
-  --cyan-soft: rgba(8,145,178,.09);
-  --brand: #e8480c;
-  --brand-ink: #ffffff;
-  --brand-soft: rgba(232,72,12,.09);
+  /* Semantic tokens: the Print Stream palette can be swapped by adding a future data-theme. */
+  --bg: #e9e1d2;
+  --bg-2: #f4eee2;
+  --panel: #f8f2e6;
+  --panel-2: #e2d6c3;
+  --ink: #171513;
+  --ink-2: #39332d;
+  --muted: #6e655b;
+  --line: #cfc0aa;
+  --line-2: #9f8e78;
+  --cyan: #176d6c;
+  --cyan-soft: rgba(23,109,108,.11);
+  --brand: #c6542d;
+  --brand-ink: #fff8eb;
+  --brand-soft: rgba(198,84,45,.13);
   --pos: #0f9d6b;
   --neg: #d6293e;
   --ok: #0f9d6b;
@@ -31,20 +32,20 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #0a0b0d;
-  --bg-2: #0f1114;
-  --panel: #14161a;
-  --panel-2: #1a1d22;
-  --ink: #eef0f2;
-  --ink-2: #c3c8cf;
-  --muted: #8d949d;
-  --line: #272b32;
-  --line-2: #363b44;
-  --cyan: #22d3ee;
-  --cyan-soft: rgba(34,211,238,.1);
-  --brand: #ff6a2b;
-  --brand-ink: #0a0b0d;
-  --brand-soft: rgba(255,106,43,.12);
+  --bg: #171513;
+  --bg-2: #211d19;
+  --panel: #28231d;
+  --panel-2: #342c23;
+  --ink: #f5ead8;
+  --ink-2: #d8c8b2;
+  --muted: #a99780;
+  --line: #554737;
+  --line-2: #806b52;
+  --cyan: #76c1b1;
+  --cyan-soft: rgba(118,193,177,.13);
+  --brand: #e47a4d;
+  --brand-ink: #211813;
+  --brand-soft: rgba(228,122,77,.15);
   --pos: #34d399;
   --neg: #fb7185;
   --ok: #34d399;
@@ -97,12 +98,33 @@
   .katex { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 8px; }
 
   /* Print Stream Base Components */
+  .ps-strip {
+    border-radius: 0;
+    border-left: 5px solid var(--brand);
+    background-image: linear-gradient(90deg, var(--brand-soft), transparent 34%), var(--stripe);
+    box-shadow: 5px 5px 0 var(--line-2), var(--shadow);
+  }
+  .ps-hero {
+    position: relative;
+    padding: clamp(10px, 2vw, 22px) 0 18px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .ps-hero::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -6px;
+    width: 86px;
+    height: 10px;
+    background: repeating-linear-gradient(90deg, var(--brand) 0 5px, transparent 5px 9px);
+  }
+  .ps-map,
   .ps-panel {
     position: relative;
     padding: 24px;
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 0;
     box-shadow: var(--shadow);
     overflow: hidden;
   }
