@@ -31,9 +31,28 @@
   --sar: env(safe-area-inset-right, 0px);
 }
 
-  :root[data-visual-theme="minimal"] {
-    --stripe: none;
-    --shadow: 0 8px 24px rgba(18, 24, 32, .08);
+  :root[data-visual-theme="green-pixel"] {
+    --bg: #020503;
+    --bg-2: #061009;
+    --panel: #07150b;
+    --panel-2: #0b2111;
+    --ink: #c7ffd0;
+    --ink-2: #83d892;
+    --muted: #4d9d5b;
+    --line: #174f25;
+    --line-2: #28783a;
+    --cyan: #65ff8a;
+    --cyan-soft: rgba(43, 255, 92, .10);
+    --brand: #39ff68;
+    --brand-ink: #011b07;
+    --brand-soft: rgba(57, 255, 104, .14);
+    --pos: #39ff68;
+    --neg: #ff6d6d;
+    --ok: #39ff68;
+    --head-bg: rgba(2, 10, 4, .9);
+    --shadow: 0 0 0 1px rgba(57,255,104,.08), 0 0 34px rgba(30,255,77,.10);
+    --stripe: radial-gradient(circle, rgba(57,255,104,.35) 1px, transparent 1.5px);
+    --page-glow: radial-gradient(700px 420px at 75% -10%, rgba(27,255,75,.15), transparent 62%);
   }
 
   :root[data-theme="dark"] {
@@ -59,6 +78,30 @@
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 20px 40px -24px rgba(0,0,0,.8);
   --stripe: repeating-linear-gradient(135deg, transparent 0 7px, rgba(255,255,255,.035) 7px 8px);
   --page-glow: radial-gradient(900px 400px at 85% -10%, rgba(34,211,238,.08), transparent 60%);
+}
+
+:root[data-theme="dark"][data-visual-theme="green-pixel"] {
+  --bg: #020503;
+  --bg-2: #061009;
+  --panel: #07150b;
+  --panel-2: #0b2111;
+  --ink: #c7ffd0;
+  --ink-2: #83d892;
+  --muted: #4d9d5b;
+  --line: #174f25;
+  --line-2: #28783a;
+  --cyan: #65ff8a;
+  --cyan-soft: rgba(43, 255, 92, .10);
+  --brand: #39ff68;
+  --brand-ink: #011b07;
+  --brand-soft: rgba(57, 255, 104, .14);
+  --pos: #39ff68;
+  --neg: #ff6d6d;
+  --ok: #39ff68;
+  --head-bg: rgba(2, 10, 4, .9);
+  --shadow: 0 0 0 1px rgba(57,255,104,.08), 0 0 34px rgba(30,255,77,.10);
+  --stripe: radial-gradient(circle, rgba(57,255,104,.35) 1px, transparent 1.5px);
+  --page-glow: radial-gradient(700px 420px at 75% -10%, rgba(27,255,75,.15), transparent 62%);
 }
 
 @theme inline {
@@ -103,18 +146,65 @@
 @layer utilities {
   .katex { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 8px; }
 
-  :root[data-visual-theme="minimal"] .ps-strip {
+  :root[data-visual-theme="green-pixel"] .ps-strip {
     border-left-width: 1px;
     box-shadow: var(--shadow);
     background-image: none;
   }
 
-  :root[data-visual-theme="minimal"] .ps-hero::after,
-  :root[data-visual-theme="minimal"] .ps-panel::before,
-  :root[data-visual-theme="minimal"] .ps-panel::after,
-  :root[data-visual-theme="minimal"] .ps-side-panel::before,
-  :root[data-visual-theme="minimal"] .ps-side-panel::after {
+  :root[data-visual-theme="green-pixel"] .ps-hero::after,
+  :root[data-visual-theme="green-pixel"] .ps-panel::before,
+  :root[data-visual-theme="green-pixel"] .ps-panel::after,
+  :root[data-visual-theme="green-pixel"] .ps-side-panel::before,
+  :root[data-visual-theme="green-pixel"] .ps-side-panel::after {
     display: none;
+  }
+
+  :root[data-visual-theme="green-pixel"] body,
+  :root[data-visual-theme="green-pixel"] button,
+  :root[data-visual-theme="green-pixel"] input,
+  :root[data-visual-theme="green-pixel"] select {
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+
+  :root[data-visual-theme="green-pixel"] body {
+    background-image: var(--page-glow), radial-gradient(rgba(57,255,104,.13) 1px, transparent 1px);
+    background-size: auto, 5px 5px;
+  }
+
+  :root[data-visual-theme="green-pixel"] .ps-strip,
+  :root[data-visual-theme="green-pixel"] .ps-map,
+  :root[data-visual-theme="green-pixel"] .ps-panel,
+  :root[data-visual-theme="green-pixel"] .ps-side-panel {
+    border-color: var(--line);
+    border-radius: 2px;
+    box-shadow: var(--shadow);
+    background-image: radial-gradient(rgba(57,255,104,.12) .8px, transparent .8px);
+    background-size: 4px 4px;
+  }
+
+  :root[data-visual-theme="green-pixel"] .ps-panel::before {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: var(--brand);
+    opacity: .8;
+  }
+
+  :root[data-visual-theme="green-pixel"] .ps-hero {
+    border-bottom-color: var(--brand);
+    text-shadow: 0 0 18px rgba(57,255,104,.18);
+  }
+
+  :root[data-visual-theme="green-pixel"] .ps-hero h1,
+  :root[data-visual-theme="green-pixel"] .ps-panel h2 {
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  :root[data-visual-theme="green-pixel"] .ps-barcode {
+    background: repeating-linear-gradient(90deg, var(--brand) 0 2px, transparent 2px 4px, var(--brand) 4px 5px, transparent 5px 8px);
+    box-shadow: 0 0 8px rgba(57,255,104,.7);
   }
 
   /* Print Stream Base Components */

@@ -4,14 +4,14 @@ import { Moon, Palette, Sun } from 'lucide-react';
 import { useEffect, useSyncExternalStore } from 'react';
 
 type Theme = 'light' | 'dark';
-export type VisualTheme = 'print' | 'minimal';
+export type VisualTheme = 'print' | 'green-pixel';
 const themeEvent = 'numeric-theme-change';
 const visualThemeEvent = 'numeric-visual-theme-change';
 
 function getVisualTheme(): VisualTheme {
   if (typeof window === 'undefined') return 'print';
-  return window.localStorage.getItem('numeric-visual-theme') === 'minimal'
-    ? 'minimal'
+  return window.localStorage.getItem('numeric-visual-theme') === 'green-pixel'
+    ? 'green-pixel'
     : 'print';
 }
 
@@ -87,10 +87,10 @@ export function ThemeToggle() {
             Design
             <select value={visualTheme} onChange={(event) => setVisualTheme(event.target.value as VisualTheme)} className="h-10 rounded-lg border border-[var(--line)] bg-[var(--bg-2)] px-3 text-sm text-[var(--ink)] outline-none focus:border-[var(--brand)]">
               <option value="print">Print Stream — Retro</option>
-              <option value="minimal">Minimal — Clean</option>
+              <option value="green-pixel">Green Pixel — Matrix</option>
             </select>
           </label>
-          <p className="mt-3 text-xs leading-relaxed text-[var(--muted)]">Tanlovingiz shu qurilmada saqlanadi.</p>
+          <p className="mt-3 text-xs leading-relaxed text-[var(--muted)]">Print Stream yoki Green Pixel tanlovingiz shu qurilmada saqlanadi.</p>
         </div>
       </details>
     </div>
