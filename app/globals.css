@@ -31,7 +31,13 @@
   --sar: env(safe-area-inset-right, 0px);
 }
 
-:root[data-theme="dark"] {
+  :root[data-visual-theme="minimal"] {
+    --stripe: none;
+    --shadow: 0 8px 24px rgba(18, 24, 32, .08);
+  }
+
+  :root[data-theme="dark"] {
+
   --bg: #171513;
   --bg-2: #211d19;
   --panel: #28231d;
@@ -96,6 +102,20 @@
 
 @layer utilities {
   .katex { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 8px; }
+
+  :root[data-visual-theme="minimal"] .ps-strip {
+    border-left-width: 1px;
+    box-shadow: var(--shadow);
+    background-image: none;
+  }
+
+  :root[data-visual-theme="minimal"] .ps-hero::after,
+  :root[data-visual-theme="minimal"] .ps-panel::before,
+  :root[data-visual-theme="minimal"] .ps-panel::after,
+  :root[data-visual-theme="minimal"] .ps-side-panel::before,
+  :root[data-visual-theme="minimal"] .ps-side-panel::after {
+    display: none;
+  }
 
   /* Print Stream Base Components */
   .ps-strip {
