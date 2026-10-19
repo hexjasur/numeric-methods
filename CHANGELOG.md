@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.2.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.1.0...numeric-methods-v3.2.0) (2026-10-19)
+
+
+### ✨ Features
+
+* add step-by-step Newton interpolation ([46f927c](https://github.com/hexjasur/numeric-methods/commit/46f927c575df39e1e9ed21e7016bb2a299e66eac))
+* **learn:** add sourced academic numerical-method guides ✨ ([230da06](https://github.com/hexjasur/numeric-methods/commit/230da06c33759a73801e912d7439e0dce45ade02))
+
+
+### 🐛 Bug Fixes
+
+* **seo:** align canonical domain and verify release PRs 🐛 ([80fb111](https://github.com/hexjasur/numeric-methods/commit/80fb11113820fbbeb335584eb65df830297a1257))
+
 ## [3.1.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.0.7...numeric-methods-v3.1.0) (2026-10-15)
 
 
