@@ -87,33 +87,39 @@ export function AppShell({
         icon: Spline,
       },
       {
+        href: '/methods/newton-interpolation',
+        label: t('nav.newtonInterpolation'),
+        code: '09',
+        icon: Spline,
+      },
+      {
         href: '/methods/rectangles',
         label: t('nav.rectangles'),
-        code: '09',
+        code: '10',
         icon: Sigma,
       },
       {
         href: '/methods/trapezoid',
         label: t('nav.trapezoid'),
-        code: '10',
+        code: '11',
         icon: Sigma,
       },
       {
         href: '/methods/simpson',
         label: t('nav.simpson'),
-        code: '11',
+        code: '12',
         icon: Sigma,
       },
       {
         href: '/methods/euler',
         label: t('nav.euler'),
-        code: '12',
+        code: '13',
         icon: Activity,
       },
       {
         href: '/methods/runge-kutta',
         label: t('nav.rungeKutta'),
-        code: '13',
+        code: '14',
         icon: Activity,
       },
     ],
@@ -145,6 +151,8 @@ export function AppShell({
             ? t('nav.learn')
           : pathname.startsWith('/methods/bisection')
             ? t('nav.bisection')
+          : pathname.startsWith('/methods/newton-interpolation')
+            ? t('nav.newtonInterpolation')
             : pathname.startsWith('/methods/newton')
               ? t('nav.newton')
               : pathname.startsWith('/methods/sweep')
@@ -215,7 +223,9 @@ export function AppShell({
               const active =
                 item.href === '/'
                   ? pathname === '/'
-                  : pathname.startsWith(item.href);
+                  : item.href === '/methods/newton'
+                    ? pathname === item.href
+                    : pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.href}

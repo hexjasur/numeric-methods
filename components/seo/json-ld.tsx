@@ -45,6 +45,7 @@ export function RootJsonLd() {
       'Eyler usuli (Oddiy differensial tenglamalarni yechish)',
       'Runge-Kutta 4-tartibli usuli (Yuqori aniqlikdagi ODU yechish)',
       'Lagranj interpolyatsiya koʻphadi',
+      'Nyuton interpolyatsiya ko‘phadi (bo‘lingan ayirmalar)',
       'Simpson parabolalar formulasi bilan integrallash',
       'Trapetsiyalar usuli bilan integrallash',
       'Toʻgʻri toʻrtburchaklar usuli bilan integrallash',

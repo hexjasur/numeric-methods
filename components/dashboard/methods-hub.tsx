@@ -86,8 +86,21 @@ const METHODS: MethodDef[] = [
     accentClass: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/25',
   },
   {
+    id: 'newton-interpolation',
+    code: '05 / INT',
+    category: 'interpolation',
+    categoryKey: 'dashboard.cat_interpolation',
+    titleKey: 'nav.newtonInterpolation',
+    descKey: 'dashboard.desc_newtonInterpolation',
+    href: '/methods/newton-interpolation',
+    formulaTex: 'f[x_0,\\ldots,x_n] = \\frac{f[x_1,\\ldots,x_n]-f[x_0,\\ldots,x_{n-1}]}{x_n-x_0}',
+    orderTex: 'O(n^2)',
+    icon: Spline,
+    accentClass: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/25',
+  },
+  {
     id: 'rectangles',
-    code: '05 / QUA',
+    code: '06 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.rectangles',
@@ -100,7 +113,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'trapezoid',
-    code: '06 / QUA',
+    code: '07 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.trapezoid',
@@ -113,7 +126,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'simpson',
-    code: '07 / QUA',
+    code: '08 / QUA',
     category: 'quadrature',
     categoryKey: 'dashboard.cat_quadrature',
     titleKey: 'nav.simpson',
@@ -126,7 +139,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'euler',
-    code: '08 / ODE',
+    code: '09 / ODE',
     category: 'odes',
     categoryKey: 'dashboard.cat_odes',
     titleKey: 'nav.euler',
@@ -139,7 +152,7 @@ const METHODS: MethodDef[] = [
   },
   {
     id: 'runge-kutta',
-    code: '09 / ODE',
+    code: '10 / ODE',
     category: 'odes',
     categoryKey: 'dashboard.cat_odes',
     titleKey: 'nav.rungeKutta',
