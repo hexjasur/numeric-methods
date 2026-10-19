@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Community & Questions (Telegram)
+    url: https://t.me/KanYonA
+    about: Ask questions or discuss mathematical algorithms in real time.
+  - name: 🌐 Online Platform
+    url: https://sonli-usullar.uz
+    about: Test calculations on the official web platform.

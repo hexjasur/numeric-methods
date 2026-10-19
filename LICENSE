@@ -1,0 +1,49 @@
+NUMERIC METHODS SOURCE CODE AND BRAND LICENSE
+Copyright (c) 2026 Jasurbek Haydarov (HexJasur) and contributors.
+All rights reserved.
+
+==============================================================================
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+==============================================================================
+
+1. GRANT OF LICENSE & RIGHTS TO USE
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to fork,
+view, run, test, and use the Software for educational, academic, research,
+and non-commercial personal purposes, subject to the conditions set forth herein.
+
+2. NON-COMMERCIAL RESTRICTION (NO RESALE)
+The Software, in whole or in part, including any source code, compiled binaries,
+mobile APK packages, desktop bundles, assets, or modified versions, MAY NOT be sold,
+resold, licensed for a fee, monetized, or used for commercial profit or gain
+without prior explicit written consent from the Original Author (Jasurbek Haydarov).
+
+3. PRESERVATION OF COPYRIGHT & ORIGINAL AUTHORSHIP
+All original copyright notices, authorship credits, license headers, and
+attribution metadata must remain intact in all copies, forks, mirrors, and
+derivative works of the Software:
+  a. The name of the Original Author (Jasurbek Haydarov / @hexjasur) must NOT
+     be removed, concealed, or replaced as the creator of this project.
+  b. The project brand names ("Numeric Methods", "Sonli Usullar") and original logos
+     may NOT be altered, misappropriated, or rebranded in derivative distributions.
+  c. You are allowed to fork and contribute additions, bug fixes, or new methods.
+     Contributors who make substantive modifications or enhancements are permitted
+     and encouraged to append their own name to the list of contributors alongside
+     the Original Author, but NEVER in place of the Original Author.
+
+4. REDISTRIBUTION & SHARING (SHARE-ALIKE ATTRIBUTION)
+You may redistribute the Software and its derivative works, provided that:
+  a. All distributions include this complete LICENSE file.
+  b. The distribution remains strictly non-commercial and free of charge.
+  c. Prominent notices are included stating that you modified the Software and
+     crediting the original repository: https://github.com/hexjasur/numeric-methods
+  d. Derivative works and forks must be released under these exact same license terms.
+
+5. DISCLAIMER OF WARRANTY
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
