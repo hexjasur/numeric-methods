@@ -315,6 +315,18 @@ export const ALL_OG_CONFIGS: MethodOgConfig[] = [
     accentColor: '#ff6a2b',
   },
   {
+    slug: 'newton-interpolation',
+    methodId: 'METHOD // 010',
+    category: 'APPROKSIMATSIYA // INTERPOLATION',
+    titleUz: 'Nyuton interpolyatsiyasi',
+    titleAlt: 'Интерполяция Ньютона • Newton Interpolation',
+    descriptionLine1: 'Bo‘lingan ayirmalar jadvalidan Newton ko‘phadini',
+    descriptionLine2: 'tuzing va P(x*) qiymatini to‘liq qadamlar bilan toping.',
+    formulaLatex: 'f[x_0,\\ldots,x_n] = \\frac{f[x_1,\\ldots,x_n] - f[x_0,\\ldots,x_{n-1}]}{x_n - x_0}',
+    badge: 'DIVIDED DIFFERENCES',
+    accentColor: '#ff6a2b',
+  },
+  {
     slug: 'rectangles',
     methodId: 'METHOD // 006',
     category: 'INTEGRALLASH // QUADRATURE',
