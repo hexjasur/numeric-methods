@@ -5,8 +5,8 @@ export const siteConfig = {
   title: 'Sonli Usullar — O‘zbekcha onlayn qo‘llanma va kalkulyator',
   description:
     "Sonli usullarni o‘zbek tilida o‘rganing va hisoblang: tenglama ildizlari, sonli integrallar, differensial tenglamalar va interpolyatsiya uchun qadam-baqadam misollar hamda bepul online kalkulyatorlar.",
-  url: 'https://sonli-usullar.uz',
-  ogImage: 'https://sonli-usullar.uz/images/og-thumbail-1280x640.png',
+  url: 'https://www.sonli-usullar.uz',
+  ogImage: 'https://www.sonli-usullar.uz/images/og-thumbail-1280x640.png',
   locale: 'uz_UZ',
   alternateLocales: ['ru_RU', 'en_US'],
   author: {

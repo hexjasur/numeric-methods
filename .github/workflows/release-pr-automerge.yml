@@ -1,0 +1,78 @@
+name: Release PR Auto-merge
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  verify-and-enable-auto-merge:
+    name: Verify release version and changelog
+    if: >-
+      github.event.pull_request.user.login == 'nm-actions[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'release-please--branches--main--components--numeric-methods' &&
+      !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release PR
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Verify synchronized version bump and changelog
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          release_version="$(bun run check:version --print)"
+          bun run check:version --changelog > /dev/null
+          base_version="$(git show "${BASE_SHA}:package.json" | jq -r '.version')"
+
+          if [[ "${base_version}" == "${release_version}" ]]; then
+            echo "::error::Release PR did not change the version (still ${release_version})."
+            exit 1
+          fi
+
+          for file in package.json src-tauri/tauri.conf.json src-tauri/Cargo.toml; do
+            if git diff --quiet "${BASE_SHA}" "${HEAD_SHA}" -- "${file}"; then
+              echo "::error::Release PR did not update ${file}."
+              exit 1
+            fi
+          done
+
+          BASE_VERSION="${base_version}" RELEASE_VERSION="${release_version}" node <<'NODE'
+          const parse = (value) => {
+            const match = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.exec(value);
+            if (!match) throw new Error(`Invalid semantic version: ${value}`);
+            return match.slice(1, 4).map(Number);
+          };
+          const [base, release] = [parse(process.env.BASE_VERSION), parse(process.env.RELEASE_VERSION)];
+          const comparison = release.findIndex((part, index) => part !== base[index]);
+          if (comparison === -1 || release[comparison] < base[comparison]) {
+            throw new Error(`Release version ${process.env.RELEASE_VERSION} must be greater than ${process.env.BASE_VERSION}.`);
+          }
+          NODE
+
+      - name: Enable auto-merge after required checks pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: gh pr merge "${PR_NUMBER}" --auto --squash --repo "${GITHUB_REPOSITORY}"
