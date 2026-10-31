@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.2.1](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.2.0...numeric-methods-v3.2.1) (2026-10-31)
+
+
+### ♻️ Refactors
+
+* **i18n:** adapt all uzbek texts to new latin alphabet and fix sidebar layout ✨ ([f84d4ec](https://github.com/hexjasur/numeric-methods/commit/f84d4ec8cd2c4c20ff335daa97d6b1d1bc693206))
+
 ## [3.2.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.1.0...numeric-methods-v3.2.0) (2026-10-19)
 
 
