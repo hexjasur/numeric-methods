@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { PsHero, PsStrip, PsPanel, PsPanelHead } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
@@ -11,7 +11,7 @@ export function SyntaxGuide() {
     <span dangerouslySetInnerHTML={{ __html: katex.renderToString(tex, { throwOnError: false }) }} />;
 
   return (
-    <div className="relative max-w-[900px] mx-auto px-4 pb-12">
+    <div className="relative mx-auto max-w-[900px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="DOC-001" id="SYNTAX" name={t('syntax.strip')} />
 
       <PsHero 

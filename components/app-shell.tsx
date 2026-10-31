@@ -341,28 +341,30 @@ export function AppShell({
 
       {/* ───────── CONTENT ───────── */}
       <div className="flex-1 min-w-0 flex flex-col min-h-screen md:ml-[272px]">
-        <header className="sticky top-0 z-20 flex items-center justify-between h-[76px] px-[clamp(22px,5vw,70px)] bg-head-bg backdrop-blur-[12px] border-b border-line max-md:h-[calc(66px+var(--sat))] max-md:pt-[var(--sat)] max-md:px-[16px] after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[1px] after:h-[1px] after:bg-[linear-gradient(90deg,var(--brand)_0_64px,transparent_64px)]">
-          <div className="flex items-center gap-[10px]">
+        <header className="sticky top-0 z-20 flex items-center justify-between h-[60px] sm:h-[72px] px-3 sm:px-6 md:px-8 bg-head-bg backdrop-blur-[12px] border-b border-line gap-2 after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[1px] after:h-[1px] after:bg-[linear-gradient(90deg,var(--brand)_0_64px,transparent_64px)]">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1 mr-1">
             <button
-              className="hidden max-md:grid place-items-center w-[42px] h-[42px] cursor-pointer border border-line-2 rounded-md bg-panel text-ink transition-all hover:border-brand hover:text-brand hover:bg-brand-soft"
+              className="hidden max-md:grid place-items-center w-9 h-9 shrink-0 cursor-pointer border border-line-2 rounded-lg bg-panel text-ink transition-all hover:border-brand hover:text-brand hover:bg-brand-soft"
               onClick={() => setMobileOpen(true)}
               aria-label="Menyuni ochish"
             >
-              <Menu size={20} />
+              <Menu size={18} />
             </button>
-            <div className="flex items-center gap-[10px] text-[14px] text-muted">
-              <span className="max-md:hidden">Sonli Usullar</span>
-              <b className="font-normal text-line-2 max-md:hidden">/</b>
-              <strong className="font-[650] text-ink">{pageTitle}</strong>
+            <div className="flex items-center gap-2 text-[13px] sm:text-[14px] text-muted min-w-0 flex-1">
+              <span className="hidden lg:inline shrink-0">Sonli Usullar</span>
+              <b className="font-normal text-line-2 hidden lg:inline">/</b>
+              <strong className="font-[650] text-ink truncate text-[13px] sm:text-[14.5px] leading-normal whitespace-nowrap min-w-0 block">
+                {pageTitle}
+              </strong>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <a
               href="https://v2.sonli-usullar.uz"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 h-[38px] px-2.5 rounded-lg border border-line bg-panel text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 font-mono text-[12px] font-semibold transition-all shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+              className="hidden sm:inline-flex items-center gap-1.5 h-9 px-2.5 rounded-lg border border-line bg-panel text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 font-mono text-[12px] font-semibold transition-all shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
               title={t('nav.v2_tooltip')}
             >
               <span>v2</span>
@@ -374,7 +376,7 @@ export function AppShell({
           </div>
         </header>
 
-        <main className="w-full max-w-[1420px] mx-auto flex-1 p-[clamp(28px,5vw,68px)_clamp(22px,5vw,70px)] max-md:p-[24px_16px] max-md:pb-[calc(24px+var(--sab))]">
+        <main className="w-full max-w-[1420px] mx-auto flex-1 p-3 sm:p-5 md:p-8 lg:p-10 max-md:pb-[calc(24px+var(--sab))]">
           {children}
         </main>
         <BackToTop />

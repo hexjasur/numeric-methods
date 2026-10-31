@@ -98,7 +98,7 @@ export default async function LearningGuidePage({ params }: LearningGuidePagePro
       </nav>
 
       {/* Hero Header */}
-      <header className="rounded-2xl border border-line bg-panel p-6 shadow-[var(--shadow)] sm:p-10">
+      <header className="rounded-2xl border border-line bg-panel p-4 sm:p-6 md:p-10 shadow-[var(--shadow)]">
         <div className="flex flex-wrap items-center gap-2.5">
           <span className="inline-flex items-center gap-1.5 rounded-md bg-brand-soft px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-brand">
             <BookOpenText aria-hidden="true" size={14} />
@@ -138,7 +138,7 @@ export default async function LearningGuidePage({ params }: LearningGuidePagePro
       </header>
 
       {/* Asosiy formula */}
-      <section aria-labelledby="guide-formula" className="rounded-2xl border border-line bg-panel p-6 sm:p-8">
+      <section aria-labelledby="guide-formula" className="rounded-2xl border border-line bg-panel p-4 sm:p-6 md:p-8">
         <div className="flex items-center gap-2">
           <Sparkles aria-hidden="true" className="text-cyan" size={20} />
           <h2 id="guide-formula" className="text-xl font-bold text-ink">
@@ -155,7 +155,7 @@ export default async function LearningGuidePage({ params }: LearningGuidePagePro
       </section>
 
       {/* Nazariy asoslar va teoremalar */}
-      <section aria-labelledby="guide-theory" className="rounded-2xl border border-line bg-panel p-6 sm:p-8">
+      <section aria-labelledby="guide-theory" className="rounded-2xl border border-line bg-panel p-4 sm:p-6 md:p-8">
         <div className="flex items-center gap-2">
           <BookOpen aria-hidden="true" className="text-brand" size={20} />
           <h2 id="guide-theory" className="text-xl font-bold text-ink">

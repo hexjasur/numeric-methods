@@ -70,7 +70,7 @@ export function ThemeToggle() {
 
   return (
     <button 
-      className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--panel)] px-3 font-mono text-xs font-semibold tracking-wide text-[var(--muted)] transition hover:border-[var(--brand)] hover:bg-[var(--brand-soft)] hover:text-[var(--brand)] focus-visible:outline-2 focus-visible:outline-[var(--cyan)]" 
+      className="inline-flex h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-lg border border-[var(--line)] bg-[var(--panel)] px-2.5 sm:px-3 font-mono text-xs font-semibold tracking-wide text-[var(--muted)] transition hover:border-[var(--brand)] hover:bg-[var(--brand-soft)] hover:text-[var(--brand)] focus-visible:outline-2 focus-visible:outline-[var(--cyan)]" 
       onClick={toggleTheme} 
       aria-label={`${isDark ? 'Light' : 'Dark'} modega o'tish`} 
       // title="Ko'rinishni almashtirish"

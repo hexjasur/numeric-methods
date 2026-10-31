@@ -178,7 +178,7 @@ export function AboutPage() {
   ];
 
   return (
-    <div className="relative max-w-[1080px] mx-auto px-4 pb-16">
+    <div className="relative mx-auto max-w-[1080px] px-0 sm:px-2 md:px-4 pb-16">
       <PsStrip eyebrow="DOC-002" id="ABOUT" name={t('about.strip')} />
 
       <PsHero

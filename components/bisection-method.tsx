@@ -45,7 +45,7 @@ export function BisectionMethod() {
   const sign = (v: number) => (v < 0 ? 'text-neg' : 'text-pos');
 
   return (
-    <div className="bm relative max-w-[1160px] mx-auto px-4 pb-12">
+    <div className="bm relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="BSC-001" id="ROOT" name={t('bisection.strip')} />
 
       <PsHero 

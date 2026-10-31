@@ -182,7 +182,7 @@ export function EulerMethod() {
   }));
 
   return (
-    <div className="relative max-w-[1160px] mx-auto px-4 pb-12">
+    <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="ELR-002" id="ODE" name={t('euler.strip')} />
 
       <PsHero 
@@ -241,7 +241,7 @@ export function EulerMethod() {
                     value={inputs[key as keyof typeof initialInputs]}
                     onChange={(event) => setValue(key as keyof typeof initialInputs, event.target.value)}
                     aria-label={label}
-                    className="w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-[15px] font-medium p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
+                    className="w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-sm sm:text-[15px] font-medium p-2.5 sm:p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
                   />
                 </label>
               ))}
@@ -539,21 +539,21 @@ export function EulerMethod() {
                     {t('euler.notebook_sec_1')}:
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div className="p-3 rounded-md border border-line bg-panel flex flex-col justify-center">
+                    <div className="p-3 rounded-md border border-line bg-panel flex flex-col justify-center min-w-0 overflow-x-auto">
                       <span className="text-muted block text-xs mb-1.5">Differensial tenglama:</span>
                       <MathKatex
                         tex={String.raw`y' = f(x, y) = ${calculationInputs.expression}`}
                         className="text-sm font-semibold text-ink"
                       />
                     </div>
-                    <div className="p-3 rounded-md border border-line bg-panel flex flex-col justify-center">
+                    <div className="p-3 rounded-md border border-line bg-panel flex flex-col justify-center min-w-0 overflow-x-auto">
                       <span className="text-muted block text-xs mb-1.5">Boşlanğiç şart (Koşi):</span>
                       <MathKatex
                         tex={String.raw`x_0 = ${formatNum(Number(calculationInputs.x0))}, \quad y(x_0) = y_0 = ${formatNum(Number(calculationInputs.y0))}`}
                         className="text-sm font-semibold text-ink"
                       />
                     </div>
-                    <div className="p-3 rounded-md border border-line bg-panel flex flex-col justify-center">
+                    <div className="p-3 rounded-md border border-line bg-panel flex flex-col justify-center min-w-0 overflow-x-auto">
                       <span className="text-muted block text-xs mb-1.5">
                         {t('euler.notebook_interval')} va qadam:
                       </span>
@@ -581,9 +581,9 @@ export function EulerMethod() {
                     const renderStepCard = (step: typeof steps[0]) => (
                       <div
                         key={step.i}
-                        className="p-4 rounded-lg border border-line bg-bg-2 hover:border-line-2 transition-colors space-y-3"
+                        className="p-3 sm:p-4 rounded-lg border border-line bg-bg-2 hover:border-line-2 transition-colors space-y-3 min-w-0 overflow-hidden"
                       >
-                        <div className="flex items-center justify-between pb-2 border-b border-line/60">
+                        <div className="flex items-center justify-between pb-2 border-b border-line/60 gap-2 min-w-0">
                           <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-brand/10 text-brand border border-brand/20">
                             i = {step.i}
                           </span>
@@ -599,26 +599,26 @@ export function EulerMethod() {
 
                         {notebookTab === 'simple' ? (
                           <div className="space-y-2 text-ink text-sm">
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">Nuqta:</span>
                               <MathKatex
                                 tex={String.raw`x_{${step.i}} = ${formatNum(step.x)}, \quad y_{${step.i}} = ${formatNum(step.y)}`}
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">Hosila:</span>
                               <MathKatex
                                 tex={String.raw`f(x_{${step.i}}, \, y_{${step.i}}) = ${substituteLatex(calculationInputs.expression, formatNum(step.x), formatNum(step.y))} = ${formatNum(step.f_xy)}`}
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">Keyingi y:</span>
                               <MathKatex
                                 tex={String.raw`y_{${step.i + 1}} = y_{${step.i}} + h \cdot f(x_{${step.i}}, \, y_{${step.i}}) = ${formatNum(step.y)} + ${formatNum(step.h)} \cdot (${formatNum(step.f_xy)}) = \mathbf{${formatNum(step.nextY)}}`}
                                 className="text-neg"
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">Keyingi x:</span>
                               <MathKatex
                                 tex={String.raw`x_{${step.i + 1}} = x_{${step.i}} + h = ${formatNum(step.x)} + ${formatNum(step.h)} = ${formatNum(step.nextX)}`}
@@ -627,38 +627,38 @@ export function EulerMethod() {
                           </div>
                         ) : (
                           <div className="space-y-2 text-ink text-sm">
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">Nuqta:</span>
                               <MathKatex
                                 tex={String.raw`x_{${step.i}} = ${formatNum(step.xImproved)}, \quad y_{${step.i}} = ${formatNum(step.yImproved)}`}
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">k₁:</span>
                               <MathKatex
                                 tex={String.raw`k_1 = f(x_{${step.i}}, \, y_{${step.i}}) = ${substituteLatex(calculationInputs.expression, formatNum(step.xImproved), formatNum(step.yImproved))} = ${formatNum(step.k1)}`}
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
-                              <span className="text-xs text-muted font-mono min-w-[70px]">Bashorat:</span>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
+                              <span className="text-xs text-muted font-mono shrink-0 sm:min-w-[70px]">Başorat:</span>
                               <MathKatex
                                 tex={String.raw`\bar{y}_{${step.i + 1}} = y_{${step.i}} + h \cdot k_1 = ${formatNum(step.yImproved)} + ${formatNum(step.h)} \cdot (${formatNum(step.k1)}) = ${formatNum(step.yPred)}`}
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">k₂:</span>
                               <MathKatex
                                 tex={String.raw`k_2 = f(x_{${step.i + 1}}, \, \bar{y}_{${step.i + 1}}) = ${substituteLatex(calculationInputs.expression, formatNum(step.nextX), formatNum(step.yPred))} = ${formatNum(step.k2)}`}
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">Korrektor:</span>
                               <MathKatex
                                 tex={String.raw`y_{${step.i + 1}} = y_{${step.i}} + \frac{h}{2}(k_1 + k_2) = ${formatNum(step.yImproved)} + \frac{${formatNum(step.h)}}{2}\bigl(${formatNum(step.k1)} + (${formatNum(step.k2)})\bigr) = \mathbf{${formatNum(step.nextYImproved)}}`}
                                 className="text-[#3b82f6]"
                               />
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 p-2 rounded bg-panel/60 border border-line/40">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
                               <span className="text-xs text-muted font-mono min-w-[70px]">Keyingi x:</span>
                               <MathKatex
                                 tex={String.raw`x_{${step.i + 1}} = x_{${step.i}} + h = ${formatNum(step.xImproved)} + ${formatNum(step.h)} = ${formatNum(step.nextX)}`}

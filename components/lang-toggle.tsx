@@ -31,12 +31,12 @@ export function LangToggle() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className={`inline-flex h-10 w-full items-center justify-between gap-2 rounded-lg border bg-[var(--panel)] px-3 font-mono text-xs font-semibold tracking-wide transition focus-visible:outline-2 focus-visible:outline-[var(--cyan)] ${
+        className={`inline-flex h-9 sm:h-10 w-full items-center justify-between gap-1.5 sm:gap-2 rounded-lg border bg-[var(--panel)] px-2 sm:px-3 font-mono text-xs font-semibold tracking-wide transition focus-visible:outline-2 focus-visible:outline-[var(--cyan)] ${
           open 
             ? 'border-[var(--brand)] text-[var(--brand)] bg-[var(--brand-soft)] shadow-sm' 
             : 'border-[var(--line)] text-[var(--muted)] hover:border-[var(--brand)] hover:bg-[var(--brand-soft)] hover:text-[var(--brand)]'
         }`}
-        aria-label="Tilni özgartiariş"
+        aria-label="Tilni özgartiriş"
         aria-expanded={open}
       >
         <div className="flex items-center gap-2">

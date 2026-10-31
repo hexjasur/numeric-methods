@@ -159,7 +159,7 @@ export function TrapezoidMethod() {
     : [];
 
   return (
-    <div className="relative mx-auto max-w-[1160px] px-4 pb-12">
+    <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="INTEGRAL / 005" id="QUADRATURE" name={t('trapezoid.strip')} />
       <PsHero
         eyebrow={t('trapezoid.hero_eyebrow')}

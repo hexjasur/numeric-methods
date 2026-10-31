@@ -263,7 +263,7 @@ export function NewtonInterpolationMethod() {
     : 0;
 
   return (
-    <div className="relative mx-auto max-w-[1160px] px-4 pb-12">
+    <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="INTERPOLATION / 010" id="NEWTON" name={t('newtonInterpolation.strip')} />
       <PsHero
         eyebrow={t('newtonInterpolation.hero_eyebrow')}

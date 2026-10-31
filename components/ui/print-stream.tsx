@@ -3,10 +3,10 @@ import React from 'react';
 // Barcode strip component
 export function PsStrip({ eyebrow, id, name }: { eyebrow: string; id: string; name: string }) {
   return (
-    <div className="flex items-center gap-3.5 font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted py-2.5 px-3.5 border border-line rounded-lg bg-panel shadow-[var(--shadow)]">
-      <span>{eyebrow}</span>
-      <i className="ps-barcode flex-1 h-[14px] opacity-55" aria-hidden />
-      <span>{id} · {name}</span>
+    <div className="flex items-center gap-2 sm:gap-3.5 font-mono text-[11px] sm:text-xs font-semibold tracking-[.1em] sm:tracking-[.14em] uppercase text-muted py-2 px-3 sm:py-2.5 sm:px-3.5 border border-line rounded-lg bg-panel shadow-[var(--shadow)] overflow-hidden">
+      <span className="shrink-0">{eyebrow}</span>
+      <i className="ps-barcode flex-1 h-[12px] sm:h-[14px] opacity-55 min-w-[20px]" aria-hidden />
+      <span className="shrink-0 truncate text-right max-w-[200px] sm:max-w-none">{id} · {name}</span>
     </div>
   );
 }
@@ -28,25 +28,25 @@ export function PsHero({
   conditionSub?: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-wrap items-end justify-between gap-8 my-8">
-      <div>
-        <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
+    <section className="flex flex-wrap items-end justify-between gap-4 sm:gap-8 my-4 sm:my-8">
+      <div className="min-w-0 max-w-full">
+        <span className="block font-mono text-[11px] sm:text-xs font-semibold tracking-[.12em] sm:tracking-[.14em] uppercase text-muted leading-[1.2]">
           {eyebrow}
         </span>
-        <h1 className="my-5 text-[clamp(44px,7vw,84px)] font-bold leading-[.94] tracking-[-.06em]">
+        <h1 className="my-2.5 sm:my-5 text-[clamp(28px,6.5vw,72px)] font-bold leading-[1.05] tracking-[-.04em] sm:tracking-[-.06em] break-words">
           {title} <em className="not-italic text-cyan relative after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[.06em] after:h-[.07em] after:bg-brand">{titleHighlight}</em>
         </h1>
-        <p className="m-0 text-muted text-[17px] max-w-[520px]">
+        <p className="m-0 text-muted text-[14px] sm:text-[17px] max-w-[520px] leading-relaxed">
           {lead}
         </p>
       </div>
       {conditionMain && (
-        <div className="border border-line bg-panel rounded-[10px] py-3.5 px-4.5 shadow-[var(--shadow)] relative overflow-x-auto overflow-y-hidden max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap before:content-[''] before:absolute before:inset-0 before:bg-[var(--stripe)] before:pointer-events-none mt-5">
-          <span className="relative block font-mono text-lg sm:text-xl font-semibold text-ink [&>b]:text-brand [&_.katex]:font-normal [&_.katex]:text-[0.92em]">
+        <div className="border border-line bg-panel rounded-[10px] py-2.5 px-3 sm:py-3.5 sm:px-4.5 shadow-[var(--shadow)] relative overflow-x-auto overflow-y-hidden max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden whitespace-nowrap before:content-[''] before:absolute before:inset-0 before:bg-[var(--stripe)] before:pointer-events-none mt-2 sm:mt-5">
+          <span className="relative block font-mono text-base sm:text-lg md:text-xl font-semibold text-ink [&>b]:text-brand [&_.katex]:font-normal [&_.katex]:text-[0.92em]">
             {conditionMain}
           </span>
           {conditionSub && (
-            <small className="relative block mt-2.5 font-mono text-xs font-medium text-muted tracking-[.04em]">
+            <small className="relative block mt-1.5 sm:mt-2.5 font-mono text-[11px] sm:text-xs font-medium text-muted tracking-[.04em]">
               {conditionSub}
             </small>
           )}

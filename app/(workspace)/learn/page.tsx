@@ -56,7 +56,7 @@ export default function LearningGuideIndexPage() {
   return (
     <div className="mx-auto max-w-5xl space-y-12 pb-16">
       {/* Hero Header */}
-      <header className="rounded-2xl border border-line bg-panel p-7 shadow-[var(--shadow)] sm:p-12">
+      <header className="rounded-2xl border border-line bg-panel p-4 sm:p-7 md:p-12 shadow-[var(--shadow)]">
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-md bg-brand-soft px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-brand">
             <GraduationCap aria-hidden="true" size={14} />
@@ -105,7 +105,7 @@ export default function LearningGuideIndexPage() {
       </header>
 
       {/* Masalangizga mos usulni tanlang */}
-      <section aria-labelledby="choose-method" className="rounded-2xl border border-line bg-bg-2 p-6 sm:p-8">
+      <section aria-labelledby="choose-method" className="rounded-2xl border border-line bg-bg-2 p-4 sm:p-6 md:p-8">
         <div className="flex items-center gap-2.5">
           <Sparkles aria-hidden="true" className="text-brand" size={20} />
           <h2 id="choose-method" className="text-xl font-bold text-ink sm:text-2xl">
@@ -256,7 +256,7 @@ export default function LearningGuideIndexPage() {
       <section
         id="standartlar-va-konvensiyalar"
         aria-labelledby="conventions-heading"
-        className="rounded-2xl border-2 border-brand/30 bg-brand-soft/20 p-6 sm:p-10"
+        className="rounded-2xl border-2 border-brand/30 bg-brand-soft/20 p-4 sm:p-6 md:p-10"
       >
         <div className="flex items-center gap-3 text-brand">
           <Lightbulb aria-hidden="true" size={24} />
@@ -314,7 +314,7 @@ export default function LearningGuideIndexPage() {
       <section
         id="adabiyotlar-kutubxonasi"
         aria-labelledby="library-heading"
-        className="rounded-2xl border border-line bg-panel p-7 shadow-[var(--shadow)] sm:p-10"
+        className="rounded-2xl border border-line bg-panel p-4 sm:p-7 md:p-10 shadow-[var(--shadow)]"
       >
         <div className="flex items-center gap-3">
           <Library aria-hidden="true" className="text-brand" size={24} />

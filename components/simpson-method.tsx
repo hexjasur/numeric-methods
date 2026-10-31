@@ -81,7 +81,7 @@ export function SimpsonMethod() {
   const renderKatex = (value: string) => katex.renderToString(value, { throwOnError: false });
 
   return (
-    <div className="smp relative max-w-[1160px] mx-auto px-4 pb-12">
+    <div className="smp relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="SMP-004" id="INTEGRAL" name={t('simpson.strip')} />
 
       <PsHero

@@ -97,7 +97,7 @@ export function RectangleMethod() {
   const visibleSlices = result ? (result.slices.length <= 12 ? result.slices : [...result.slices.slice(0, 5), ...result.slices.slice(-3)]) : [];
 
   return (
-    <div className="relative mx-auto max-w-[1160px] px-4 pb-12">
+    <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="INTEGRAL / 006" id="QUADRATURE" name={t('rectangle.strip')} />
       <PsHero eyebrow={t('rectangle.hero_eyebrow')} title={t('rectangle.hero_title')} titleHighlight={t('rectangle.hero_highlight')} lead={t('rectangle.hero_lead')}
         conditionMain={<MathOutput tex={String.raw`I_L=h\sum_{i=0}^{n-1}f(x_i),\quad I_R=h\sum_{i=1}^{n}f(x_i),\quad I_M=\frac{I_L+I_R}{2}`} />}

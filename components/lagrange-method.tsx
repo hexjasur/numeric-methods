@@ -126,7 +126,7 @@ export function LagrangeMethod() {
   }
 
   return (
-    <div className="relative mx-auto max-w-[1160px] px-4 pb-12">
+    <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="INTERPOLATION / 007" id="POLYNOMIAL" name={t('lagrange.strip')} />
       <PsHero eyebrow={t('lagrange.hero_eyebrow')} title={t('lagrange.hero_title')} titleHighlight={t('lagrange.hero_highlight')} lead={t('lagrange.hero_lead')}
         conditionMain={<MathOutput tex={String.raw`P_n(x)=\sum_{i=0}^{n} y_i\,\ell_i(x)`} />}

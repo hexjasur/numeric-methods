@@ -816,6 +816,24 @@
     "method_rk4": "RK4 startup",
     "method_predictor": "Adams predictor",
     "method_boundary": "RK4 boundary step",
-    "error": "Check the entered parameters or differential equation."
+    "error": "Check the entered parameters or differential equation.",
+    "notebook_eyebrow": "LAB-003 / STUDENT PROTOCOL",
+    "notebook_badge": "For Notebook",
+    "notebook_title": "Handwritten Solution Protocol",
+    "notebook_desc": "Step-by-step arithmetic derivations and formula evaluations formatted for copying directly into homework notebooks.",
+    "notebook_toggle_open": "Open",
+    "notebook_toggle_close": "Close",
+    "notebook_copy_btn": "Copy notebook text",
+    "notebook_copy_done": "Copied!",
+    "notebook_sec_1": "1. Problem statement and given data",
+    "notebook_sec_2": "2. Computational formulas",
+    "notebook_sec_3": "3. Step-by-step arithmetic evaluations",
+    "notebook_sec_4": "4. Final table and summary answer",
+    "notebook_step": "steps",
+    "notebook_etc": "... (intermediate steps omitted)",
+    "notebook_show_all": "Show all {count} steps",
+    "notebook_collapse": "Collapse (key steps)",
+    "notebook_final_ans": "Final Answer",
+    "notebook_ans_desc": "Summary of solution across the interval"
   }
 }
