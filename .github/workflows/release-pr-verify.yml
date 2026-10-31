@@ -1,4 +1,4 @@
-name: Release PR Auto-merge
+name: Release PR Verification
 
 on:
   pull_request:
@@ -11,11 +11,10 @@ on:
       - ready_for_review
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
-  verify-and-enable-auto-merge:
+  verify-release-pr:
     name: Verify release version and changelog
     if: >-
       github.event.pull_request.user.login == 'nm-actions[bot]' &&
@@ -70,9 +69,3 @@ jobs:
             throw new Error(`Release version ${process.env.RELEASE_VERSION} must be greater than ${process.env.BASE_VERSION}.`);
           }
           NODE
-
-      - name: Enable auto-merge after required checks pass
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr merge "${PR_NUMBER}" --auto --squash --repo "${GITHUB_REPOSITORY}"
