@@ -37,7 +37,7 @@ export async function generateMetadata({
   const guide = getLearningGuide(slug);
 
   if (!guide) {
-    return { title: 'Qo‘llanma topilmadi' };
+    return { title: 'Qöllanma topilmadi' };
   }
 
   const canonical = `/learn/${guide.slug}`;

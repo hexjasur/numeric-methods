@@ -20,7 +20,7 @@ export function LangToggle() {
   }, []);
 
   const options: { value: Locale; label: string }[] = [
-    { value: 'uz', label: 'UZB' },
+    { value: 'uz', label: 'ÖZB' },
     { value: 'ru', label: 'RUS' },
     { value: 'en', label: 'ENG' },
   ];
@@ -36,7 +36,7 @@ export function LangToggle() {
             ? 'border-[var(--brand)] text-[var(--brand)] bg-[var(--brand-soft)] shadow-sm' 
             : 'border-[var(--line)] text-[var(--muted)] hover:border-[var(--brand)] hover:bg-[var(--brand-soft)] hover:text-[var(--brand)]'
         }`}
-        aria-label="Tilni o'zgartirish"
+        aria-label="Tilni özgartiariş"
         aria-expanded={open}
       >
         <div className="flex items-center gap-2">

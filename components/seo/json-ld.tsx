@@ -40,16 +40,16 @@ export function RootJsonLd() {
       url: siteConfig.author.url,
     },
     featureList: [
-      "Biseksiya usuli (Teng ikkiga bo'lish orqali ildiz topish)",
-      'Nyuton usuli (Urinmalar orqali tenglamalar yechish)',
-      'Eyler usuli (Oddiy differensial tenglamalarni yechish)',
-      'Runge-Kutta 4-tartibli usuli (Yuqori aniqlikdagi ODU yechish)',
-      'Lagranj interpolyatsiya koʻphadi',
-      'Nyuton interpolyatsiya ko‘phadi (bo‘lingan ayirmalar)',
+      "Biseksiya usuli (Teng ikkiga böliş orqali ildiz topiş)",
+      'Nyuton usuli (Urinmalar orqali tenglamalar yeçiş)',
+      'Eyler usuli (Oddiy differensial tenglamalarni yeçiş)',
+      'Runge-Kutta 4-tartibli usuli (Yuqori aniqlikdagi ODU yeçiş)',
+      'Lagranj interpolyatsiya köphadi',
+      'Nyuton interpolyatsiya köphadi (bölingan ayirmalar)',
       'Simpson parabolalar formulasi bilan integrallash',
       'Trapetsiyalar usuli bilan integrallash',
-      'Toʻgʻri toʻrtburchaklar usuli bilan integrallash',
-      'Progonka usuli (Uch diagonalli matritsalarni yechish)',
+      'Töğri törtburçaklar usuli bilan integrallaş',
+      'Progonka usuli (Uç diagonalli matritsalarni yeçiş)',
     ],
   };
 
@@ -144,7 +144,7 @@ export function LearningGuideJsonLd({ guide }: { guide: LearningGuide }) {
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Qo‘llanmalar',
+        name: 'Qöllanmalar',
         item: `${siteConfig.url}/learn`,
       },
       {

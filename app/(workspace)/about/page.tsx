@@ -4,8 +4,7 @@ import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'Loyiha haqida | О проекте | About Sonli Usullar',
-  description:
-    "Sonli Usullar platformasi — talabalar, oʻqituvchilar va muhandislar uchun moʻljallangan bepul, interaktiv matematik tahlil vositasi. Loyiha maqsadi, arxitekturasi va muallif haqida maʼlumot.",
+  description: "Sonli Usullar platformasi — talabalar, öqituvçilar va muhandislar uçun möljallangan bepul, interaktiv matematik tahlil vositasi. Loyiha maqsadi, arxitekturasi va muallif haqida maʼlumot.",
   keywords: [
     'sonli usullar loyihasi',
     'loyiha haqida',
@@ -20,8 +19,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Loyiha haqida | Sonli Usullar platformasi',
-    description:
-      'Sonli Usullar interaktiv matematik hisoblash platformasining maqsadi, arxitekturasi va jamoasi.',
+    description: 'Sonli Usullar interaktiv matematik hisoblaş platformasining maqsadi, arxitekturasi va jamoasi.',
     url: `${siteConfig.url}/about`,
     images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
   },

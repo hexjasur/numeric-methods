@@ -130,7 +130,7 @@ export function EulerMethod() {
         error:
           cause instanceof Error
             ? cause.message
-            : "Parametrlarni tekshirib qayta urinib ko'ring.",
+            : "Parametrlarni tekşirib qayta urinib köring.",
       };
     }
   }, [calculationInputs, t]);
@@ -547,7 +547,7 @@ export function EulerMethod() {
                       />
                     </div>
                     <div className="p-3 rounded-md border border-line bg-panel flex flex-col justify-center">
-                      <span className="text-muted block text-xs mb-1.5">Boshlang&apos;ich shart (Koshi):</span>
+                      <span className="text-muted block text-xs mb-1.5">Boşlanğiç şart (Koşi):</span>
                       <MathKatex
                         tex={String.raw`x_0 = ${formatNum(Number(calculationInputs.x0))}, \quad y(x_0) = y_0 = ${formatNum(Number(calculationInputs.y0))}`}
                         className="text-sm font-semibold text-ink"

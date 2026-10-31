@@ -4,11 +4,10 @@ import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'Matematik sintaksis va formulalar | Синтаксис формул | Math Syntax',
-  description:
-    "Funksiya va tenglamalarni kiritish boʻyicha toʻliq yoʻriqnoma: trigonometrik (sin, cos, tg), logarifmik (log, ln), darajalar (^), oʻzgarmaslar (pi, e) va Math.js operatorlari sintaksisi.",
+  description: "Funksiya va tenglamalarni kiritiş böyiça töliq yöriqnoma: trigonometrik (sin, cos, tg), logarifmik (log, ln), darajalar (^), özgarmaslar (pi, e) va Math.js operatorlari sintaksisi.",
   keywords: [
     'matematik formulalar sintaksisi',
-    'formulalarni togri kiritish',
+    'formulalarni togri kiritiş',
     'funksiyalar qollanmasi',
     'mathjs sintaksis',
     'darajalar va ildizlar',
@@ -23,8 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Matematik formulalar sintaksisi | Sonli Usullar',
-    description:
-      'Formulalar, trigonometriya, darajalar va oʻzgarmaslarni kiritish boʻyicha batafsil qoʻllanma.',
+    description: 'Formulalar, trigonometriya, darajalar va özgarmaslarni kiritiş böyiça batafsil qöllanma.',
     url: `${siteConfig.url}/docs/syntax`,
     images: [{ url: '/images/og-thumbail-1280x640.png', width: 1280, height: 640 }],
   },

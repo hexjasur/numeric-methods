@@ -3,9 +3,9 @@ import { DashboardView } from '@/components/dashboard/dashboard-view';
 import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
-  title: 'Sonli Usullar — Onlayn kalkulyator va o‘zbekcha qo‘llanma',
+  title: 'Sonli Usullar — Onlayn kalkulyator va özbekça qöllanma',
   description:
-    "Sonli usullarni o‘zbek tilida o‘rganing va hisoblang: biseksiya, Nyuton, Eyler, Runge–Kutta, Simpson, trapetsiyalar va Lagranj usullari bo‘yicha bepul kalkulyatorlar hamda ishlangan misollar.",
+    "Sonli usullarni özbek tilida örganing va hisoblang: biseksiya, Nyuton, Eyler, Runge–Kutta, Simpson, trapetsiyalar va Lagranj usullari böyiça bepul kalkulyatorlar hamda işlangan misollar.",
   alternates: {
     canonical: '/',
   },

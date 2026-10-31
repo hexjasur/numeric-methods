@@ -4,15 +4,14 @@ import { MethodJsonLd } from '@/components/seo/json-ld';
 import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
-  title: "To'g'ri to'rtburchaklar usuli | Метод прямоугольников | Rectangles Rule",
-  description:
-    "Aniq integrallarni chap va oʻng toʻgʻri toʻrtburchaklar usuli bilan qadam-baqam hisoblash. Boʻlaklash oraliqlari soni n, integral yigʻindilari, xatolik bahosi va interaktiv grafik.",
+  title: "Töğri törtburçaklar usuli | Метод прямоугольников | Rectangles Rule",
+  description: "Aniq integrallarni çap va öng töğri törtburçaklar usuli bilan qadam-baqam hisoblaş. Bölaklaş oraliqlari soni n, integral yiğindilari, xatolik bahosi va interaktiv grafik.",
   keywords: [
-    'togri tortburchaklar usuli',
-    'sonli integrallash',
-    'chap tortburchaklar usuli',
-    'ong tortburchaklar usuli',
-    'aniq integral hisoblash',
+    'togri tortburçaklar usuli',
+    'sonli integrallaş',
+    'çap tortburçaklar usuli',
+    'ong tortburçaklar usuli',
+    'aniq integral hisoblaş',
     'riemann yigindilari',
     'метод прямоугольников',
     'численное интегрирование онлайн',
@@ -26,17 +25,15 @@ export const metadata: Metadata = {
     canonical: '/methods/rectangles',
   },
   openGraph: {
-    title: "To'g'ri to'rtburchaklar usuli | Метод прямоугольников",
-    description:
-      "Aniq integrallarni to'g'ri to'rtburchaklar usuli yordamida online hisoblang va geometrik yuzalarni ko'ring.",
+    title: "Töğri törtburçaklar usuli | Метод прямоугольников",
+    description: "Aniq integrallarni töğri törtburçaklar usuli yordamida online hisoblang va geometrik yuzalarni köring.",
     url: `${siteConfig.url}/methods/rectangles`,
     images: [{ url: '/images/og/rectangles.png', width: 1200, height: 630, alt: "To'g'ri to'rtburchaklar usuli" }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "To'g'ri to'rtburchaklar usuli | Метод прямоугольников",
-    description:
-      "Aniq integrallarni to'g'ri to'rtburchaklar usuli yordamida online hisoblang va geometrik yuzalarni ko'ring.",
+    title: "Töğri törtburçaklar usuli | Метод прямоугольников",
+    description: "Aniq integrallarni töğri törtburçaklar usuli yordamida online hisoblang va geometrik yuzalarni köring.",
     images: ['/images/og/rectangles.png'],
   },
 };
@@ -47,7 +44,7 @@ export default function RectanglesPage() {
       <MethodJsonLd
         name="To'g'ri to'rtburchaklar usuli (Chap va O'ng)"
         alternateName="Метод прямоугольников / Rectangles Rule"
-        description="Egri chiziqli trapetsiya yuzini to'g'ri to'rtburchaklar yig'indisi sifatida sonli hisoblang."
+        description="Egri çiziqli trapetsiya yuzini töğri törtburçaklar yiğindisi sifatida sonli hisoblang."
         path="/methods/rectangles"
         formula="I \approx h \sum f(x_i)"
       />

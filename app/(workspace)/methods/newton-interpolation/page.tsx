@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   description: pageDescription,
   keywords: [
     'Nyuton interpolyatsiyasi',
-    'bo‘lingan ayirmalar',
-    'Nyuton interpolyatsion ko‘phadi',
-    'chekli ayirmalar usuli',
+    'bölingan ayirmalar',
+    'Nyuton interpolyatsion köphadi',
+    'çekli ayirmalar usuli',
     'интерполяция Ньютона',
     'разделённые разности онлайн',
     'Newton interpolation calculator',

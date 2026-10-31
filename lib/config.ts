@@ -2,9 +2,8 @@ export const siteConfig = {
   name: 'Sonli Usullar',
   shortName: 'SonliUsullar',
   alternateNames: ['Numeric Methods', 'Численные методы', 'sonli-usullar.uz'],
-  title: 'Sonli Usullar — O‘zbekcha onlayn qo‘llanma va kalkulyator',
-  description:
-    "Sonli usullarni o‘zbek tilida o‘rganing va hisoblang: tenglama ildizlari, sonli integrallar, differensial tenglamalar va interpolyatsiya uchun qadam-baqadam misollar hamda bepul online kalkulyatorlar.",
+  title: 'Sonli Usullar — Özbekça onlayn qöllanma va kalkulyator',
+  description: "Sonli usullarni özbek tilida örganing va hisoblang: tenglama ildizlari, sonli integrallar, differensial tenglamalar va interpolyatsiya uçun qadam-baqadam misollar hamda bepul online kalkulyatorlar.",
   url: 'https://www.sonli-usullar.uz',
   ogImage: 'https://www.sonli-usullar.uz/images/og-thumbail-1280x640.png',
   locale: 'uz_UZ',
@@ -16,10 +15,10 @@ export const siteConfig = {
   creator: 'Jasurbek Haydarov',
   publisher: 'Jasurbek Haydarov',
   keywords: [
-    // O'zbekcha
+    // Özbekça
     'sonli usullar',
     'sonli usullar online',
-    'sonli usullar qo‘llanmasi',
+    'sonli usullar qöllanmasi',
     'sonli usullar misollar bilan',
     'sonli usullar kalkulyatori',
     'matematik hisoblash',
@@ -35,14 +34,14 @@ export const siteConfig = {
     'togri tortburchaklar usuli',
     'lagranj interpolyatsiyasi',
     'nyuton interpolyatsiyasi',
-    'nyutonning bo‘lingan ayirmalari',
+    'nyutonning bölingan ayirmalari',
     'progonka usuli',
     'quvib otish usuli',
     'tenglama ildizini topish',
-    'differensial tenglamalar yechish',
+    'differensial tenglamalar yeçiş',
     'sonli integrallash',
     'matematika dasturlari',
-    // Ruscha
+    // Rusça
     'численные методы',
     'численные методы онлайн',
     'калькулятор численных методов',
@@ -62,7 +61,7 @@ export const siteConfig = {
     'метод прогонки',
     'решение дифференциальных уравнений онлайн',
     'численное интегрирование',
-    // Inglizcha
+    // Inglizça
     'numerical methods',
     'numerical methods online',
     'numerical analysis',

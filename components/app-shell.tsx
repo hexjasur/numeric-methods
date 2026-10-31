@@ -17,7 +17,16 @@ import {
   Spline,
   Split,
   X,
+  type LucideIcon,
 } from 'lucide-react';
+
+interface NavItem {
+  href: string;
+  label: string;
+  code?: string;
+  icon: LucideIcon;
+  isNew?: boolean;
+}
 import logo from '@/public/logo.webp';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LangToggle } from '@/components/lang-toggle';
@@ -36,95 +45,100 @@ export function AppShell({
   const { t } = useI18n();
   const activeLinkRef = useRef<HTMLAnchorElement | null>(null);
 
-  const navigation = useMemo(
-    () => [
+  const navigation = useMemo(() => {
+    // 1. General pages (always remain fixed at top 01..04)
+    const generalItems: NavItem[] = [
       {
         href: '/',
         label: t('nav.workspace'),
-        code: '01',
         icon: LayoutDashboard,
       },
       {
         href: '/about',
         label: t('nav.about'),
-        code: '02',
         icon: Info,
       },
       {
         href: '/docs/syntax',
         label: t('nav.syntax'),
-        code: '03',
         icon: BookOpenText,
       },
       {
         href: '/learn',
         label: t('nav.learn'),
-        code: '04',
         icon: BookOpenText,
       },
+    ];
+
+    // 2. Numerical methods (methods with isNew: true automatically pin to top of methods section)
+    const methodItems: NavItem[] = [
       {
         href: '/methods/bisection',
         label: t('nav.bisection'),
-        code: '05',
         icon: Split,
       },
       {
         href: '/methods/newton',
         label: t('nav.newton'),
-        code: '06',
         icon: ArrowUpRight,
       },
       {
         href: '/methods/sweep',
         label: t('nav.sweep'),
-        code: '07',
         icon: ArrowRightLeft,
       },
       {
         href: '/methods/lagrange',
         label: t('nav.lagrange'),
-        code: '08',
         icon: Spline,
       },
       {
         href: '/methods/newton-interpolation',
         label: t('nav.newtonInterpolation'),
-        code: '09',
         icon: Spline,
       },
       {
         href: '/methods/rectangles',
         label: t('nav.rectangles'),
-        code: '10',
         icon: Sigma,
       },
       {
         href: '/methods/trapezoid',
         label: t('nav.trapezoid'),
-        code: '11',
         icon: Sigma,
       },
       {
         href: '/methods/simpson',
         label: t('nav.simpson'),
-        code: '12',
         icon: Sigma,
       },
       {
         href: '/methods/euler',
         label: t('nav.euler'),
-        code: '13',
         icon: Activity,
+        isNew: true,
       },
       {
         href: '/methods/runge-kutta',
         label: t('nav.rungeKutta'),
-        code: '14',
         icon: Activity,
+        isNew: true,
       },
-    ],
-    [t],
-  );
+    ];
+
+    const sortedMethods = [...methodItems].sort((a, b) => {
+      if (Boolean(a.isNew) !== Boolean(b.isNew)) {
+        return a.isNew ? -1 : 1;
+      }
+      return 0;
+    });
+
+    const combined = [...generalItems, ...sortedMethods];
+    return combined.map((item, index) => ({
+      ...item,
+      code: String(index + 1).padStart(2, '0'),
+    }));
+  }, [t]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -218,7 +232,7 @@ export function AppShell({
             />
           </div>
 
-          <nav className="grid gap-[6px]">
+          <nav className="flex flex-col gap-[6px] w-full min-w-0">
             {navigation.map((item) => {
               const active =
                 item.href === '/'
@@ -233,46 +247,53 @@ export function AppShell({
                   href={item.href}
                   prefetch={false}
                   onClick={() => setMobileOpen(false)}
-                  className={`group relative flex items-center gap-[12px] min-h-[48px] px-[14px] border border-transparent rounded-[9px] text-[15px] font-semibold transition-all duration-150 ${
+                  className={`group relative flex items-center gap-[10px] min-h-[46px] px-[12px] w-full min-w-0 overflow-hidden border border-transparent rounded-[9px] text-[14.5px] font-semibold transition-all duration-150 ${
                     active
-                      ? 'bg-ink text-panel border-ink font-bold shadow-[0_10px_22px_-14px_var(--ink)] before:content-[""] before:absolute before:-left-[18px] before:top-[10px] before:bottom-[10px] before:w-[4px] before:rounded-r-[3px] before:bg-brand'
+                      ? 'bg-ink text-panel border-ink font-bold shadow-[0_10px_22px_-14px_var(--ink)] before:content-[""] before:absolute before:left-0 before:top-[10px] before:bottom-[10px] before:w-[3px] before:rounded-r-[3px] before:bg-brand'
                       : 'text-muted hover:bg-bg-2 hover:text-ink hover:border-line hover:translate-x-[2px]'
                   }`}
                   aria-current={active ? 'page' : undefined}
                 >
                   <item.icon
-                    size={20}
+                    size={19}
                     strokeWidth={active ? 2.4 : 2}
-                    className={active ? 'text-brand' : ''}
+                    className={`shrink-0 ${active ? 'text-brand' : ''}`}
                   />
-                  <span className="flex-1">{item.label}</span>
-                  <em
-                    className={`font-mono text-[12px] font-semibold not-italic ${active ? 'text-brand opacity-100' : 'opacity-60'}`}
-                  >
-                    {item.code}
-                  </em>
+                  <span className="flex-1 min-w-0 truncate pr-1">{item.label}</span>
+                  <div className="flex items-center gap-1.5 shrink-0 ml-auto">
+                    {item.isNew && (
+                      <span className="font-mono text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 shrink-0 tracking-wider">
+                        NEW
+                      </span>
+                    )}
+                    <em
+                      className={`font-mono text-[11.5px] font-semibold not-italic ${active ? 'text-brand opacity-100' : 'opacity-60'}`}
+                    >
+                      {item.code}
+                    </em>
+                  </div>
                 </Link>
               );
             })}
           </nav>
 
           {/* V2 Old Version Switcher */}
-          <div className="my-3 pt-3 border-t border-line/60">
+          <div className="my-3 pt-3 border-t border-line/60 w-full min-w-0">
             <a
               href="https://v2.sonli-usullar.uz"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between min-h-[42px] px-3.5 rounded-lg border border-line bg-bg-2/50 text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 transition-all text-[13px] font-semibold"
+              className="group flex items-center justify-between min-h-[42px] px-3 rounded-lg border border-line bg-bg-2/50 text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 transition-all text-[13px] font-semibold w-full min-w-0 overflow-hidden"
               title={t('nav.v2_tooltip')}
             >
-              <span className="flex items-center gap-2.5">
-                <span className="relative flex h-2 w-2">
+              <span className="flex items-center gap-2 min-w-0 truncate">
+                <span className="relative flex h-2 w-2 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan/40 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan" />
                 </span>
-                <span>{t('nav.v2_link')}</span>
+                <span className="truncate">{t('nav.v2_link')}</span>
               </span>
-              <span className="flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded border border-line-2 bg-panel text-muted group-hover:text-brand group-hover:border-brand/40 transition-colors">
+              <span className="flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded border border-line-2 bg-panel text-muted group-hover:text-brand group-hover:border-brand/40 transition-colors shrink-0 ml-1.5">
                 <span>v2.0</span>
                 <ExternalLink size={12} />
               </span>

@@ -141,7 +141,7 @@ export function findExactSolution(
           hasExact: true,
           fn: (x: number) => p * x + q + K * Math.exp(A * (x - x0)),
           tex: `y(x) = ${fullTex}`,
-          description: `1-tartibli chiziqli ODT (${odeLatex}) analitik yechildi: C = ${kStr}.`,
+          description: `1-tartibli çiziqli ODT (${odeLatex}) analitik yeçildi: C = ${kStr}.`,
         };
       } else {
         // A === 0 -> y' = B*x + C
@@ -199,7 +199,7 @@ export function findExactSolution(
               hasExact: true,
               fn: (x: number) => particular(x) + K * Math.exp(A * (x - x0)),
               tex: `y(x) = ${solutionTex}`,
-              description: 'Birinchi tartibli chiziqli ODT kvadratik x-ko‘phad bilan analitik yechildi.',
+              description: 'Birinçi tartibli çiziqli ODT kvadratik x-köphad bilan analitik yeçildi.',
             };
           }
         }
@@ -444,8 +444,8 @@ export function generateNotebookText(
 ): string {
   const isSimple = type === 'simple';
   const title = isSimple
-    ? `--- ${t('euler.notebook_tab_simple').toUpperCase()} BO'YICHA YECHIM ---`
-    : `--- ${t('euler.notebook_tab_improved').toUpperCase()} BO'YICHA YECHIM ---`;
+    ? `--- ${t('euler.notebook_tab_simple').toUpperCase()} BÖYİÇA YEÇİM ---`
+    : `--- ${t('euler.notebook_tab_improved').toUpperCase()} BÖYİÇA YEÇİM ---`;
 
   const sec1 = t('euler.notebook_sec_1');
   const sec2 = t('euler.notebook_sec_2');

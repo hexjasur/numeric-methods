@@ -58,14 +58,14 @@ export interface BibliographyItem {
 export const academicBibliography: BibliographyItem[] = [
   {
     id: 'ismoilov-2025',
-    authors: 'A. I. Ismoilov, Sh. A. Ro‘zaliyev',
-    title: 'Sonli usullar (O‘quv qo‘llanma, I qism)',
-    publisher: 'Farg‘ona davlat universiteti, FDU "Nusxa ko‘paytirish bo‘limi"',
+    authors: 'A. I. Ismoilov, Ş. A. Rözaliyev',
+    title: 'Sonli usullar (Öquv qöllanma, I qism)',
+    publisher: 'Farğona davlat universiteti, FDU "Nusxa köpaytiriş bölimi"',
     year: 2025,
     pages: '150 b.',
-    degree: 'Farg‘ona davlat universiteti Amaliy matematika kafedrasi tavsiyasi',
+    degree: 'Farğona davlat universiteti Amaliy matematika kafedrasi tavsiyasi',
     description:
-      'Amaliy matematika yo‘nalishi talabalari uchun tayyorlangan zamonaviy darslik. Unda xatoliklar nazariyasi, algebraik va transendent tenglamalarni yechish, chiziqli va chiziqsiz sistemalar, xos sonlar va vektorlar (Krilov usuli), interpolyatsiyalash hamda sonli integrallash batafsil bayon etilgan.',
+      'Amaliy matematika yönalişi talabalari uçun tayyorlangan zamonaviy darslik. Unda xatoliklar nazariyasi, algebraik va transendent tenglamalarni yeçiş, çiziqli va çiziqsiz sistemalar, xos sonlar va vektorlar (Krilov usuli), interpolyatsiyalaş hamda sonli integrallaş batafsil bayon etilgan.',
     topics: [
       'Xatoliklar nazariyasi',
       'Biseksiya usuli',
@@ -82,13 +82,13 @@ export const academicBibliography: BibliographyItem[] = [
   {
     id: 'irisqulov-2013',
     authors: 'S. S. Irisqulov, K. D. Ismanova, M. Olimov, A. Imomov',
-    title: 'Sonli usullar va algoritmlar (O‘quv qo‘llanma)',
-    publisher: '“Namangan” nashriyoti',
+    title: 'Sonli usullar va algoritmlar (Öquv qöllanma)',
+    publisher: '“Namangan” naşriyoti',
     year: 2013,
     pages: '244 b.',
-    degree: 'Oliy va o‘rta maxsus ta’lim vazirligi tomonidan tavsiya etilgan',
+    degree: 'Oliy va örta maxsus ta’lim vazirligi tomonidan tavsiya etilgan',
     description:
-      'Informatika va hisoblash matematikasi yo‘nalishlari uchun fundamental qo‘llanma. Har bir hisoblash usuli uchun blok-sxemalar, algoritmik tahlillar, differensial tenglamalarni yechish (Eyler, Runge-Kutta, haydash usuli, Galyorkin) va Mathcad dasturiy vositalari tahlili berilgan.',
+      'Informatika va hisoblaş matematikasi yönalişlari uçun fundamental qöllanma. Har bir hisoblaş usuli uçun blok-sxemalar, algoritmik tahlillar, differensial tenglamalarni yeçiş (Eyler, Runge-Kutta, haydaş usuli, Galyorkin) va Mathcad dasturiy vositalari tahlili berilgan.',
     topics: [
       'Biseksiya va vatarlar usuli',
       'Urinmalar va Vegsteyn usullari',
@@ -103,14 +103,14 @@ export const academicBibliography: BibliographyItem[] = [
   },
   {
     id: 'ismatullayev-2014',
-    authors: 'G. P. Ismatullayev, M. S. Koshergenova',
-    title: 'Hisoblash usullari (O‘quv qo‘llanma)',
-    publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+    authors: 'G. P. Ismatullayev, M. S. Koşergenova',
+    title: 'Hisoblaş usullari (Öquv qöllanma)',
+    publisher: 'Toşkent: «Tafakkur Böstoni»',
     year: 2014,
     pages: '240 b.',
-    degree: 'Oliy va o‘rta maxsus ta’lim vazirligi tavsiyasi',
+    degree: 'Oliy va örta maxsus ta’lim vazirligi tavsiyasi',
     description:
-      'Matematika, mexanika va axborot xavfsizligi mutaxassisliklari uchun mo‘ljallangan mukammal qo‘llanma. Nazariy teoremalar, ortogonal ko‘phadlar (Chebishev, Lejandr), qoldiq had baholari, xos sonlar va vektorlar (Krilov, Danilevskiy), Koshi va chegaraviy masalalar chuqur tahlil qilingan.',
+      'Matematika, mexanika va axborot xavfsizligi mutaxassisliklari uçun möljallangan mukammal qöllanma. Nazariy teoremalar, ortogonal köphadlar (Çebişev, Lejandr), qoldiq had baholari, xos sonlar va vektorlar (Krilov, Danilevskiy), Koşi va çegaraviy masalalar çuqur tahlil qilingan.',
     topics: [
       'Absolyut va nisbiy xatolar',
       'Chebishev va Lejandr ko‘phadlari',
@@ -126,13 +126,13 @@ export const academicBibliography: BibliographyItem[] = [
   {
     id: 'isroilov-2003',
     authors: 'M. I. Isroilov',
-    title: 'Hisoblash metodlari (1- va 2-qism)',
-    publisher: 'Toshkent: «O‘qituvchi» (1-qism, 2003) / «Iqtisod-Moliya» (2-qism, 2008)',
+    title: 'Hisoblaş metodlari (1- va 2-qism)',
+    publisher: 'Toşkent: «Öqituvçi» (1-qism, 2003) / «Iqtisod-Moliya» (2-qism, 2008)',
     year: 2008,
     pages: '400 b. + 320 b.',
-    degree: 'Universitetlar va oliy texnika o‘quv yurtlari uchun darslik',
+    degree: 'Universitetlar va oliy texnika öquv yurtlari uçun darslik',
     description:
-      'O‘zbekiston hisoblash matematikasi maktabining klassik poydevor darsligi. Funksional analiz asoslari, approksimatsiya nazariyasi, chiziqli algebra va differensial tenglamalarning sonli usullari eng qat’iy matematik shaklda yoritilgan.',
+      'Özbekiston hisoblaş matematikasi maktabining klassik poydevor darsligi. Funksional analiz asoslari, approksimatsiya nazariyasi, çiziqli algebra va differensial tenglamalarning sonli usullari eng qat’iy matematik şaklda yoritilgan.',
     topics: [
       'Funksional fazolar va approksimatsiya',
       'Chiziqli algebraning to‘g‘ri va iteratsion usullari',
@@ -144,14 +144,14 @@ export const academicBibliography: BibliographyItem[] = [
   },
   {
     id: 'burden-faires-2011',
-    authors: 'Richard L. Burden, J. Douglas Faires',
+    authors: 'Riçard L. Burden, J. Douglas Faires',
     title: 'Numerical Analysis (9th Edition)',
     publisher: 'Boston, USA: Brooks/Cole, Cengage Learning',
     year: 2011,
     pages: '888 p.',
     degree: 'Dunyo miqyosidagi standart akademik darslik',
     description:
-      'Xalqaro darajadagi eng mashhur sonli usullar darsligi. Teoremalarning qat’iy isbotlari, zamonaviy dasturiy algoritmlar va konvergensiya tahlillari batafsil keltirilgan.',
+      'Xalqaro darajadagi eng maşhur sonli usullar darsligi. Teoremalarning qat’iy isbotlari, zamonaviy dasturiy algoritmlar va konvergensiya tahlillari batafsil keltirilgan.',
     topics: [
       'Solutions of Equations in One Variable',
       'Interpolation and Polynomial Approximation',
@@ -165,10 +165,10 @@ export const academicBibliography: BibliographyItem[] = [
 export const learningGuides: LearningGuide[] = [
   {
     slug: 'biseksiya-usuli',
-    title: 'Biseksiya (teng ikkiga bo‘lish) usuli',
+    title: 'Biseksiya (teng ikkiga böliş) usuli',
     metaTitle: 'Biseksiya usuli: nazariya, formulalar va kalkulyator',
     description:
-      'Biseksiya (dixotomiya) usulida algebraik va transendent tenglama ildizini topish. O‘zbekiston darsliklari asosida nazariya, formulalar, misol va platformadagi kiritish standarti.',
+      'Biseksiya (dixotomiya) usulida algebraik va transendent tenglama ildizini topiş. Özbekiston darsliklari asosida nazariya, formulalar, misol va platformadagi kiritiş standarti.',
     keywords: [
       'biseksiya usuli',
       'oraliqni teng ikkiga bo‘lish usuli',
@@ -176,14 +176,14 @@ export const learningGuides: LearningGuide[] = [
       'tenglama ildizini topish',
       'sonli usullar biseksiya',
     ],
-    area: 'Tenglama ildizlarini topish',
+    area: 'Tenglama ildizlarini topiş',
     calculatorHref: '/methods/bisection',
     summary:
-      'Biseksiya usuli (dixotomiya) uzluksiz funksiyaning ildizini o‘z ichiga olgan oraliqni har bir qadamda teng ikkiga bo‘lib borish orqali topadi. Bolsano-Koshi teoremasiga ko‘ra, agar oraliq uchlarida funksiya qarama-qarshi ishoralarga ega bo‘lsa (f(a)·f(b) < 0), oraliqda kamida bitta haqiqiy ildiz mavjud bo‘ladi.',
-    formula: 'c = (a + b) / 2;  f(a) · f(c) < 0 bo‘lsa yangi oraliq [a, c], aks holda [c, b]',
+      'Biseksiya usuli (dixotomiya) uzluksiz funksiyaning ildizini öz içiga olgan oraliqni har bir qadamda teng ikkiga bölib boriş orqali topadi. Bolsano-Koşi teoremasiga köra, agar oraliq uçlarida funksiya qarama-qarşi işoralarga ega bölsa (f(a)·f(b) < 0), oraliqda kamida bitta haqiqiy ildiz mavjud böladi.',
+    formula: 'c = (a + b) / 2;  f(a) · f(c) < 0 bölsa yangi oraliq [a, c], aks holda [c, b]',
     formulaTex: 'c_k = \\frac{a_k + b_k}{2}, \\quad f(a_k) \\cdot f(c_k) < 0 \\implies [a_{k+1}, b_{k+1}] = [a_k, c_k]',
     convergenceCondition:
-      'Funksiya [a, b] kesmada uzluksiz va f(a) · f(b) < 0 bo‘lishi zarur. Agar f′(x) oraliqda o‘z ishorasini o‘zgartirmasa, ildiz yagonadir.',
+      'Funksiya [a, b] kesmada uzluksiz va f(a) · f(b) < 0 bölişi zarur. Agar f′(x) oraliqda öz işorasini özgartirmasa, ildiz yagonadir.',
     convergenceTex: 'f(x) \\in C[a,b], \\quad f(a) \\cdot f(b) < 0, \\quad f\'(x) \\neq 0',
     errorEstimateTex: '|c_n - \\xi| \\le \\frac{b - a}{2^{n+1}} < \\varepsilon \\implies n \\ge \\frac{\\ln(b-a) - \\ln\\varepsilon}{\\ln 2} - 1',
     theory: [
@@ -200,10 +200,10 @@ export const learningGuides: LearningGuide[] = [
       'Oraliq uzunligi (b - a) < ε yoki |f(c)| < ε aniqlikka yetgunga qadar takrorlang.',
     ],
     example: {
-      problem: 'f(x) = x³ − 20x + 12 = 0 tenglamaning [0, 1] oraliqdagi ildizini topish.',
+      problem: 'f(x) = x³ − 20x + 12 = 0 tenglamaning [0, 1] oraliqdagi ildizini topiş.',
       calculation:
-        'f(0) = 12 > 0, f(1) = −7 < 0. Birinchi qadam: c₀ = (0 + 1) / 2 = 0.5. f(0.5) = 0.5³ − 20(0.5) + 12 = 2.125 > 0. f(0.5) · f(1) < 0 bo‘lgani uchun yangi oraliq [0.5, 1]. Ikkinchi qadam: c₁ = (0.5 + 1) / 2 = 0.75. f(0.75) = −2.578 < 0. Yangi oraliq [0.5, 0.75].',
-      result: 'Iteratsiyalar davom ettirilib, 0.001 aniqlikdagi ildiz x ≈ 0.612 ga yaqinlashadi.',
+        'f(0) = 12 > 0, f(1) = −7 < 0. Birinchi qadam: c₀ = (0 + 1) / 2 = 0.5. f(0.5) = 0.5³ − 20(0.5) + 12 = 2.125 > 0. f(0.5) · f(1) < 0 bölgani uçun yangi oraliq [0.5, 1]. Ikkinçi qadam: c₁ = (0.5 + 1) / 2 = 0.75. f(0.75) = −2.578 < 0. Yangi oraliq [0.5, 0.75].',
+      result: 'Iteratsiyalar davom ettirilib, 0.001 aniqlikdagi ildiz x ≈ 0.612 ga yaqinlaşadi.',
     },
     whenToUse: [
       'Funksiya uzluksiz bo‘lib, oraliq uchlarida ishora almashinuvi ma’lum bo‘lsa.',
@@ -216,72 +216,72 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'Biseksiya usuli qachon yechim kafolatlaydi?',
+        question: 'Biseksiya usuli qaçon yeçim kafolatlaydi?',
         answer:
-          'Funksiya [a, b] da uzluksiz va f(a) bilan f(b) ishoralari qarama-qarshi (f(a)·f(b) < 0) bo‘lsa, Bolsano-Koshi teoremasiga ko‘ra ildiz topilishi mutlaq kafolatlanadi.',
+          'Funksiya [a, b] da uzluksiz va f(a) bilan f(b) işoralari qarama-qarşi (f(a)·f(b) < 0) bölsa, Bolsano-Koşi teoremasiga köra ildiz topilişi mutlaq kafolatlanadi.',
       },
       {
-        question: 'Berilgan ε aniqlikka erishish uchun nechta iteratsiya kerak bo‘ladi?',
+        question: 'Berilgan ε aniqlikka erişiş uçun neçta iteratsiya kerak böladi?',
         answer:
-          'Qadamlar soni n ≥ (ln(b - a) - ln(ε)) / ln(2) formulasi bilan oldindan aniq hisoblanadi. Masalan, [0, 1] da 10⁻⁴ aniqlik uchun kamida 14 ta qadam kerak.',
+          'Qadamlar soni n ≥ (ln(b - a) - ln(ε)) / ln(2) formulasi bilan oldindan aniq hisoblanadi. Masalan, [0, 1] da 10⁻⁴ aniqlik uçun kamida 14 ta qadam kerak.',
       },
     ],
     sources: [
       {
-        authors: 'A.I. Ismoilov, Sh.A. Ro‘zaliyev',
-        title: 'Sonli usullar (O‘quv qo‘llanma, I qism)',
-        publisher: 'Farg‘ona davlat universiteti',
+        authors: 'A.I. Ismoilov, Ş.A. Rözaliyev',
+        title: 'Sonli usullar (Öquv qöllanma, I qism)',
+        publisher: 'Farğona davlat universiteti',
         year: 2025,
-        chapterSection: 'II bob, 2.4-§ ("Algebraik va transendent tenglamalarni yarim (teng ikkiga) bo‘lish usuli bilan yechish")',
+        chapterSection: 'II bob, 2.4-§ ("Algebraik va transendent tenglamalarni yarim (teng ikkiga) böliş usuli bilan yeçiş")',
         pages: '34–39-betlar',
-        note: 'C# tilida to‘liq dastur matni va algoritm blok-sxemasi keltirilgan.',
+        note: 'C# tilida töliq dastur matni va algoritm blok-sxemasi keltirilgan.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
-        chapterSection: '2-bob, 2-§ ("Oraliqni teng ikkiga bo‘lish (biseksiya) usuli")',
+        chapterSection: '2-bob, 2-§ ("Oraliqni teng ikkiga böliş (biseksiya) usuli")',
         pages: '27–30-betlar',
         note: 'Xatolik bahosi Δx_n = (b-a)/2^n va test misoli x + 2 + 0.7x = 0 tahlil qilingan.',
       },
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
-        chapterSection: 'IV bob, 4.1-§ ("Ildizlarni ajratish")',
+        chapterSection: 'IV bob, 4.1-§ ("Ildizlarni ajratiş")',
         pages: '76–80-betlar',
-        note: 'Ildizlarni ajratishning Dekart, Gyua, Lagranj va Nyuton teoremalari bayoni.',
+        note: 'Ildizlarni ajratişning Dekart, Gyua, Lagranj va Nyuton teoremalari bayoni.',
       },
     ],
     platformConventions: [
       {
-        topic: 'To‘xtash mezoni (Stopping criteria)',
+        topic: 'Töxtaş mezoni (Stopping criteria)',
         textbookStandard:
-          'Ba’zi darsliklarda (Ismoilov 2025) faqat |b_n - a_n| < ε, boshqalarida (Irisqulov 2013) faqat |f(c)| < ε sharti tekshiriladi.',
+          'Ba’zi darsliklarda (Ismoilov 2025) faqat |b_n - a_n| < ε, boşqalarida (Irisqulov 2013) faqat |f(c)| < ε şarti tekşiriladi.',
         platformImplementation:
-          'Sonli-usullar interaktiv platformasida bir vaqtning o‘zida ham oraliq uzunligi (|b - a| ≤ ε), ham funksiya qiymatining nolga yaqinligi (|f(c)| ≤ tol) qat’iy tekshiriladi.',
+          'Sonli-usullar interaktiv platformasida bir vaqtning özida ham oraliq uzunligi (|b - a| ≤ ε), ham funksiya qiymatining nolga yaqinligi (|f(c)| ≤ tol) qat’iy tekşiriladi.',
         whyChosen:
-          'Bu yondashuv ham argument bo‘yicha aniqlikni, ham qoldiq bo‘yicha xatolikni kafolatlaydi va soxta konvergensiyadan himoya qiladi.',
+          'Bu yondaşuv ham argument böyiça aniqlikni, ham qoldiq böyiça xatolikni kafolatlaydi va soxta konvergensiyadan himoya qiladi.',
       },
       {
-        topic: 'Oraliq chegaralari va funksiyani kiritish',
+        topic: 'Oraliq çegaralari va funksiyani kiritiş',
         textbookStandard:
-          'Qo‘lda ishlaganda funksiya alohida tahlil qilinib, oraliq qat’iy a < b deb belgilanadi.',
+          'Qölda işlaganda funksiya alohida tahlil qilinib, oraliq qat’iy a < b deb belgilanadi.',
         platformImplementation:
-          'Platformada f(x) ifodasi qulay matematik ko‘rinishda (masalan, x^3 - 20*x + 12 yoki sin(x) - x/2) kiritiladi. Agar a > b kiritilsa, tizim ularni avtomatik to‘g‘ri tartibga soladi va f(a)·f(b) < 0 shartini real vaqtda tekshirib boradi.',
+          'Platformada f(x) ifodasi qulay matematik körinişda (masalan, x^3 - 20*x + 12 yoki sin(x) - x/2) kiritiladi. Agar a > b kiritilsa, tizim ularni avtomatik töğri tartibga soladi va f(a)·f(b) < 0 şartini real vaqtda tekşirib boradi.',
         whyChosen:
-          'Foydalanuvchi oraliqni teskari kiritgan taqdirda ham algoritm buzilmaydi, foydalanuvchiga qulay interaktiv tajriba taqdim etiladi.',
+          'Foydalanuvçi oraliqni teskari kiritgan taqdirda ham algoritm buzilmaydi, foydalanuvçiga qulay interaktiv tajriba taqdim etiladi.',
       },
     ],
   },
   {
     slug: 'nyuton-usuli',
     title: 'Nyuton (urinmalar) usuli',
-    metaTitle: 'Nyuton usuli: formula, Fur‘ye sharti va online kalkulyator',
+    metaTitle: 'Nyuton usuli: formula, Fur‘ye şarti va online kalkulyator',
     description:
-      'Nyuton-Rafson (urinmalar) usulida algebraik va transendent tenglamalarni yechish. Fur‘ye sharti, kvadratik yaqinlashish, darsliklar manbalari va platforma standarti.',
+      'Nyuton-Rafson (urinmalar) usulida algebraik va transendent tenglamalarni yeçiş. Fur‘ye şarti, kvadratik yaqinlaşiş, darsliklar manbalari va platforma standarti.',
     keywords: [
       'nyuton usuli',
       'urinmalar usuli',
@@ -289,14 +289,14 @@ export const learningGuides: LearningGuide[] = [
       'fur‘ye sharti',
       'tenglama ildizi nyuton',
     ],
-    area: 'Tenglama ildizlarini topish',
+    area: 'Tenglama ildizlarini topiş',
     calculatorHref: '/methods/newton',
     summary:
-      'Nyuton usuli funksiya grafigiga joriy nuqtada urinma o‘tkazib, uning absissa o‘qi bilan kesishgan nuqtasini navbatdagi yaqinlashuv sifatida qabul qiladi. Agar birinchi hosila noldan farqli va boshlang‘ich nuqta yaxshi tanlangan bo‘lsa, usul kvadratik tezlikda yaqinlashadi.',
+      'Nyuton usuli funksiya grafigiga joriy nuqtada urinma ötkazib, uning absissa öqi bilan kesişgan nuqtasini navbatdagi yaqinlaşuv sifatida qabul qiladi. Agar birinçi hosila noldan farqli va boşlanğiç nuqta yaxşi tanlangan bölsa, usul kvadratik tezlikda yaqinlaşadi.',
     formula: 'xₙ₊₁ = xₙ − f(xₙ) / f′(xₙ)',
     formulaTex: 'x_{n+1} = x_n - \\frac{f(x_n)}{f\'(x_n)}, \\quad n = 0, 1, 2, \\dots',
     convergenceCondition:
-      'Funksiya [a, b] da ikki marta differensiallanuvchi, f(a)·f(b) < 0 va f′(x) ≠ 0 bo‘lsin. Boshlang‘ich nuqta Fur‘ye shartini qanoatlantirishi lozim: f(x₀) · f′′(x₀) > 0.',
+      'Funksiya [a, b] da ikki marta differensiallanuvçi, f(a)·f(b) < 0 va f′(x) ≠ 0 bo‘lsin. Boshlang‘ich nuqta Fur‘ye shartini qanoatlantirishi lozim: f(x₀) · f′′(x₀) > 0.',
     convergenceTex: 'f(a)f(b) < 0, \\quad f\'(x) \\neq 0, \\quad f(x_0) \\cdot f\'\'(x_0) > 0',
     errorEstimateTex: '|x_{n+1} - \\xi| \\le \\frac{M_2}{2 m_1} |x_n - \\xi|^2, \\quad m_1 = \\min_{[a,b]} |f\'(x)|, \\quad M_2 = \\max_{[a,b]} |f\'\'(x)|',
     theory: [
@@ -313,10 +313,10 @@ export const learningGuides: LearningGuide[] = [
       'Agar hosila f′(x_n) nolga yaqinlashib qolsa, qadamni qayta sozlang.',
     ],
     example: {
-      problem: 'f(x) = x³ − 20x + 12 = 0 tenglamaning (4, 5) oraliqdagi ildizini topish.',
+      problem: 'f(x) = x³ − 20x + 12 = 0 tenglamaning (4, 5) oraliqdagi ildizini topiş.',
       calculation:
-        'f′(x) = 3x² − 20, f′′(x) = 6x. x ∈ (4, 5) da f′′(x) > 0. f(5) = 125 − 100 + 12 = 37 > 0. Demak, f(5)·f′′(5) > 0 bo‘lgani uchun x₀ = 5 tanlanadi. 1-qadam: x₁ = 5 − (5³ − 20·5 + 12)/(3·5² − 20) = 5 − 37/55 ≈ 4.327. 2-qadam: x₂ = 4.327 − f(4.327)/f′(4.327) ≈ 4.162.',
-      result: 'Atigi 4 ta iteratsiyada x ≈ 4.1501 aniq qiymatiga erishiladi.',
+        'f′(x) = 3x² − 20, f′′(x) = 6x. x ∈ (4, 5) da f′′(x) > 0. f(5) = 125 − 100 + 12 = 37 > 0. Demak, f(5)·f′′(5) > 0 bölgani uçun x₀ = 5 tanlanadi. 1-qadam: x₁ = 5 − (5³ − 20·5 + 12)/(3·5² − 20) = 5 − 37/55 ≈ 4.327. 2-qadam: x₂ = 4.327 − f(4.327)/f′(4.327) ≈ 4.162.',
+      result: 'Atigi 4 ta iteratsiyada x ≈ 4.1501 aniq qiymatiga erişiladi.',
     },
     whenToUse: [
       'Funksiya differensiallanuvchi va hosilasini hisoblash oson bo‘lganda.',
@@ -329,39 +329,39 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'Nyuton usulida hosila nima uchun kerak?',
+        question: 'Nyuton usulida hosila nima uçun kerak?',
         answer:
-          'Hosila urinmaning qiyaligini beradi. Urinmaning x-o‘qi bilan kesishgan nuqtasi keyingi ildiz taxmini bo‘ladi.',
+          'Hosila urinmaning qiyaligini beradi. Urinmaning x-öqi bilan kesişgan nuqtasi keyingi ildiz taxmini böladi.',
       },
       {
-        question: 'Fur‘ye sharti bajarilmasa usul ishlamaydimi?',
+        question: 'Fur‘ye şarti bajarilmasa usul işlamaydimi?',
         answer:
-          'Ishlashi mumkin, ammo monoton yaqinlashish kafolati yo‘qoladi va usul tebranib uzoqlashishi xavfi tug‘iladi.',
+          'Işlaşi mumkin, ammo monoton yaqinlaşiş kafolati yöqoladi va usul tebranib uzoqlaşişi xavfi tuğiladi.',
       },
     ],
     sources: [
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
         chapterSection: 'IV bob, 4.4-§ ("Nyuton metodi")',
         pages: '84–86-betlar',
-        note: 'Kvadratik konvergensiya teoremasi va xatolikning Teylor qoldig‘i orqali bahosi berilgan.',
+        note: 'Kvadratik konvergensiya teoremasi va xatolikning Teylor qoldiği orqali bahosi berilgan.',
       },
       {
-        authors: 'A.I. Ismoilov, Sh.A. Ro‘zaliyev',
+        authors: 'A.I. Ismoilov, Ş.A. Rözaliyev',
         title: 'Sonli usullar (I qism)',
-        publisher: 'Farg‘ona davlat universiteti',
+        publisher: 'Farğona davlat universiteti',
         year: 2025,
-        chapterSection: 'II bob, 2.3-§ ("Algebraik va transendent tenglamalarni urinmalar (Nyuton) usuli bilan yechish")',
+        chapterSection: 'II bob, 2.3-§ ("Algebraik va transendent tenglamalarni urinmalar (Nyuton) usuli bilan yeçiş")',
         pages: '29–34-betlar',
         note: 'C# dasturi va x³ − 20x + 12 = 0 tenglamasi tahlili.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
         chapterSection: '2-bob, 3-§ ("Urinmalar (Nyuton) usuli")',
         pages: '31–35-betlar',
@@ -370,31 +370,31 @@ export const learningGuides: LearningGuide[] = [
     ],
     platformConventions: [
       {
-        topic: 'Hosilani hisoblash (Avtomatik differensiallash)',
+        topic: 'Hosilani hisoblaş (Avtomatik differensiallaş)',
         textbookStandard:
-          'Darsliklarda talaba f′(x) hosilani qog‘ozda hisoblab, dastur kodiga f1(x) funksiya sifatida qo‘lda yozishi talab etiladi.',
+          'Darsliklarda talaba f′(x) hosilani qoğozda hisoblab, dastur kodiga f1(x) funksiya sifatida qölda yozişi talab etiladi.',
         platformImplementation:
-          'Sonli-usullar interaktiv platformasida hosilani qo‘lda kiritish talab qilinmaydi! Platforma Math.js analitik dvigateli yordamida f(x) dan f′(x) hosilani avtomatik simvolik hisoblaydi va ekranda ko‘rsatadi.',
+          'Sonli-usullar interaktiv platformasida hosilani qölda kiritiş talab qilinmaydi! Platforma Math.js analitik dvigateli yordamida f(x) dan f′(x) hosilani avtomatik simvolik hisoblaydi va ekranda körsatadi.',
         whyChosen:
-          'Bu foydalanuvchini differensiallashdagi insoniy xatoliklardan (belgilar, koeffitsiyentlar yanglishishi) to‘liq himoya qiladi va hisoblashni tezlashtiradi.',
+          'Bu foydalanuvçini differensiallaşdagi insoniy xatoliklardan (belgilar, koeffitsiyentlar yanglişişi) töliq himoya qiladi va hisoblaşni tezlaştiradi.',
       },
       {
-        topic: 'Gorizontal urinma va nolga bo‘linish xavfi',
+        topic: 'Gorizontal urinma va nolga böliniş xavfi',
         textbookStandard:
-          'Kitoblarda f′(x_n) = 0 bo‘lganda usul to‘xtashi quruq qoida sifatida aytiladi.',
+          'Kitoblarda f′(x_n) = 0 bölganda usul töxtaşi quruq qoida sifatida aytiladi.',
         platformImplementation:
-          'Platformada agar biror qadamda |f′(x_n)| < 1e-12 bo‘lsa, tizim bo‘linish xatosi bermaydi, balki "Hosila nolga yaqin, urinma gorizontal bo‘lib qoldi — boshqa x₀ tanlang" mazmunida aniq tushuntirish va diagnostika beradi.',
+          'Platformada agar biror qadamda |f′(x_n)| < 1e-12 bölsa, tizim böliniş xatosi bermaydi, balki "Hosila nolga yaqin, urinma gorizontal bölib qoldi — boşqa x₀ tanlang" mazmunida aniq tuşuntiriş va diagnostika beradi.',
         whyChosen:
-          'Foydalanuvchi hisoblash nima sababdan to‘xtaganini darhol anglab, parametrni osonlikcha to‘g‘rilay oladi.',
+          'Foydalanuvçi hisoblaş nima sababdan töxtaganini darhol anglab, parametrni osonlikça töğrilay oladi.',
       },
     ],
   },
   {
     slug: 'haydash-usuli',
-    title: 'Haydash (progonka, Thomas) usuli',
-    metaTitle: 'Haydash usuli: uch diagonalli sistemalarni yechish nazariyasi',
+    title: 'Haydaş (progonka, Thomas) usuli',
+    metaTitle: 'Haydaş usuli: uç diagonalli sistemalarni yeçiş nazariyasi',
     description:
-      'Uch diagonalli chiziqli tenglamalar sistemasini haydash (progonka / Thomas) usuli bilan yechish. Turg‘unlik sharti, to‘g‘ri va teskari yurish, darsliklar va platforma standarti.',
+      'Uç diagonalli çiziqli tenglamalar sistemasini haydaş (progonka / Thomas) usuli bilan yeçiş. Turğunlik şarti, töğri va teskari yuriş, darsliklar va platforma standarti.',
     keywords: [
       'haydash usuli',
       'progonka usuli',
@@ -402,15 +402,15 @@ export const learningGuides: LearningGuide[] = [
       'uch diagonalli sistema',
       'tridiagonal matrix algorithm',
     ],
-    area: 'Chiziqli tenglamalar sistemalari',
+    area: 'Çiziqli tenglamalar sistemalari',
     calculatorHref: '/methods/sweep',
     summary:
-      'Haydash usuli (progonka, Thomas algoritmi) uch diagonalli matritsaga ega bo‘lgan katta o‘lchamli chiziqli algebraik tenglamalar sistemasini O(n) chiziqli amallar soni bilan yechadi. U to‘g‘ri yurish (haydash koeffitsiyentlarini aniqlash) va teskari yurish (noma’lumlarni ketma-ket topish) bosqichlaridan iborat.',
+      'Haydaş usuli (progonka, Thomas algoritmi) uç diagonalli matritsaga ega bölgan katta ölçamli çiziqli algebraik tenglamalar sistemasini O(n) çiziqli amallar soni bilan yeçadi. U töğri yuriş (haydaş koeffitsiyentlarini aniqlaş) va teskari yuriş (noma’lumlarni ketma-ket topiş) bosqiçlaridan iborat.',
     formula: 'aᵢxᵢ₋₁ + bᵢxᵢ + cᵢxᵢ₊₁ = dᵢ;  xᵢ = αᵢ₊₁xᵢ₊₁ + βᵢ₊₁',
     formulaTex:
       'a_i x_{i-1} + b_i x_i + c_i x_{i+1} = d_i \\implies x_i = \\alpha_{i+1} x_{i+1} + \\beta_{i+1}, \\quad \\alpha_{i+1} = \\frac{-c_i}{b_i + a_i \\alpha_i}, \\quad \\beta_{i+1} = \\frac{d_i - a_i \\beta_i}{b_i + a_i \\alpha_i}',
     convergenceCondition:
-      'Turg‘unlik uchun diagonal elementlarning qat’iy ustunligi zarur: |b_i| ≥ |a_i| + |c_i| (barcha i uchun) va kamida bitta qatorda qat’iy tengsizlik.',
+      'Turğunlik uçun diagonal elementlarning qat’iy ustunligi zarur: |b_i| ≥ |a_i| + |c_i| (barça i uçun) va kamida bitta qatorda qat’iy tengsizlik.',
     convergenceTex: '|b_i| \\ge |a_i| + |c_i| \\quad (i = 1, \\dots, n), \\quad |\\alpha_{i+1}| \\le 1',
     errorEstimateTex: '\\text{Murakkablik: } 8n - 7 \\text{ ta arifmetik amal } = O(n), \\quad \\text{xotira sarfi: } O(n)',
     theory: [
@@ -428,10 +428,10 @@ export const learningGuides: LearningGuide[] = [
     ],
     example: {
       problem:
-        '5x₁ − 3x₂ = 8; 3x₁ + 5x₂ + x₃ = 0; x₂ + 4x₃ − 2x₄ = 3; x₃ − 3x₄ = −2 uch diagonalli sistemasini yechish.',
+        '5x₁ − 3x₂ = 8; 3x₁ + 5x₂ + x₃ = 0; x₂ + 4x₃ − 2x₄ = 3; x₃ − 3x₄ = −2 uç diagonalli sistemasini yeçiş.',
       calculation:
-        'To‘g‘ri yurish: α₂ = 3/5 = 0.6, β₂ = 8/5 = 1.6. α₃ = −1/(5 + 3·0.6) = −1/6.8 = −0.147, β₃ = (0 − 3·1.6)/6.8 = −0.706. Oxirgi x₄ va qolgan noma’lumlar teskari yurish bilan topiladi.',
-      result: 'Teskari yurish natijasida aniq yechim x = (1, −1, 1, 1) hosil qilinadi.',
+        'Töğri yuriş: α₂ = 3/5 = 0.6, β₂ = 8/5 = 1.6. α₃ = −1/(5 + 3·0.6) = −1/6.8 = −0.147, β₃ = (0 − 3·1.6)/6.8 = −0.706. Oxirgi x₄ va qolgan noma’lumlar teskari yuriş bilan topiladi.',
+      result: 'Teskari yuriş natijasida aniq yeçim x = (1, −1, 1, 1) hosil qilinadi.',
     },
     whenToUse: [
       'Chegaraviy masalalarni chekli ayirmalar usuli bilan yechganda.',
@@ -444,34 +444,34 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'Haydash usulining Gauss usulidan ustunligi nimada?',
+        question: 'Haydaş usulining Gauss usulidan ustunligi nimada?',
         answer:
-          'Gauss usuli O(n³) amallar talab qilsa, haydash usuli faqat O(n) amal talab qiladi. Masalan, n = 1000 bo‘lganda Gauss 1 milliard amal bajarsa, haydash usuli bir necha ming amalda yechadi.',
+          'Gauss usuli O(n³) amallar talab qilsa, haydaş usuli faqat O(n) amal talab qiladi. Masalan, n = 1000 bölganda Gauss 1 milliard amal bajarsa, haydaş usuli bir neça ming amalda yeçadi.',
       },
       {
-        question: 'Agar matritsa uch diagonalli bo‘lmasa nima qilish kerak?',
+        question: 'Agar matritsa uç diagonalli bölmasa nima qiliş kerak?',
         answer:
-          'Bunday holda umumiy Gauss usuli, LU-ajratish yoki iteratsion usullar (Oddiy iteratsiya, Zeydel) qo‘llaniladi.',
+          'Bunday holda umumiy Gauss usuli, LU-ajratiş yoki iteratsion usullar (Oddiy iteratsiya, Zeydel) qöllaniladi.',
       },
     ],
     sources: [
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
-        chapterSection: 'V bob, 5.4-§ ("Haydash usuli") va VIII bob, 8.3-§',
+        chapterSection: 'V bob, 5.4-§ ("Haydaş usuli") va VIII bob, 8.3-§',
         pages: '100–102, 184–187-betlar',
-        note: 'Turg‘unlik teoremasi va to‘liq isboti bilan berilgan.',
+        note: 'Turğunlik teoremasi va töliq isboti bilan berilgan.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
-        chapterSection: '6-bob, 5-§ ("Chekli ayirmalar usuli va haydash")',
+        chapterSection: '6-bob, 5-§ ("Çekli ayirmalar usuli va haydaş")',
         pages: '141–145-betlar',
-        note: 'Ikkinchi tartibli chegaraviy masalalar bilan uzviy bog‘liqlikda tahlil qilingan.',
+        note: 'Ikkinçi tartibli çegaraviy masalalar bilan uzviy boğliqlikda tahlil qilingan.',
       },
       {
         authors: 'A.A. Samarskiy, A.V. Gulin',
@@ -485,22 +485,22 @@ export const learningGuides: LearningGuide[] = [
     ],
     platformConventions: [
       {
-        topic: 'Belgilashlar va indeksatsiyadagi konvensiya',
+        topic: 'Belgilaşlar va indeksatsiyadagi konvensiya',
         textbookStandard:
-          'Turli kitoblarda har xil harflar: Ismatullayevda a_i, b_i, c_i; Irisqulovda A_i, B_i, C_i; Samarskiyda esa manfiy ishora bilan −A_i x_{i-1} + C_i x_i − B_i x_{i+1} = F_i ishlatiladi.',
+          'Turli kitoblarda har xil harflar: Ismatullayevda a_i, b_i, c_i; Irisqulovda A_i, B_i, C_i; Samarskiyda esa manfiy işora bilan −A_i x_{i-1} + C_i x_i − B_i x_{i+1} = F_i işlatiladi.',
         platformImplementation:
-          'Sonli-usullar interaktiv platformasida eng tushunarli va qat’iy kanonik shakl qabul qilingan: har bir i-qator uchun a_i (pastki diagonal), b_i (asosiy diagonal), c_i (yuqori diagonal) va d_i (o‘ng tomon ozod hadi): a_i x_{i-1} + b_i x_i + c_i x_{i+1} = d_i.',
+          'Sonli-usullar interaktiv platformasida eng tuşunarli va qat’iy kanonik şakl qabul qilingan: har bir i-qator uçun a_i (pastki diagonal), b_i (asosiy diagonal), c_i (yuqori diagonal) va d_i (öng tomon ozod hadi): a_i x_{i-1} + b_i x_i + c_i x_{i+1} = d_i.',
         whyChosen:
-          'Ushbu standart xalqaro adabiyotlar (Thomas Algorithm) bilan to‘liq mos keladi va foydalanuvchida ishoralar bo‘yicha chalkashlikni yo‘qotadi.',
+          'Uşbu standart xalqaro adabiyotlar (Thomas Algorithm) bilan töliq mos keladi va foydalanuvçida işoralar böyiça çalkaşlikni yöqotadi.',
       },
       {
-        topic: 'Turg‘unlik va chegaraviy nol koeffitsiyentlar',
+        topic: 'Turğunlik va çegaraviy nol koeffitsiyentlar',
         textbookStandard:
-          'Birinchi qatorda a_1 = 0 va oxirgi qatorda c_n = 0 ekanligi ko‘pincha matnda yashirin qoldiriladi.',
+          'Birinçi qatorda a_1 = 0 va oxirgi qatorda c_n = 0 ekanligi köpinça matnda yaşirin qoldiriladi.',
         platformImplementation:
-          'Platformada matritsa o‘lchami tanlanganda a₁ va c_n avtomatik 0 deb belgilanadi va kiritish maydonida ko‘rsatiladi. Tizim diagonal ustunlikni har bir satr uchun alohida tekshirib, foydalanuvchiga yashil/qizil nishon bilan darhol ko‘rsatadi.',
+          'Platformada matritsa ölçami tanlanganda a₁ va c_n avtomatik 0 deb belgilanadi va kiritiş maydonida körsatiladi. Tizim diagonal ustunlikni har bir satr uçun alohida tekşirib, foydalanuvçiga yaşil/qizil nişon bilan darhol körsatadi.',
         whyChosen:
-          'Foydalanuvchi noto‘g‘ri nol bo‘lmagan chekka element kiritib tizimni buzmasligini ta’minlaydi.',
+          'Foydalanuvçi notöğri nol bölmagan çekka element kiritib tizimni buzmasligini ta’minlaydi.',
       },
     ],
   },
@@ -509,7 +509,7 @@ export const learningGuides: LearningGuide[] = [
     title: 'Lagranj interpolyatsiyasi',
     metaTitle: 'Lagranj interpolyatsiyasi: formula, bazislar va kalkulyator',
     description:
-      'Lagranj interpolyatsion ko‘phadini qurish. Vandermond determinanti, fundamental bazislar, xatolik bahosi, darsliklar manbalari va platforma standarti.',
+      'Lagranj interpolyatsion köphadini quriş. Vandermond determinanti, fundamental bazislar, xatolik bahosi, darsliklar manbalari va platforma standarti.',
     keywords: [
       'lagranj interpolyatsiyasi',
       'lagrange polynomial',
@@ -520,11 +520,11 @@ export const learningGuides: LearningGuide[] = [
     area: 'Interpolyatsiya',
     calculatorHref: '/methods/lagrange',
     summary:
-      'Lagranj interpolyatsiyasi berilgan chekli sondagi turli (xᵢ, yᵢ) nuqtalar orqali o‘tuvchi yagona algebraik ko‘phadni quradi. Ko‘phad barcha tugunlarda berilgan qiymatlarni aniq qabul qiladi va oraliqdagi noma’lum qiymatlarni baholash imkonini beradi.',
+      'Lagranj interpolyatsiyasi berilgan çekli sondagi turli (xᵢ, yᵢ) nuqtalar orqali ötuvçi yagona algebraik köphadni quradi. Köphad barça tugunlarda berilgan qiymatlarni aniq qabul qiladi va oraliqdagi noma’lum qiymatlarni baholaş imkonini beradi.',
     formula: 'P(x) = Σᵢ yᵢ Lᵢ(x),  Lᵢ(x) = Πⱼ≠ᵢ (x − xⱼ) / (xᵢ − xⱼ)',
     formulaTex: 'L_n(x) = \\sum_{i=0}^n y_i \\ell_i(x), \\quad \\ell_i(x) = \\prod_{j=0, j \\ne i}^n \\frac{x - x_j}{x_i - x_j}',
     convergenceCondition:
-      'Barcha tugunlar turlicha bo‘lishi shart: x_i ≠ x_j (i ≠ j). Oraliq qadamlarining teng bo‘lishi talab qilinmaydi.',
+      'Barça tugunlar turliça bölişi şart: x_i ≠ x_j (i ≠ j). Oraliq qadamlarining teng bölişi talab qilinmaydi.',
     convergenceTex: 'x_i \\neq x_j \\quad (\\forall i \\neq j) \\implies \\det(V) = \\prod_{0 \\le j < i \\le n} (x_i - x_j) \\neq 0',
     errorEstimateTex: 'R_n(x) = f(x) - L_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!} \\prod_{i=0}^n (x - x_i), \\quad \\xi \\in [x_0, x_n]',
     theory: [
@@ -540,10 +540,10 @@ export const learningGuides: LearningGuide[] = [
       'Hosil bo‘lgan ko‘phadga kerakli x nuqtani qo‘yib, funksiyaning taqribiy qiymatini hisoblang.',
     ],
     example: {
-      problem: '(0, 2), (1, 3), (2, 12), (5, 147) nuqtalardan o‘tuvchi Lagranj ko‘phadini qurish.',
+      problem: '(0, 2), (1, 3), (2, 12), (5, 147) nuqtalardan ötuvçi Lagranj köphadini quriş.',
       calculation:
-        'ℓ₀(x) = (x−1)(x−2)(x−5)/((0−1)(0−2)(0−5)) = −(x−1)(x−2)(x−5)/10. ℓ₁(x) = x(x−2)(x−5)/(1·(−1)·(−4)) = x(x−2)(x−5)/4. ℓ₂(x) = x(x−1)(x−5)/(2·1·(−3)) = −x(x−1)(x−5)/6. ℓ₃(x) = x(x−1)(x−2)/(5·4·3) = x(x−1)(x−2)/60. Koeffitsiyentlarni y_i larga ko‘paytirib qisqartirganda: P(x) = x³ + x² − x + 2 hosil bo‘ladi.',
-      result: 'Hosil bo‘lgan ko‘phad: P(x) = x³ + x² − x + 2. Barcha 4 ta nuqtada aynan mos keladi.',
+        'ℓ₀(x) = (x−1)(x−2)(x−5)/((0−1)(0−2)(0−5)) = −(x−1)(x−2)(x−5)/10. ℓ₁(x) = x(x−2)(x−5)/(1·(−1)·(−4)) = x(x−2)(x−5)/4. ℓ₂(x) = x(x−1)(x−5)/(2·1·(−3)) = −x(x−1)(x−5)/6. ℓ₃(x) = x(x−1)(x−2)/(5·4·3) = x(x−1)(x−2)/60. Koeffitsiyentlarni y_i larga köpaytirib qisqartirganda: P(x) = x³ + x² − x + 2 hosil böladi.',
+      result: 'Hosil bölgan köphad: P(x) = x³ + x² − x + 2. Barça 4 ta nuqtada aynan mos keladi.',
     },
     whenToUse: [
       'Tajriba yoki o‘lchov natijalari notekis (turli oraliqli) qadamlar bilan olinganda.',
@@ -556,72 +556,72 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'Lagranj usulida tugunlar orasidagi qadamlar bir xil bo‘lishi shartmi?',
+        question: 'Lagranj usulida tugunlar orasidagi qadamlar bir xil bölişi şartmi?',
         answer:
-          'Yo‘q! Lagranj usulining eng katta kuchi aynan notekis (har xil masofadagi) nuqtalarda ham hech qanday cheklovsiz ishlashidadir.',
+          'Yöq! Lagranj usulining eng katta kuçi aynan notekis (har xil masofadagi) nuqtalarda ham heç qanday çeklovsiz işlaşidadir.',
       },
       {
-        question: 'Runge effekti nima va uni qanday yengish mumkin?',
+        question: 'Runge effekti nima va uni qanday yengiş mumkin?',
         answer:
-          'Yuqori darajali ko‘phadlar oraliq chekkalarida kuchli tebranish beradi. Buning oldini olish uchun oraliqni bo‘laklab kubik splaynlar bilan interpolyatsiyalash yoki Chebishev tugunlaridan foydalanish tavsiya etiladi.',
+          'Yuqori darajali köphadlar oraliq çekkalarida kuçli tebraniş beradi. Buning oldini oliş uçun oraliqni bölaklab kubik splaynlar bilan interpolyatsiyalaş yoki Çebişev tugunlaridan foydalaniş tavsiya etiladi.',
       },
     ],
     sources: [
       {
-        authors: 'A.I. Ismoilov, Sh.A. Ro‘zaliyev',
-        title: 'Sonli usullar (O‘quv qo‘llanma, I qism)',
-        publisher: 'Farg‘ona davlat universiteti',
+        authors: 'A.I. Ismoilov, Ş.A. Rözaliyev',
+        title: 'Sonli usullar (Öquv qöllanma, I qism)',
+        publisher: 'Farğona davlat universiteti',
         year: 2025,
-        chapterSection: 'VI bob, 6.1-§ ("Lagranj interpolyatsion ko‘phadi")',
+        chapterSection: 'VI bob, 6.1-§ ("Lagranj interpolyatsion köphadi")',
         pages: '95–100-betlar',
         note: 'Vandermond determinanti orqali yagonalik isboti va C# kodi keltirilgan.',
       },
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
-        chapterSection: 'II bob, 2.1-§ va 2.2-§ ("Interpolyatsiyalash xatoligi")',
+        chapterSection: 'II bob, 2.1-§ va 2.2-§ ("Interpolyatsiyalaş xatoligi")',
         pages: '15–18-betlar',
-        note: 'Qoldiq hadning R_n(x) umumiy bahosi va Chebishev tugunlari tahlili.',
+        note: 'Qoldiq hadning R_n(x) umumiy bahosi va Çebişev tugunlari tahlili.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
         chapterSection: '4-bob, 3-§ ("Lagranj interpolyasion formulasi")',
         pages: '101–106-betlar',
-        note: 'Blok-sxema va amaliy masalalar to‘plami.',
+        note: 'Blok-sxema va amaliy masalalar töplami.',
       },
     ],
     platformConventions: [
       {
-        topic: 'Nuqtalarni kiritish tartibi va dublikatlar',
+        topic: 'Nuqtalarni kiritiş tartibi va dublikatlar',
         textbookStandard:
-          'Darsliklarda doimo x₀ < x₁ < ... < x_n qat’iy o‘sish tartibida beriladi.',
+          'Darsliklarda doimo x₀ < x₁ < ... < x_n qat’iy ösiş tartibida beriladi.',
         platformImplementation:
-          'Sonli-usullar interaktiv platformasida nuqtalar juftligini ixtiyoriy tartibda kiritishingiz mumkin. Platforma ularni avtomatik saralaydi va agar bir xil x koordinatali nuqta kiritilsa, darhol ogohlantiradi.',
+          'Sonli-usullar interaktiv platformasida nuqtalar juftligini ixtiyoriy tartibda kiritişingiz mumkin. Platforma ularni avtomatik saralaydi va agar bir xil x koordinatali nuqta kiritilsa, darhol ogohlantiradi.',
         whyChosen:
-          'Foydalanuvchi qulayligi uchun: tartibni qo‘lda tekshirishga hojat qolmaydi, nolga bo‘linish xatosi avtomatik oldi olinadi.',
+          'Foydalanuvçi qulayligi uçun: tartibni qölda tekşirişga hojat qolmaydi, nolga böliniş xatosi avtomatik oldi olinadi.',
       },
       {
-        topic: 'Interpolyatsiya ko‘phadini namoyish qilish',
+        topic: 'Interpolyatsiya köphadini namoyiş qiliş',
         textbookStandard:
-          'Kitoblarda ko‘pincha faqat bitta belgilangan nuqtadagi sonli qiymat hisoblab ko‘rsatiladi.',
+          'Kitoblarda köpinça faqat bitta belgilangan nuqtadagi sonli qiymat hisoblab körsatiladi.',
         platformImplementation:
-          'Platforma nafaqat ixtiyoriy x nuqtadagi natijani, balki ko‘phadning to‘liq analitik formulasini hamda barcha tugunlardan o‘tuvchi interaktiv grafikni real vaqtda chizadi.',
+          'Platforma nafaqat ixtiyoriy x nuqtadagi natijani, balki köphadning töliq analitik formulasini hamda barça tugunlardan ötuvçi interaktiv grafikni real vaqtda çizadi.',
         whyChosen:
-          'Talaba ko‘phadning harakatini va Runge tebranishi bor-yo‘qligini ko‘z bilan yaqqol ko‘rib xulosa chiqara oladi.',
+          'Talaba köphadning harakatini va Runge tebranişi bor-yöqligini köz bilan yaqqol körib xulosa çiqara oladi.',
       },
     ],
   },
   {
     slug: 'togri-tortburchaklar-usuli',
-    title: 'To‘g‘ri to‘rtburchaklar usuli',
-    metaTitle: 'To‘g‘ri to‘rtburchaklar usuli: integral formulasi va misollar',
+    title: 'Töğri törtburçaklar usuli',
+    metaTitle: 'Töğri törtburçaklar usuli: integral formulasi va misollar',
     description:
-      'Aniq integralni chap, o‘ng va o‘rta to‘g‘ri to‘rtburchaklar usulida hisoblash. Nazariya, qadam formulasi, xatolik bahosi va online kalkulyator.',
+      'Aniq integralni çap, öng va örta töğri törtburçaklar usulida hisoblaş. Nazariya, qadam formulasi, xatolik bahosi va online kalkulyator.',
     keywords: [
       'to‘g‘ri to‘rtburchaklar usuli',
       'o‘rta nuqtalar usuli',
@@ -629,15 +629,15 @@ export const learningGuides: LearningGuide[] = [
       'sonli integrallash',
       'kvadratur formulalar',
     ],
-    area: 'Sonli integrallash',
+    area: 'Sonli integrallaş',
     calculatorHref: '/methods/rectangles',
     summary:
-      'To‘g‘ri to‘rtburchaklar usuli integral ostidagi egri chiziq bilan chegaralangan soha yuzini to‘g‘ri to‘rtburchaklar yuzalari yig‘indisiga almashtiradi. Balandlik sifatida bo‘lakning chap chekkasi, o‘ng chekkasi yoki o‘rtasi olinadi. O‘rta to‘g‘ri to‘rtburchaklar usuli Teylor simmetriyasi evaziga O(h²) tartibli yuqori aniqlik beradi.',
+      'Töğri törtburçaklar usuli integral ostidagi egri çiziq bilan çegaralangan soha yuzini töğri törtburçaklar yuzalari yiğindisiga almaştiradi. Balandlik sifatida bölakning çap çekkasi, öng çekkasi yoki örtasi olinadi. Örta töğri törtburçaklar usuli Teylor simmetriyasi evaziga O(h²) tartibli yuqori aniqlik beradi.',
     formula: '∫ₐᵇ f(x) dx ≈ h · Σᵢ f(ξᵢ),  h = (b − a) / n',
     formulaTex:
       'I_{\\text{o\'rta}} = h \\sum_{i=0}^{n-1} f\\left(x_i + \\frac{h}{2}\\right), \\quad I_{\\text{chap}} = h \\sum_{i=0}^{n-1} f(x_i), \\quad I_{\\text{o\'ng}} = h \\sum_{i=1}^n f(x_i)',
     convergenceCondition:
-      'Funksiya [a, b] da uzluksiz bo‘lishi lozim. Qadam h → 0 da yig‘indi Riman integrali ta’rifiga ko‘ra aniq integralga intiladi.',
+      'Funksiya [a, b] da uzluksiz bölişi lozim. Qadam h → 0 da yiğindi Riman integrali ta’rifiga köra aniq integralga intiladi.',
     convergenceTex: 'f(x) \\in C^2[a,b], \\quad h = \\frac{b-a}{n} \\to 0 \\implies I_h \\to \\int_a^b f(x)dx',
     errorEstimateTex:
       '|R_{\\text{chap/o\'ng}}| \\le \\frac{(b-a)^2}{2n} M_1, \\quad |R_{\\text{o\'rta}}| \\le \\frac{(b-a)^3}{24 n^2} M_2 = \\frac{h^2(b-a)}{24} M_2, \\quad M_2 = \\max_{[a,b]} |f\'\'(x)|',
@@ -655,9 +655,9 @@ export const learningGuides: LearningGuide[] = [
       'Yig‘indini tuzing va h ga ko‘paytiring: I = h · Σ f(x_{i+1/2}).',
     ],
     example: {
-      problem: '∫₀¹ x / (x + 1) dx integralini n = 10 bilan o‘rta to‘rtburchak usulida hisoblash.',
+      problem: '∫₀¹ x / (x + 1) dx integralini n = 10 bilan örta törtburçak usulida hisoblaş.',
       calculation:
-        'h = (1 − 0)/10 = 0.1. O‘rta nuqtalar: x₀.₅ = 0.05, x₁.₅ = 0.15, ..., x₉.₅ = 0.95. Funksiya qiymatlari: f(0.05) = 0.05/1.05 ≈ 0.0476; f(0.15) ≈ 0.1304; ...; f(0.95) ≈ 0.4872. Yig‘indi Σ f(x_{i+1/2}) ≈ 3.0691.',
+        'h = (1 − 0)/10 = 0.1. Örta nuqtalar: x₀.₅ = 0.05, x₁.₅ = 0.15, ..., x₉.₅ = 0.95. Funksiya qiymatlari: f(0.05) = 0.05/1.05 ≈ 0.0476; f(0.15) ≈ 0.1304; ...; f(0.95) ≈ 0.4872. Yiğindi Σ f(x_{i+1/2}) ≈ 3.0691.',
       result: 'I ≈ 0.1 · 3.0691 = 0.3069. Aniq qiymat: 1 − ln(2) ≈ 0.30685 (xatolik atigi 0.00005).',
     },
     whenToUse: [
@@ -671,63 +671,63 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'O‘rta to‘rtburchaklar usuli nega trapetsiya usulidan aniqroq?',
+        question: 'Örta törtburçaklar usuli nega trapetsiya usulidan aniqroq?',
         answer:
-          'O‘rta nuqtalar qoidasida xatolik koeffitsiyenti 1/24 bo‘lsa, trapetsiya usulida 1/12 dir. Demak, o‘rta to‘rtburchak usulining nazariy xatosi trapetsiyadan 2 barobar kichikdir.',
+          'Örta nuqtalar qoidasida xatolik koeffitsiyenti 1/24 bölsa, trapetsiya usulida 1/12 dir. Demak, örta törtburçak usulining nazariy xatosi trapetsiyadan 2 barobar kiçikdir.',
       },
       {
-        question: 'Chap va o‘ng to‘rtburchaklar orasidagi farq nimani bildiradi?',
+        question: 'Çap va öng törtburçaklar orasidagi farq nimani bildiradi?',
         answer:
-          'Monoton o‘suvchi funksiyada chap usul integralni quyi baholaydi (kamaytiradi), o‘ng usul esa yuqori baholaydi (orttiradi). Ularning farqi oraliq qadami h ga to‘g‘ridan-to‘g‘ri proporsionaldir.',
+          'Monoton ösuvçi funksiyada çap usul integralni quyi baholaydi (kamaytiradi), öng usul esa yuqori baholaydi (orttiradi). Ularning farqi oraliq qadami h ga töğridan-töğri proporsionaldir.',
       },
     ],
     sources: [
       {
-        authors: 'A.I. Ismoilov, Sh.A. Ro‘zaliyev',
+        authors: 'A.I. Ismoilov, Ş.A. Rözaliyev',
         title: 'Sonli usullar (I qism)',
-        publisher: 'Farg‘ona davlat universiteti',
+        publisher: 'Farğona davlat universiteti',
         year: 2025,
-        chapterSection: 'VII bob, 7.1-§ ("Aniq integralni to‘g‘ri to‘rtburchak usuli bilan taqribiy hisoblash")',
+        chapterSection: 'VII bob, 7.1-§ ("Aniq integralni töğri törtburçak usuli bilan taqribiy hisoblaş")',
         pages: '121–127-betlar',
         note: 'C# dastur matni va 30 ta amaliy variant misollari.',
       },
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
         chapterSection: 'III bob, 3.1-§ ("Interpolyatsion kvadratur formulalar")',
         pages: '58–63-betlar',
-        note: 'O‘rta to‘rtburchaklar qoldiq hadi R_0(f) = (b-a)³ f′′(ξ)/24 ning qat’iy isboti.',
+        note: 'Örta törtburçaklar qoldiq hadi R_0(f) = (b-a)³ f′′(ξ)/24 ning qat’iy isboti.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
-        chapterSection: '5-bob, 2-§ ("To‘g‘ri to‘rtburchaklar formulasi")',
+        chapterSection: '5-bob, 2-§ ("Töğri törtburçaklar formulasi")',
         pages: '114–116-betlar',
         note: 'Algoritm blok-sxemasi va Paskal tili dasturi.',
       },
     ],
     platformConventions: [
       {
-        topic: 'Chap, o‘ng va o‘rta to‘rtburchaklarni birlashtirish',
+        topic: 'Çap, öng va örta törtburçaklarni birlaştiriş',
         textbookStandard:
-          'Ko‘p darsliklarda har bir variant uchun alohida formula va dastur yoziladi yoki faqat bitta variant ko‘rsatiladi.',
+          'Köp darsliklarda har bir variant uçun alohida formula va dastur yoziladi yoki faqat bitta variant körsatiladi.',
         platformImplementation:
-          'Sonli-usullar interaktiv platformasida bir vaqtning o‘zida uchala usul (chap, o‘rta, o‘ng) hisoblanadi. Interaktiv grafikda to‘rtburchaklar ustunchalari egri chiziq ostida chiroyli ko‘rsatiladi.',
+          'Sonli-usullar interaktiv platformasida bir vaqtning özida uçala usul (çap, örta, öng) hisoblanadi. Interaktiv grafikda törtburçaklar ustunçalari egri çiziq ostida çiroyli körsatiladi.',
         whyChosen:
-          'Foydalanuvchi uchala usulning farqini bitta ekranda darhol solishtira oladi va o‘rta nuqtaning ustunligini ko‘z bilan ko‘radi.',
+          'Foydalanuvçi uçala usulning farqini bitta ekranda darhol soliştira oladi va örta nuqtaning ustunligini köz bilan köradi.',
       },
       {
-        topic: 'Integral ostidagi funksiya kiritish sintaksisi',
+        topic: 'Integral ostidagi funksiya kiritiş sintaksisi',
         textbookStandard:
-          'Kitoblarda f(x) analitik tarzda yoziladi, lekin kompyuterga kiritish turlicha (Paskal, C#, Mathcad).',
+          'Kitoblarda f(x) analitik tarzda yoziladi, lekin kompyuterga kiritiş turliça (Paskal, C#, Mathcad).',
         platformImplementation:
-          'Platformada universal matematik ifodalar qo‘llab-quvvatlanadi: sqrt(x), exp(x), ln(x), x^2, sin(x). Integral analitik tarzda ham yechilib, taqribiy natija bilan xatoligi ko‘rsatiladi.',
+          'Platformada universal matematik ifodalar qöllab-quvvatlanadi: sqrt(x), exp(x), ln(x), x^2, sin(x). Integral analitik tarzda ham yeçilib, taqribiy natija bilan xatoligi körsatiladi.',
         whyChosen:
-          'Har qanday murakkablikdagi funksiyalarni qulay kiritish va ta’lim jarayonida vizual tekshirish imkonini beradi.',
+          'Har qanday murakkablikdagi funksiyalarni qulay kiritiş va ta’lim jarayonida vizual tekşiriş imkonini beradi.',
       },
     ],
   },
@@ -736,7 +736,7 @@ export const learningGuides: LearningGuide[] = [
     title: 'Trapetsiyalar usuli',
     metaTitle: 'Trapetsiyalar usuli: integral formulasi, xato bahosi va misol',
     description:
-      'Trapetsiyalar usulida aniq integralni sonli hisoblash. Kompozit formula, qoldiq had bahosi, darsliklar manbalari va platforma standarti.',
+      'Trapetsiyalar usulida aniq integralni sonli hisoblaş. Kompozit formula, qoldiq had bahosi, darsliklar manbalari va platforma standarti.',
     keywords: [
       'trapetsiyalar usuli',
       'trapetsiya formulasi',
@@ -744,15 +744,15 @@ export const learningGuides: LearningGuide[] = [
       'sonli integrallash',
       'integral taqribiy hisoblash',
     ],
-    area: 'Sonli integrallash',
+    area: 'Sonli integrallaş',
     calculatorHref: '/methods/trapezoid',
     summary:
-      'Trapetsiyalar usulida integrallash oraliqlaridagi egri chiziq vatarlar (chiziqli kesmalar) bilan tutashtirilib, hosil bo‘lgan to‘g‘ri chiziqli trapetsiyalar yuzalari qo‘shiladi. Silliq funksiyalar uchun kompozit formula xatoligi O(h²) tartibda bo‘ladi.',
+      'Trapetsiyalar usulida integrallaş oraliqlaridagi egri çiziq vatarlar (çiziqli kesmalar) bilan tutaştirilib, hosil bölgan töğri çiziqli trapetsiyalar yuzalari qöşiladi. Silliq funksiyalar uçun kompozit formula xatoligi O(h²) tartibda böladi.',
     formula: 'I ≈ h/2 · [f(x₀) + 2Σᵢ₌₁ⁿ⁻¹ f(xᵢ) + f(xₙ)],  h = (b − a) / n',
     formulaTex:
       'I_{\\text{trap}} \\approx \\frac{h}{2} \\left[ f(x_0) + 2\\sum_{i=1}^{n-1} f(x_i) + f(x_n) \\right], \\quad h = \\frac{b - a}{n}',
     convergenceCondition:
-      'Funksiya [a, b] da uzluksiz va kamida ikki marta differensiallanuvchi bo‘lsin. n musbat butun son bo‘lishi kifoya.',
+      'Funksiya [a, b] da uzluksiz va kamida ikki marta differensiallanuvçi bölsin. n musbat butun son bölişi kifoya.',
     convergenceTex: 'f(x) \\in C^2[a,b], \\quad n \\ge 1, \\quad h = \\frac{b-a}{n}',
     errorEstimateTex:
       '|R_n(f)| \\le \\frac{(b-a)^3}{12 n^2} \\max_{[a,b]} |f\'\'(x)| = \\frac{h^2 (b-a)}{12} M_2, \\quad M_2 = \\max_{[a,b]} |f\'\'(x)|',
@@ -770,10 +770,10 @@ export const learningGuides: LearningGuide[] = [
       'Yig‘indini h ga ko‘paytiring: I = h · [ (f(a)+f(b))/2 + Σ f(x_i) ].',
     ],
     example: {
-      problem: '∫₀¹ (x + 1) dx integralini n = 10 bilan trapetsiya usulida hisoblash.',
+      problem: '∫₀¹ (x + 1) dx integralini n = 10 bilan trapetsiya usulida hisoblaş.',
       calculation:
-        'h = 0.1. x₀ = 0, x₁ = 0.1, ..., x₁₀ = 1.0. f(0) = 1, f(1) = 2. Ichki tugunlar: f(0.1)=1.1, f(0.2)=1.2, ..., f(0.9)=1.9. Ichki yig‘indi: 1.1 + 1.2 + ... + 1.9 = 13.5. Chekkalar: (1 + 2)/2 = 1.5. Umumiy yig‘indi: 1.5 + 13.5 = 15.0. I = 0.1 · 15.0 = 1.5.',
-      result: 'I = 1.5. Aniq yechim: [x²/2 + x]₀¹ = 0.5 + 1 = 1.5 (chiziqli funksiyada xato 0 ga teng!).',
+        'h = 0.1. x₀ = 0, x₁ = 0.1, ..., x₁₀ = 1.0. f(0) = 1, f(1) = 2. Içki tugunlar: f(0.1)=1.1, f(0.2)=1.2, ..., f(0.9)=1.9. Içki yiğindi: 1.1 + 1.2 + ... + 1.9 = 13.5. Çekkalar: (1 + 2)/2 = 1.5. Umumiy yiğindi: 1.5 + 13.5 = 15.0. I = 0.1 · 15.0 = 1.5.',
+      result: 'I = 1.5. Aniq yeçim: [x²/2 + x]₀¹ = 0.5 + 1 = 1.5 (çiziqli funksiyada xato 0 ga teng!).',
     },
     whenToUse: [
       'Funksiya qiymatlari jadval ko‘rinishida berilgan bo‘lganda.',
@@ -786,38 +786,38 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'Trapetsiyalar usulida n juft bo‘lishi shartmi?',
-        answer: 'Yo‘q. Simpson usulidan farqli o‘laroq, trapetsiyalar usuli uchun n ixtiyoriy butun musbat son (toq ham, juft ham) bo‘lishi mumkin.',
+        question: 'Trapetsiyalar usulida n juft bölişi şartmi?',
+        answer: 'Yöq. Simpson usulidan farqli ölaroq, trapetsiyalar usuli uçun n ixtiyoriy butun musbat son (toq ham, juft ham) bölişi mumkin.',
       },
       {
-        question: 'Qachon trapetsiya usuli mutlaq aniq natija beradi?',
+        question: 'Qaçon trapetsiya usuli mutlaq aniq natija beradi?',
         answer:
-          'Agar f(x) chiziqli funksiya (f(x) = kx + b) bo‘lsa, f′′(x) = 0 bo‘ladi va qoldiq had aynan nolga aylanadi — natija mutlaq aniq chiqadi.',
+          'Agar f(x) çiziqli funksiya (f(x) = kx + b) bölsa, f′′(x) = 0 böladi va qoldiq had aynan nolga aylanadi — natija mutlaq aniq çiqadi.',
       },
     ],
     sources: [
       {
-        authors: 'A.I. Ismoilov, Sh.A. Ro‘zaliyev',
+        authors: 'A.I. Ismoilov, Ş.A. Rözaliyev',
         title: 'Sonli usullar (I qism)',
-        publisher: 'Farg‘ona davlat universiteti',
+        publisher: 'Farğona davlat universiteti',
         year: 2025,
-        chapterSection: 'VII bob, 7.2-§ ("Aniq integrallarni trapetsiyalar usuli bilan taqribiy hisoblash")',
+        chapterSection: 'VII bob, 7.2-§ ("Aniq integrallarni trapetsiyalar usuli bilan taqribiy hisoblaş")',
         pages: '128–134-betlar',
         note: 'Qoldiq had bahosi R_n(f) = -(b-a)³ f′′(ξ)/(12n²) va C# dasturi keltirilgan.',
       },
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
-        chapterSection: 'III bob, 3.1-§ ("Umumlashgan trapetsiyalar formulasi")',
+        chapterSection: 'III bob, 3.1-§ ("Umumlaşgan trapetsiyalar formulasi")',
         pages: '61–63, 70–71-betlar',
-        note: 'Koshi teoremasiga asoslangan qoldiq had bahosi.',
+        note: 'Koşi teoremasiga asoslangan qoldiq had bahosi.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
         chapterSection: '5-bob, 3-§ ("Trapetsiya usuli")',
         pages: '117–118-betlar',
@@ -826,31 +826,31 @@ export const learningGuides: LearningGuide[] = [
     ],
     platformConventions: [
       {
-        topic: 'Formula ko‘rinishi va qismlar yig‘indisi',
+        topic: 'Formula körinişi va qismlar yiğindisi',
         textbookStandard:
-          'Kitoblarda ba’zan I ≈ h[(y₀ + y_n)/2 + y₁ + ... + y_{n-1}] ko‘rinishida, ba’zan esa I ≈ (h/2)[y₀ + 2y₁ + ... + 2y_{n-1} + y_n] shaklida beriladi.',
+          'Kitoblarda ba’zan I ≈ h[(y₀ + y_n)/2 + y₁ + ... + y_{n-1}] körinişida, ba’zan esa I ≈ (h/2)[y₀ + 2y₁ + ... + 2y_{n-1} + y_n] şaklida beriladi.',
         platformImplementation:
-          'Sonli-usullar platformasida ikkala ifoda ham bir xil matematik qiymatga ega ekanligi ko‘rsatiladi. Dastur ichida umumiy omil h/2 qilib chiqarilib, chekkalar 1, ichkilar 2 ga ko‘paytiriladi.',
+          'Sonli-usullar platformasida ikkala ifoda ham bir xil matematik qiymatga ega ekanligi körsatiladi. Dastur içida umumiy omil h/2 qilib çiqarilib, çekkalar 1, içkilar 2 ga köpaytiriladi.',
         whyChosen:
-          'Bu usul hisoblash mashinasida arifmetik amallarni qisqartiradi va yaxlitlash xatosini kamaytiradi.',
+          'Bu usul hisoblaş maşinasida arifmetik amallarni qisqartiradi va yaxlitlaş xatosini kamaytiradi.',
       },
       {
         topic: 'Interaktiv grafik va trapetsiyalar vizualizatsiyasi',
         textbookStandard:
-          'Darsliklarda faqat bitta statik chizma (16-rasm) beriladi.',
+          'Darsliklarda faqat bitta statik çizma (16-rasm) beriladi.',
         platformImplementation:
-          'Platformada n sonini slayder orqali o‘zgartirganda har bir trapetsiya real vaqtda qayta chiziladi. Foydalanuvchi n ortgani sari trapetsiyalar egri chiziqqa qanday yopishib borishini interaktiv ko‘radi.',
+          'Platformada n sonini slayder orqali özgartirganda har bir trapetsiya real vaqtda qayta çiziladi. Foydalanuvçi n ortgani sari trapetsiyalar egri çiziqqa qanday yopişib borişini interaktiv köradi.',
         whyChosen:
-          'Geometrik ma’noni mustahkamlash va n ning aniqlikka ta’sirini jonli his qilish uchun.',
+          'Geometrik ma’noni mustahkamlaş va n ning aniqlikka ta’sirini jonli his qiliş uçun.',
       },
     ],
   },
   {
     slug: 'simpson-usuli',
     title: 'Simpson 1/3 (parabolalar) usuli',
-    metaTitle: 'Simpson usuli: formula, juft qadam sharti va kalkulyator',
+    metaTitle: 'Simpson usuli: formula, juft qadam şarti va kalkulyator',
     description:
-      'Simpson 1/3 (parabolalar) usulida aniq integralni hisoblash. 4-tartibli aniqlik, juft n sharti, darsliklardagi 2n va n chalkashligi tahlili hamda platforma standarti.',
+      'Simpson 1/3 (parabolalar) usulida aniq integralni hisoblaş. 4-tartibli aniqlik, juft n şarti, darsliklardagi 2n va n çalkaşligi tahlili hamda platforma standarti.',
     keywords: [
       'simpson usuli',
       'simpson 1/3 formulasi',
@@ -858,15 +858,15 @@ export const learningGuides: LearningGuide[] = [
       'sonli integrallash simpson',
       'simpson qoidasi',
     ],
-    area: 'Sonli integrallash',
+    area: 'Sonli integrallaş',
     calculatorHref: '/methods/simpson',
     summary:
-      'Simpson 1/3 usuli har ikki qo‘shni oraliqdagi funksiyani kvadratik parabola bilan yaqinlashtiradi. Bo‘linishlar soni n juft bo‘lishi shart. Toq indeksli tugunlar 4, juft indeksli tugunlar 2 koeffitsiyenti bilan olinadi. Usul O(h⁴) yuqori tartibli aniqlikka ega bo‘lib, 3-darajagacha bo‘lgan barcha ko‘phadlarni mutlaqo aniq integrallaydi.',
+      'Simpson 1/3 usuli har ikki qöşni oraliqdagi funksiyani kvadratik parabola bilan yaqinlaştiradi. Bölinişlar soni n juft bölişi şart. Toq indeksli tugunlar 4, juft indeksli tugunlar 2 koeffitsiyenti bilan olinadi. Usul O(h⁴) yuqori tartibli aniqlikka ega bölib, 3-darajagaça bölgan barça köphadlarni mutlaqo aniq integrallaydi.',
     formula: 'I ≈ h/3 · [f(x₀) + 4Σ f(x_toq) + 2Σ f(x_juft) + f(xₙ)]',
     formulaTex:
       'I_{\\text{simp}} \\approx \\frac{h}{3} \\left[ f(x_0) + 4\\sum_{k=1}^{n/2} f(x_{2k-1}) + 2\\sum_{k=1}^{n/2 - 1} f(x_{2k}) + f(x_n) \\right], \\quad h = \\frac{b - a}{n}',
     convergenceCondition:
-      'Funksiya [a, b] da 4 marta uzluksiz differensiallanuvchi (f ∈ C⁴[a, b]) va bo‘linishlar soni n juft musbat son (n = 2m) bo‘lishi shart.',
+      'Funksiya [a, b] da 4 marta uzluksiz differensiallanuvçi (f ∈ C⁴[a, b]) va bölinişlar soni n juft musbat son (n = 2m) bölişi şart.',
     convergenceTex: 'f(x) \\in C^4[a,b], \\quad n \\in 2\\mathbb{N}^+ \\implies h = \\frac{b-a}{n}',
     errorEstimateTex:
       '|R_n(f)| \\le \\frac{(b-a)^5}{180 n^4} \\max_{[a,b]} |f^{(4)}(x)| = \\frac{h^4 (b-a)}{180} M_4',
@@ -885,9 +885,9 @@ export const learningGuides: LearningGuide[] = [
       'Chekka qiymatlarni qo‘shib, h/3 ga ko‘paytiring: I = (h/3)[y₀ + 4Σ y_{toq} + 2Σ y_{juft} + y_n].',
     ],
     example: {
-      problem: '∫₀¹ 2x / (1 + x²) dx integralini n = 10 (juft) bilan Simpson usulida hisoblash.',
+      problem: '∫₀¹ 2x / (1 + x²) dx integralini n = 10 (juft) bilan Simpson usulida hisoblaş.',
       calculation:
-        'h = (1 − 0)/10 = 0.1. x₀ = 0, x₁ = 0.1, ..., x₁₀ = 1.0. Toq tugunlar: f(0.1), f(0.3), f(0.5), f(0.7), f(0.9); yig‘indi S₁ ≈ 1.8398. Juft tugunlar: f(0.2), f(0.4), f(0.6), f(0.8); yig‘indi S₂ ≈ 1.3414. Chekkalar: f(0) = 0, f(1) = 1.0. I = (0.1 / 3) · [0 + 4(1.8398) + 2(1.3414) + 1.0] ≈ 0.693148.',
+        'h = (1 − 0)/10 = 0.1. x₀ = 0, x₁ = 0.1, ..., x₁₀ = 1.0. Toq tugunlar: f(0.1), f(0.3), f(0.5), f(0.7), f(0.9); yiğindi S₁ ≈ 1.8398. Juft tugunlar: f(0.2), f(0.4), f(0.6), f(0.8); yiğindi S₂ ≈ 1.3414. Çekkalar: f(0) = 0, f(1) = 1.0. I = (0.1 / 3) · [0 + 4(1.8398) + 2(1.3414) + 1.0] ≈ 0.693148.',
       result: 'I ≈ 0.693148. Aniq analitik qiymat: ln(1 + 1²) = ln(2) ≈ 0.69314718 (xatolik atigi 10⁻⁶).',
     },
     whenToUse: [
@@ -901,72 +901,72 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'Simpson usulida n nega albatta juft bo‘lishi kerak?',
+        question: 'Simpson usulida n nega albatta juft bölişi kerak?',
         answer:
-          'Chunki har bir parabola uchta ketma-ket nuqta (ya’ni 2 ta qismiy oraliq) ustida quriladi. Barcha oraliqlarni juftlab guruhlash uchun umumiy qismlar soni n juft bo‘lishi shart.',
+          'Çunki har bir parabola uçta ketma-ket nuqta (ya’ni 2 ta qismiy oraliq) ustida quriladi. Barça oraliqlarni juftlab guruhlaş uçun umumiy qismlar soni n juft bölişi şart.',
       },
       {
         question: 'Simpson 1/3 va Simpson 3/8 orasidagi farq nima?',
         answer:
-          'Simpson 1/3 ikkita oraliq va parabola (2-darajali) ishlatadi; Simpson 3/8 esa uchta oraliq va 3-darajali ko‘phad ishlatadi (n 3 ga karrali bo‘lishi talab qilinadi).',
+          'Simpson 1/3 ikkita oraliq va parabola (2-darajali) işlatadi; Simpson 3/8 esa uçta oraliq va 3-darajali köphad işlatadi (n 3 ga karrali bölişi talab qilinadi).',
       },
     ],
     sources: [
       {
-        authors: 'A.I. Ismoilov, Sh.A. Ro‘zaliyev',
+        authors: 'A.I. Ismoilov, Ş.A. Rözaliyev',
         title: 'Sonli usullar (I qism)',
-        publisher: 'Farg‘ona davlat universiteti',
+        publisher: 'Farğona davlat universiteti',
         year: 2025,
-        chapterSection: 'VII bob, 7.3-§ ("Aniq integralni parabolalar (Simpson) usuli bilan taqribiy hisoblash")',
+        chapterSection: 'VII bob, 7.3-§ ("Aniq integralni parabolalar (Simpson) usuli bilan taqribiy hisoblaş")',
         pages: '135–143-betlar',
         note: 'Qoldiq had bahosi R_n(f) = -(b-a) f^{(IV)}(ξ) h⁴ / 180 va C# kodi keltirilgan.',
       },
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
         chapterSection: 'III bob, 3.1-§ ("Simpson kvadratur formulasi")',
         pages: '62–64, 71–74-betlar',
-        note: 'Simpson formulasi qoldiq hadining batafsil isboti va Chebishev/Gauss kvadraturasi bilan taqqoslanishi.',
+        note: 'Simpson formulasi qoldiq hadining batafsil isboti va Çebişev/Gauss kvadraturasi bilan taqqoslanişi.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
         chapterSection: '5-bob, 4-§ ("Simpson (parabolalar) formulasi")',
         pages: '119–123-betlar',
-        note: 'Misol ∫₀¹ (x³ + 2x² − x + 5)dx ning uchala usulda taqqoslama hisobi.',
+        note: 'Misol ∫₀¹ (x³ + 2x² − x + 5)dx ning uçala usulda taqqoslama hisobi.',
       },
     ],
     platformConventions: [
       {
-        topic: '2n va n oraliqlar soni chalkashligi (Asosiy darslik ziddiyati)',
+        topic: '2n va n oraliqlar soni çalkaşligi (Asosiy darslik ziddiyati)',
         textbookStandard:
-          'Ismoilov (2025) va Irisqulov (2013) kitoblarida interval "2n ta bo‘lakka bo‘linadi" deb olinadi, shunda qadam h = (b-a)/(2n) va koeffitsiyent (b-a)/(6n) bo‘ladi. Ismatullayev (2014) va xalqaro darsliklarda (Burden) esa oraliq "n ta bo‘lakka bo‘linadi va n juft son" deb belgilanadi (h = (b-a)/n va h/3).',
+          'Ismoilov (2025) va Irisqulov (2013) kitoblarida interval "2n ta bölakka bölinadi" deb olinadi, şunda qadam h = (b-a)/(2n) va koeffitsiyent (b-a)/(6n) böladi. Ismatullayev (2014) va xalqaro darsliklarda (Burden) esa oraliq "n ta bölakka bölinadi va n juft son" deb belgilanadi (h = (b-a)/n va h/3).',
         platformImplementation:
-          'Sonli-usullar interaktiv platformasida xalqaro standart qabul qilingan: kiritiladigan n soni bevosita umumiy oraliqlar sonini (subintervals) bildiradi va u juft bo‘lishi talab qilinadi (n = 2, 4, 6, ...). Qadam h = (b − a)/n, formula esa h/3 [y₀ + 4Σ y_{toq} + 2Σ y_{juft} + y_n].',
+          'Sonli-usullar interaktiv platformasida xalqaro standart qabul qilingan: kiritiladigan n soni bevosita umumiy oraliqlar sonini (subintervals) bildiradi va u juft bölişi talab qilinadi (n = 2, 4, 6, ...). Qadam h = (b − a)/n, formula esa h/3 [y₀ + 4Σ y_{toq} + 2Σ y_{juft} + y_n].',
         whyChosen:
-          'Ushbu standart foydalanuvchiga oraliqlar sonini to‘g‘ridan-to‘g‘ri boshqarish imkonini beradi. Agar toq son kiritilsa, tizim darhol buni ko‘rsatib, eng yaqin juft songa avtomatik tuzatishni taklif qiladi.',
+          'Uşbu standart foydalanuvçiga oraliqlar sonini töğridan-töğri boşqariş imkonini beradi. Agar toq son kiritilsa, tizim darhol buni körsatib, eng yaqin juft songa avtomatik tuzatişni taklif qiladi.',
       },
       {
         topic: 'Toq va juft indekslar koeffitsiyentlari (4 va 2)',
         textbookStandard:
-          'Adabiyotlarda qaysi indekslar 4 va qaysilari 2 bo‘lishi indekslash 0 dan yoki 1 dan boshlanishiga qarab chalkashishi mumkin.',
+          'Adabiyotlarda qaysi indekslar 4 va qaysilari 2 bölişi indekslaş 0 dan yoki 1 dan boşlanişiga qarab çalkaşişi mumkin.',
         platformImplementation:
-          'Platformada 0-indekslangan massiv qabul qilingan: x₀ (chekka), x₁ (toq → 4), x₂ (juft → 2), x₃ (toq → 4), ..., x_{n-1} (toq → 4), x_n (chekka). Natijalar jadvalida har bir x_i yonida uning vazn koeffitsiyenti (1, 4 yoki 2) alohida ustunda ko‘rsatiladi.',
+          'Platformada 0-indekslangan massiv qabul qilingan: x₀ (çekka), x₁ (toq → 4), x₂ (juft → 2), x₃ (toq → 4), ..., x_{n-1} (toq → 4), x_n (çekka). Natijalar jadvalida har bir x_i yonida uning vazn koeffitsiyenti (1, 4 yoki 2) alohida ustunda körsatiladi.',
         whyChosen:
-          'Talaba hisob-kitobni qo‘lda tekshirayotganda qaysi had qanday vazn olganini bir zumda ko‘ra oladi.',
+          'Talaba hisob-kitobni qölda tekşirayotganda qaysi had qanday vazn olganini bir zumda köra oladi.',
       },
     ],
   },
   {
     slug: 'eyler-usuli',
     title: 'Eyler usuli (oddiy differensial tenglama)',
-    metaTitle: 'Eyler usuli: Koshi masalasi formulasi, qadam va kalkulyator',
+    metaTitle: 'Eyler usuli: Koşi masalasi formulasi, qadam va kalkulyator',
     description:
-      'Eyler usulida birinchi tartibli oddiy differensial tenglamani (Koshi masalasi) sonli yechish. Siniq chiziqlar geometriyasi, takomillashgan Eyler, darsliklar va platforma standarti.',
+      'Eyler usulida birinçi tartibli oddiy differensial tenglamani (Koşi masalasi) sonli yeçiş. Siniq çiziqlar geometriyasi, takomillaşgan Eyler, darsliklar va platforma standarti.',
     keywords: [
       'eyler usuli',
       'koshi masalasi',
@@ -977,11 +977,11 @@ export const learningGuides: LearningGuide[] = [
     area: 'Oddiy differensial tenglamalar',
     calculatorHref: '/methods/euler',
     summary:
-      'Eyler usuli — oddiy differensial tenglamalar uchun Koshi masalasini yechishning eng sodda va fundamental sonli usuli. U har bir qadamda yechim egri chizig‘ini uning joriy qiyaligi bo‘yicha to‘g‘ri chiziq (urinma) bilan almashtiradi. Lokal xatosi O(h²), global xatosi esa O(h) tartibga ega.',
+      'Eyler usuli — oddiy differensial tenglamalar uçun Koşi masalasini yeçişning eng sodda va fundamental sonli usuli. U har bir qadamda yeçim egri çiziğini uning joriy qiyaligi böyiça töğri çiziq (urinma) bilan almaştiradi. Lokal xatosi O(h²), global xatosi esa O(h) tartibga ega.',
     formula: 'yᵢ₊₁ = yᵢ + h · f(xᵢ, yᵢ),  y(x₀) = y₀',
     formulaTex: 'y_{i+1} = y_i + h f(x_i, y_i), \\quad x_{i+1} = x_i + h, \\quad y(x_0) = y_0',
     convergenceCondition:
-      'f(x, y) funksiyasi qaralayotgan sohada uzluksiz va y bo‘yicha Lipshits shartini qanoatlantirishi lozim: |f(x, y₁) − f(x, y₂)| ≤ L|y₁ − y₂|.',
+      'f(x, y) funksiyasi qaralayotgan sohada uzluksiz va y böyiça Lipşits şartini qanoatlantirişi lozim: |f(x, y₁) − f(x, y₂)| ≤ L|y₁ − y₂|.',
     convergenceTex: '|f(x, y_1) - f(x, y_2)| \\le L |y_1 - y_2|, \\quad h \\to 0 \\implies y_n \\to y(x_n)',
     errorEstimateTex:
       '\\text{Lokal xatolik: } R_{i+1} = \\frac{h^2}{2} y\'\'(\\xi) = O(h^2), \\quad \\text{Global to‘liq xatolik: } |y(x_n) - y_n| \\le O(h)',
@@ -999,10 +999,10 @@ export const learningGuides: LearningGuide[] = [
       'x_{i+1} oraliq oxiri X ga yetguncha takrorlang va natijalar jadvalini tuzing.',
     ],
     example: {
-      problem: 'y′ = x + y, y(0) = 1 Koshi masalasini h = 0.1 qadam bilan [0, 0.4] da yechish (aniq yechim: y = 2eˣ − x − 1).',
+      problem: 'y′ = x + y, y(0) = 1 Koşi masalasini h = 0.1 qadam bilan [0, 0.4] da yeçiş (aniq yeçim: y = 2eˣ − x − 1).',
       calculation:
         '1-qadam (x₀=0, y₀=1): f(0, 1) = 0 + 1 = 1; y₁ = 1 + 0.1·1 = 1.1 (aniq: 1.1103, xato: 0.0103). 2-qadam (x₁=0.1, y₁=1.1): f(0.1, 1.1) = 1.2; y₂ = 1.1 + 0.1·1.2 = 1.22 (aniq: 1.2428, xato: 0.0228). 3-qadam: y₃ = 1.22 + 0.1(0.2+1.22) = 1.362. 4-qadam: y₄ = 1.362 + 0.1(0.3+1.362) = 1.5282.',
-      result: 'x = 0.4 da Eyler yechimi y ≈ 1.5282; analitik aniq yechim y(0.4) ≈ 1.5836.',
+      result: 'x = 0.4 da Eyler yeçimi y ≈ 1.5282; analitik aniq yeçim y(0.4) ≈ 1.5836.',
     },
     whenToUse: [
       'Differensial tenglamalar sonli yechilishining qadam-baqadam mexanizmini o‘rganishda.',
@@ -1015,63 +1015,63 @@ export const learningGuides: LearningGuide[] = [
     ],
     questions: [
       {
-        question: 'Eyler usulining aniqligini qanday yaxshilash mumkin?',
+        question: 'Eyler usulining aniqligini qanday yaxşilaş mumkin?',
         answer:
-          'Qadam h ni kichraytirish mumkin, ammo amallar soni va yaxlitlash xatosi ortadi. Yaxshiroq yo‘l — Takomillashgan Eyler yoki 4-tartibli Runge-Kutta usuliga o‘tishdir.',
+          'Qadam h ni kiçraytiriş mumkin, ammo amallar soni va yaxlitlaş xatosi ortadi. Yaxşiroq yöl — Takomillaşgan Eyler yoki 4-tartibli Runge-Kutta usuliga ötişdir.',
       },
       {
         question: 'Lokal va global xatolik farqi nimada?',
         answer:
-          'Lokal xatolik bitta qadamda yo‘l qo‘yilgan xato (O(h²)), global xatolik esa barcha qadamlar bo‘ylab to‘plangan umumiy xatodir (n · O(h²) = O(h)).',
+          'Lokal xatolik bitta qadamda yöl qöyilgan xato (O(h²)), global xatolik esa barça qadamlar böylab töplangan umumiy xatodir (n · O(h²) = O(h)).',
       },
     ],
     sources: [
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
-        chapterSection: '6-bob, 2-§ ("Koshi masalasini yechishning Eyler usuli")',
+        chapterSection: '6-bob, 2-§ ("Koşi masalasini yeçişning Eyler usuli")',
         pages: '127–130-betlar',
-        note: 'Siniq chiziqlar geometrik talqini, Paskal dasturi va y′ = cos(x) test misoli.',
+        note: 'Siniq çiziqlar geometrik talqini, Paskal dasturi va y′ = cos(x) test misoli.',
       },
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
-        chapterSection: 'VII bob, 7.3.3-§ ("Eyler va Eyler-Koshi usullari")',
+        chapterSection: 'VII bob, 7.3.3-§ ("Eyler va Eyler-Koşi usullari")',
         pages: '167–168, 176–177-betlar',
-        note: 'y′ = x + y misoli tahlili va jadval taqqoslashlari.',
+        note: 'y′ = x + y misoli tahlili va jadval taqqoslaşlari.',
       },
       {
-        authors: 'Richard L. Burden, J. Douglas Faires',
+        authors: 'Riçard L. Burden, J. Douglas Faires',
         title: 'Numerical Analysis',
         publisher: 'Brooks/Cole',
         year: 2011,
-        chapterSection: 'Chapter 5 ("Initial-Value Problems for ODEs: Euler\'s Method")',
+        chapterSection: 'Çapter 5 ("Initial-Value Problems for ODEs: Euler\'s Method")',
         pages: '266–275-betlar',
-        note: 'Lipshits sharti va xatolik chegarasi teoremalari.',
+        note: 'Lipşits şarti va xatolik çegarasi teoremalari.',
       },
     ],
     platformConventions: [
       {
-        topic: 'O‘zgaruvchilar va tenglamani kiritish formati',
+        topic: 'Özgaruvçilar va tenglamani kiritiş formati',
         textbookStandard:
           'Ayrim darsliklarda vaqt t va funksiya x(t) yoki u(t) deb belgilanadi (masalan, du/dt = f(t, u)).',
         platformImplementation:
-          'Sonli-usullar platformasida klassik matematik standart qabul qilingan: erksiz o‘zgaruvchi y, erkli o‘zgaruvchi x: y′ = f(x, y). Masalan, x + y yoki -2*x*y yoki (y^2 - x)/(2*y).',
+          'Sonli-usullar platformasida klassik matematik standart qabul qilingan: erksiz özgaruvçi y, erkli özgaruvçi x: y′ = f(x, y). Masalan, x + y yoki -2*x*y yoki (y^2 - x)/(2*y).',
         whyChosen:
-          'Bu standart talabalar uchun oliy matematika kursidagi odatiy yozuv bilan bir xil bo‘lib, chalkashliklarni bartaraf etadi.',
+          'Bu standart talabalar uçun oliy matematika kursidagi odatiy yozuv bilan bir xil bölib, çalkaşliklarni bartaraf etadi.',
       },
       {
-        topic: 'Klassik va Takomillashgan Eyler (Heun) rejimi',
+        topic: 'Klassik va Takomillaşgan Eyler (Heun) rejimi',
         textbookStandard:
-          'Ko‘p qo‘llanmalarda oddiy Eyler va Eyler-Koshi (yoki Heun) ikki alohida mavzuda bayon qilinadi.',
+          'Köp qöllanmalarda oddiy Eyler va Eyler-Koşi (yoki Heun) ikki alohida mavzuda bayon qilinadi.',
         platformImplementation:
-          'Platformamizda bitta kalkulyator ichida rejimni tanlash imkoniyati mavjud: foydalanuvchi "Klassik Eyler" yoki "Takomillashgan Eyler (Heun)" rejimini yoqib, bir vaqtning o‘zida ikkala traektoriyani grafikda kuzatishi mumkin.',
+          'Platformamizda bitta kalkulyator içida rejimni tanlaş imkoniyati mavjud: foydalanuvçi "Klassik Eyler" yoki "Takomillaşgan Eyler (Heun)" rejimini yoqib, bir vaqtning özida ikkala traektoriyani grafikda kuzatişi mumkin.',
         whyChosen:
-          'Usulning modifikatsiyasi qanday qilib birinchi tartibli xatoni ikkinchi tartibga ko‘tarishini amalda solishtirish uchun.',
+          'Usulning modifikatsiyasi qanday qilib birinçi tartibli xatoni ikkinçi tartibga kötarişini amalda soliştiriş uçun.',
       },
     ],
   },
@@ -1080,7 +1080,7 @@ export const learningGuides: LearningGuide[] = [
     title: 'Runge–Kutta 4-tartibli usuli (RK4)',
     metaTitle: 'Runge–Kutta 4 usuli: RK4 formulasi, Runge qoidasi va kalkulyator',
     description:
-      'Runge-Kutta 4-tartibli (RK4) usulida Koshi masalasini yuqori aniqlikda yechish. To‘rtta qiyalik, Runge qoidasi bo‘yicha xatolik bahosi, darsliklar va platforma standarti.',
+      'Runge-Kutta 4-tartibli (RK4) usulida Koşi masalasini yuqori aniqlikda yeçiş. Törtta qiyalik, Runge qoidasi böyiça xatolik bahosi, darsliklar va platforma standarti.',
     keywords: [
       'runge-kutta usuli',
       'rk4 usuli',
@@ -1091,12 +1091,12 @@ export const learningGuides: LearningGuide[] = [
     area: 'Oddiy differensial tenglamalar',
     calculatorHref: '/methods/runge-kutta',
     summary:
-      'Runge–Kutta 4-tartibli (RK4) usuli har bir qadamda to‘rtta qiyalikni (boshlang‘ich, ikkita o‘rta va oxirgi) hisoblab, ularni Simpson qoidasiga o‘xshash vaznli o‘rtacha bilan birlashtiradi. Global xatoligi O(h⁴) bo‘lib, ilmiy va muhandislik amaliyotida eng keng qo‘llaniladigan standart usuldir.',
+      'Runge–Kutta 4-tartibli (RK4) usuli har bir qadamda törtta qiyalikni (boşlanğiç, ikkita örta va oxirgi) hisoblab, ularni Simpson qoidasiga öxşaş vaznli örtaça bilan birlaştiradi. Global xatoligi O(h⁴) bölib, ilmiy va muhandislik amaliyotida eng keng qöllaniladigan standart usuldir.',
     formula: 'k₁ = h f(xᵢ,yᵢ); k₂ = h f(xᵢ+h/2,yᵢ+k₁/2); k₃ = h f(xᵢ+h/2,yᵢ+k₂/2); k₄ = h f(xᵢ+h,yᵢ+k₃); yᵢ₊₁ = yᵢ + (k₁+2k₂+2k₃+k₄)/6',
     formulaTex:
       'y_{i+1} = y_i + \\frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4), \\quad k_1 = h f(x_i, y_i), \\; k_2 = h f\\left(x_i + \\frac{h}{2}, y_i + \\frac{k_1}{2}\\right), \\; k_3 = h f\\left(x_i + \\frac{h}{2}, y_i + \\frac{k_2}{2}\\right), \\; k_4 = h f(x_i + h, y_i + k_3)',
     convergenceCondition:
-      'f(x, y) funksiyasi o‘zgaruvchilar bo‘yicha kamida 4-tartibli uzluksiz xususiy hosilalarga ega bo‘lishi zarur.',
+      'f(x, y) funksiyasi özgaruvçilar böyiça kamida 4-tartibli uzluksiz xususiy hosilalarga ega bölişi zarur.',
     convergenceTex: 'f(x, y) \\in C^4(D), \\quad y_{i+1} - y(x_{i+1}) = O(h^5) \\implies \\text{Global xato: } O(h^4)',
     errorEstimateTex:
       '\\text{Runge qoidasi: } R_h \\approx \\frac{y_h - y_{2h}}{2^4 - 1} = \\frac{y_h - y_{2h}}{15}, \\quad y_{\\text{aniq}} \\approx y_h + \\frac{y_h - y_{2h}}{15}',
@@ -1115,7 +1115,7 @@ export const learningGuides: LearningGuide[] = [
       'Vaznli o‘rtachani qo‘shing: y_{i+1} = y_i + (k₁ + 2k₂ + 2k₃ + k₄) / 6 va x_{i+1} = x_i + h.',
     ],
     example: {
-      problem: 'y′ = x + y, y(0) = 1 Koshi masalasining 1-qadami; h = 0.1 (aniq qiymat: y(0.1) ≈ 1.110342).',
+      problem: 'y′ = x + y, y(0) = 1 Koşi masalasining 1-qadami; h = 0.1 (aniq qiymat: y(0.1) ≈ 1.110342).',
       calculation:
         'k₁ = 0.1 · f(0, 1) = 0.1 · (0 + 1) = 0.1. k₂ = 0.1 · f(0 + 0.05, 1 + 0.05) = 0.1 · (0.05 + 1.05) = 0.11. k₃ = 0.1 · f(0 + 0.05, 1 + 0.055) = 0.1 · (0.05 + 1.055) = 0.1105. k₄ = 0.1 · f(0 + 0.1, 1 + 0.1105) = 0.1 · (0.1 + 1.1105) = 0.12105. Δy = (0.1 + 2·0.11 + 2·0.1105 + 0.12105) / 6 = 0.66205 / 6 ≈ 0.110342.',
       result: 'y₁ = 1 + 0.110342 = 1.110342. Aniq qiymat bilan mutlaq mos keladi (xato < 10⁻⁷)!',
@@ -1133,61 +1133,61 @@ export const learningGuides: LearningGuide[] = [
       {
         question: 'RK4 dagi 4 raqami nimani bildiradi?',
         answer:
-          'U usulning global xatolik tartibi to‘rtinchi daraja (O(h⁴)) ekanini bildiradi. Qadam 10 barobarga qisqarsa, xatolik 10 000 barobar kamayadi.',
+          'U usulning global xatolik tartibi törtinçi daraja (O(h⁴)) ekanini bildiradi. Qadam 10 barobarga qisqarsa, xatolik 10 000 barobar kamayadi.',
       },
       {
-        question: 'Runge qoidasi nima uchun 15 ga bo‘linadi?',
+        question: 'Runge qoidasi nima uçun 15 ga bölinadi?',
         answer:
-          'Chunki p = 4 tartibli usulda qadam ikki barobar oshirilganda (2h) xatolik 2⁴ = 16 barobar ortadi. 2⁴ − 1 = 15 bo‘lganligi uchun maxrajda 15 soni hosil bo‘ladi.',
+          'Çunki p = 4 tartibli usulda qadam ikki barobar oşirilganda (2h) xatolik 2⁴ = 16 barobar ortadi. 2⁴ − 1 = 15 bölganligi uçun maxrajda 15 soni hosil böladi.',
       },
     ],
     sources: [
       {
-        authors: 'G.P. Ismatullayev, M.S. Koshergenova',
-        title: 'Hisoblash usullari',
-        publisher: 'Toshkent: «Tafakkur Bo‘stoni»',
+        authors: 'G.P. Ismatullayev, M.S. Koşergenova',
+        title: 'Hisoblaş usullari',
+        publisher: 'Toşkent: «Tafakkur Böstoni»',
         year: 2014,
         chapterSection: 'VII bob, 7.3.4-§ ("Runge-Kutta metodi") va 7.3.5-§ ("Runge qoidasi")',
         pages: '168–175, 178–179-betlar',
-        note: 'k₁, k₂, k₃, k₄ parametrlarini chiqarishning to‘liq nazariy bayoni.',
+        note: 'k₁, k₂, k₃, k₄ parametrlarini çiqarişning töliq nazariy bayoni.',
       },
       {
         authors: 'S.S. Irisqulov, K.D. Ismanova, M. Olimov, A. Imomov',
         title: 'Sonli usullar va algoritmlar',
-        publisher: '“Namangan” nashriyoti',
+        publisher: '“Namangan” naşriyoti',
         year: 2013,
-        chapterSection: '6-bob, 3-§ ("Koshi masalasini yechishning Runge-Kutta usuli")',
+        chapterSection: '6-bob, 3-§ ("Koşi masalasini yeçişning Runge-Kutta usuli")',
         pages: '131–134-betlar',
-        note: 'Blok-sxema, Paskal dasturi va y′ = cos(x) bo‘yicha Eyler bilan taqqoslama jadval.',
+        note: 'Blok-sxema, Paskal dasturi va y′ = cos(x) böyiça Eyler bilan taqqoslama jadval.',
       },
       {
         authors: 'M.I. Isroilov',
-        title: 'Hisoblash metodlari (2-qism)',
-        publisher: 'Toshkent: «Iqtisod-Moliya»',
+        title: 'Hisoblaş metodlari (2-qism)',
+        publisher: 'Toşkent: «Iqtisod-Moliya»',
         year: 2008,
-        chapterSection: 'Bob 5 ("Koshi masalasini sonli yechish")',
+        chapterSection: 'Bob 5 ("Koşi masalasini sonli yeçiş")',
         pages: '140–155-betlar',
-        note: 'Ko‘p qadamli va bir qadamli metodlarning konvergensiya tahlili.',
+        note: 'Köp qadamli va bir qadamli metodlarning konvergensiya tahlili.',
       },
     ],
     platformConventions: [
       {
-        topic: 'Qiyalik koeffitsiyentlariga h ni kiritish konvensiyasi',
+        topic: 'Qiyalik koeffitsiyentlariga h ni kiritiş konvensiyasi',
         textbookStandard:
-          'Ba’zi adabiyotlarda K_i = f(...) (h siz) yozilib, oxirgi yangilanishda h/6 ko‘paytiriladi. Boshqa kitoblarda (Ismatullayev, Irisqulov) k_i = h · f(...) deb h ichiga kiritiladi.',
+          'Ba’zi adabiyotlarda K_i = f(...) (h siz) yozilib, oxirgi yangilanişda h/6 köpaytiriladi. Boşqa kitoblarda (Ismatullayev, Irisqulov) k_i = h · f(...) deb h içiga kiritiladi.',
         platformImplementation:
-          'Sonli-usullar interaktiv platformasida k_i = h · f(...) standarti qabul qilingan. Yangilanish y_{i+1} = y_i + (k₁ + 2k₂ + 2k₃ + k₄)/6 ko‘rinishida amalga oshiriladi. Jadvalda har bir qadamdagi k₁, k₂, k₃, k₄ qiymatlari alohida ustunda ko‘rsatiladi.',
+          'Sonli-usullar interaktiv platformasida k_i = h · f(...) standarti qabul qilingan. Yangilaniş y_{i+1} = y_i + (k₁ + 2k₂ + 2k₃ + k₄)/6 körinişida amalga oşiriladi. Jadvalda har bir qadamdagi k₁, k₂, k₃, k₄ qiymatlari alohida ustunda körsatiladi.',
         whyChosen:
-          'Dasturlashda va hisoblash mashinalarida k_i larni oraliq qadam siljishlari bilan bevosita yig‘ish ancha barqaror va xotirada tushunarli saqlanadi.',
+          'Dasturlaşda va hisoblaş maşinalarida k_i larni oraliq qadam siljişlari bilan bevosita yiğiş ança barqaror va xotirada tuşunarli saqlanadi.',
       },
       {
-        topic: 'Analitik yechim bilan avtomatik taqqoslash',
+        topic: 'Analitik yeçim bilan avtomatik taqqoslaş',
         textbookStandard:
-          'Darsliklardagi test misollarda analitik aniq yechim qo‘lda hisoblanib, alohida jadval qilinadi.',
+          'Darsliklardagi test misollarda analitik aniq yeçim qölda hisoblanib, alohida jadval qilinadi.',
         platformImplementation:
-          'Platformada "Aniq yechim funksiyasi (ixtiyoriy)" maydoniga analitik formula (masalan 2*exp(x) - x - 1) kiritilsa, tizim har bir qadamda mutlaq xatolikni (|y_taqribiy - y_aniq|) avtomatik hisoblab, taqqoslash grafigini chizadi.',
+          'Platformada "Aniq yeçim funksiyasi (ixtiyoriy)" maydoniga analitik formula (masalan 2*exp(x) - x - 1) kiritilsa, tizim har bir qadamda mutlaq xatolikni (|y_taqribiy - y_aniq|) avtomatik hisoblab, taqqoslaş grafigini çizadi.',
         whyChosen:
-          'Talabalar va tadqiqotchilar o‘z topshiriqlarini darhol tekshirib, xatolik darajasi O(h⁴) ekanligiga amalda ishonch hosil qilishlari uchun.',
+          'Talabalar va tadqiqotçilar öz topşiriqlarini darhol tekşirib, xatolik darajasi O(h⁴) ekanligiga amalda işonç hosil qilişlari uçun.',
       },
     ],
   },

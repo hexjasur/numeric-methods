@@ -17,14 +17,13 @@ import 'katex/dist/katex.min.css';
 import { academicBibliography, learningGuides } from '@/lib/learning-guides';
 
 export const metadata: Metadata = {
-  title: 'Sonli usullar akademik qo‘llanmasi: formulalar, manbalar va misollar',
-  description:
-    'O‘zbekiston darsliklari va ilmiy adabiyotlar asosida sonli usullarni o‘rganing: biseksiya, Nyuton, Simpson, trapetsiya, Lagranj, Eyler, RK4 va haydash usuli bo‘yicha nazariya, formulalar va interaktiv kalkulyatorlar.',
+  title: 'Sonli usullar akademik qöllanmasi: formulalar, manbalar va misollar',
+  description: 'Özbekiston darsliklari va ilmiy adabiyotlar asosida sonli usullarni örganing: biseksiya, Nyuton, Simpson, trapetsiya, Lagranj, Eyler, RK4 va haydaş usuli böyiça nazariya, formulalar va interaktiv kalkulyatorlar.',
   keywords: [
-    'sonli usullar qo‘llanmasi',
-    'hisoblash usullari kitoblar',
+    'sonli usullar qöllanmasi',
+    'hisoblaş usullari kitoblar',
     'sonli usullar darsliklari',
-    'hisoblash matematikasi',
+    'hisoblaş matematikasi',
     'sonli usullar formulalari',
     'sonli usullar adabiyotlar',
   ],
@@ -33,9 +32,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    title: 'Sonli usullar akademik qo‘llanmasi | Sonli Usullar',
-    description:
-      'O‘zbekiston oliy ta’lim darsliklari asosidagi sonli usullar nazariyasi, formulalari, ishlangan misollari va interaktiv hisoblash vositalari.',
+    title: 'Sonli usullar akademik qöllanmasi | Sonli Usullar',
+    description: 'Özbekiston oliy ta’lim darsliklari asosidagi sonli usullar nazariyasi, formulalari, işlangan misollari va interaktiv hisoblaş vositalari.',
     url: '/learn',
     siteName: 'Sonli Usullar',
   },

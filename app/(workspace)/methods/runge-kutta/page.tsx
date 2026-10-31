@@ -5,13 +5,12 @@ import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'Runge-Kutta 4-tartibli usuli (RK4) | Метод Рунге-Кутты 4 | RK4 Solver',
-  description:
-    "Birinchi tartibli oddiy differensial tenglamalar (Koshi masalasi)ni klassik 4-tartibli Runge-Kutta (RK4) usuli yordamida yuqori aniqlikda yechish. k₀, k₁, k₂, k₃ qiyalik koeffitsientlari, qadam-baqam jadval va analitik taqqoslash grafigi.",
+  description: "Birinçi tartibli oddiy differensial tenglamalar (Koşi masalasi)ni klassik 4-tartibli Runge-Kutta (RK4) usuli yordamida yuqori aniqlikda yeçiş. k₀, k₁, k₂, k₃ qiyalik koeffitsientlari, qadam-baqam jadval va analitik taqqoslaş grafigi.",
   keywords: [
     'runge kutta usuli',
     'rk4 usuli',
     'differensial tenglamalar rk4',
-    'koshi masalasi',
+    'koşi masalasi',
     'yuqori tartibli sonli usul',
     'rk4 kalkulyator',
     'метод рунге кутты',
@@ -28,16 +27,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Runge-Kutta 4-tartibli usuli (RK4) | Метод Рунге-Кутты 4',
-    description:
-      "Oddiy differensial tenglamalarni klassik Runge-Kutta 4 usuli bilan yuqori aniqlikda online yeching.",
+    description: "Oddiy differensial tenglamalarni klassik Runge-Kutta 4 usuli bilan yuqori aniqlikda online yeçing.",
     url: `${siteConfig.url}/methods/runge-kutta`,
     images: [{ url: '/images/og/runge-kutta.png', width: 1200, height: 630, alt: 'Runge-Kutta 4 usuli' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Runge-Kutta 4-tartibli usuli (RK4) | Метод Рунге-Кутты 4',
-    description:
-      "Oddiy differensial tenglamalarni klassik Runge-Kutta 4 usuli bilan yuqori aniqlikda online yeching.",
+    description: "Oddiy differensial tenglamalarni klassik Runge-Kutta 4 usuli bilan yuqori aniqlikda online yeçing.",
     images: ['/images/og/runge-kutta.png'],
   },
 };
@@ -48,7 +45,7 @@ export default function RungeKuttaPage() {
       <MethodJsonLd
         name="Runge-Kutta 4-tartibli usuli (RK4)"
         alternateName="Классический метод Рунге-Кутты 4-го порядка / Runge-Kutta 4th Order"
-        description="To'rt bosqichli og'irlik koeffitsiyentlari bilan O(h⁴) aniqlikda differensial tenglamalarni yeching."
+        description="Tört bosqiçli oğirlik koeffitsiyentlari bilan O(h⁴) aniqlikda differensial tenglamalarni yeçing."
         path="/methods/runge-kutta"
         formula="y_{i+1} = y_i + (h/6) · (k_0 + 2k_1 + 2k_2 + k_3)"
       />

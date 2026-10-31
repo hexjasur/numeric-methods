@@ -164,7 +164,7 @@ export function BisectionMethod() {
                   type="button"
                   className="cursor-pointer py-1.5 px-2.5 border border-line-2 bg-bg-2 text-brand rounded-md font-mono text-[13px] font-semibold transition-all hover:border-brand hover:bg-brand-soft hover:-translate-y-[1px] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
                   onClick={() => setExpression((v) => (v.trim() ? `${v} + ${t}` : t))}
-                  title="Ifodaga qo'shish"
+                  title="Ifodaga qöşiş"
                 >
                   {t}
                 </button>
