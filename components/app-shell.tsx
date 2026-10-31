@@ -124,6 +124,12 @@ export function AppShell({
         icon: Activity,
         isNew: true,
       },
+      {
+        href: '/methods/adams-predictor',
+        label: t('nav.adamsPredictor'),
+        icon: Activity,
+        isNew: true,
+      },
     ];
 
     const sortedMethods = [...methodItems].sort((a, b) => {
@@ -181,8 +187,10 @@ export function AppShell({
                         ? t('nav.simpson')
                         : pathname.startsWith('/methods/euler')
                           ? t('nav.euler')
-                          : pathname.startsWith('/methods/runge-kutta')
-                            ? t('nav.rungeKutta')
+                          : pathname.startsWith('/methods/adams-predictor')
+                            ? t('nav.adamsPredictor')
+                            : pathname.startsWith('/methods/runge-kutta')
+                              ? t('nav.rungeKutta')
                             : t('nav.workspace');
 
   return (

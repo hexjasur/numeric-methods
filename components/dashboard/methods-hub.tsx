@@ -163,6 +163,19 @@ const METHODS: MethodDef[] = [
     icon: Activity,
     accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
   },
+  {
+    id: 'adams-predictor',
+    code: '11 / ODE',
+    category: 'odes',
+    categoryKey: 'dashboard.cat_odes',
+    titleKey: 'nav.adamsPredictor',
+    descKey: 'dashboard.desc_adamsPredictor',
+    href: '/methods/adams-predictor',
+    formulaTex: String.raw`y_{i+1}=y_i+q_i+\frac{1}{2}\Delta q_{i-1}+\frac{5}{12}\Delta^2q_{i-2}+\frac{3}{8}\Delta^3q_{i-3}`,
+    orderTex: 'O(h^4)',
+    icon: Activity,
+    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+  },
 ];
 
 function renderKatexSafe(tex: string, displayMode = false): string {

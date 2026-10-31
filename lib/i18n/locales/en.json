@@ -17,7 +17,8 @@
     "sweep": "Thomas Method",
     "rungeKutta": "Runge–Kutta 4th Order",
     "learn": "Uzbek learning guides",
-    "newtonInterpolation": "Newton Interpolation"
+    "newtonInterpolation": "Newton Interpolation",
+    "adamsPredictor": "Adams Predictor Method"
   },
   "about": {
     "strip": "DOC-002 / ABOUT",
@@ -78,7 +79,7 @@
     "hero_title_2": ", step by step.",
     "hero_lead": "Learn numerical methods through real interactive computation, not just theory.",
     "stat1_label": "Active methods",
-    "stat1_val": "10 Methods",
+    "stat1_val": "11 methods",
     "stat2_label": "Domains",
     "stat2_val": "5 Categories",
     "stat3_label": "Compute environment",
@@ -86,7 +87,7 @@
     "overview": "Workspace status",
     "catalog_eyebrow": "02 / METHODS HUB",
     "catalog_title": "Interactive Numerical Methods Catalog",
-    "catalog_desc": "Explore all 10 core numerical computation algorithms, their mathematical formulas, and live interactive labs.",
+    "catalog_desc": "Explore all 11 core numerical computation algorithms, their mathematical formulas, and live interactive labs.",
     "cat_all": "All",
     "cat_equations": "Equations",
     "cat_interpolation": "Interpolation",
@@ -111,7 +112,8 @@
     "desc_sweep": "Solve tridiagonal linear systems with forward and backward sweeps.",
     "cat_linear": "Linear systems",
     "desc_rungeKutta": "Solve a first-order initial value problem with the classical fourth-order Runge–Kutta method.",
-    "desc_newtonInterpolation": "Build the Newton polynomial from divided differences, compare finite differences, and evaluate P(x*) step by step."
+    "desc_newtonInterpolation": "Build the Newton polynomial from divided differences, compare finite differences, and evaluate P(x*) step by step.",
+    "desc_adamsPredictor": "Solve an initial value problem with RK4 startup steps and the third-order Adams predictor formula."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",
@@ -791,5 +793,29 @@
     "err_spacing": "Finite differences require equal spacing between all x nodes. Choose divided differences instead.",
     "err_overflow": "The calculation exceeded the supported numeric range. Try smaller values or fewer nodes.",
     "err_general": "Could not calculate. Check the entered points."
+  },
+  "adams": {
+    "strip": "SOLVER / MK-3",
+    "eyebrow": "ODE / Adams predictor",
+    "title": "Adams",
+    "highlight": "predictor method",
+    "lead": "Solve an initial value problem with the finite-difference Adams formula after RK4 startup steps.",
+    "condition": "The initial condition is at x₀; the solution is computed over [a,b].",
+    "parameters": "Problem parameters",
+    "expression": "Differential equation",
+    "initial_hint": "The initial condition is specified at x₀. The calculation proceeds from x₀ to both interval boundaries.",
+    "calculate": "Calculate",
+    "formula_title": "Third-order Adams predictor formula",
+    "startup_note": "The first three steps use RK4. The Adams formula is used for subsequent uniform steps; a shorter final boundary step uses RK4.",
+    "result_title": "Calculation result",
+    "result_summary": "Solution at the final point:",
+    "example": "Default example:",
+    "table_title": "Step-by-step table",
+    "method": "Method",
+    "method_initial": "Initial value",
+    "method_rk4": "RK4 startup",
+    "method_predictor": "Adams predictor",
+    "method_boundary": "RK4 boundary step",
+    "error": "Check the entered parameters or differential equation."
   }
 }

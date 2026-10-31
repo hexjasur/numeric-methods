@@ -17,7 +17,8 @@
     "sweep": "Haydaş usuli",
     "rungeKutta": "Runge–Kutta 4-tartibli usuli",
     "learn": "Özbekça qöllanma",
-    "newtonInterpolation": "Nyuton interpolyatsiyasi"
+    "newtonInterpolation": "Nyuton interpolyatsiyasi",
+    "adamsPredictor": "Adams başorat qiluvçi usuli"
   },
   "about": {
     "strip": "DOC-002 / HAQIDA",
@@ -78,7 +79,7 @@
     "hero_title_2": "kaşf eting.",
     "hero_lead": "Sonli usullarni nazariya bilan emas, real interaktiv hisoblaş orqali örganing.",
     "stat1_label": "Faol usullar",
-    "stat1_val": "10 ta metod",
+    "stat1_val": "11 ta metod",
     "stat2_label": "Hisoblaş sohalari",
     "stat2_val": "5 ta toifa",
     "stat3_label": "Hisoblaş muhiti",
@@ -86,7 +87,7 @@
     "overview": "Workspace holati",
     "catalog_eyebrow": "02 / METODLAR KATALOGI",
     "catalog_title": "Interaktiv sonli usullar laboratoriyasi",
-    "catalog_desc": "Barça 10 ta asosiy hisoblaş algoritmlari, ularning matematik formulalari va interaktiv parametrlari.",
+    "catalog_desc": "Barça 11 ta asosiy hisoblaş algoritmlari, ularning matematik formulalari va interaktiv parametrlari.",
     "cat_all": "Barçasi",
     "cat_equations": "Tenglamalar",
     "cat_interpolation": "Interpolyatsiya",
@@ -111,7 +112,8 @@
     "desc_sweep": "Uç diagonalli çiziqli tenglamalar sistemasini töğri va teskari yuriş bilan yeçiş.",
     "cat_linear": "Çiziqli sistemalar",
     "desc_rungeKutta": "Birinçi tartibli Koşi masalasini klassik törtinçi tartibli Runge–Kutta usuli bilan yeçing.",
-    "desc_newtonInterpolation": "Bölingan ayirmalar orqali Nyuton köphadini tuzing, çekli ayirmalarni taqqoslang va P(x*) qiymatini qadam-baqadam hisoblang."
+    "desc_newtonInterpolation": "Bölingan ayirmalar orqali Nyuton köphadini tuzing, çekli ayirmalarni taqqoslang va P(x*) qiymatini qadam-baqadam hisoblang.",
+    "desc_adamsPredictor": "Koşi masalasini RK4 boşlanğiç qadamlari va uçinçi tartibli Adams başorat formulasi bilan yeçing."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",
@@ -791,5 +793,29 @@
     "err_spacing": "Çekli ayirmalar usuli uçun barça x tugunlar orasidagi qadam teng bölişi şart. Bölingan ayirmalarni tanlang.",
     "err_overflow": "Hisoblaşda sonlar diapazoni oşib ketdi. Kiçikroq sonlar yoki kamroq tugun kiriting.",
     "err_general": "Hisoblab bölmadi. Kiritilgan nuqtalarni tekşiring."
+  },
+  "adams": {
+    "strip": "SOLVER / MK-3",
+    "eyebrow": "ODE / Adams başorat qiluvçi",
+    "title": "Adams başorat",
+    "highlight": "qiluvçi usuli",
+    "lead": "Koşi masalasini dastlabki RK4 qadamlaridan söng çekli ayirmali Adams formulasi bilan yeçing.",
+    "condition": "Boşlanğiç şart x₀ nuqtada; yeçim [a,b] oraliqda hisoblanadi.",
+    "parameters": "Masala parametrlari",
+    "expression": "Differensial tenglama",
+    "initial_hint": "Boşlanğiç şart x₀ da beriladi. Hisoblaş x₀ dan intervalning har ikki çegarasigaça bajariladi.",
+    "calculate": "Hisoblaş",
+    "formula_title": "3-tartibli Adams başorat formulasi",
+    "startup_note": "Dastlabki uçta qadam RK4 bilan olinadi. Adams formulasi keyingi teng qadamli nuqtalarda işlaydi; çegaradagi qisqa qadam RK4 bilan hisoblanadi.",
+    "result_title": "Hisoblaş natijasi",
+    "result_summary": "Oxirgi nuqtadagi yeçim:",
+    "example": "Standart misol:",
+    "table_title": "Qadamma-qadam jadval",
+    "method": "Usul",
+    "method_initial": "Boşlanğiç qiymat",
+    "method_rk4": "RK4 boşlanğiç qadam",
+    "method_predictor": "Adams başorati",
+    "method_boundary": "RK4 çegara qadami",
+    "error": "Kiritilgan parametrlar yoki funksiya ifodasini tekşiring."
   }
 }
