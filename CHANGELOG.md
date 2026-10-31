@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.2.1...numeric-methods-v3.3.0) (2026-10-31)
+
+
+### ✨ Features
+
+* **adams:** safely integrate Adams predictor solver into main ✨ ([98f997f](https://github.com/hexjasur/numeric-methods/commit/98f997f9bf68f38c2cd48dfc2e55795012cbde3f))
+
+
+### 🐛 Bug Fixes
+
+* **responsive:** improve mobile container padding, topbar title ellipsis, and euler formula overflow 📱 ([85472db](https://github.com/hexjasur/numeric-methods/commit/85472db799151b4ce34a31998740a0d7d5df40a6))
+
 ## [3.2.1](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.2.0...numeric-methods-v3.2.1) (2026-10-31)
 
 
