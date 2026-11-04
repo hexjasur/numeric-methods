@@ -5,11 +5,13 @@ import { Activity, Calculator, Info } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/components/ui/print-stream';
 import { solveBvp, type BvpInput, type BvpResult } from '@/lib/bvp-finite-difference';
+import { parseBvpProblem } from '@/lib/parse-bvp-problem';
 
 const INITIAL: BvpInput = {
   p: '0', q: '0', f: '0', a: '0', b: '1', intervals: '10',
   m0: '1', m1: '0', m2: '0', g0: '1', g1: '0', g2: '1',
 };
+const EXAMPLE_PROBLEM = "h = 0.1\ny'' - x y' + 2x y = 0.8\ny(1.2) - 0.5 y'(1.2) = 1\ny'(1.5) = 2";
 const fmt = (value: number) => Number(value.toFixed(6)).toString();
 
 function SolutionPlot({ result }: { result: BvpResult }) {
@@ -47,12 +49,15 @@ function SolutionPlot({ result }: { result: BvpResult }) {
 export function BvpFiniteDifferenceMethod() {
   const { t } = useI18n();
   const [input, setInput] = useState(INITIAL);
+  const [problemText, setProblemText] = useState('');
   const [result, setResult] = useState<BvpResult | null>(null);
   const [error, setError] = useState('');
+  const [parsedNotice, setParsedNotice] = useState('');
   const update = (key: keyof BvpInput, value: string) => {
     setInput((current) => ({ ...current, [key]: value }));
     setResult(null);
     setError('');
+    setParsedNotice('');
   };
   const calculate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,10 +69,29 @@ export function BvpFiniteDifferenceMethod() {
       setError(cause instanceof Error ? cause.message : t('bvp.error'));
     }
   };
+  const parseProblem = (text = problemText) => {
+    try {
+      const parsed = parseBvpProblem(text, input);
+      setInput(parsed);
+      setProblemText(text);
+      setResult(null);
+      setError('');
+      setParsedNotice(t('bvp.parsed_summary', {
+        h: fmt((Number(parsed.b) - Number(parsed.a)) / Number(parsed.intervals)),
+        a: parsed.a, b: parsed.b, n: parsed.intervals,
+      }));
+    } catch (cause) {
+      setResult(null);
+      setParsedNotice('');
+      setError(cause instanceof Error ? cause.message : t('bvp.parse_error'));
+    }
+  };
   const applyExample = () => {
-    setInput((current) => ({ ...current, p: '-x', q: '2*x', f: '0.8' }));
+    setProblemText(EXAMPLE_PROBLEM);
     setResult(null);
     setError('');
+    setParsedNotice('');
+    parseProblem(EXAMPLE_PROBLEM);
   };
   const fields: Array<{ key: keyof BvpInput; label: string; step?: string }> = [
     { key: 'p', label: 'P(x)' }, { key: 'q', label: 'Q(x)' }, { key: 'f', label: 'f(x)' },
@@ -92,12 +116,17 @@ export function BvpFiniteDifferenceMethod() {
           <PsPanel>
             <PsPanelHead eyebrow={t('bvp.input_eyebrow')} title={t('bvp.input_title')} idx="01" />
             <form onSubmit={calculate} className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-xs leading-relaxed text-muted">{t('bvp.expression_hint')}</p>
-                <button type="button" onClick={applyExample} className="inline-flex min-h-10 max-w-full items-center justify-center rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-left text-xs font-semibold leading-snug text-brand transition-colors hover:bg-brand/15">
-                  {t('bvp.example_button')}
-                </button>
-              </div>
+              <section className="space-y-2 rounded-lg border border-brand/25 bg-brand-soft/30 p-3">
+                <label htmlFor="bvp-problem" className="block text-sm font-semibold text-ink">{t('bvp.full_problem_label')}</label>
+                <p className="text-xs leading-relaxed text-muted">{t('bvp.full_problem_hint')}</p>
+                <textarea id="bvp-problem" value={problemText} onChange={(event) => { setProblemText(event.target.value); setError(''); setParsedNotice(''); }} rows={5} spellCheck={false} placeholder={t('bvp.full_problem_placeholder')} className="block min-h-32 w-full resize-y rounded-lg border border-line bg-bg-2 p-3 font-mono text-sm leading-relaxed text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft" />
+                <div className="flex flex-col gap-2 min-[420px]:flex-row">
+                  <button type="button" onClick={() => parseProblem()} className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg bg-brand px-3 py-2 text-center text-sm font-semibold text-brand-ink hover:opacity-90">{t('bvp.parse_button')}</button>
+                  <button type="button" onClick={applyExample} className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-center text-xs font-semibold leading-snug text-brand transition-colors hover:bg-brand/15">{t('bvp.example_button')}</button>
+                </div>
+                {parsedNotice && <p role="status" className="rounded-md bg-emerald-500/10 p-2 text-xs leading-relaxed text-emerald-700 dark:text-emerald-300">{parsedNotice}</p>}
+              </section>
+              <p className="text-xs leading-relaxed text-muted">{t('bvp.expression_hint')}</p>
               <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
                 {fields.map(({ key, label, step }) => (
                   <label key={key} className="min-w-0">

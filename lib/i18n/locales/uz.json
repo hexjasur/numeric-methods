@@ -879,6 +879,12 @@
     "result_eyebrow": "03 / YECHIM",
     "result_title": "Sonli yechim va grafik",
     "max_residual": "Maksimal qoldiq",
-    "example_button": "Misolni qo‘yish: y″ − x·y′ + 2x·y = 0.8"
+    "example_button": "Misolni qo‘yish: y″ − x·y′ + 2x·y = 0.8",
+    "full_problem_label": "Masalani to‘liq kiriting",
+    "full_problem_hint": "h, differensial tenglama va ikkita chegaraviy shartni alohida qatorda yozing. Masalan, vergul bilan yozilgan o‘nli бутархай ҳам қабул qilinadi.",
+    "full_problem_placeholder": "h = 0.1\ny″ - x y′ + 2x y = 0.8\ny(1.2) - 0.5 y′(1.2) = 1\ny′(1.5) = 2",
+    "parse_button": "Masalani o‘qib, maydonlarni to‘ldirish",
+    "parsed_summary": "Ajratildi: h={h}, kesma [{a}, {b}], qadamlar soni n={n}. Quyidagi qiymatlarni tekshiring.",
+    "parse_error": "Masala matnini ajratib bo‘lmadi."
   }
 }
