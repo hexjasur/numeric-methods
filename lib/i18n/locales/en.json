@@ -878,6 +878,7 @@
     "backward_title": "Recover the solution step by step",
     "result_eyebrow": "03 / SOLUTION",
     "result_title": "Numerical solution and plot",
-    "max_residual": "Maximum equation residual"
+    "max_residual": "Maximum equation residual",
+    "example_button": "Load example: y″ − x·y′ + 2x·y = 0.8"
   }
 }

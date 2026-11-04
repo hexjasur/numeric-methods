@@ -64,6 +64,11 @@ export function BvpFiniteDifferenceMethod() {
       setError(cause instanceof Error ? cause.message : t('bvp.error'));
     }
   };
+  const applyExample = () => {
+    setInput((current) => ({ ...current, p: '-x', q: '2*x', f: '0.8' }));
+    setResult(null);
+    setError('');
+  };
   const fields: Array<{ key: keyof BvpInput; label: string; step?: string }> = [
     { key: 'p', label: 'P(x)' }, { key: 'q', label: 'Q(x)' }, { key: 'f', label: 'f(x)' },
     { key: 'a', label: 'a', step: 'any' }, { key: 'b', label: 'b', step: 'any' }, { key: 'intervals', label: 'n', step: '1' },
@@ -75,20 +80,25 @@ export function BvpFiniteDifferenceMethod() {
   const tableHeaders = useMemo(() => ['k', 'xₖ', 'aₖ', 'bₖ', 'cₖ', 'dₖ', 'uₖ', 'vₖ', 'yₖ', 'rₖ'], []);
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 pb-12 sm:px-2 md:px-4">
-      <PsStrip eyebrow="BVP / FD-TDMA" id="ODE" name={t('nav.bvp')} />
+      <PsStrip eyebrow="ODE / FD" id="ODE" name={t('nav.bvp')} />
       <PsHero eyebrow={t('bvp.eyebrow')} title={t('bvp.title')} titleHighlight={t('bvp.title_highlight')} lead={t('bvp.lead')} conditionMain={<>y″ + P(x)y′ + Q(x)y = f(x)</>} conditionSub={t('bvp.boundaries')} />
       <PsMap eyebrow={t('bvp.map_eyebrow')} title={t('bvp.map_title')} steps={[
         { n: '01', t: t('bvp.map_1'), s: t('bvp.map_1_desc') },
         { n: '02', t: t('bvp.map_2'), s: t('bvp.map_2_desc') },
         { n: '03', t: t('bvp.map_3'), s: t('bvp.map_3_desc') },
       ]} />
-      <div className="grid items-start gap-[18px] lg:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
-        <aside className="space-y-[18px] lg:sticky lg:top-4">
+      <div className="grid min-w-0 items-start gap-[18px] lg:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
+        <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-4">
           <PsPanel>
             <PsPanelHead eyebrow={t('bvp.input_eyebrow')} title={t('bvp.input_title')} idx="01" />
             <form onSubmit={calculate} className="space-y-4">
-              <p className="text-xs text-muted">{t('bvp.expression_hint')}</p>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <p className="text-xs leading-relaxed text-muted">{t('bvp.expression_hint')}</p>
+                <button type="button" onClick={applyExample} className="inline-flex min-h-10 max-w-full items-center justify-center rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-left text-xs font-semibold leading-snug text-brand transition-colors hover:bg-brand/15">
+                  {t('bvp.example_button')}
+                </button>
+              </div>
+              <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
                 {fields.map(({ key, label, step }) => (
                   <label key={key} className="min-w-0">
                     <span className="mb-1 block text-xs font-semibold text-ink">{label}</span>
@@ -100,13 +110,13 @@ export function BvpFiniteDifferenceMethod() {
                 <strong className="text-ink">{t('bvp.left')}:</strong> m₀y(a) + m₁y′(a) = m₂<br />
                 <strong className="text-ink">{t('bvp.right')}:</strong> g₀y(b) + g₁y′(b) = g₂
               </div>
-              <button type="submit" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-brand px-4 py-3 font-semibold text-brand-ink hover:opacity-90"><Calculator size={17} />{t('bvp.calculate')}</button>
+              <button type="submit" className="flex min-h-12 w-full flex-wrap items-center justify-center gap-2 rounded-lg bg-brand px-3 py-3 text-center font-semibold leading-snug text-brand-ink transition-opacity hover:opacity-90"><Calculator size={17} className="shrink-0" /><span className="min-w-0">{t('bvp.calculate')}</span></button>
               {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-700 dark:text-red-300">{error}</p>}
             </form>
           </PsPanel>
           <PsNote icon={<Info size={15} />} variant="cyan"><span className="text-sm">{t('bvp.note')}</span></PsNote>
         </aside>
-        <div className="space-y-[18px]">
+        <div className="min-w-0 space-y-[18px]">
           <PsPanel>
             <PsPanelHead eyebrow={t('bvp.matrix_eyebrow')} title={t('bvp.matrix_title')} idx="02" />
             {!result ? <p className="py-8 text-center text-sm text-muted">{t('bvp.empty')}</p> : <>
