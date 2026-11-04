@@ -13,8 +13,6 @@ import {
   YAxis,
 } from 'recharts';
 import {
-  Calculator,
-  Info,
   ChevronDown,
   ChevronUp,
   BookOpen,
@@ -25,7 +23,8 @@ import {
   substituteLatex,
   type EulerResult,
 } from '@/lib/euler';
-import { PsHero, PsStrip, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
+import { PsHero, PsStrip, PsPanel, PsPanelHead } from '@/components/ui/print-stream';
+import { ODEParameterForm } from '@/components/ode-parameter-form';
 import { useI18n } from '@/components/i18n-provider';
 import { ResultActions } from '@/components/ui/result-actions';
 
@@ -138,17 +137,6 @@ export function EulerMethod() {
   const result = calculation.result;
   const rows = result?.rows ?? [];
 
-  const intervalMarkup = useMemo(() => {
-    const formatEndpoint = (value: string) => {
-      if (!value.trim() || !Number.isFinite(Number(value))) return String.raw`\text{—}`;
-      return Number(Number(value).toFixed(4)).toString();
-    };
-    return katex.renderToString(
-      String.raw`\left[${formatEndpoint(inputs.x0)},\,${formatEndpoint(inputs.xEnd)}\right]`,
-      { throwOnError: false },
-    );
-  }, [inputs.x0, inputs.xEnd]);
-
   const exactMarkup = useMemo(() => {
     if (result?.exactResult.hasExact) {
       return katex.renderToString(result.exactResult.tex, {
@@ -166,9 +154,6 @@ export function EulerMethod() {
     );
   }, [t]);
   
-  const setValue = (key: keyof typeof initialInputs, value: string) =>
-    setInputs((current) => ({ ...current, [key]: value }));
-
   const tableHeadings = [
     { tex: String.raw`i`, label: 'i' },
     { tex: String.raw`x_i`, label: 'x_i' },
@@ -198,79 +183,18 @@ export function EulerMethod() {
         <PsPanel>
           <PsPanelHead eyebrow="Input / Parametrlar" title={t('euler.panel_input')} idx="01" />
 
-          <form
+          <ODEParameterForm
+            inputs={inputs}
+            onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
             onSubmit={(event) => {
               event.preventDefault();
               setCalculationInputs({ ...inputs });
             }}
-          >
-            <label className="block mb-4">
-              <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
-                <span>{t('euler.label_fn')}</span>
-                <span className="font-mono text-xs font-medium not-italic text-muted">{t('euler.label_syntax')}</span>
-              </span>
-              <div className="mt-2 w-full border border-brand bg-brand-soft rounded-lg flex items-center gap-2.5 px-3.5 focus-within:ring-4 focus-within:ring-brand-soft focus-within:bg-panel transition-all">
-                <b className="text-brand text-[15px] whitespace-nowrap">f(x, y) =</b>
-                <input
-                  value={inputs.expression}
-                  onChange={(event) => setValue('expression', event.target.value)}
-                  aria-label="f(x, y)"
-                  className="flex-1 min-w-0 border-0 outline-0 bg-transparent text-ink py-[15px] font-mono text-[16px] font-semibold"
-                  placeholder="x - 2*y"
-                  spellCheck={false}
-                />
-              </div>
-            </label>
-
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              {(
-                [
-                  ['x0', t('euler.label_x0')],
-                  ['xEnd', t('euler.label_xEnd')],
-                  ['y0', t('euler.label_y0')],
-                  ['h', t('euler.label_h')],
-                ] as const
-              ).map(([key, label]) => (
-                <label key={key} className="block min-w-0">
-                  <span className="mb-1.5 block text-[13.5px] font-[650] text-ink">
-                    {label}
-                  </span>
-                  <input
-                    type="number"
-                    step="any"
-                    value={inputs[key as keyof typeof initialInputs]}
-                    onChange={(event) => setValue(key as keyof typeof initialInputs, event.target.value)}
-                    aria-label={label}
-                    className="w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-sm sm:text-[15px] font-medium p-2.5 sm:p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
-                  />
-                </label>
-              ))}
-            </div>
-
-            <PsNote icon={<Info size={15} />} variant="cyan">
-              <div className="flex justify-between items-center w-full">
-                <span>{t('euler.note_interval')}</span>
-                <span className="font-mono text-brand font-semibold"><MathInline html={intervalMarkup} /></span>
-              </div>
-              <p className="mt-1.5 text-[12px] text-muted">
-                {t('euler.hero_condition')}
-              </p>
-            </PsNote>
-
-            <button
-              type="submit"
-              className="flex w-full items-center justify-between gap-3 mt-1.5 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-            >
-              {t('euler.btn_calc')} <Calculator size={20} />
-            </button>
-
-            {calculation.error && (
-              <div className="mt-4 p-[16px_18px] border border-neg border-l-[5px] rounded-lg bg-[color-mix(in_srgb,var(--neg)_10%,transparent)]" role="alert">
-                <b className="text-[14.5px]">{t('euler.err_calc')}</b>
-                <p className="mt-1.5 text-[14px] text-ink-2">{calculation.error}</p>
-              </div>
-            )}
-          </form>
+            calculateLabel={t('euler.btn_calc')}
+            expressionHint={t('euler.label_syntax')}
+            error={calculation.error ? `${t('euler.err_calc')}: ${calculation.error}` : undefined}
+            submitClassName="flex w-full items-center justify-between gap-3 mt-1.5 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+          />
         </PsPanel>
 
         <div className="grid gap-[18px] min-w-0">

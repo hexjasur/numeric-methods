@@ -178,6 +178,15 @@
     "footer_1": "Дихотомия · O(log₂((b−a)/ε)) шагов",
     "footer_2": "Погрешность ≤ (b − a) / 2ⁿ"
   },
+  "odeForm": {
+    "function": "Function f(x, y)",
+    "initial_x0": "Initial x₀",
+    "final_xEnd": "Final x_end",
+    "initial_y0": "Initial y₀",
+    "step_h": "Step size h",
+    "interval_bounds": "Interval Bounds: a = x₀, b = x_end",
+    "step_count": "Step Count: n = (x_end − x₀) / h"
+  },
   "euler": {
     "strip": "РЕШЕНИЕ / МК-2",
     "hero_eyebrow": "Численное решение ОДУ / 002",

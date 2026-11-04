@@ -2,13 +2,14 @@
 
 import { useMemo, useState } from 'react';
 import katex from 'katex';
-import { Calculator, BookOpen, ChevronDown, Copy, Check } from 'lucide-react';
+import { BookOpen, ChevronDown, Copy, Check } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { PsHero, PsPanel, PsPanelHead, PsStrip } from '@/components/ui/print-stream';
 import { ResultActions } from '@/components/ui/result-actions';
+import { ODEParameterForm } from '@/components/ode-parameter-form';
 import { calculateAdamsPredictor, type AdamsPredictorOptions, type AdamsPredictorResult } from '@/lib/adams-predictor';
 
-const defaults = { expression: 'x - 2*y', a: '-1', b: '2', x0: '0', y0: '1', h: '0.6' };
+const defaults = { expression: 'x - 2*y', x0: '-1', xEnd: '2', y0: '1', h: '0.6' };
 const formulaTex = katex.renderToString(
   String.raw`\Delta y_i=q_i+\frac{1}{2}\Delta q_{i-1}+\frac{5}{12}\Delta^2q_{i-2}+\frac{3}{8}\Delta^3q_{i-3},\qquad y_{i+1}=y_i+\Delta y_i`,
   { throwOnError: false, displayMode: true }
@@ -53,8 +54,7 @@ export function AdamsPredictorMethod() {
   const calculation = useMemo(() => {
     try {
       const options: AdamsPredictorOptions = {
-        a: Number(calculationInputs.a),
-        b: Number(calculationInputs.b),
+        xEnd: Number(calculationInputs.xEnd),
         x0: Number(calculationInputs.x0),
         y0: Number(calculationInputs.y0),
         h: Number(calculationInputs.h),
@@ -64,9 +64,6 @@ export function AdamsPredictorMethod() {
       return { rows: [] as AdamsPredictorResult[], error: t('adams.error') };
     }
   }, [calculationInputs, t]);
-
-  const setInput = (key: keyof typeof defaults, value: string) =>
-    setInputs((current) => ({ ...current, [key]: value }));
 
   const rows = calculation.rows;
   const last = rows[rows.length - 1];
@@ -78,7 +75,7 @@ export function AdamsPredictorMethod() {
       `${t('adams.notebook_sec_1')}:`,
       `  y' = ${calculationInputs.expression}`,
       `  y(${calculationInputs.x0}) = ${calculationInputs.y0}`,
-      `  [a, b] = [${calculationInputs.a}, ${calculationInputs.b}],  h = ${calculationInputs.h}`,
+      `  [x₀, x_end] = [${calculationInputs.x0}, ${calculationInputs.xEnd}],  h = ${calculationInputs.h}`,
       '',
       `${t('adams.notebook_sec_2')}:`,
       `  q_i = h * f(x_i, y_i)`,
@@ -128,58 +125,16 @@ export function AdamsPredictorMethod() {
       <div className="grid grid-cols-1 items-start gap-4.5 xl:grid-cols-[minmax(280px,.7fr)_minmax(0,1.3fr)]">
         <PsPanel>
           <PsPanelHead eyebrow="INPUT / PARAMETERS" title={t('adams.parameters')} idx="01" />
-          <form
+          <ODEParameterForm
+            inputs={inputs}
+            onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
             onSubmit={(event) => {
               event.preventDefault();
               setCalculationInputs({ ...inputs });
             }}
-            className="space-y-4"
-          >
-            <label className="block text-sm font-semibold text-ink">
-              {t('adams.expression')}
-              <span className="mt-1.5 flex w-full items-center gap-2 rounded-lg border border-brand bg-brand-soft px-3 focus-within:ring-2 focus-within:ring-brand/20">
-                <span className="whitespace-nowrap font-mono text-brand">f(x,y) =</span>
-                <input
-                  type="text"
-                  value={inputs.expression}
-                  onChange={(event) => setInput('expression', event.target.value)}
-                  className="min-w-0 flex-1 border-0 bg-transparent py-3 font-mono font-normal text-ink outline-none"
-                  aria-label="f(x, y)"
-                  spellCheck={false}
-                  required
-                />
-              </span>
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {([['a', 'a'], ['b', 'b'], ['x0', 'x₀'], ['y0', 'y₀'], ['h', 'h']] as const).map(
-                ([key, label]) => (
-                  <label key={key} className="block text-sm font-semibold text-ink">
-                    {label}
-                    <input
-                      type="number"
-                      step="any"
-                      value={inputs[key]}
-                      onChange={(event) => setInput(key, event.target.value)}
-                      className="mt-1.5 w-full rounded-lg border border-line bg-bg px-3 py-2.5 font-mono font-normal text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
-                      aria-label={label}
-                    />
-                  </label>
-                )
-              )}
-            </div>
-            <p className="text-xs text-muted">{t('adams.initial_hint')}</p>
-            <button
-              type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-4 py-3 font-semibold text-brand-ink transition-opacity hover:opacity-90 cursor-pointer"
-            >
-              <Calculator size={17} aria-hidden="true" /> {t('adams.calculate')}
-            </button>
-            {calculation.error && (
-              <p role="alert" className="rounded-lg border border-neg/30 bg-neg/10 px-3 py-2 text-sm text-neg">
-                {calculation.error}
-              </p>
-            )}
-          </form>
+            calculateLabel={t('adams.calculate')}
+            error={calculation.error}
+          />
           <div className="mt-6 border-t border-line pt-4">
             <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
               {t('adams.formula_title')}
@@ -202,7 +157,7 @@ export function AdamsPredictorMethod() {
               </div>
               <p className="mt-2 text-xs text-muted">
                 {t('adams.example')}{' '}
-                <span className="font-mono">y&apos; = x − 2y, y(0)=1, [−1,2], h=0.6</span>
+                <span className="font-mono">y&apos; = x − 2y, y(−1)=1, [−1,2], h=0.6</span>
               </p>
             </PsPanel>
           )}
@@ -210,7 +165,7 @@ export function AdamsPredictorMethod() {
           {rows.length > 0 && (
             <>
               <ResultActions
-                summaryText={`Adams predictor: y'=${calculationInputs.expression}, [${calculationInputs.a}, ${calculationInputs.b}], y(${calculationInputs.x0})=${calculationInputs.y0}, h=${calculationInputs.h}; y(${last?.x})≈${last?.y}`}
+                summaryText={`Adams predictor: y'=${calculationInputs.expression}, [${calculationInputs.x0}, ${calculationInputs.xEnd}], y(${calculationInputs.x0})=${calculationInputs.y0}, h=${calculationInputs.h}; y(${last?.x})≈${last?.y}`}
                 csvData={rows.map((row) => ({
                   i: row.step,
                   x: row.x,
@@ -370,7 +325,7 @@ export function AdamsPredictorMethod() {
                     <span className="text-muted block text-xs mb-1">Boshlang‘ich shart va oraliq:</span>
                     <div className="p-2.5 rounded bg-panel border border-line text-cyan overflow-x-auto">
                       <MathKatex
-                        tex={String.raw`y(x_0) = y(${calculationInputs.x0}) = ${calculationInputs.y0}, \quad [a, b] = [${calculationInputs.a}, \, ${calculationInputs.b}], \quad h = ${calculationInputs.h}`}
+                        tex={String.raw`y(x_0) = y(${calculationInputs.x0}) = ${calculationInputs.y0}, \quad [x₀, x_end] = [${calculationInputs.x0}, \, ${calculationInputs.xEnd}], \quad h = ${calculationInputs.h}`}
                         display
                       />
                     </div>

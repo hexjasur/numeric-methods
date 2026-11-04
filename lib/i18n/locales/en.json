@@ -178,6 +178,15 @@
     "footer_1": "Bisection · O(log₂((b−a)/ε)) steps",
     "footer_2": "Error ≤ (b − a) / 2ⁿ"
   },
+  "odeForm": {
+    "function": "Function f(x, y)",
+    "initial_x0": "Initial x₀",
+    "final_xEnd": "Final x_end",
+    "initial_y0": "Initial y₀",
+    "step_h": "Step size h",
+    "interval_bounds": "Interval Bounds: a = x₀, b = x_end",
+    "step_count": "Step Count: n = (x_end − x₀) / h"
+  },
   "euler": {
     "strip": "SOLVER / MK-2",
     "hero_eyebrow": "Numerical ODE / 002",

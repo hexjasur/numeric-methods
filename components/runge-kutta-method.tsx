@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import katex from 'katex';
-import { Activity, Calculator } from 'lucide-react';
+import { Activity } from 'lucide-react';
 import {
   CartesianGrid,
   Legend,
@@ -27,6 +27,7 @@ import {
   type RK4Result,
 } from '@/lib/runge-kutta';
 import { ResultActions } from '@/components/ui/result-actions';
+import { ODEParameterForm } from '@/components/ode-parameter-form';
 
 const initialInputs = {
   expression: 'x^2 + y',
@@ -103,9 +104,6 @@ export function RungeKuttaMethod() {
       })),
     [rows, exactSolution],
   );
-  const setInput = (key: keyof typeof initialInputs, value: string) =>
-    setInputs((current) => ({ ...current, [key]: value }));
-
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="ODE-002" id="RK4" name={t('rk4.strip')} />
@@ -125,76 +123,17 @@ export function RungeKuttaMethod() {
             title={t('rk4.parameters')}
             idx="01"
           />
-          <form
+          <ODEParameterForm
+            inputs={inputs}
+            onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
             onSubmit={(event) => {
               event.preventDefault();
               setCalculationInputs({ ...inputs });
             }}
-            className="space-y-4"
-          >
-            <label className="block text-sm font-semibold text-ink">
-              {t('rk4.expression')}
-              <span className="mt-1.5 flex w-full items-center gap-2 rounded-lg border border-brand bg-brand-soft px-3 focus-within:ring-2 focus-within:ring-brand/20">
-                <span className="whitespace-nowrap font-mono text-brand">
-                  f(x,y) =
-                </span>
-                <input
-                  type="text"
-                  value={inputs.expression}
-                  onChange={(event) =>
-                    setInput('expression', event.target.value)
-                  }
-                  className="min-w-0 flex-1 border-0 bg-transparent py-3 font-mono font-normal text-ink outline-none"
-                  aria-label="f(x, y)"
-                  placeholder="x^2 + y"
-                  spellCheck={false}
-                  required
-                />
-              </span>
-              <span className="mt-1 block text-xs font-normal text-muted">
-                {t('rk4.expression_hint')}
-              </span>
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {(
-                [
-                  ['x0', 'x₀'],
-                  ['y0', 'y₀'],
-                  ['xEnd', 'x end'],
-                  ['h', 'h'],
-                ] as const
-              ).map(([key, label]) => (
-                <label
-                  key={key}
-                  className="block text-sm font-semibold text-ink"
-                >
-                  {label}
-                  <input
-                    type="number"
-                    step="any"
-                    value={inputs[key]}
-                    onChange={(event) => setInput(key, event.target.value)}
-                    className="mt-1.5 w-full rounded-lg border border-line bg-bg px-3 py-2.5 font-mono font-normal text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
-                    aria-label={label}
-                  />
-                </label>
-              ))}
-            </div>
-            <button
-              type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-4 py-3 font-semibold text-brand-ink transition-opacity hover:opacity-90"
-            >
-              <Calculator size={17} aria-hidden="true" /> {t('rk4.calculate')}
-            </button>
-            {error && (
-              <p
-                role="alert"
-                className="rounded-lg border border-neg/30 bg-neg/10 px-3 py-2 text-sm text-neg"
-              >
-                {error}
-              </p>
-            )}
-          </form>
+            calculateLabel={t('rk4.calculate')}
+            expressionHint={t('rk4.expression_hint')}
+            error={error}
+          />
           <div className="mt-6 border-t border-line pt-4">
             <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
               {t('rk4.formulas')}
