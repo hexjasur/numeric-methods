@@ -8,7 +8,7 @@ import { solveBvp, type BvpInput, type BvpResult } from '@/lib/bvp-finite-differ
 import { parseBvpProblem } from '@/lib/parse-bvp-problem';
 
 const INITIAL: BvpInput = {
-  p: '0', q: '0', f: '0', a: '0', b: '1', intervals: '10',
+  p: '0', q: '0', f: '0', a: '0', b: '1', h: '0.1', intervals: '10',
   m0: '1', m1: '0', m2: '0', g0: '1', g1: '0', g2: '1',
 };
 const EXAMPLE_PROBLEM = "h = 0.1\ny'' - x y' + 2x y = 0.8\ny(1.2) - 0.5 y'(1.2) = 1\ny'(1.5) = 2";
@@ -54,7 +54,16 @@ export function BvpFiniteDifferenceMethod() {
   const [error, setError] = useState('');
   const [parsedNotice, setParsedNotice] = useState('');
   const update = (key: keyof BvpInput, value: string) => {
-    setInput((current) => ({ ...current, [key]: value }));
+    setInput((current) => {
+      const next = { ...current, [key]: value };
+      if (key === 'a' || key === 'b' || key === 'h') {
+        const count = (Number(next.b) - Number(next.a)) / Number(next.h);
+        if (Number.isFinite(count) && Math.abs(count - Math.round(count)) < 1e-8) {
+          next.intervals = String(Math.round(count));
+        }
+      }
+      return next;
+    });
     setResult(null);
     setError('');
     setParsedNotice('');
@@ -95,7 +104,7 @@ export function BvpFiniteDifferenceMethod() {
   };
   const fields: Array<{ key: keyof BvpInput; label: string; step?: string }> = [
     { key: 'p', label: 'P(x)' }, { key: 'q', label: 'Q(x)' }, { key: 'f', label: 'f(x)' },
-    { key: 'a', label: 'a', step: 'any' }, { key: 'b', label: 'b', step: 'any' }, { key: 'intervals', label: 'n', step: '1' },
+    { key: 'a', label: 'a =', step: 'any' }, { key: 'b', label: 'b =', step: 'any' }, { key: 'h', label: 'h =', step: 'any' },
     { key: 'm0', label: 'm₀' }, { key: 'm1', label: 'm₁' }, { key: 'm2', label: 'm₂' },
     { key: 'g0', label: 'g₀' }, { key: 'g1', label: 'g₁' }, { key: 'g2', label: 'g₂' },
   ];
@@ -116,25 +125,28 @@ export function BvpFiniteDifferenceMethod() {
           <PsPanel>
             <PsPanelHead eyebrow={t('bvp.input_eyebrow')} title={t('bvp.input_title')} idx="01" />
             <form onSubmit={calculate} className="space-y-4">
-              <section className="space-y-2 rounded-lg border border-brand/25 bg-brand-soft/30 p-3">
-                <label htmlFor="bvp-problem" className="block text-sm font-semibold text-ink">{t('bvp.full_problem_label')}</label>
-                <p className="text-xs leading-relaxed text-muted">{t('bvp.full_problem_hint')}</p>
-                <textarea id="bvp-problem" value={problemText} onChange={(event) => { setProblemText(event.target.value); setError(''); setParsedNotice(''); }} rows={5} spellCheck={false} placeholder={t('bvp.full_problem_placeholder')} className="block min-h-32 w-full resize-y rounded-lg border border-line bg-bg-2 p-3 font-mono text-sm leading-relaxed text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft" />
-                <div className="flex flex-col gap-2 min-[420px]:flex-row">
-                  <button type="button" onClick={() => parseProblem()} className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg bg-brand px-3 py-2 text-center text-sm font-semibold text-brand-ink hover:opacity-90">{t('bvp.parse_button')}</button>
-                  <button type="button" onClick={applyExample} className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-center text-xs font-semibold leading-snug text-brand transition-colors hover:bg-brand/15">{t('bvp.example_button')}</button>
+              <details className="rounded-lg border border-line bg-bg-2 p-3">
+                <summary className="cursor-pointer text-sm font-semibold text-ink">{t('bvp.full_problem_label')}</summary>
+                <div className="mt-3 space-y-2">
+                  <p className="text-xs leading-relaxed text-muted">{t('bvp.full_problem_hint')}</p>
+                  <textarea id="bvp-problem" value={problemText} onChange={(event) => { setProblemText(event.target.value); setError(''); setParsedNotice(''); }} rows={5} spellCheck={false} placeholder={t('bvp.full_problem_placeholder')} className="block min-h-32 w-full resize-y rounded-lg border border-line bg-panel p-3 font-mono text-sm leading-relaxed text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft" />
+                  <div className="flex flex-col gap-2 min-[420px]:flex-row">
+                    <button type="button" onClick={() => parseProblem()} className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg bg-brand px-3 py-2 text-center text-sm font-semibold text-brand-ink hover:opacity-90">{t('bvp.parse_button')}</button>
+                    <button type="button" onClick={applyExample} className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-center text-xs font-semibold leading-snug text-brand transition-colors hover:bg-brand/15">{t('bvp.example_button')}</button>
+                  </div>
+                  {parsedNotice && <p role="status" className="rounded-md bg-emerald-500/10 p-2 text-xs leading-relaxed text-emerald-700 dark:text-emerald-300">{parsedNotice}</p>}
                 </div>
-                {parsedNotice && <p role="status" className="rounded-md bg-emerald-500/10 p-2 text-xs leading-relaxed text-emerald-700 dark:text-emerald-300">{parsedNotice}</p>}
-              </section>
+              </details>
               <p className="text-xs leading-relaxed text-muted">{t('bvp.expression_hint')}</p>
-              <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
                 {fields.map(({ key, label, step }) => (
                   <label key={key} className="min-w-0">
                     <span className="mb-1 block text-xs font-semibold text-ink">{label}</span>
-                    <input type={['a', 'b', 'intervals'].includes(key) ? 'number' : 'text'} step={step ?? 'any'} min={key === 'intervals' ? 2 : undefined} max={key === 'intervals' ? 80 : undefined} value={input[key]} onChange={(event) => update(key, event.target.value)} required className="w-full rounded-lg border border-line bg-bg-2 px-2.5 py-2 font-mono text-sm text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft" />
+                    <input type={['a', 'b', 'h'].includes(key) ? 'number' : 'text'} step={step ?? 'any'} value={input[key]} onChange={(event) => update(key, event.target.value)} required className="w-full min-w-0 rounded-lg border border-line bg-bg-2 px-2 py-2 font-mono text-sm text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft" />
                   </label>
                 ))}
               </div>
+              <p className="-mt-2 text-[11px] text-muted">{t('bvp.steps_derived', { count: input.intervals })}</p>
               <div className="rounded-lg border border-line bg-bg-2 p-3 text-xs leading-relaxed text-muted">
                 <strong className="text-ink">{t('bvp.left')}:</strong> m₀y(a) + m₁y′(a) = m₂<br />
                 <strong className="text-ink">{t('bvp.right')}:</strong> g₀y(b) + g₁y′(b) = g₂

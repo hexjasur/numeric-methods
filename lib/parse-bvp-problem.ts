@@ -98,6 +98,7 @@ export function parseBvpProblem(text: string, current: BvpInput): BvpInput {
     ...ode,
     a: String(first.x),
     b: String(second.x),
+    h: String(h),
     intervals: String(roundedCount),
     m0: String(first.y), m1: String(first.derivative), m2: String(first.rhs),
     g0: String(second.y), g1: String(second.derivative), g2: String(second.rhs),

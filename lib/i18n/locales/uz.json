@@ -885,6 +885,7 @@
     "full_problem_placeholder": "h = 0.1\ny″ - x y′ + 2x y = 0.8\ny(1.2) - 0.5 y′(1.2) = 1\ny′(1.5) = 2",
     "parse_button": "Masalani o‘qib, maydonlarni to‘ldirish",
     "parsed_summary": "Ajratildi: h={h}, kesma [{a}, {b}], qadamlar soni n={n}. Quyidagi qiymatlarni tekshiring.",
-    "parse_error": "Masala matnini ajratib bo‘lmadi."
+    "parse_error": "Masala matnini ajratib bo‘lmadi.",
+    "steps_derived": "Tanlangan qadam bilan kesmada {count} ta teng qadam hosil bo‘ladi."
   }
 }

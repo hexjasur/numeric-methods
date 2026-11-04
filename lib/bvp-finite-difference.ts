@@ -1,7 +1,7 @@
 import { compileMath } from '@/lib/math';
 
 export interface BvpInput {
-  p: string; q: string; f: string; a: string; b: string; intervals: string;
+  p: string; q: string; f: string; a: string; b: string; h: string; intervals: string;
   m0: string; m1: string; m2: string; g0: string; g1: string; g2: string;
 }
 export interface BvpRow {
@@ -23,11 +23,15 @@ function number(value: string, label: string): number {
 export function solveBvp(input: BvpInput): BvpResult {
   const left = number(input.a, 'a');
   const right = number(input.b, 'b');
+  const h = number(input.h, 'h');
   const intervals = number(input.intervals, 'n');
   const m0 = number(input.m0, 'm₀'); const m1 = number(input.m1, 'm₁'); const m2 = number(input.m2, 'm₂');
   const g0 = number(input.g0, 'g₀'); const g1 = number(input.g1, 'g₁'); const g2 = number(input.g2, 'g₂');
   if (right <= left) throw new Error('b must be greater than a');
   if (!Number.isInteger(intervals) || intervals < 2 || intervals > 80) throw new Error('n must be an integer from 2 to 80');
+  if (h <= 0 || Math.abs((right - left) / intervals - h) > Math.max(1, Math.abs(h)) * 1e-8) {
+    throw new Error('h must divide the interval into an integer number of steps (2–80).');
+  }
   if (m0 === 0 && m1 === 0) throw new Error('Left boundary condition cannot be zero');
   if (g0 === 0 && g1 === 0) throw new Error('Right boundary condition cannot be zero');
   const functions = [input.p, input.q, input.f].map((expression) => {
@@ -40,7 +44,6 @@ export function solveBvp(input: BvpInput): BvpResult {
     };
   });
   const [P, Q, F] = functions;
-  const h = (right - left) / intervals;
   const coeffs = Array.from({ length: intervals + 1 }, (_, i) => {
     if (i === 0) return { a: 0, b: m0 - m1 / h, c: m1 / h, d: m2 };
     if (i === intervals) return { a: -g1 / h, b: g0 + g1 / h, c: 0, d: g2 };
