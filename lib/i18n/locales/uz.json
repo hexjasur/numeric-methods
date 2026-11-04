@@ -179,13 +179,15 @@
     "footer_2": "Xato ≤ (b − a) / 2ⁿ"
   },
   "odeForm": {
-    "function": "Function f(x, y)",
-    "initial_x0": "Initial x₀",
-    "final_xEnd": "Final x_end",
-    "initial_y0": "Initial y₀",
-    "step_h": "Step size h",
-    "interval_bounds": "Interval Bounds: a = x₀, b = x_end",
-    "step_count": "Step Count: n = (x_end − x₀) / h"
+    "function": "Differensial tenglama f(x, y)",
+    "interval_title": "Integrallaş kesmasi",
+    "interval_hint": "Kesma [a, b]",
+    "initial_x0": "Kesma boşi (x₀)",
+    "final_xEnd": "Kesma oxiri (x_end)",
+    "initial_y0": "Boşlanğiç qiymat (y₀)",
+    "step_h": "Qadam kattaligi (h)",
+    "interval_bounds": "Kesma çegaralari: a = x₀, b = x_end",
+    "step_count": "Qadamlar soni: n = (x_end − x₀) / h"
   },
   "euler": {
     "strip": "SOLVER / MK-2",

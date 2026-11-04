@@ -179,13 +179,15 @@
     "footer_2": "Погрешность ≤ (b − a) / 2ⁿ"
   },
   "odeForm": {
-    "function": "Function f(x, y)",
-    "initial_x0": "Initial x₀",
-    "final_xEnd": "Final x_end",
-    "initial_y0": "Initial y₀",
-    "step_h": "Step size h",
-    "interval_bounds": "Interval Bounds: a = x₀, b = x_end",
-    "step_count": "Step Count: n = (x_end − x₀) / h"
+    "function": "Дифференциальное уравнение f(x, y)",
+    "interval_title": "Отрезок интегрирования",
+    "interval_hint": "Отрезок [a, b]",
+    "initial_x0": "Начало отрезка (x₀)",
+    "final_xEnd": "Конец отрезка (x_end)",
+    "initial_y0": "Начальное значение (y₀)",
+    "step_h": "Шаг интегрирования (h)",
+    "interval_bounds": "Границы отрезка: a = x₀, b = x_end",
+    "step_count": "Число шагов: n = (x_end − x₀) / h"
   },
   "euler": {
     "strip": "РЕШЕНИЕ / МК-2",
