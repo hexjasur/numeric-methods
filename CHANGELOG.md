@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.4.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.3.0...numeric-methods-v3.4.0) (2026-11-04)
+
+
+### ✨ Features
+
+* **ode:** visually distinguish interval inputs with dedicated container and preview ✨ ([b24aa61](https://github.com/hexjasur/numeric-methods/commit/b24aa61361f6ad5623225e691cd024ba36da5558))
+
+
+### ♻️ Refactors
+
+* **ode:** standardize solver input parameters ♻️ ([3cf2afd](https://github.com/hexjasur/numeric-methods/commit/3cf2afdcf3c068876789794e8fe3d1f3fcfce0f6))
+
 ## [3.3.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.2.1...numeric-methods-v3.3.0) (2026-10-31)
 
 
