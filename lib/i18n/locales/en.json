@@ -18,7 +18,8 @@
     "rungeKutta": "Runge–Kutta 4th Order",
     "learn": "Uzbek learning guides",
     "newtonInterpolation": "Newton Interpolation",
-    "adamsPredictor": "Adams Predictor Method"
+    "adamsPredictor": "Adams Predictor Method",
+    "bvp": "Finite Difference BVP"
   },
   "about": {
     "strip": "DOC-002 / ABOUT",
@@ -113,7 +114,8 @@
     "cat_linear": "Linear systems",
     "desc_rungeKutta": "Solve a first-order initial value problem with the classical fourth-order Runge–Kutta method.",
     "desc_newtonInterpolation": "Build the Newton polynomial from divided differences, compare finite differences, and evaluate P(x*) step by step.",
-    "desc_adamsPredictor": "Solve an initial value problem with RK4 startup steps and the third-order Adams predictor formula."
+    "desc_adamsPredictor": "Solve an initial value problem with RK4 startup steps and the third-order Adams predictor formula.",
+    "desc_bvp": "Solve second-order linear boundary value problems with finite differences and a step-by-step Thomas algorithm trace."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",
@@ -846,5 +848,36 @@
     "notebook_collapse": "Collapse (key steps)",
     "notebook_final_ans": "Final Answer",
     "notebook_ans_desc": "Summary of solution across the interval"
+  },
+  "bvp": {
+    "eyebrow": "Boundary value problems / 012",
+    "title": "Finite Difference",
+    "title_highlight": "BVP Solver",
+    "lead": "Solve a second-order linear boundary value problem and inspect its discretization, Thomas sweep, residuals, and numerical curve.",
+    "boundaries": "m₀y(a) + m₁y′(a) = m₂;  g₀y(b) + g₁y′(b) = g₂",
+    "map_eyebrow": "Solution workflow",
+    "map_title": "Finite differences + Thomas algorithm",
+    "map_1": "Discretize",
+    "map_1_desc": "Build the tridiagonal equations at boundary and interior nodes.",
+    "map_2": "Forward sweep",
+    "map_2_desc": "Compute the Thomas coefficients uₖ and vₖ row by row.",
+    "map_3": "Back substitute",
+    "map_3_desc": "Recover y values, then inspect the residual and graph.",
+    "input_eyebrow": "Inputs / Boundary conditions",
+    "input_title": "Problem parameters",
+    "expression_hint": "Enter Math.js expressions in x (examples: x, sin(x), x^2). Use n equal intervals (2–80).",
+    "left": "Left boundary",
+    "right": "Right boundary",
+    "calculate": "Solve BVP",
+    "error": "Unable to solve the boundary value problem.",
+    "note": "Central differences are used for interior derivatives; one-sided differences approximate endpoint derivatives.",
+    "matrix_eyebrow": "01 / DISCRETIZATION",
+    "matrix_title": "Tridiagonal system and Thomas coefficients",
+    "empty": "Set the equation and boundary data, then select Solve BVP.",
+    "backward_eyebrow": "02 / BACK SUBSTITUTION",
+    "backward_title": "Recover the solution step by step",
+    "result_eyebrow": "03 / SOLUTION",
+    "result_title": "Numerical solution and plot",
+    "max_residual": "Maximum equation residual"
   }
 }

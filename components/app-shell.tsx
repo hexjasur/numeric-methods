@@ -88,6 +88,12 @@ export function AppShell({
         icon: ArrowRightLeft,
       },
       {
+        href: '/methods/bvp',
+        label: t('nav.bvp'),
+        icon: Activity,
+        isNew: true,
+      },
+      {
         href: '/methods/lagrange',
         label: t('nav.lagrange'),
         icon: Spline,
@@ -175,7 +181,9 @@ export function AppShell({
             ? t('nav.newtonInterpolation')
             : pathname.startsWith('/methods/newton')
               ? t('nav.newton')
-              : pathname.startsWith('/methods/sweep')
+          : pathname.startsWith('/methods/bvp')
+            ? t('nav.bvp')
+            : pathname.startsWith('/methods/sweep')
                 ? t('nav.sweep')
                 : pathname.startsWith('/methods/lagrange')
                   ? t('nav.lagrange')

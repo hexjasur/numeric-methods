@@ -18,7 +18,8 @@
     "rungeKutta": "Runge–Kutta 4-tartibli usuli",
     "learn": "Özbekça qöllanma",
     "newtonInterpolation": "Nyuton interpolyatsiyasi",
-    "adamsPredictor": "Adams başorat qiluvçi usuli"
+    "adamsPredictor": "Adams başorat qiluvçi usuli",
+    "bvp": "Chekli ayirmalar BChM"
   },
   "about": {
     "strip": "DOC-002 / HAQIDA",
@@ -113,7 +114,8 @@
     "cat_linear": "Çiziqli sistemalar",
     "desc_rungeKutta": "Birinçi tartibli Koşi masalasini klassik törtinçi tartibli Runge–Kutta usuli bilan yeçing.",
     "desc_newtonInterpolation": "Bölingan ayirmalar orqali Nyuton köphadini tuzing, çekli ayirmalarni taqqoslang va P(x*) qiymatini qadam-baqadam hisoblang.",
-    "desc_adamsPredictor": "Koşi masalasini RK4 boşlanğiç qadamlari va uçinçi tartibli Adams başorat formulasi bilan yeçing."
+    "desc_adamsPredictor": "Koşi masalasini RK4 boşlanğiç qadamlari va uçinçi tartibli Adams başorat formulasi bilan yeçing.",
+    "desc_bvp": "2-tartibli chiziqli chegaraviy masalani chekli ayirmalar va qadamma-qadam Thomas haydash usulida yeching."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",
@@ -846,5 +848,36 @@
     "notebook_collapse": "Qisqartiriş (asosiy qadamlar)",
     "notebook_final_ans": "Yakuniy javob",
     "notebook_ans_desc": "Hisoblangan oraliqdagi natijalar xulosasi"
+  },
+  "bvp": {
+    "eyebrow": "Chegaraviy masala / 012",
+    "title": "Chekli ayirmalar",
+    "title_highlight": "BChM yechuvchisi",
+    "lead": "2-tartibli chiziqli chegaraviy masalani yeching: diskretlash, Thomas haydash koeffitsiyentlari, qoldiq va yechim grafigini ko‘ring.",
+    "boundaries": "m₀y(a) + m₁y′(a) = m₂;  g₀y(b) + g₁y′(b) = g₂",
+    "map_eyebrow": "Yechish bosqichlari",
+    "map_title": "Chekli ayirmalar + Thomas algoritmi",
+    "map_1": "Diskretlash",
+    "map_1_desc": "Chegara va ichki nuqtalarda uch diagonalli sistemani tuzish.",
+    "map_2": "To‘g‘ri yo‘l",
+    "map_2_desc": "uₖ va vₖ haydash koeffitsiyentlarini ketma-ket hisoblash.",
+    "map_3": "Teskari yo‘l",
+    "map_3_desc": "y qiymatlarini topish, qoldiqni va grafikni ko‘rish.",
+    "input_eyebrow": "Kiritish / Chegaraviy shartlar",
+    "input_title": "Masala parametrlari",
+    "expression_hint": "x o‘zgaruvchili Math.js ifodalarni kiriting (masalan: x, sin(x), x^2). n — bo‘linishlar soni (2–80).",
+    "left": "Chap chegara",
+    "right": "O‘ng chegara",
+    "calculate": "Masalani yechish",
+    "error": "Chegaraviy masalani yechib bo‘lmadi.",
+    "note": "Ichki nuqtalarda markaziy ayirma, chekka nuqtalarda bir tomonlama ayirma ishlatiladi.",
+    "matrix_eyebrow": "01 / DISKRETLASH",
+    "matrix_title": "Uch diagonalli sistema va haydash koeffitsiyentlari",
+    "empty": "Tenglama va chegaraviy shartlarni kiriting, so‘ng yechishni boshlang.",
+    "backward_eyebrow": "02 / TESKARI YO‘L",
+    "backward_title": "Yechimni qadamma-qadam tiklash",
+    "result_eyebrow": "03 / YECHIM",
+    "result_title": "Sonli yechim va grafik",
+    "max_residual": "Maksimal qoldiq"
   }
 }
