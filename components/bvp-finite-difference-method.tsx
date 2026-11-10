@@ -339,7 +339,7 @@ export function BvpFiniteDifferenceMethod() {
                     <p className="text-xs text-muted">{t('bvp.notebook_left_after')}</p>
                     <p className="text-xs font-semibold text-muted">{t('bvp.right')}</p>
                     <MathDisplay tex={String.raw`g_0y_n+g_1\frac{y_n-y_{n-1}}{h}=g_2`} />
-                    <MathDisplay tex={`\\Rightarrow-\\frac{${input.g1}}{${fmt(result.h)}}y_{${input.intervals - 1}}+\\left(${input.g0}+\\frac{${input.g1}}{${fmt(result.h)}}\\right)y_${input.intervals}=${input.g2}`} />
+                    <MathDisplay tex={`\\Rightarrow-\\frac{${input.g1}}{${fmt(result.h)}}y_{${Number(input.intervals) - 1}}+\\left(${input.g0}+\\frac{${input.g1}}{${fmt(result.h)}}\\right)y_${input.intervals}=${input.g2}`} />
                     <p className="text-xs text-muted">{t('bvp.notebook_right_after')}</p>
                     <div className="overflow-x-auto rounded-md bg-panel px-3 py-2">
                       <MathDisplay tex={`\\begin{aligned}${formatSystemEquationTex(nodes[0])}\\\\${formatSystemEquationTex(nodes[nodes.length - 1])}\\end{aligned}`} />
