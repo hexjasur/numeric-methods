@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.5.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.4.0...numeric-methods-v3.5.0) (2026-11-10)
+
+
+### ✨ Features
+
+* **bvp:** add finite-difference boundary-value solver ([1ae3259](https://github.com/hexjasur/numeric-methods/commit/1ae32592999cffcf905a03993c370c3555226177))
+* **bvp:** add finite-difference Thomas solver ✨ ([0fba555](https://github.com/hexjasur/numeric-methods/commit/0fba5553b4fb47c89f2905397b65ab9aeb28ad1b))
+* **bvp:** explain finite-difference solution steps ✨ ([02b9ef2](https://github.com/hexjasur/numeric-methods/commit/02b9ef215ea1ed5c4ec8efaea8cb564e8cf635c5))
+* **bvp:** parse complete boundary problems from text ✨ ([1133ed8](https://github.com/hexjasur/numeric-methods/commit/1133ed81d008b8a4775c2ac52916531aefc08c9d))
+
+
+### 🐛 Bug Fixes
+
+* **bvp:** improve example input and mobile layout 🐛 ([6c58ba7](https://github.com/hexjasur/numeric-methods/commit/6c58ba7281f12ce46187c50a38d585b572a46701))
+* **bvp:** keep parameters separate and add step input 🎨 ([e0c1aab](https://github.com/hexjasur/numeric-methods/commit/e0c1aab38c4a6007f9c3e468afc8730ebd0b7ae9))
+
 ## [3.4.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.3.0...numeric-methods-v3.4.0) (2026-11-04)
 
 
