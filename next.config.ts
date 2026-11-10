@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     },
   },
   experimental: {
+    agentUpgrade: "security",
     optimizePackageImports: ["lucide-react", "recharts", "katex"],
     cpus: 2,
     memoryBasedWorkersCount: true,
