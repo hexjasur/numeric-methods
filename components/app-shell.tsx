@@ -70,7 +70,7 @@ export function AppShell({
       },
     ];
 
-    // 2. Numerical methods (methods with isNew: true automatically pin to top of methods section)
+    // 2. Numerical methods (new methods appear at the end of the section)
     const methodItems: NavItem[] = [
       {
         href: '/methods/bisection',
@@ -86,12 +86,6 @@ export function AppShell({
         href: '/methods/sweep',
         label: t('nav.sweep'),
         icon: ArrowRightLeft,
-      },
-      {
-        href: '/methods/bvp',
-        label: t('nav.bvp'),
-        icon: Activity,
-        isNew: true,
       },
       {
         href: '/methods/lagrange',
@@ -136,11 +130,17 @@ export function AppShell({
         icon: Activity,
         isNew: true,
       },
+      {
+        href: '/methods/bvp',
+        label: t('nav.bvp'),
+        icon: Activity,
+        isNew: true,
+      },
     ];
 
     const sortedMethods = [...methodItems].sort((a, b) => {
       if (Boolean(a.isNew) !== Boolean(b.isNew)) {
-        return a.isNew ? -1 : 1;
+        return a.isNew ? 1 : -1;
       }
       return 0;
     });
