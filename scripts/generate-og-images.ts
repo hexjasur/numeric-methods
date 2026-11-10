@@ -250,7 +250,7 @@ export const ALL_OG_CONFIGS: MethodOgConfig[] = [
     descriptionLine1: 'Matematik va muhandislik tenglamalarini',
     descriptionLine2: 'qadam-baqam yechuvchi interaktiv online laboratoriya.',
     formulaLatex: 'f(x) = 0 \\quad \\int_a^b f(x)dx \\quad y\' = f(x,y)',
-    badge: '10 TA USUL',
+    badge: '11 TA USUL',
     accentColor: '#ff6a2b',
   },
   {
@@ -373,6 +373,19 @@ export const ALL_OG_CONFIGS: MethodOgConfig[] = [
     formulaLatex: 'x_i = \\alpha_{i+1} x_{i+1} + \\beta_{i+1}',
     badge: 'CHIZIQLI O(n)',
     accentColor: '#ff6a2b',
+  },
+  {
+    slug: 'bvp',
+    methodId: 'METHOD // 011',
+    category: 'ODU // CHEGARAVIY MASALA',
+    titleUz: 'Chegaraviy masala',
+    titleAlt: 'Finite Differences • Thomas Algorithm',
+    descriptionLine1: 'Ikkinchi tartibli chegaraviy masalani chekli ayirmalar',
+    descriptionLine2: 'va Tomas algoritmi bilan qadam-baqam yeching.',
+    formulaLatex: "y'' + P(x)y' + Q(x)y = f(x)",
+    conditionLatex: 'y(a)=g_0, \\quad y(b)=g_1',
+    badge: 'CHEKLI AYIRMALAR',
+    accentColor: '#22d3ee',
   },
 ];
 

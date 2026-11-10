@@ -12,6 +12,13 @@ export const metadata: Metadata = {
     title: 'Finite Difference BVP Solver | Thomas Algorithm',
     description: 'Discretize and solve second-order linear boundary value problems, inspect Thomas coefficients, residuals, and the solution graph.',
     url: `${siteConfig.url}/methods/bvp`,
+    images: [{ url: '/images/og/bvp.png', width: 1200, height: 630, alt: 'Chegaraviy masala — chekli ayirmalar usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Finite Difference BVP Solver | Thomas Algorithm',
+    description: 'Discretize and solve second-order linear boundary value problems using finite differences and the Thomas algorithm.',
+    images: ['/images/og/bvp.png'],
   },
 };
 
