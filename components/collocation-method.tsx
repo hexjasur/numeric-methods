@@ -7,7 +7,7 @@ import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/componen
 import { solveCollocation, texNumber, type CollocationInput, type CollocationResult } from '@/lib/collocation';
 
 const INITIAL: CollocationInput = {
-  p: '0', q: '-1', f: '2*x', a: '0', b: '1', alpha0: '1', alpha1: '0', alphaValue: '0', beta0: '1', beta1: '0', betaValue: '0', n: 3, points: ['1/4', '1/2', '3/4'],
+  a2: '1', a1: '0', a0: '-1', f: '2*x', a: '0', b: '1', alpha0: '1', alpha1: '0', alphaValue: '0', beta0: '1', beta1: '0', betaValue: '0', n: 3, points: ['1/4', '1/2', '3/4'],
 };
 
 function tex(value: string): string {
@@ -72,17 +72,17 @@ export function CollocationMethod() {
     catch (cause) { setResult(null); setError(cause instanceof Error ? cause.message : 'Hisoblashda xatolik yuz berdi.'); }
   };
   const fields: Array<{ key: keyof CollocationInput; label: string }> = [
-    { key: 'p', label: 'P(x)' }, { key: 'q', label: 'Q(x)' }, { key: 'f', label: 'f(x)' }, { key: 'a', label: 'a' }, { key: 'b', label: 'b' },
+    { key: 'a2', label: 'A₂(x) · u″' }, { key: 'a1', label: 'A₁(x) · u′' }, { key: 'a0', label: 'A₀(x) · u' }, { key: 'f', label: 'f(x)' }, { key: 'a', label: 'a' }, { key: 'b', label: 'b' },
     { key: 'alpha0', label: 'α₀' }, { key: 'alpha1', label: 'α₁' }, { key: 'alphaValue', label: 'A' }, { key: 'beta0', label: 'β₀' }, { key: 'beta1', label: 'β₁' }, { key: 'betaValue', label: 'B' },
   ];
   return <div className="relative mx-auto max-w-[1200px] px-0 pb-12 sm:px-2 md:px-4">
     <PsStrip eyebrow="ODE / COLLOCATION" id="ODE" name="Kollokatsiya usuli" />
-    <PsHero eyebrow="Ikkinchi tartibli ODT / Chegaraviy masala" title="Kollokatsiya" titleHighlight="usuli" lead="Chegaraviy masalani bazis funksiyalar va kollokatsiya nuqtalari orqali qadamma-qadam yeching." conditionMain={<>u″ + P(x)u′ + Q(x)u = f(x)</>} conditionSub="Dirixle chegaralari: u(a)=A, u(b)=B" />
+    <PsHero eyebrow="Ikkinchi tartibli ODT / Chegaraviy masala" title="Kollokatsiya" titleHighlight="usuli" lead="Chegaraviy masalani bazis funksiyalar va kollokatsiya nuqtalari orqali qadamma-qadam yeching." conditionMain={<>A₂(x)u″ + A₁(x)u′ + A₀(x)u = f(x)</>} conditionSub="Dirixle chegaralari: u(a)=A, u(b)=B" />
     <PsMap eyebrow="Usul xaritasi" title="6 bosqichli audit" steps={[{ n: '01', t: 'Bazislar', s: 'Chegaralarni qanoatlantiruvchi φᵢ(x) ni tanlash' }, { n: '02', t: 'Qoldiq', s: 'R(x,C) ni tuzish va guruhlash' }, { n: '03', t: 'Sistema', s: 'Nuqtalarda kollokatsiya va Gauss yechimi' }]} />
     <div className="grid min-w-0 items-start gap-[18px] lg:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
       <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-4"><PsPanel><PsPanelHead eyebrow="Kiritish / Parametrlar" title="Masalani sozlang" idx="01" />
         <form onSubmit={calculate} className="space-y-4">
-          <p className="text-xs leading-relaxed text-muted">Math.js sintaksisi: <code>x^2</code>, <code>sin(x)</code>. Kasrlar uchun <code>1/4</code> yozing.</p>
+          <p className="text-xs leading-relaxed text-muted">Umumiy ko‘rinish: A₂(x)u″ + A₁(x)u′ + A₀(x)u = f(x). Math.js: <code>x^2</code>, <code>sin(x)</code>. Kasrlar uchun <code>1/4</code> yozing.</p>
           <div className="grid grid-cols-2 gap-2.5">{fields.map(({ key, label }) => <label key={key} className="min-w-0"><span className="mb-1 block text-xs font-semibold text-ink">{label}</span><input value={String(input[key])} onChange={(event) => update(key, event.target.value)} className="w-full rounded-lg border border-line bg-bg-2 px-2 py-2 font-mono text-sm text-ink outline-none focus:border-brand" /></label>)}</div>
           <label className="block"><span className="mb-1 block text-xs font-semibold text-ink">n — bazislar soni (2–6)</span><select value={input.n} onChange={(event) => { const n = Number(event.target.value); update('n', n); update('points', Array.from({ length: n }, (_, index) => input.points[index] ?? String((index + 1) / (n + 1)))); }} className="w-full rounded-lg border border-line bg-bg-2 px-2 py-2 font-mono text-sm text-ink"><option value={2}>2</option><option value={3}>3</option><option value={4}>4</option><option value={5}>5</option><option value={6}>6</option></select></label>
           <div className="rounded-lg border border-line bg-bg-2 p-3"><p className="mb-2 text-xs font-semibold text-ink">Kollokatsiya nuqtalari xᵢ ∈ (a,b)</p><div className="space-y-2">{input.points.map((point, index) => <input key={index} value={point} onChange={(event) => updatePoint(index, event.target.value)} aria-label={`${index + 1}-kollokatsiya nuqtasi`} className="w-full rounded-lg border border-line bg-panel px-2 py-2 font-mono text-sm text-ink outline-none focus:border-brand" />)}</div><button type="button" onClick={distributePoints} className="mt-3 w-full rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-xs font-semibold text-brand">Avtomatik teng taqsimlash</button></div>

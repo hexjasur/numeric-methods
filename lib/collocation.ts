@@ -1,6 +1,6 @@
 import { math, normalizeExpression } from '@/lib/math';
 
-export interface CollocationInput { p: string; q: string; f: string; a: string; b: string; alpha0: string; alpha1: string; alphaValue: string; beta0: string; beta1: string; betaValue: string; n: number; points: string[]; }
+export interface CollocationInput { a2: string; a1: string; a0: string; f: string; a: string; b: string; alpha0: string; alpha1: string; alphaValue: string; beta0: string; beta1: string; betaValue: string; n: number; points: string[]; }
 export interface CollocationBasis { index: number; expression: string; derivative: string; secondDerivative: string; }
 export interface CollocationEquation { x: number; exactX: string; coefficients: number[]; rhs: number; residualExpression: string; }
 export interface CollocationResult { input: CollocationInput; phi0: string; basis: CollocationBasis[]; approximation: string; derivative: string; secondDerivative: string; residual: string; equations: CollocationEquation[]; coefficients: number[]; finalSolution: string; samples: Array<{ x: number; value: number }>; }
@@ -120,14 +120,14 @@ export function solveCollocation(input: CollocationInput): CollocationResult {
   const approximation = `\\tilde{u}(x) = ${joinFormulaTerms(phi0, basis.map((item) => `C_${item.index}\\cdot\\left(${item.expression}\\right)`))}`;
   const derivative = `\\tilde{u}'(x) = ${joinFormulaTerms(phi0Derivative, basis.map((item) => `C_${item.index}\\cdot\\left(${item.derivative}\\right)`))}`;
   const secondDerivative = `\\tilde{u}''(x) = ${joinFormulaTerms(phi0SecondDerivative, basis.map((item) => `C_${item.index}\\cdot\\left(${item.secondDerivative}\\right)`))}`;
-  const residualConstant = expressionTex(simplifiedExpression(`${phi0SecondDerivative} + (${input.p})*(${phi0Derivative}) + (${input.q})*(${phi0}) - (${input.f})`));
+  const residualConstant = expressionTex(simplifiedExpression(`(${input.a2})*(${phi0SecondDerivative}) + (${input.a1})*(${phi0Derivative}) + (${input.a0})*(${phi0}) - (${input.f})`));
   const residualTerms = basis.map((item) => {
-    const coefficient = simplifiedExpression(`${item.secondDerivative} + (${input.p})*(${item.derivative}) + (${input.q})*(${item.expression})`);
+    const coefficient = simplifiedExpression(`(${input.a2})*(${item.secondDerivative}) + (${input.a1})*(${item.derivative}) + (${input.a0})*(${item.expression})`);
     return `C_${item.index}\\cdot\\left(${expressionTex(coefficient)}\\right)`;
   }).join(' + ');
   const equations = pointValues.map((x, rowIndex) => {
-    const constant = numeric(phi0SecondDerivative, x) + numeric(input.p, x) * numeric(phi0Derivative, x) + numeric(input.q, x) * numeric(phi0, x) - numeric(input.f, x);
-    const coefficients = basis.map((item) => numeric(item.secondDerivative, x) + numeric(input.p, x) * numeric(item.derivative, x) + numeric(input.q, x) * numeric(item.expression, x));
+    const constant = numeric(input.a2, x) * numeric(phi0SecondDerivative, x) + numeric(input.a1, x) * numeric(phi0Derivative, x) + numeric(input.a0, x) * numeric(phi0, x) - numeric(input.f, x);
+    const coefficients = basis.map((item) => numeric(input.a2, x) * numeric(item.secondDerivative, x) + numeric(input.a1, x) * numeric(item.derivative, x) + numeric(input.a0, x) * numeric(item.expression, x));
     return { x, exactX: input.points[rowIndex], coefficients, rhs: -constant, residualExpression: `${polynomialSum(texNumber(constant), coefficients.map((value, index) => ({ coefficient: value, variable: `C_${index + 1}` })))} = 0` };
   });
   const coefficients = solveGauss(equations.map((row) => row.coefficients), equations.map((row) => row.rhs));
