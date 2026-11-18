@@ -32,15 +32,26 @@ export function texNumber(value: number): string {
   return `${sign}${denominator === 1 ? numerator : `\\frac{${numerator}}{${denominator}}`}`;
 }
 
-function binomial(n: number, k: number): number { let result = 1; for (let i = 1; i <= k; i += 1) result *= (n - i + 1) / i; return result; }
 function derivativeCoefficients(coefficients: number[]): number[] { return coefficients.slice(1).map((coefficient, index) => coefficient * (index + 1)); }
-function basisCoefficients(power: number, left: number, right: number): number[] {
-  const coefficients = Array<number>(power + 2).fill(0);
-  for (let k = 0; k <= power; k += 1) {
-    const shifted = binomial(power, k) * (-left) ** (power - k);
-    coefficients[k] += right * shifted; coefficients[k + 1] -= shifted;
-  }
-  return coefficients;
+function polynomialValue(coefficients: number[], x: number): number {
+  return coefficients.reduce((sum, coefficient, index) => sum + coefficient * x ** index, 0);
+}
+function boundaryValue(coefficients: number[], x: number, coefficient0: number, coefficient1: number): number {
+  return coefficient0 * polynomialValue(coefficients, x) + coefficient1 * polynomialValue(derivativeCoefficients(coefficients), x);
+}
+function solveBoundaryPair(left0: number, left1: number, right0: number, right1: number, leftValue: number, rightValue: number): number[] {
+  const determinant = left0 * right1 - left1 * right0;
+  if (Math.abs(determinant) < EPSILON) throw new Error('Chegaraviy shartlar mustaqil emas: α va β koeffitsiyentlarini tekshiring.');
+  return [(leftValue * right1 - left1 * rightValue) / determinant, (left0 * rightValue - leftValue * right0) / determinant];
+}
+function subtractScaled(target: number[], source: number[], scale: number): number[] {
+  const result = [...target];
+  source.forEach((coefficient, index) => { result[index] = (result[index] ?? 0) - scale * coefficient; });
+  return result;
+}
+function homogeneousBasis(power: number, a: number, b: number, alpha0: number, alpha1: number, beta0: number, beta1: number, leftProjector: number[], rightProjector: number[]): number[] {
+  const raw = Array<number>(power + 1).fill(0); raw[power] = 1;
+  return subtractScaled(subtractScaled(raw, leftProjector, boundaryValue(raw, a, alpha0, alpha1)), rightProjector, boundaryValue(raw, b, beta0, beta1));
 }
 function polynomialExpression(coefficients: number[]): string {
   const terms: string[] = [];
@@ -106,17 +117,25 @@ export function solveCollocation(input: CollocationInput): CollocationResult {
   const leftValue = parseNumber(input.alphaValue, 'A'); const rightValue = parseNumber(input.betaValue, 'B');
   if (!(a < b)) throw new Error('a < b bo‘lishi kerak.');
   if (input.n < 2 || input.n > 6) throw new Error('n 2 dan 6 gacha bo‘lishi kerak.');
-  if (Math.abs(alpha1) > EPSILON || Math.abs(beta1) > EPSILON || Math.abs(alpha0) < EPSILON || Math.abs(beta0) < EPSILON) throw new Error('Hozircha bazis funksiyalar Dirixle shartlarini talab qiladi: α₁=β₁=0 va α₀,β₀≠0.');
-  const left = leftValue / alpha0; const right = rightValue / beta0;
+  const leftMatrix0 = alpha0;
+  const leftMatrix1 = alpha0 * a + alpha1;
+  const rightMatrix0 = beta0;
+  const rightMatrix1 = beta0 * b + beta1;
+  const phi0Coefficients = solveBoundaryPair(leftMatrix0, leftMatrix1, rightMatrix0, rightMatrix1, leftValue, rightValue);
+  const leftProjector = solveBoundaryPair(leftMatrix0, leftMatrix1, rightMatrix0, rightMatrix1, 1, 0);
+  const rightProjector = solveBoundaryPair(leftMatrix0, leftMatrix1, rightMatrix0, rightMatrix1, 0, 1);
   const pointValues = input.points.map((point) => parseNumber(point, 'Kollokatsiya nuqtasi'));
   if (pointValues.length !== input.n || pointValues.some((x) => !(x > a && x < b))) throw new Error('Barcha kollokatsiya nuqtalari (a,b) ichida va n ta bo‘lishi kerak.');
+  if (pointValues.some((x) => Math.abs(numeric(input.a2, x)) < EPSILON)) throw new Error('A₂(x) kollokatsiya nuqtalarida nol bo‘lmasligi kerak.');
 
   const basis: CollocationBasis[] = Array.from({ length: input.n }, (_, index) => {
-    const coefficients = basisCoefficients(index + 1, a, b); const first = derivativeCoefficients(coefficients); const second = derivativeCoefficients(first);
+    const coefficients = homogeneousBasis(index + 2, a, b, alpha0, alpha1, beta0, beta1, leftProjector, rightProjector);
+    const first = derivativeCoefficients(coefficients); const second = derivativeCoefficients(first);
     return { index: index + 1, expression: polynomialExpression(coefficients), derivative: polynomialExpression(first), secondDerivative: polynomialExpression(second) };
   });
-  const slope = (right - left) / (b - a); const intercept = left - slope * a;
-  const phi0 = polynomialExpression([intercept, slope]); const phi0Derivative = texNumber(slope); const phi0SecondDerivative = '0';
+  const phi0 = polynomialExpression(phi0Coefficients);
+  const phi0Derivative = polynomialExpression(derivativeCoefficients(phi0Coefficients));
+  const phi0SecondDerivative = polynomialExpression(derivativeCoefficients(derivativeCoefficients(phi0Coefficients)));
   const approximation = `\\tilde{u}(x) = ${joinFormulaTerms(phi0, basis.map((item) => `C_${item.index}\\cdot\\left(${item.expression}\\right)`))}`;
   const derivative = `\\tilde{u}'(x) = ${joinFormulaTerms(phi0Derivative, basis.map((item) => `C_${item.index}\\cdot\\left(${item.derivative}\\right)`))}`;
   const secondDerivative = `\\tilde{u}''(x) = ${joinFormulaTerms(phi0SecondDerivative, basis.map((item) => `C_${item.index}\\cdot\\left(${item.secondDerivative}\\right)`))}`;
