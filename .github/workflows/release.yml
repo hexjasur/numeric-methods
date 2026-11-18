@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - master
       - tauri-desktop
   workflow_dispatch:
     inputs:

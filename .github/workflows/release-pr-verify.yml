@@ -3,7 +3,7 @@ name: Release PR Verification
 on:
   pull_request:
     branches:
-      - main
+      - master
     types:
       - opened
       - synchronize
@@ -19,7 +19,7 @@ jobs:
     if: >-
       github.event.pull_request.user.login == 'nm-actions[bot]' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
-      github.event.pull_request.head.ref == 'release-please--branches--main--components--numeric-methods' &&
+      github.event.pull_request.head.ref == 'release-please--branches--master--components--numeric-methods' &&
       !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
