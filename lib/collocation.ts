@@ -65,9 +65,25 @@ function polynomialSum(constant: string, terms: Array<{ coefficient: number; var
   const pieces = terms.map(({ coefficient, variable }) => {
     if (Math.abs(coefficient) < EPSILON) return '';
     const magnitude = Math.abs(coefficient); const factor = Math.abs(magnitude - 1) < EPSILON ? '' : texNumber(magnitude);
-    return `${coefficient < 0 ? '-' : '+'}${factor}${variable}`;
+    const multiplication = factor ? `${factor}\\cdot ` : '';
+    return `${coefficient < 0 ? '-' : '+'}${multiplication}${variable}`;
   }).filter(Boolean);
   return [constant && constant !== '0' ? constant : '', ...pieces].filter(Boolean).join(' ').replace(/^\+/, '') || '0';
+}
+
+function joinFormulaTerms(base: string, terms: string[]): string {
+  let result = base === '0' ? '' : base;
+  terms.filter(Boolean).forEach((term) => {
+    const normalized = term.startsWith('+ ') ? term.slice(2) : term;
+    result += result ? (normalized.startsWith('-') ? ` ${normalized}` : ` + ${normalized}`) : normalized;
+  });
+  return result || '0';
+}
+
+function signedCoefficientTerm(coefficient: number, expression: string): string {
+  if (Math.abs(coefficient) < EPSILON) return '';
+  const magnitude = texNumber(Math.abs(coefficient));
+  return `${coefficient < 0 ? '-' : '+'} ${magnitude}\\cdot\\left(${expression}\\right)`;
 }
 
 function solveGauss(matrix: number[][], vector: number[]): number[] {
@@ -101,13 +117,13 @@ export function solveCollocation(input: CollocationInput): CollocationResult {
   });
   const slope = (right - left) / (b - a); const intercept = left - slope * a;
   const phi0 = polynomialExpression([intercept, slope]); const phi0Derivative = texNumber(slope); const phi0SecondDerivative = '0';
-  const approximation = `\\tilde{u}(x) = ${phi0} + ${basis.map((item) => `C_${item.index}\\,(${item.expression})`).join(' + ')}`;
-  const derivative = `\\tilde{u}'(x) = ${phi0Derivative} + ${basis.map((item) => `C_${item.index}\\,(${item.derivative})`).join(' + ')}`;
-  const secondDerivative = `\\tilde{u}''(x) = ${phi0SecondDerivative} + ${basis.map((item) => `C_${item.index}\\,(${item.secondDerivative})`).join(' + ')}`;
+  const approximation = `\\tilde{u}(x) = ${joinFormulaTerms(phi0, basis.map((item) => `C_${item.index}\\cdot\\left(${item.expression}\\right)`))}`;
+  const derivative = `\\tilde{u}'(x) = ${joinFormulaTerms(phi0Derivative, basis.map((item) => `C_${item.index}\\cdot\\left(${item.derivative}\\right)`))}`;
+  const secondDerivative = `\\tilde{u}''(x) = ${joinFormulaTerms(phi0SecondDerivative, basis.map((item) => `C_${item.index}\\cdot\\left(${item.secondDerivative}\\right)`))}`;
   const residualConstant = expressionTex(simplifiedExpression(`${phi0SecondDerivative} + (${input.p})*(${phi0Derivative}) + (${input.q})*(${phi0}) - (${input.f})`));
   const residualTerms = basis.map((item) => {
     const coefficient = simplifiedExpression(`${item.secondDerivative} + (${input.p})*(${item.derivative}) + (${input.q})*(${item.expression})`);
-    return `C_${item.index}\\left(${expressionTex(coefficient)}\\right)`;
+    return `C_${item.index}\\cdot\\left(${expressionTex(coefficient)}\\right)`;
   }).join(' + ');
   const equations = pointValues.map((x, rowIndex) => {
     const constant = numeric(phi0SecondDerivative, x) + numeric(input.p, x) * numeric(phi0Derivative, x) + numeric(input.q, x) * numeric(phi0, x) - numeric(input.f, x);
@@ -115,7 +131,7 @@ export function solveCollocation(input: CollocationInput): CollocationResult {
     return { x, exactX: input.points[rowIndex], coefficients, rhs: -constant, residualExpression: `${polynomialSum(texNumber(constant), coefficients.map((value, index) => ({ coefficient: value, variable: `C_${index + 1}` })))} = 0` };
   });
   const coefficients = solveGauss(equations.map((row) => row.coefficients), equations.map((row) => row.rhs));
-  const finalSolution = `\\tilde{u}(x) = ${phi0} + ${coefficients.map((value, index) => `${texNumber(value)}\\,(${basis[index].expression})`).join(' + ')}`;
+  const finalSolution = `\\tilde{u}(x) = ${joinFormulaTerms(phi0, coefficients.map((value, index) => signedCoefficientTerm(value, basis[index].expression)).filter(Boolean).map((term) => term.startsWith('+ ') ? term.slice(2) : term))}`;
   const samples = Array.from({ length: 41 }, (_, index) => { const x = a + ((b - a) * index) / 40; const value = numeric(phi0, x) + basis.reduce((sum, item, basisIndex) => sum + coefficients[basisIndex] * numeric(item.expression, x), 0); return { x, value }; });
   return { input, phi0, basis, approximation, derivative, secondDerivative, residual: `R(x,C_1,\\ldots,C_${input.n}) = ${residualConstant} + ${residualTerms}`, equations, coefficients, finalSolution, samples };
 }
