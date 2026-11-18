@@ -50,6 +50,7 @@ export function RootJsonLd() {
       'Trapetsiyalar usuli bilan integrallash',
       'Töğri törtburçaklar usuli bilan integrallaş',
       'Progonka usuli (Uç diagonalli matritsalarni yeçiş)',
+      'Kollokatsiya usuli (Chegaraviy masalalar uçun)',
     ],
   };
 

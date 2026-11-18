@@ -12,6 +12,13 @@ export const metadata: Metadata = {
     title: 'Adams başorat qiluvçi usuli',
     description: 'Koşi masalasini Adams başorat qiluvçi usuli bilan qadamma-qadam yeçing.',
     url: `${siteConfig.url}/methods/adams-predictor`,
+    images: [{ url: '/images/og/adams-predictor.png', width: 1200, height: 630, alt: 'Adams bashorat qiluvchi usuli' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Adams bashorat qiluvchi usuli',
+    description: 'Koshi masalasini Adams predictor usuli bilan qadamma-qadam yeching.',
+    images: ['/images/og/adams-predictor.png'],
   },
 };
 
