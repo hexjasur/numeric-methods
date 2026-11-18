@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.5.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.4.0...numeric-methods-v3.5.0) (2026-11-18)
+
+
+### ✨ Features
+
+* **bvp:** add finite-difference boundary-value solver ([1ae3259](https://github.com/hexjasur/numeric-methods/commit/1ae32592999cffcf905a03993c370c3555226177))
+* **bvp:** add finite-difference Thomas solver ✨ ([0fba555](https://github.com/hexjasur/numeric-methods/commit/0fba5553b4fb47c89f2905397b65ab9aeb28ad1b))
+* **bvp:** explain finite-difference solution steps ✨ ([02b9ef2](https://github.com/hexjasur/numeric-methods/commit/02b9ef215ea1ed5c4ec8efaea8cb564e8cf635c5))
+* **bvp:** parse complete boundary problems from text ✨ ([1133ed8](https://github.com/hexjasur/numeric-methods/commit/1133ed81d008b8a4775c2ac52916531aefc08c9d))
+* **collocation:** add interactive boundary problem solver ✨ ([4ea3e4b](https://github.com/hexjasur/numeric-methods/commit/4ea3e4b4b25b4544a1ebe907ec828f8d559bc267))
+* **collocation:** add interactive collocation method solver ✨ ([6dd9717](https://github.com/hexjasur/numeric-methods/commit/6dd97175f84f670e5191ade2c75761160c0f6755))
+* **collocation:** allow general second-order ODE coefficients ✨ ([2b760ee](https://github.com/hexjasur/numeric-methods/commit/2b760eef174e3f4cd1a6e77fc0f23840ce16d0dc))
+* **collocation:** localize method and expand dashboard catalog ✨ ([71713ce](https://github.com/hexjasur/numeric-methods/commit/71713ceb1340a4d5b7b12b6a97df964a2046e890))
+* **collocation:** support Robin boundary conditions ✨ ([3338680](https://github.com/hexjasur/numeric-methods/commit/333868045783a9bad9c0efdc761673fd60077bb7))
+* **og:** add BVP method preview image ✨ ([d8a016b](https://github.com/hexjasur/numeric-methods/commit/d8a016b1cd8b8bc9ae61fbca201d3699c4cae8f6))
+
+
+### 🐛 Bug Fixes
+
+* **bvp:** calculate boundary node index numerically 🐛 ([5ff6ee6](https://github.com/hexjasur/numeric-methods/commit/5ff6ee63634b0eb3176a334ab88ef622c30b26a1))
+* **bvp:** improve example input and mobile layout 🐛 ([6c58ba7](https://github.com/hexjasur/numeric-methods/commit/6c58ba7281f12ce46187c50a38d585b572a46701))
+* **bvp:** keep parameters separate and add step input 🎨 ([e0c1aab](https://github.com/hexjasur/numeric-methods/commit/e0c1aab38c4a6007f9c3e468afc8730ebd0b7ae9))
+* **collocation:** allow boundary endpoints as collocation nodes 🐛 ([9f005aa](https://github.com/hexjasur/numeric-methods/commit/9f005aa9cb5d7efdc31f03377f879d4ff0f509ef))
+* **collocation:** expand and simplify KaTeX formulas 🐛 ([a730fbf](https://github.com/hexjasur/numeric-methods/commit/a730fbfc48b922b42ec75d3c0d2bbc5c410670d1))
+* **collocation:** remove zero terms and show products clearly 🐛 ([a2f78a8](https://github.com/hexjasur/numeric-methods/commit/a2f78a80bcce4557de8b8d02eab8b8f91affae9b))
+* **next:** upgrade to patched 16.4.6 release 🔧 ([da8f866](https://github.com/hexjasur/numeric-methods/commit/da8f8660f15370ef2563c8bf49d75187c3d508b2))
+
 ## [3.4.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.3.0...numeric-methods-v3.4.0) (2026-11-04)
 
 
