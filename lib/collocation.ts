@@ -125,7 +125,7 @@ export function solveCollocation(input: CollocationInput): CollocationResult {
   const leftProjector = solveBoundaryPair(leftMatrix0, leftMatrix1, rightMatrix0, rightMatrix1, 1, 0);
   const rightProjector = solveBoundaryPair(leftMatrix0, leftMatrix1, rightMatrix0, rightMatrix1, 0, 1);
   const pointValues = input.points.map((point) => parseNumber(point, 'Kollokatsiya nuqtasi'));
-  if (pointValues.length !== input.n || pointValues.some((x) => !(x > a && x < b))) throw new Error('Barcha kollokatsiya nuqtalari (a,b) ichida va n ta bo‘lishi kerak.');
+  if (pointValues.length !== input.n || pointValues.some((x) => !(x >= a && x <= b))) throw new Error('Barcha kollokatsiya nuqtalari [a,b] kesmada va n ta bo‘lishi kerak.');
   if (pointValues.some((x) => Math.abs(numeric(input.a2, x)) < EPSILON)) throw new Error('A₂(x) kollokatsiya nuqtalarida nol bo‘lmasligi kerak.');
 
   const basis: CollocationBasis[] = Array.from({ length: input.n }, (_, index) => {
