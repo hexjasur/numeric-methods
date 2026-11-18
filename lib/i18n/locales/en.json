@@ -19,7 +19,8 @@
     "learn": "Uzbek learning guides",
     "newtonInterpolation": "Newton Interpolation",
     "adamsPredictor": "Adams Predictor Method",
-    "bvp": "Finite Difference BVP"
+    "bvp": "Finite Difference BVP",
+    "collocation": "Collocation Method"
   },
   "about": {
     "strip": "DOC-002 / ABOUT",

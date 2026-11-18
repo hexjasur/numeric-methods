@@ -19,7 +19,8 @@
     "learn": "Özbekça qöllanma",
     "newtonInterpolation": "Nyuton interpolyatsiyasi",
     "adamsPredictor": "Adams başorat qiluvçi usuli",
-    "bvp": "Chegaraviy masala"
+    "bvp": "Chegaraviy masala",
+    "collocation": "Kollokatsiya usuli"
   },
   "about": {
     "strip": "DOC-002 / HAQIDA",
