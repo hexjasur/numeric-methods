@@ -9,6 +9,7 @@ import {
   ArrowRightLeft,
   ArrowUpRight,
   BookOpenText,
+  Orbit,
   ExternalLink,
   Info,
   LayoutDashboard,
@@ -136,6 +137,12 @@ export function AppShell({
         icon: Activity,
         isNew: true,
       },
+      {
+        href: '/methods/collocation',
+        label: t('nav.collocation'),
+        icon: Orbit,
+        isNew: true,
+      },
     ];
 
     const sortedMethods = [...methodItems].sort((a, b) => {
@@ -183,6 +190,8 @@ export function AppShell({
               ? t('nav.newton')
           : pathname.startsWith('/methods/bvp')
             ? t('nav.bvp')
+          : pathname.startsWith('/methods/collocation')
+            ? t('nav.collocation')
             : pathname.startsWith('/methods/sweep')
                 ? t('nav.sweep')
                 : pathname.startsWith('/methods/lagrange')

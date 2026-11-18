@@ -36,6 +36,8 @@ export const siteConfig = {
     'nyuton interpolyatsiyasi',
     'nyutonning bölingan ayirmalari',
     'progonka usuli',
+    'kollokatsiya usuli',
+    'kollokatsiya nuqtalari',
     'quvib otish usuli',
     'tenglama ildizini topish',
     'differensial tenglamalar yeçiş',
@@ -59,6 +61,9 @@ export const siteConfig = {
     'интерполяция ньютона',
     'разделённые разности ньютона',
     'метод прогонки',
+    'метод коллокаций',
+    'точки коллокации',
+    'краевая задача методом коллокаций',
     'решение дифференциальных уравнений онлайн',
     'численное интегрирование',
     // Inglizça
@@ -78,6 +83,9 @@ export const siteConfig = {
     'newton divided differences',
     'thomas algorithm',
     'tridiagonal matrix algorithm',
+    'collocation method',
+    'collocation points',
+    'boundary value problem collocation',
     'math solver online',
   ],
 };

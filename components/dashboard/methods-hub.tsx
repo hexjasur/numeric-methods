@@ -189,6 +189,19 @@ const METHODS: MethodDef[] = [
     icon: Activity,
     accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
   },
+  {
+    id: 'collocation',
+    code: '13 / ODE',
+    category: 'odes',
+    categoryKey: 'dashboard.cat_odes',
+    titleKey: 'nav.collocation',
+    descKey: 'dashboard.desc_collocation',
+    href: '/methods/collocation',
+    formulaTex: "A_2(x)u'' + A_1(x)u' + A_0(x)u = f(x)",
+    orderTex: 'n',
+    icon: Activity,
+    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+  },
 ];
 
 function renderKatexSafe(tex: string, displayMode = false): string {
