@@ -3,11 +3,11 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - master
       - tauri-desktop
   pull_request:
     branches:
-      - main
+      - master
       - tauri-desktop
 
 concurrency:
