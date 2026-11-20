@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import { BookOpen, ChevronDown, Copy, Check } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
@@ -110,6 +111,8 @@ export function AdamsPredictorMethod() {
     ? [...rows.slice(0, 4), null, ...rows.slice(-2)]
     : rows;
 
+  const resultRef = useScrollToResult(calculation);
+
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="ODE-003" id="ADAMS" name={t('adams.strip')} />
@@ -122,29 +125,31 @@ export function AdamsPredictorMethod() {
         conditionSub={t('adams.condition')}
       />
 
-      <div className="grid grid-cols-1 items-start gap-4.5 xl:grid-cols-[minmax(280px,.7fr)_minmax(0,1.3fr)]">
-        <PsPanel>
-          <PsPanelHead eyebrow="INPUT / PARAMETERS" title={t('adams.parameters')} idx="01" />
-          <ODEParameterForm
-            inputs={inputs}
-            onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
-            onSubmit={(event) => {
-              event.preventDefault();
-              setCalculationInputs({ ...inputs });
-            }}
-            calculateLabel={t('adams.calculate')}
-            error={calculation.error}
-          />
-          <div className="mt-6 border-t border-line pt-4">
-            <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
-              {t('adams.formula_title')}
-            </p>
-            <div className="overflow-x-auto text-cyan" dangerouslySetInnerHTML={{ __html: formulaTex }} />
-            <p className="mt-3 text-xs leading-5 text-muted">{t('adams.startup_note')}</p>
-          </div>
-        </PsPanel>
+      <div className="grid grid-cols-1 items-start gap-4.5 lg:grid-cols-[minmax(280px,.7fr)_minmax(0,1.3fr)]">
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead eyebrow="INPUT / PARAMETERS" title={t('adams.parameters')} idx="01" />
+            <ODEParameterForm
+              inputs={inputs}
+              onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
+              onSubmit={(event) => {
+                event.preventDefault();
+                setCalculationInputs({ ...inputs });
+              }}
+              calculateLabel={t('adams.calculate')}
+              error={calculation.error}
+            />
+            <div className="mt-6 border-t border-line pt-4">
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
+                {t('adams.formula_title')}
+              </p>
+              <div className="overflow-x-auto text-cyan" dangerouslySetInnerHTML={{ __html: formulaTex }} />
+              <p className="mt-3 text-xs leading-5 text-muted">{t('adams.startup_note')}</p>
+            </div>
+          </PsPanel>
+        </div>
 
-        <div className="space-y-[18px]">
+        <div ref={resultRef} className="scroll-mt-24 space-y-[18px]">
           {last && (
             <PsPanel>
               <PsPanelHead eyebrow="INITIAL VALUE PROBLEM" title={t('adams.result_title')} idx="02" />
