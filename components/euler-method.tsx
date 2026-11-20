@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import {
   CartesianGrid,
@@ -166,6 +167,8 @@ export function EulerMethod() {
     html: katex.renderToString(tex, { throwOnError: false }),
   }));
 
+  const resultRef = useScrollToResult(calculation);
+
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="ELR-002" id="ODE" name={t('euler.strip')} />
@@ -179,25 +182,27 @@ export function EulerMethod() {
         conditionSub={t('euler.hero_condition')}
       />
 
-      <div className="grid grid-cols-1 xl:grid-cols-[minmax(300px,.82fr)_minmax(0,1.4fr)] gap-[18px] items-start mb-[18px]">
-        <PsPanel>
-          <PsPanelHead eyebrow="Input / Parametrlar" title={t('euler.panel_input')} idx="01" />
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(300px,.82fr)_minmax(0,1.4fr)] gap-[18px] items-start mb-[18px]">
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead eyebrow="Input / Parametrlar" title={t('euler.panel_input')} idx="01" />
 
-          <ODEParameterForm
-            inputs={inputs}
-            onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
-            onSubmit={(event) => {
-              event.preventDefault();
-              setCalculationInputs({ ...inputs });
-            }}
-            calculateLabel={t('euler.btn_calc')}
-            expressionHint={t('euler.label_syntax')}
-            error={calculation.error ? `${t('euler.err_calc')}: ${calculation.error}` : undefined}
-            submitClassName="flex w-full items-center justify-between gap-3 mt-1.5 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-          />
-        </PsPanel>
+            <ODEParameterForm
+              inputs={inputs}
+              onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
+              onSubmit={(event) => {
+                event.preventDefault();
+                setCalculationInputs({ ...inputs });
+              }}
+              calculateLabel={t('euler.btn_calc')}
+              expressionHint={t('euler.label_syntax')}
+              error={calculation.error ? `${t('euler.err_calc')}: ${calculation.error}` : undefined}
+              submitClassName="flex w-full items-center justify-between gap-3 mt-1.5 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+            />
+          </PsPanel>
+        </div>
 
-        <div className="grid gap-[18px] min-w-0">
+        <div ref={resultRef} className="scroll-mt-24 grid gap-[18px] min-w-0">
           <PsPanel className="flex min-h-[420px] flex-col">
             <PsPanelHead eyebrow={t('euler.plot_eyebrow')} title={t('euler.plot_title')} idx="02" />
             <div className="h-[350px] w-full min-w-0 flex-1">
