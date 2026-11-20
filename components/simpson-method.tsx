@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Info, Sigma } from 'lucide-react';
@@ -80,6 +81,8 @@ export function SimpsonMethod() {
 
   const renderKatex = (value: string) => katex.renderToString(value, { throwOnError: false });
 
+  const resultRef = useScrollToResult(result);
+
   return (
     <div className="smp relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="SMP-004" id="INTEGRAL" name={t('simpson.strip')} />
@@ -138,106 +141,108 @@ export function SimpsonMethod() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(300px,.85fr)_minmax(0,1.4fr)] gap-[18px] items-start">
         {/* INPUT PANEL */}
-        <PsPanel>
-          <PsPanelHead eyebrow="Input / Parametrlar" title={t('simpson.panel_input')} idx="01" />
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead eyebrow="Input / Parametrlar" title={t('simpson.panel_input')} idx="01" />
 
-          <PsNote icon={<Info size={18} />}>
-            <p className="flex flex-wrap items-center gap-1.5">
-              <b><MathInline tex="f(x)" /></b> — <span>{t('simpson.note_fn')}</span>
-            </p>
-          </PsNote>
+            <PsNote icon={<Info size={18} />}>
+              <p className="flex flex-wrap items-center gap-1.5">
+                <b><MathInline tex="f(x)" /></b> — <span>{t('simpson.note_fn')}</span>
+              </p>
+            </PsNote>
 
-          <label className="block mb-4">
-            <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
-              {t('simpson.label_fn')}
-            </span>
-            <div className="mt-2 w-full border border-brand bg-brand-soft rounded-lg flex items-center gap-2.5 px-3.5 focus-within:ring-4 focus-within:ring-brand-soft focus-within:bg-panel transition-all">
-              <b className="text-brand text-[15px] whitespace-nowrap"><MathInline tex="f(x) =" /></b>
-              <input
-                value={expression}
-                onChange={(e) => setExpression(e.target.value)}
-                placeholder="dx / sqrt(1 + 2x^2)"
-                aria-label={t('simpson.label_fn')}
-                spellCheck={false}
-                className="flex-1 min-w-0 border-0 outline-0 bg-transparent text-ink py-[15px] font-mono text-[16px] font-semibold"
-              />
-            </div>
-          </label>
-
-          {/* Live KaTeX integral preview */}
-          <div className="grid place-items-center min-h-[60px] -mt-1 mb-[18px] p-2.5 overflow-x-auto bg-bg-2 border border-dashed border-line-2 rounded-lg text-cyan text-[1.15em] [&_.katex-display]:my-0 [&_.katex]:text-[1.05em]">
-            {liveIntegralTex ? (
-              <span dangerouslySetInnerHTML={{ __html: liveIntegralTex }} />
-            ) : (
-              <span className="font-mono text-[13px] font-medium text-neg">
-                {t('simpson.plot_empty')}
+            <label className="block mb-4">
+              <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
+                {t('simpson.label_fn')}
               </span>
+              <div className="mt-2 w-full border border-brand bg-brand-soft rounded-lg flex items-center gap-2.5 px-3.5 focus-within:ring-4 focus-within:ring-brand-soft focus-within:bg-panel transition-all">
+                <b className="text-brand text-[15px] whitespace-nowrap"><MathInline tex="f(x) =" /></b>
+                <input
+                  value={expression}
+                  onChange={(e) => setExpression(e.target.value)}
+                  placeholder="dx / sqrt(1 + 2x^2)"
+                  aria-label={t('simpson.label_fn')}
+                  spellCheck={false}
+                  className="flex-1 min-w-0 border-0 outline-0 bg-transparent text-ink py-[15px] font-mono text-[16px] font-semibold"
+                />
+              </div>
+            </label>
+
+            {/* Live KaTeX integral preview */}
+            <div className="grid place-items-center min-h-[60px] -mt-1 mb-[18px] p-2.5 overflow-x-auto bg-bg-2 border border-dashed border-line-2 rounded-lg text-cyan text-[1.15em] [&_.katex-display]:my-0 [&_.katex]:text-[1.05em]">
+              {liveIntegralTex ? (
+                <span dangerouslySetInnerHTML={{ __html: liveIntegralTex }} />
+              ) : (
+                <span className="font-mono text-[13px] font-medium text-neg">
+                  {t('simpson.plot_empty')}
+                </span>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <label className="block">
+                <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
+                  <span>{t('simpson.label_a_text')}</span>
+                  <MathInline tex="a" />
+                </span>
+                <input
+                  value={a}
+                  onChange={(e) => setA(e.target.value)}
+                  type="number"
+                  step="any"
+                  className="w-full border border-line bg-panel rounded-lg py-3 px-3.5 font-mono text-[15px] font-semibold text-ink outline-0 focus:border-brand transition-all"
+                />
+              </label>
+              <label className="block">
+                <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
+                  <span>{t('simpson.label_b_text')}</span>
+                  <MathInline tex="b" />
+                </span>
+                <input
+                  value={b}
+                  onChange={(e) => setB(e.target.value)}
+                  type="number"
+                  step="any"
+                  className="w-full border border-line bg-panel rounded-lg py-3 px-3.5 font-mono text-[15px] font-semibold text-ink outline-0 focus:border-brand transition-all"
+                />
+              </label>
+            </div>
+
+            <label className="block mb-5">
+              <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
+                <span>{t('simpson.label_n_text')}</span>
+                <MathInline tex="n" />
+                <span className="text-muted font-normal text-xs">({t('simpson.label_n_even')})</span>
+              </span>
+              <input
+                value={n}
+                onChange={(e) => setN(e.target.value)}
+                type="number"
+                min="2"
+                max="1000"
+                step="2"
+                className="w-full border border-line bg-panel rounded-lg py-3 px-3.5 font-mono text-[15px] font-semibold text-ink outline-0 focus:border-brand transition-all"
+              />
+            </label>
+
+            <button
+              onClick={calculate}
+              className="w-full min-h-[50px] p-[14px_18px] bg-brand text-brand-ink border-0 rounded-lg font-sans text-[15px] font-[750] tracking-[.02em] cursor-pointer flex items-center justify-center gap-2.5 transition-all shadow-[0_12px_28px_-12px_var(--brand)] hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <span>{t('simpson.btn_calc')}</span>
+              <ArrowUpRight size={18} />
+            </button>
+
+            {error && (
+              <div className="mt-4 p-3.5 border border-neg/30 bg-neg/10 text-neg rounded-lg font-mono text-xs font-semibold leading-relaxed">
+                {error}
+              </div>
             )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            <label className="block">
-              <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
-                <span>{t('simpson.label_a_text')}</span>
-                <MathInline tex="a" />
-              </span>
-              <input
-                value={a}
-                onChange={(e) => setA(e.target.value)}
-                type="number"
-                step="any"
-                className="w-full border border-line bg-panel rounded-lg py-3 px-3.5 font-mono text-[15px] font-semibold text-ink outline-0 focus:border-brand transition-all"
-              />
-            </label>
-            <label className="block">
-              <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
-                <span>{t('simpson.label_b_text')}</span>
-                <MathInline tex="b" />
-              </span>
-              <input
-                value={b}
-                onChange={(e) => setB(e.target.value)}
-                type="number"
-                step="any"
-                className="w-full border border-line bg-panel rounded-lg py-3 px-3.5 font-mono text-[15px] font-semibold text-ink outline-0 focus:border-brand transition-all"
-              />
-            </label>
-          </div>
-
-          <label className="block mb-5">
-            <span className="flex items-center gap-1.5 text-[13.5px] font-[650] text-ink mb-1.5">
-              <span>{t('simpson.label_n_text')}</span>
-              <MathInline tex="n" />
-              <span className="text-muted font-normal text-xs">({t('simpson.label_n_even')})</span>
-            </span>
-            <input
-              value={n}
-              onChange={(e) => setN(e.target.value)}
-              type="number"
-              min="2"
-              max="1000"
-              step="2"
-              className="w-full border border-line bg-panel rounded-lg py-3 px-3.5 font-mono text-[15px] font-semibold text-ink outline-0 focus:border-brand transition-all"
-            />
-          </label>
-
-          <button
-            onClick={calculate}
-            className="w-full min-h-[50px] p-[14px_18px] bg-brand text-brand-ink border-0 rounded-lg font-sans text-[15px] font-[750] tracking-[.02em] cursor-pointer flex items-center justify-center gap-2.5 transition-all shadow-[0_12px_28px_-12px_var(--brand)] hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0"
-          >
-            <span>{t('simpson.btn_calc')}</span>
-            <ArrowUpRight size={18} />
-          </button>
-
-          {error && (
-            <div className="mt-4 p-3.5 border border-neg/30 bg-neg/10 text-neg rounded-lg font-mono text-xs font-semibold leading-relaxed">
-              {error}
-            </div>
-          )}
-        </PsPanel>
+          </PsPanel>
+        </div>
 
         {/* RESULTS & OUTPUT */}
-        <div className="space-y-[18px]">
+        <div ref={resultRef} className="scroll-mt-24 space-y-[18px]">
           {result ? (
             <>
               <ResultActions
