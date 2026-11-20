@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import { Activity } from 'lucide-react';
 import {
@@ -104,6 +105,8 @@ export function RungeKuttaMethod() {
       })),
     [rows, exactSolution],
   );
+  const resultRef = useScrollToResult(calculation);
+
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="ODE-002" id="RK4" name={t('rk4.strip')} />
@@ -116,33 +119,35 @@ export function RungeKuttaMethod() {
         conditionSub={t('rk4.condition')}
       />
 
-      <div className="grid grid-cols-1 items-start gap-4.5 xl:grid-cols-[minmax(280px,.7fr)_minmax(0,1.3fr)]">
-        <PsPanel>
-          <PsPanelHead
-            eyebrow="INPUT / PARAMETERS"
-            title={t('rk4.parameters')}
-            idx="01"
-          />
-          <ODEParameterForm
-            inputs={inputs}
-            onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
-            onSubmit={(event) => {
-              event.preventDefault();
-              setCalculationInputs({ ...inputs });
-            }}
-            calculateLabel={t('rk4.calculate')}
-            expressionHint={t('rk4.expression_hint')}
-            error={error}
-          />
-          <div className="mt-6 border-t border-line pt-4">
-            <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
-              {t('rk4.formulas')}
-            </p>
-            <MathFormula html={formula} />
-          </div>
-        </PsPanel>
+      <div className="grid grid-cols-1 items-start gap-4.5 lg:grid-cols-[minmax(280px,.7fr)_minmax(0,1.3fr)]">
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead
+              eyebrow="INPUT / PARAMETERS"
+              title={t('rk4.parameters')}
+              idx="01"
+            />
+            <ODEParameterForm
+              inputs={inputs}
+              onChange={(key, value) => setInputs((current) => ({ ...current, [key]: value }))}
+              onSubmit={(event) => {
+                event.preventDefault();
+                setCalculationInputs({ ...inputs });
+              }}
+              calculateLabel={t('rk4.calculate')}
+              expressionHint={t('rk4.expression_hint')}
+              error={error}
+            />
+            <div className="mt-6 border-t border-line pt-4">
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
+                {t('rk4.formulas')}
+              </p>
+              <MathFormula html={formula} />
+            </div>
+          </PsPanel>
+        </div>
 
-        <div className="space-y-[18px]">
+        <div ref={resultRef} className="scroll-mt-24 space-y-[18px]">
           <PsPanel>
             <PsPanelHead
               eyebrow="ANALYTIC / EXACT"
