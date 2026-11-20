@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.6.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.5.0...numeric-methods-v3.6.0) (2026-11-20)
+
+
+### ✨ Features
+
+* **ui:** add useScrollToResult hook for result visibility ✨ ([c185c75](https://github.com/hexjasur/numeric-methods/commit/c185c75a78fb1770e972ee4bed38ef49f3c69f2b))
+
+
+### 🐛 Bug Fixes
+
+* **adams:** align layout breakpoint with other methods and scroll to results 🎨 ([50284cb](https://github.com/hexjasur/numeric-methods/commit/50284cb6b90f7c71d4ec76ce74217a2b706e396c))
+* **bisection:** keep input sticky on desktop and scroll to results on phones 🐛 ([a7b21dc](https://github.com/hexjasur/numeric-methods/commit/a7b21dc3a28bb752126ba169136acd855bab4e03))
+* **bvp:** sticky scrollable input panel and scroll to results after solving 🐛 ([ad50ea6](https://github.com/hexjasur/numeric-methods/commit/ad50ea6d2c82748eab7daedb9850712ece068f86))
+* **collocation:** sticky scrollable input panel and scroll to results after calculation 🐛 ([c2f7378](https://github.com/hexjasur/numeric-methods/commit/c2f73783f51a80c7525122632432ef9c24ff17a3))
+* **euler:** align layout breakpoint with other methods and scroll to results 🎨 ([7e0dafd](https://github.com/hexjasur/numeric-methods/commit/7e0dafd06c1a42ed1562ff95925197d783d2929d))
+* **lagrange:** keep input sticky on desktop and scroll to results on phones 🐛 ([0d5bbfb](https://github.com/hexjasur/numeric-methods/commit/0d5bbfbfaee0e2f9d28b2c699dbc83411ebd43e7))
+* **newton-interpolation:** keep input sticky on desktop and scroll to results on phones 🐛 ([8bebd50](https://github.com/hexjasur/numeric-methods/commit/8bebd50480474fe6a7438ea22e9559854b4eb51d))
+* **newton:** keep input sticky on desktop and scroll to results on phones 🐛 ([271dd61](https://github.com/hexjasur/numeric-methods/commit/271dd610c4eb49741f6075d2568e0efe5e9b5b3c))
+* **rectangles:** keep input sticky on desktop and scroll to results on phones 🐛 ([972114c](https://github.com/hexjasur/numeric-methods/commit/972114c3c2fe30b8a492b09952742b3e2a1213c2))
+* **rk4:** align layout breakpoint with other methods and scroll to results 🎨 ([d16a917](https://github.com/hexjasur/numeric-methods/commit/d16a917a9a814c942d94fbc70a4b5c3e1774ecd7))
+* **simpson:** keep input sticky on desktop and scroll to results on phones 🐛 ([93cdfc2](https://github.com/hexjasur/numeric-methods/commit/93cdfc2a7ca49d20bb545dce2cc1b9d7909a7451))
+* **sweep:** scroll to result after calculation and keep inputs in sticky, scrollable panel 🐛 ([9c7ad67](https://github.com/hexjasur/numeric-methods/commit/9c7ad6766a8cee17fddfb54318d4b8ddf7af5063))
+* **trapezoid:** keep input sticky on desktop and scroll to results on phones 🐛 ([c051c36](https://github.com/hexjasur/numeric-methods/commit/c051c369f8fb05487a9e51cfa30b9efb345fe796))
+
 ## [3.5.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.4.0...numeric-methods-v3.5.0) (2026-11-18)
 
 
