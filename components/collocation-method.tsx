@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState, type FormEvent } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import { Calculator, Info } from 'lucide-react';
 import {
@@ -182,6 +183,7 @@ export function CollocationMethod() {
   const { t } = useI18n();
   const [input, setInput] = useState(INITIAL);
   const [result, setResult] = useState<CollocationResult | null>(null);
+  const resultRef = useScrollToResult(result);
   const [error, setError] = useState('');
   const update = (
     key: keyof CollocationInput,
@@ -262,7 +264,7 @@ export function CollocationMethod() {
         ]}
       />
       <div className="grid min-w-0 items-start gap-[18px] lg:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
-        <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-4">
+        <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
           <PsPanel>
             <PsPanelHead
               eyebrow={t('collocation.input_eyebrow')}
@@ -373,7 +375,7 @@ export function CollocationMethod() {
             </span>
           </PsNote>
         </aside>
-        <div className="min-w-0 space-y-[18px]">
+        <div ref={resultRef} className="min-w-0 scroll-mt-24 space-y-[18px]">
           {!result ? (
             <PsPanel>
               <PsPanelHead
