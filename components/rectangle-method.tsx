@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Info, Waves } from 'lucide-react';
@@ -96,6 +97,8 @@ export function RectangleMethod() {
   const visiblePoints = result ? (result.points.length <= 14 ? result.points : [...result.points.slice(0, 6), ...result.points.slice(-3)]) : [];
   const visibleSlices = result ? (result.slices.length <= 12 ? result.slices : [...result.slices.slice(0, 5), ...result.slices.slice(-3)]) : [];
 
+  const resultRef = useScrollToResult(result);
+
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="INTEGRAL / 006" id="QUADRATURE" name={t('rectangle.strip')} />
@@ -109,31 +112,33 @@ export function RectangleMethod() {
       ]} />
 
       <div className="grid grid-cols-1 items-start gap-[18px] lg:grid-cols-[minmax(290px,.78fr)_minmax(0,1.5fr)]">
-        <PsPanel>
-          <PsPanelHead eyebrow="Input / Parametrlar" title={t('rectangle.panel_input')} idx="01" />
-          <PsNote icon={<Info size={18} />}><p>{t('rectangle.note_fn')} <code className="font-mono text-ink">dx/sqrt(1+2*x^2)</code></p></PsNote>
-          <label className="mb-4 block"><span className="text-[13.5px] font-semibold text-ink">{t('rectangle.label_fn')}</span>
-            <div className="mt-2 flex items-center gap-2.5 rounded-lg border border-brand bg-brand-soft px-3.5 focus-within:ring-4 focus-within:ring-brand-soft">
-              <b className="whitespace-nowrap font-mono text-brand">f(x) =</b>
-              <input value={expression} onChange={(event) => setExpression(event.target.value)} aria-label={t('rectangle.label_fn')} spellCheck={false} className="min-w-0 flex-1 bg-transparent py-3.5 font-mono text-[15px] font-semibold text-ink outline-none" />
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead eyebrow="Input / Parametrlar" title={t('rectangle.panel_input')} idx="01" />
+            <PsNote icon={<Info size={18} />}><p>{t('rectangle.note_fn')} <code className="font-mono text-ink">dx/sqrt(1+2*x^2)</code></p></PsNote>
+            <label className="mb-4 block"><span className="text-[13.5px] font-semibold text-ink">{t('rectangle.label_fn')}</span>
+              <div className="mt-2 flex items-center gap-2.5 rounded-lg border border-brand bg-brand-soft px-3.5 focus-within:ring-4 focus-within:ring-brand-soft">
+                <b className="whitespace-nowrap font-mono text-brand">f(x) =</b>
+                <input value={expression} onChange={(event) => setExpression(event.target.value)} aria-label={t('rectangle.label_fn')} spellCheck={false} className="min-w-0 flex-1 bg-transparent py-3.5 font-mono text-[15px] font-semibold text-ink outline-none" />
+              </div>
+            </label>
+            <div className="mb-4 grid min-h-[65px] place-items-center overflow-x-auto rounded-lg border border-dashed border-line-2 bg-bg-2 p-2 text-cyan">
+              {integralTex ? <span dangerouslySetInnerHTML={{ __html: integralTex }} /> : <span className="text-xs text-neg">{t('rectangle.preview_error')}</span>}
             </div>
-          </label>
-          <div className="mb-4 grid min-h-[65px] place-items-center overflow-x-auto rounded-lg border border-dashed border-line-2 bg-bg-2 p-2 text-cyan">
-            {integralTex ? <span dangerouslySetInnerHTML={{ __html: integralTex }} /> : <span className="text-xs text-neg">{t('rectangle.preview_error')}</span>}
-          </div>
-          <div className="mb-4 grid grid-cols-2 gap-3">
-            <label className="block"><span className="text-[13px] font-semibold text-ink">{t('rectangle.label_a')}</span><input value={a} onChange={(event) => setA(event.target.value)} type="number" step="any" className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-[15px] text-ink outline-none focus:border-brand" /></label>
-            <label className="block"><span className="text-[13px] font-semibold text-ink">{t('rectangle.label_b')}</span><input value={b} onChange={(event) => setB(event.target.value)} type="number" step="any" className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-[15px] text-ink outline-none focus:border-brand" /></label>
-          </div>
-          <label className="mb-5 block"><span className="text-[13px] font-semibold text-ink">{t('rectangle.label_n')}</span><input value={n} onChange={(event) => setN(event.target.value)} type="number" min="1" max="1000" step="1" className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-[15px] text-ink outline-none focus:border-brand" /><small className="mt-1 block text-xs text-muted">{t('rectangle.n_hint')}</small></label>
-          <div className="grid grid-cols-2 gap-2">
-            <button onClick={calculate} className="flex min-h-[50px] items-center justify-center gap-2 rounded-lg border border-ink bg-ink px-3 py-3 text-sm font-bold text-panel transition hover:-translate-y-0.5 hover:border-brand hover:bg-brand">{t('rectangle.btn_calc')} <ArrowUpRight size={17} /></button>
-            <button onClick={() => { setExpression(EXAMPLE.expression); setA(EXAMPLE.a); setB(EXAMPLE.b); setN(EXAMPLE.n); setResult(null); setError(''); }} className="min-h-[50px] rounded-lg border border-line-2 bg-bg-2 px-3 py-3 text-xs font-semibold text-ink transition hover:border-brand hover:text-brand">{t('rectangle.btn_example')}</button>
-          </div>
-          {error && <div className="mt-4 rounded-lg border border-neg/30 bg-neg/10 p-3.5 font-mono text-xs font-semibold text-neg" role="alert">{error}</div>}
-        </PsPanel>
+            <div className="mb-4 grid grid-cols-2 gap-3">
+              <label className="block"><span className="text-[13px] font-semibold text-ink">{t('rectangle.label_a')}</span><input value={a} onChange={(event) => setA(event.target.value)} type="number" step="any" className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-[15px] text-ink outline-none focus:border-brand" /></label>
+              <label className="block"><span className="text-[13px] font-semibold text-ink">{t('rectangle.label_b')}</span><input value={b} onChange={(event) => setB(event.target.value)} type="number" step="any" className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-[15px] text-ink outline-none focus:border-brand" /></label>
+            </div>
+            <label className="mb-5 block"><span className="text-[13px] font-semibold text-ink">{t('rectangle.label_n')}</span><input value={n} onChange={(event) => setN(event.target.value)} type="number" min="1" max="1000" step="1" className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-[15px] text-ink outline-none focus:border-brand" /><small className="mt-1 block text-xs text-muted">{t('rectangle.n_hint')}</small></label>
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={calculate} className="flex min-h-[50px] items-center justify-center gap-2 rounded-lg border border-ink bg-ink px-3 py-3 text-sm font-bold text-panel transition hover:-translate-y-0.5 hover:border-brand hover:bg-brand">{t('rectangle.btn_calc')} <ArrowUpRight size={17} /></button>
+              <button onClick={() => { setExpression(EXAMPLE.expression); setA(EXAMPLE.a); setB(EXAMPLE.b); setN(EXAMPLE.n); setResult(null); setError(''); }} className="min-h-[50px] rounded-lg border border-line-2 bg-bg-2 px-3 py-3 text-xs font-semibold text-ink transition hover:border-brand hover:text-brand">{t('rectangle.btn_example')}</button>
+            </div>
+            {error && <div className="mt-4 rounded-lg border border-neg/30 bg-neg/10 p-3.5 font-mono text-xs font-semibold text-neg" role="alert">{error}</div>}
+          </PsPanel>
+        </div>
 
-        <div className="grid min-w-0 gap-[18px]">
+        <div ref={resultRef} className="scroll-mt-24 grid min-w-0 gap-[18px]">
           <PsPanel>
             <PsPanelHead eyebrow={t('rectangle.plot_eyebrow')} title={t('rectangle.plot_title')} idx="02" />
             <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label={t('rectangle.plot_title')}>

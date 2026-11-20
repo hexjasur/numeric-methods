@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState, type FormEvent } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import { Activity, Calculator, Check, Copy, Info } from 'lucide-react';
 import katex from 'katex';
 import { useI18n } from '@/components/i18n-provider';
@@ -121,6 +122,7 @@ export function BvpFiniteDifferenceMethod() {
   const [input, setInput] = useState(INITIAL);
   const [problemFields, setProblemFields] = useState(EMPTY_PROBLEM);
   const [result, setResult] = useState<BvpResult | null>(null);
+  const resultRef = useScrollToResult(result);
   const [error, setError] = useState('');
   const [parsedNotice, setParsedNotice] = useState('');
   const [copiedNotebook, setCopiedNotebook] = useState(false);
@@ -243,7 +245,7 @@ export function BvpFiniteDifferenceMethod() {
         { n: '03', t: t('bvp.map_3'), s: t('bvp.map_3_desc') },
       ]} />
       <div className="grid min-w-0 items-start gap-[18px] lg:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
-        <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-4">
+        <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
           <PsPanel>
             <PsPanelHead eyebrow={t('bvp.input_eyebrow')} title={t('bvp.input_title')} idx="01" />
             <form onSubmit={calculate} className="space-y-4">
@@ -304,7 +306,7 @@ export function BvpFiniteDifferenceMethod() {
           </PsPanel>
           <PsNote icon={<Info size={15} />} variant="cyan"><span className="text-sm">{t('bvp.note')}</span></PsNote>
         </aside>
-        <div className="min-w-0 space-y-[18px]">
+        <div ref={resultRef} className="min-w-0 scroll-mt-24 space-y-[18px]">
           {result && (
             <PsPanel>
               <PsPanelHead eyebrow={t('bvp.derivation_eyebrow')} title={t('bvp.notebook_title')} idx="02" />

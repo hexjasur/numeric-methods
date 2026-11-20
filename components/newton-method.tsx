@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Check, Info, Waves } from 'lucide-react';
@@ -72,6 +73,8 @@ export function NewtonMethod() {
           value: formatNewton(value.selectionValue),
         });
 
+  const resultRef = useScrollToResult(result);
+
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="NWT-001" id="ROOT" name={t('nav.newton')} />
@@ -96,113 +99,115 @@ export function NewtonMethod() {
       />
 
       <div className="grid grid-cols-1 items-start gap-[18px] lg:grid-cols-[minmax(300px,.82fr)_minmax(0,1.4fr)]">
-        <PsPanel>
-          <PsPanelHead eyebrow="Input / Parametrlar" title={t('newton.panel_input')} idx="01" />
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead eyebrow="Input / Parametrlar" title={t('newton.panel_input')} idx="01" />
 
-          <PsNote icon={<Info size={18} />}>
-            <p><b>{t('newton.note_method_title')}</b> — {t('newton.note_method')}</p>
-            <p className="mt-2">{t('newton.note_start')}</p>
-            <p className="mt-2">{t('newton.note_derivative')}</p>
-          </PsNote>
+            <PsNote icon={<Info size={18} />}>
+              <p><b>{t('newton.note_method_title')}</b> — {t('newton.note_method')}</p>
+              <p className="mt-2">{t('newton.note_start')}</p>
+              <p className="mt-2">{t('newton.note_derivative')}</p>
+            </PsNote>
 
-          <label className="mb-4 block">
-            <span className="flex items-baseline justify-between text-[13.5px] font-[650] text-ink">
-              {t('newton.label_fn')}
-              <em className="font-mono text-xs font-medium not-italic text-muted">Math.js</em>
-            </span>
-            <div className="mt-2 flex w-full items-center gap-2.5 rounded-lg border border-brand bg-brand-soft px-3.5 transition-all focus-within:bg-panel focus-within:ring-4 focus-within:ring-brand-soft">
-              <b className="whitespace-nowrap text-[15px] text-brand">f(x) =</b>
-              <input
-                value={expression}
-                onChange={(event) => setExpression(event.target.value)}
-                onKeyDown={(event) => event.key === 'Enter' && calculate()}
-                placeholder="x^3 + x - 1"
-                aria-label={t('newton.label_fn')}
-                spellCheck={false}
-                className="min-w-0 flex-1 border-0 bg-transparent py-[15px] font-mono text-[16px] font-semibold text-ink outline-0"
-              />
-            </div>
-          </label>
-
-          <div className="mb-[18px] grid min-h-[56px] place-items-center overflow-x-auto rounded-lg border border-dashed border-line-2 bg-bg-2 p-2.5 text-[1.1em] text-cyan [&_.katex]:text-[1.05em]">
-            {formula ? (
-              <span dangerouslySetInnerHTML={{ __html: formula }} />
-            ) : (
-              <span className="font-mono text-[13px] font-medium text-neg">{t('errors.nwt_fn')}</span>
-            )}
-          </div>
-
-          <div className="mb-4 grid grid-cols-2 gap-3">
-            <label className="block">
+            <label className="mb-4 block">
               <span className="flex items-baseline justify-between text-[13.5px] font-[650] text-ink">
-                a <em className="font-mono text-xs font-medium not-italic text-muted">{t('newton.label_a')}</em>
+                {t('newton.label_fn')}
+                <em className="font-mono text-xs font-medium not-italic text-muted">Math.js</em>
+              </span>
+              <div className="mt-2 flex w-full items-center gap-2.5 rounded-lg border border-brand bg-brand-soft px-3.5 transition-all focus-within:bg-panel focus-within:ring-4 focus-within:ring-brand-soft">
+                <b className="whitespace-nowrap text-[15px] text-brand">f(x) =</b>
+                <input
+                  value={expression}
+                  onChange={(event) => setExpression(event.target.value)}
+                  onKeyDown={(event) => event.key === 'Enter' && calculate()}
+                  placeholder="x^3 + x - 1"
+                  aria-label={t('newton.label_fn')}
+                  spellCheck={false}
+                  className="min-w-0 flex-1 border-0 bg-transparent py-[15px] font-mono text-[16px] font-semibold text-ink outline-0"
+                />
+              </div>
+            </label>
+
+            <div className="mb-[18px] grid min-h-[56px] place-items-center overflow-x-auto rounded-lg border border-dashed border-line-2 bg-bg-2 p-2.5 text-[1.1em] text-cyan [&_.katex]:text-[1.05em]">
+              {formula ? (
+                <span dangerouslySetInnerHTML={{ __html: formula }} />
+              ) : (
+                <span className="font-mono text-[13px] font-medium text-neg">{t('errors.nwt_fn')}</span>
+              )}
+            </div>
+
+            <div className="mb-4 grid grid-cols-2 gap-3">
+              <label className="block">
+                <span className="flex items-baseline justify-between text-[13.5px] font-[650] text-ink">
+                  a <em className="font-mono text-xs font-medium not-italic text-muted">{t('newton.label_a')}</em>
+                </span>
+                <input
+                  type="number"
+                  step="any"
+                  value={a}
+                  onChange={(event) => setA(event.target.value)}
+                  className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-[13px_14px] font-mono text-[15px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
+                />
+              </label>
+              <label className="block">
+                <span className="flex items-baseline justify-between text-[13.5px] font-[650] text-ink">
+                  b <em className="font-mono text-xs font-medium not-italic text-muted">{t('newton.label_b')}</em>
+                </span>
+                <input
+                  type="number"
+                  step="any"
+                  value={b}
+                  onChange={(event) => setB(event.target.value)}
+                  className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-[13px_14px] font-mono text-[15px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
+                />
+              </label>
+            </div>
+
+            <PsNote variant="orange" icon={<span className="font-mono text-lg font-bold leading-none">ε</span>}>
+              <p><b>{t('newton.label_eps')}</b> — {t('newton.note_eps')}</p>
+            </PsNote>
+
+            <label className="mb-[16px] block">
+              <span className="flex items-baseline justify-between text-[13.5px] font-[650] text-ink">
+                {t('newton.label_eps')} <em className="font-mono text-xs font-medium not-italic text-muted">ε / epsilon</em>
               </span>
               <input
                 type="number"
+                min="0.0000000001"
                 step="any"
-                value={a}
-                onChange={(event) => setA(event.target.value)}
+                value={epsilon}
+                onChange={(event) => setEpsilon(event.target.value)}
                 className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-[13px_14px] font-mono text-[15px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
               />
             </label>
-            <label className="block">
-              <span className="flex items-baseline justify-between text-[13.5px] font-[650] text-ink">
-                b <em className="font-mono text-xs font-medium not-italic text-muted">{t('newton.label_b')}</em>
-              </span>
-              <input
-                type="number"
-                step="any"
-                value={b}
-                onChange={(event) => setB(event.target.value)}
-                className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-[13px_14px] font-mono text-[15px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
-              />
-            </label>
-          </div>
 
-          <PsNote variant="orange" icon={<span className="font-mono text-lg font-bold leading-none">ε</span>}>
-            <p><b>{t('newton.label_eps')}</b> — {t('newton.note_eps')}</p>
-          </PsNote>
+            <button
+              className="mt-1.5 flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-ink bg-ink p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+              onClick={calculate}
+              type="button"
+            >
+              {t('newton.btn_calc')} <ArrowUpRight size={20} />
+            </button>
 
-          <label className="mb-[16px] block">
-            <span className="flex items-baseline justify-between text-[13.5px] font-[650] text-ink">
-              {t('newton.label_eps')} <em className="font-mono text-xs font-medium not-italic text-muted">ε / epsilon</em>
-            </span>
-            <input
-              type="number"
-              min="0.0000000001"
-              step="any"
-              value={epsilon}
-              onChange={(event) => setEpsilon(event.target.value)}
-              className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-[13px_14px] font-mono text-[15px] font-medium text-ink outline-none transition-all focus:border-brand focus:bg-panel focus:ring-4 focus:ring-brand-soft"
-            />
-          </label>
-
-          <button
-            className="mt-1.5 flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-ink bg-ink p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-            onClick={calculate}
-            type="button"
-          >
-            {t('newton.btn_calc')} <ArrowUpRight size={20} />
-          </button>
-
-          <div className="mt-[22px] border-t border-line pt-[16px]">
-            <strong className="mb-2.5 block font-mono text-xs font-semibold uppercase tracking-[.1em] text-muted">{t('newton.examples_title')}</strong>
-            <div className="flex flex-wrap gap-2">
-              {examples.map((example) => (
-                <button
-                  key={example.label}
-                  type="button"
-                  className="cursor-pointer rounded-md border border-line-2 bg-bg-2 px-2.5 py-1.5 font-mono text-[12px] font-semibold text-brand transition-all hover:-translate-y-[1px] hover:border-brand hover:bg-brand-soft focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-                  onClick={() => applyExample(example)}
-                >
-                  {t(example.label)}
-                </button>
-              ))}
+            <div className="mt-[22px] border-t border-line pt-[16px]">
+              <strong className="mb-2.5 block font-mono text-xs font-semibold uppercase tracking-[.1em] text-muted">{t('newton.examples_title')}</strong>
+              <div className="flex flex-wrap gap-2">
+                {examples.map((example) => (
+                  <button
+                    key={example.label}
+                    type="button"
+                    className="cursor-pointer rounded-md border border-line-2 bg-bg-2 px-2.5 py-1.5 font-mono text-[12px] font-semibold text-brand transition-all hover:-translate-y-[1px] hover:border-brand hover:bg-brand-soft focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+                    onClick={() => applyExample(example)}
+                  >
+                    {t(example.label)}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        </PsPanel>
+          </PsPanel>
+        </div>
 
-        <div className="grid min-w-0 gap-[18px]">
+        <div ref={resultRef} className="scroll-mt-24 grid min-w-0 gap-[18px]">
           {result && (
             <ResultActions
               summaryText={`Newton method: f(x) = ${expression}, [a, b] = [${a}, ${b}], ε = ${epsilon}; x ≈ ${formatNewton(result.root, 8)}, residual = ${formatNewton(result.residual, 8)} (${result.iterations} iterations)`}

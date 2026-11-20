@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Info, Minus, Plus } from 'lucide-react';
@@ -262,6 +263,8 @@ export function NewtonInterpolationMethod() {
     ? (result.points.length - 1)
     : 0;
 
+  const resultRef = useScrollToResult(result);
+
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="INTERPOLATION / 010" id="NEWTON" name={t('newtonInterpolation.strip')} />
@@ -285,52 +288,54 @@ export function NewtonInterpolationMethod() {
       />
 
       <div className="grid grid-cols-1 items-start gap-[18px] lg:grid-cols-[minmax(300px,.78fr)_minmax(0,1.4fr)]">
-        <PsPanel>
-          <PsPanelHead eyebrow={t('newtonInterpolation.input_eyebrow')} title={t('newtonInterpolation.input_title')} idx="01" />
-          <PsNote icon={<Info size={18} />}>
-            <p>{t('newtonInterpolation.note_points')} <code className="font-mono text-ink">1/2</code>, <code className="font-mono text-ink">-1</code>. {t('newtonInterpolation.note_unique')}</p>
-          </PsNote>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              calculate();
-            }}
-            className="mt-4"
-          >
-            <PointInputTable points={points} onChange={updatePoint} />
-            <div className="my-3 flex items-center gap-2">
-              <span className="flex-1 text-xs text-muted">{t('newtonInterpolation.point_controls')}</span>
-              <button type="button" disabled={points.length >= MAX_POINTS} onClick={addPoint} aria-label={t('newtonInterpolation.add_point')} className="grid h-9 w-9 place-items-center rounded-md border border-line-2 bg-bg-2 text-ink hover:border-brand hover:text-brand disabled:opacity-40"><Plus size={17} /></button>
-              <button type="button" disabled={points.length <= 2} onClick={removePoint} aria-label={t('newtonInterpolation.remove_point')} className="grid h-9 w-9 place-items-center rounded-md border border-line-2 bg-bg-2 text-ink hover:border-brand hover:text-brand disabled:opacity-40"><Minus size={17} /></button>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <label className="block text-[13px] font-semibold text-ink">
-                {t('newtonInterpolation.mode')}
-                <select value={mode} onChange={(event) => { setMode(event.target.value as NewtonInterpolationMode); setResult(null); setError(''); }} className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-sm text-ink outline-none focus:border-brand">
-                  <option value="divided">{t('newtonInterpolation.mode_divided')}</option>
-                  <option value="finite">{t('newtonInterpolation.mode_finite')}</option>
-                </select>
-              </label>
-              <label className="block text-[13px] font-semibold text-ink">
-                {t('newtonInterpolation.target_x')}
-                <input value={targetX} onChange={(event) => { setTargetX(event.target.value); setResult(null); setError(''); }} className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-sm text-ink outline-none focus:border-brand" inputMode="decimal" />
-              </label>
-            </div>
-            <div className="my-4 grid gap-2 sm:grid-cols-1">
-              {EXAMPLES.map((example, index) => (
-                <button key={example.labelKey} type="button" onClick={() => applyExample(index)} className="min-h-10 rounded-md border border-line bg-bg-2 px-3 py-2 text-left text-xs font-semibold text-muted transition-colors hover:border-brand hover:text-brand">
-                  {t(example.labelKey)}
-                </button>
-              ))}
-            </div>
-            <button type="submit" className="flex min-h-[50px] w-full items-center justify-center gap-2 rounded-lg border border-ink bg-ink px-3 py-3 text-sm font-bold text-panel transition hover:-translate-y-0.5 hover:border-brand hover:bg-brand">
-              {t('newtonInterpolation.calculate')} <ArrowUpRight size={17} />
-            </button>
-            {error && <div className="mt-4 rounded-lg border border-neg/30 bg-neg/10 p-3.5 font-mono text-xs font-semibold text-neg" role="alert">{error}</div>}
-          </form>
-        </PsPanel>
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead eyebrow={t('newtonInterpolation.input_eyebrow')} title={t('newtonInterpolation.input_title')} idx="01" />
+            <PsNote icon={<Info size={18} />}>
+              <p>{t('newtonInterpolation.note_points')} <code className="font-mono text-ink">1/2</code>, <code className="font-mono text-ink">-1</code>. {t('newtonInterpolation.note_unique')}</p>
+            </PsNote>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                calculate();
+              }}
+              className="mt-4"
+            >
+              <PointInputTable points={points} onChange={updatePoint} />
+              <div className="my-3 flex items-center gap-2">
+                <span className="flex-1 text-xs text-muted">{t('newtonInterpolation.point_controls')}</span>
+                <button type="button" disabled={points.length >= MAX_POINTS} onClick={addPoint} aria-label={t('newtonInterpolation.add_point')} className="grid h-9 w-9 place-items-center rounded-md border border-line-2 bg-bg-2 text-ink hover:border-brand hover:text-brand disabled:opacity-40"><Plus size={17} /></button>
+                <button type="button" disabled={points.length <= 2} onClick={removePoint} aria-label={t('newtonInterpolation.remove_point')} className="grid h-9 w-9 place-items-center rounded-md border border-line-2 bg-bg-2 text-ink hover:border-brand hover:text-brand disabled:opacity-40"><Minus size={17} /></button>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className="block text-[13px] font-semibold text-ink">
+                  {t('newtonInterpolation.mode')}
+                  <select value={mode} onChange={(event) => { setMode(event.target.value as NewtonInterpolationMode); setResult(null); setError(''); }} className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-sm text-ink outline-none focus:border-brand">
+                    <option value="divided">{t('newtonInterpolation.mode_divided')}</option>
+                    <option value="finite">{t('newtonInterpolation.mode_finite')}</option>
+                  </select>
+                </label>
+                <label className="block text-[13px] font-semibold text-ink">
+                  {t('newtonInterpolation.target_x')}
+                  <input value={targetX} onChange={(event) => { setTargetX(event.target.value); setResult(null); setError(''); }} className="mt-2 w-full rounded-lg border border-line-2 bg-bg-2 p-3 font-mono text-sm text-ink outline-none focus:border-brand" inputMode="decimal" />
+                </label>
+              </div>
+              <div className="my-4 grid gap-2 sm:grid-cols-1">
+                {EXAMPLES.map((example, index) => (
+                  <button key={example.labelKey} type="button" onClick={() => applyExample(index)} className="min-h-10 rounded-md border border-line bg-bg-2 px-3 py-2 text-left text-xs font-semibold text-muted transition-colors hover:border-brand hover:text-brand">
+                    {t(example.labelKey)}
+                  </button>
+                ))}
+              </div>
+              <button type="submit" className="flex min-h-[50px] w-full items-center justify-center gap-2 rounded-lg border border-ink bg-ink px-3 py-3 text-sm font-bold text-panel transition hover:-translate-y-0.5 hover:border-brand hover:bg-brand">
+                {t('newtonInterpolation.calculate')} <ArrowUpRight size={17} />
+              </button>
+              {error && <div className="mt-4 rounded-lg border border-neg/30 bg-neg/10 p-3.5 font-mono text-xs font-semibold text-neg" role="alert">{error}</div>}
+            </form>
+          </PsPanel>
+        </div>
 
-        <div className="grid min-w-0 gap-[18px]">
+        <div ref={resultRef} className="scroll-mt-24 grid min-w-0 gap-[18px]">
           {result ? (
             <>
               <ResultActions

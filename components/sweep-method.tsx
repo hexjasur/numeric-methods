@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Calculator, Check, Info } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { ResultActions } from '@/components/ui/result-actions';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import {
   PsHero,
   PsMap,
@@ -109,6 +110,7 @@ export function SweepMethod() {
   const [precision, setPrecision] = useState(6);
   const [rows, setRows] = useState<SweepInputRow[]>(() => makeDefaultRows(4));
   const [result, setResult] = useState<SweepResult | null>(null);
+  const resultRef = useScrollToResult(result);
   const [error, setError] = useState('');
 
   const clearResult = () => {
@@ -203,7 +205,7 @@ export function SweepMethod() {
       />
 
       <div className="grid items-start gap-[18px] lg:grid-cols-[minmax(290px,340px)_minmax(0,1fr)]">
-        <aside className="space-y-[18px] lg:sticky lg:top-4">
+        <aside className="space-y-[18px] lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
           <PsPanel>
             <PsPanelHead
               eyebrow={t('sweep.panel_settings_eyebrow')}
@@ -402,7 +404,7 @@ export function SweepMethod() {
             />
           )}
 
-          <section className={`flex min-h-[150px] flex-wrap items-center justify-between gap-5 rounded-[10px] border p-6 shadow-[var(--shadow)] transition-colors ${result ? 'border-brand bg-[linear-gradient(135deg,var(--brand-soft),var(--panel)_70%)]' : 'border-line bg-panel'}`}>
+          <section ref={resultRef} className={`scroll-mt-24 flex min-h-[150px] flex-wrap items-center justify-between gap-5 rounded-[10px] border p-6 shadow-[var(--shadow)] transition-colors ${result ? 'border-brand bg-[linear-gradient(135deg,var(--brand-soft),var(--panel)_70%)]' : 'border-line bg-panel'}`}>
             <div className="min-w-0 flex-1">
               <span className="block font-mono text-xs font-semibold uppercase tracking-[.14em] text-muted">{t('sweep.result_eyebrow')}</span>
               <div className="my-3 flex flex-wrap gap-2">

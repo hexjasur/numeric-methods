@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Check, Info, Waves } from 'lucide-react';
@@ -44,6 +45,8 @@ export function BisectionMethod() {
   const renderKatex = (value: string) => katex.renderToString(value, { throwOnError: false });
   const sign = (v: number) => (v < 0 ? 'text-neg' : 'text-pos');
 
+  const resultRef = useScrollToResult(result);
+
   return (
     <div className="bm relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="BSC-001" id="ROOT" name={t('bisection.strip')} />
@@ -69,112 +72,114 @@ export function BisectionMethod() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(300px,.82fr)_minmax(0,1.4fr)] gap-[18px] items-start">
         {/* INPUT */}
-        <PsPanel>
-          <PsPanelHead eyebrow="Input / Parametrlar" title={t('bisection.panel_input')} idx="01" />
+        <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+          <PsPanel>
+            <PsPanelHead eyebrow="Input / Parametrlar" title={t('bisection.panel_input')} idx="01" />
 
-          <PsNote icon={<Info size={18} />}>
-            <p><b>{t('bisection.label_fn').split(' ')[0]}</b> — {t('bisection.note_fn')} <code>x^3 + x - 1</code></p>
-          </PsNote>
+            <PsNote icon={<Info size={18} />}>
+              <p><b>{t('bisection.label_fn').split(' ')[0]}</b> — {t('bisection.note_fn')} <code>x^3 + x - 1</code></p>
+            </PsNote>
 
-          <label className="block mb-4">
-            <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
-              {t('bisection.label_fn')} <em className="font-mono text-xs font-medium not-italic text-muted">{t('bisection.label_syntax')}</em>
-            </span>
-            <div className="mt-2 w-full border border-brand bg-brand-soft rounded-lg flex items-center gap-2.5 px-3.5 focus-within:ring-4 focus-within:ring-brand-soft focus-within:bg-panel transition-all">
-              <b className="text-brand text-[15px] whitespace-nowrap">f(x) =</b>
-              <input
-                value={expression}
-                onChange={(e) => setExpression(e.target.value)}
-                placeholder="x^3 + x - 1"
-                aria-label={t('bisection.label_fn')}
-                spellCheck={false}
-                className="flex-1 min-w-0 border-0 outline-0 bg-transparent text-ink py-[15px] font-mono text-[16px] font-semibold"
-              />
-            </div>
-          </label>
-
-          <div className="grid place-items-center min-h-[56px] -mt-1 mb-[18px] p-2.5 overflow-x-auto bg-bg-2 border border-dashed border-line-2 rounded-lg text-cyan text-[1.1em] [&_.katex]:text-[1.05em]">
-            {formula ? (
-              <span dangerouslySetInnerHTML={{ __html: formula }} />
-            ) : (
-              <span className="font-mono text-[13px] font-medium text-neg">
-                {t('bisection.err_fn')}
-              </span>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            <label className="block">
+            <label className="block mb-4">
               <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
-                a <em className="font-mono text-xs font-medium not-italic text-muted">{t('bisection.label_a').split(' ')[1] ?? 'start'}</em>
+                {t('bisection.label_fn')} <em className="font-mono text-xs font-medium not-italic text-muted">{t('bisection.label_syntax')}</em>
+              </span>
+              <div className="mt-2 w-full border border-brand bg-brand-soft rounded-lg flex items-center gap-2.5 px-3.5 focus-within:ring-4 focus-within:ring-brand-soft focus-within:bg-panel transition-all">
+                <b className="text-brand text-[15px] whitespace-nowrap">f(x) =</b>
+                <input
+                  value={expression}
+                  onChange={(e) => setExpression(e.target.value)}
+                  placeholder="x^3 + x - 1"
+                  aria-label={t('bisection.label_fn')}
+                  spellCheck={false}
+                  className="flex-1 min-w-0 border-0 outline-0 bg-transparent text-ink py-[15px] font-mono text-[16px] font-semibold"
+                />
+              </div>
+            </label>
+
+            <div className="grid place-items-center min-h-[56px] -mt-1 mb-[18px] p-2.5 overflow-x-auto bg-bg-2 border border-dashed border-line-2 rounded-lg text-cyan text-[1.1em] [&_.katex]:text-[1.05em]">
+              {formula ? (
+                <span dangerouslySetInnerHTML={{ __html: formula }} />
+              ) : (
+                <span className="font-mono text-[13px] font-medium text-neg">
+                  {t('bisection.err_fn')}
+                </span>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <label className="block">
+                <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
+                  a <em className="font-mono text-xs font-medium not-italic text-muted">{t('bisection.label_a').split(' ')[1] ?? 'start'}</em>
+                </span>
+                <input
+                  type="number"
+                  step="any"
+                  value={a}
+                  onChange={(e) => setA(e.target.value)}
+                  className="mt-2 w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-[15px] font-medium p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
+                />
+              </label>
+              <label className="block">
+                <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
+                  b <em className="font-mono text-xs font-medium not-italic text-muted">{t('bisection.label_b').split(' ')[1] ?? 'end'}</em>
+                </span>
+                <input
+                  type="number"
+                  step="any"
+                  value={b}
+                  onChange={(e) => setB(e.target.value)}
+                  className="mt-2 w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-[15px] font-medium p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
+                />
+              </label>
+            </div>
+
+            <PsNote variant="orange" icon={<span className="font-mono font-bold text-lg leading-none">ε</span>}>
+              <p><b>{t('bisection.label_eps')}</b> — {t('bisection.note_eps').split(' — ')[1]}</p>
+            </PsNote>
+
+            <label className="block mb-[16px]">
+              <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
+                {t('bisection.label_eps')} <em className="font-mono text-xs font-medium not-italic text-muted">ε / epsilon</em>
               </span>
               <input
                 type="number"
                 step="any"
-                value={a}
-                onChange={(e) => setA(e.target.value)}
+                min="0.000001"
+                value={epsilon}
+                onChange={(e) => setEpsilon(e.target.value)}
                 className="mt-2 w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-[15px] font-medium p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
               />
             </label>
-            <label className="block">
-              <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
-                b <em className="font-mono text-xs font-medium not-italic text-muted">{t('bisection.label_b').split(' ')[1] ?? 'end'}</em>
-              </span>
-              <input
-                type="number"
-                step="any"
-                value={b}
-                onChange={(e) => setB(e.target.value)}
-                className="mt-2 w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-[15px] font-medium p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
-              />
-            </label>
-          </div>
 
-          <PsNote variant="orange" icon={<span className="font-mono font-bold text-lg leading-none">ε</span>}>
-            <p><b>{t('bisection.label_eps')}</b> — {t('bisection.note_eps').split(' — ')[1]}</p>
-          </PsNote>
+            <button 
+              className="flex w-full items-center justify-between gap-3 mt-1.5 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+              onClick={calculate}
+            >
+              {t('bisection.btn_calc')} <ArrowUpRight size={20} />
+            </button>
 
-          <label className="block mb-[16px]">
-            <span className="flex justify-between items-baseline text-[13.5px] font-[650] text-ink">
-              {t('bisection.label_eps')} <em className="font-mono text-xs font-medium not-italic text-muted">ε / epsilon</em>
-            </span>
-            <input
-              type="number"
-              step="any"
-              min="0.000001"
-              value={epsilon}
-              onChange={(e) => setEpsilon(e.target.value)}
-              className="mt-2 w-full border border-line-2 bg-bg-2 rounded-lg text-ink font-mono text-[15px] font-medium p-[13px_14px] outline-none focus:border-brand focus:ring-4 focus:ring-brand-soft focus:bg-panel transition-all"
-            />
-          </label>
-
-          <button 
-            className="flex w-full items-center justify-between gap-3 mt-1.5 p-[16px_18px] font-sans text-[15px] font-[650] tracking-[-.01em] cursor-pointer text-brand-ink bg-ink border border-ink rounded-lg transition-all hover:-translate-y-0.5 hover:bg-brand hover:border-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-            onClick={calculate}
-          >
-            {t('bisection.btn_calc')} <ArrowUpRight size={20} />
-          </button>
-
-          <div className="mt-[22px] pt-[16px] border-t border-line">
-            <strong className="block mb-2.5 font-mono text-xs font-semibold tracking-[.1em] uppercase text-muted">{t('bisection.sample_formula')}</strong>
-            <div className="flex flex-wrap gap-2">
-              {['sin(x)', 'cos(x)', 'sqrt(x)', 'log(x)', 'x^2', 'e^x'].map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  className="cursor-pointer py-1.5 px-2.5 border border-line-2 bg-bg-2 text-brand rounded-md font-mono text-[13px] font-semibold transition-all hover:border-brand hover:bg-brand-soft hover:-translate-y-[1px] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-                  onClick={() => setExpression((v) => (v.trim() ? `${v} + ${t}` : t))}
-                  title="Ifodaga qöşiş"
-                >
-                  {t}
-                </button>
-              ))}
+            <div className="mt-[22px] pt-[16px] border-t border-line">
+              <strong className="block mb-2.5 font-mono text-xs font-semibold tracking-[.1em] uppercase text-muted">{t('bisection.sample_formula')}</strong>
+              <div className="flex flex-wrap gap-2">
+                {['sin(x)', 'cos(x)', 'sqrt(x)', 'log(x)', 'x^2', 'e^x'].map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    className="cursor-pointer py-1.5 px-2.5 border border-line-2 bg-bg-2 text-brand rounded-md font-mono text-[13px] font-semibold transition-all hover:border-brand hover:bg-brand-soft hover:-translate-y-[1px] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+                    onClick={() => setExpression((v) => (v.trim() ? `${v} + ${t}` : t))}
+                    title="Ifodaga qöşiş"
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        </PsPanel>
+          </PsPanel>
+        </div>
 
         {/* OUTPUT */}
-        <div className="grid gap-[18px] min-w-0">
+        <div ref={resultRef} className="scroll-mt-24 grid gap-[18px] min-w-0">
           {result && (
             <ResultActions
               summaryText={`Biseksiya usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], eps = ${epsilon} -> x ≈ ${format(result.root, 8)} (${result.iterations} iteratsiyada)`}
