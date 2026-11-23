@@ -2,21 +2,21 @@ name: Block v2 PRs
 
 on:
   pull_request:
+    types: [opened, reopened]
     branches: [master]
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
-  block-v2:
+  close-v2-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Fail if PR comes from v2 branch
+      - name: Close PR if it comes from v2
+        if: github.head_ref == 'v2'
         env:
-          HEAD_REF: ${{ github.head_ref }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
-          if [ "$HEAD_REF" = "v2" ]; then
-            echo "::error::v2 branch PR'lari master'ga birlashtirilmaydi. Bu branch alohida loyiha."
-            exit 1
-          fi
-          echo "OK: $HEAD_REF -> master"
+          gh pr close "$PR_URL" --comment "v2 branch master'ga birlashtirilmaydi. Bu alohida loyiha. PR avtomatik yopildi."
