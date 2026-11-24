@@ -3,5 +3,10 @@
   "framework": "nextjs",
   "installCommand": "bun install --frozen-lockfile",
   "buildCommand": "bun run build",
-  "outputDirectory": null
+  "outputDirectory": null,
+  "git": {
+    "deploymentEnabled": {
+      "v2": false
+    }
+  }
 }
