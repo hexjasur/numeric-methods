@@ -27,6 +27,15 @@ import { PsHero, PsStrip, PsPanel, PsPanelHead } from '@/components/ui/print-str
 import { useI18n } from '@/components/i18n-provider';
 import packageJson from '@/package.json';
 
+async function openExternalLink(url: string): Promise<void> {
+  if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+    const { openUrl } = await import('@tauri-apps/plugin-opener');
+    await openUrl(url);
+    return;
+  }
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
 export function AboutPage() {
   const { t } = useI18n();
 
@@ -224,6 +233,12 @@ export function AboutPage() {
                 href="https://t.me/KanYonA"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(event) => {
+                  if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+                    event.preventDefault();
+                    void openExternalLink('https://t.me/KanYonA');
+                  }
+                }}
                 className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-line bg-panel hover:bg-brand-soft hover:border-brand/40 text-ink text-xs font-semibold transition-all"
               >
                 <Send size={14} className="text-brand" />
@@ -240,9 +255,15 @@ export function AboutPage() {
               </a>
 
               <a
-                href="https://github.com/hexjasur/numeric-methods"
+                href="https://github.com/hexjasur"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(event) => {
+                  if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+                    event.preventDefault();
+                    void openExternalLink('https://github.com/hexjasur');
+                  }
+                }}
                 className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-line bg-panel hover:bg-brand-soft hover:border-brand/40 text-ink text-xs font-semibold transition-all"
               >
                 <Code2 size={14} className="text-brand" />
@@ -349,6 +370,12 @@ export function AboutPage() {
                     href={h.link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(event) => {
+                      if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+                        event.preventDefault();
+                        void openExternalLink(h.link);
+                      }
+                    }}
                     className="inline-flex items-center gap-1 font-mono text-xs text-cyan hover:underline"
                   >
                     <span>v2.sonli-usullar.uz</span>

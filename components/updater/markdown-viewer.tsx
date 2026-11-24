@@ -2,6 +2,17 @@
 
 import React from 'react';
 
+async function openReleaseLink(url: string): Promise<void> {
+  const parsed = new URL(url);
+  if (parsed.protocol !== 'https:' || parsed.hostname !== 'github.com') return;
+  if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+    const { openUrl } = await import('@tauri-apps/plugin-opener');
+    await openUrl(parsed.toString());
+    return;
+  }
+  window.open(parsed.toString(), '_blank', 'noopener,noreferrer');
+}
+
 interface MarkdownViewerProps {
   content: string;
 }
@@ -41,6 +52,12 @@ export function MarkdownViewer({ content }: MarkdownViewerProps) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(event) => {
+              if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+                event.preventDefault();
+                void openReleaseLink(url);
+              }
+            }}
             className="text-[var(--cyan)] underline hover:text-[var(--brand)] transition-colors"
           >
             {title}

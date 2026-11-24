@@ -37,6 +37,32 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
 
   const isCheckingRef = useRef(false);
 
+  useEffect(() => {
+    if (!isUpdating) return;
+
+    const preventContextMenu = (event: MouseEvent) => {
+      event.preventDefault();
+    };
+    const preventReloadKeys = (event: KeyboardEvent) => {
+      const key = event.key.toLowerCase();
+      const blocked =
+        key === 'f5' ||
+        (event.ctrlKey && key === 'r') ||
+        (event.ctrlKey && event.shiftKey && key === 'r');
+      if (blocked) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
+    document.addEventListener('contextmenu', preventContextMenu);
+    window.addEventListener('keydown', preventReloadKeys, true);
+    return () => {
+      document.removeEventListener('contextmenu', preventContextMenu);
+      window.removeEventListener('keydown', preventReloadKeys, true);
+    };
+  }, [isUpdating]);
+
   const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
@@ -170,7 +196,10 @@ export function UpdateProvider({ children }: { children: React.ReactNode }) {
               const { relaunch } = await import('@tauri-apps/plugin-process');
               await relaunch();
             } catch {
-              window.location.reload();
+              setIsUpdating(false);
+              setProgress(0);
+              setShowModal(true);
+              showToast(t('updater.native_update_failed'));
             }
           }, 1500);
           return;

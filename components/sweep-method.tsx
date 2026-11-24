@@ -1,9 +1,9 @@
 'use client';
 
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
-import { ArrowUpRight, Calculator, Check, Info } from 'lucide-react';
+import { ArrowUpRight, Calculator, Check, Info, Link2 } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { ResultActions } from '@/components/ui/result-actions';
 import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
@@ -56,6 +56,15 @@ function MathMarkup({
 }
 
 function makeDefaultRows(size: number): SweepInputRow[] {
+  return Array.from({ length: size }, () => ({
+    a: '',
+    b: '',
+    c: '',
+    d: '',
+  }));
+}
+
+function makeExactExampleRows(size: number): SweepInputRow[] {
   return Array.from({ length: size }, (_, index) => {
     const a = index === 0 ? 0 : -1;
     const b = 4;
@@ -84,13 +93,13 @@ function getForwardFormulas(
   const pivotTex =
     i === 1
       ? `m_1 = b_1 = ${current(step.b)} = ${current(step.pivot)}`
-      : `m_{${i}} = b_{${i}} + a_{${i}}\\alpha_{${i - 1}} = ${current(step.b)} + (${current(step.a)})(${current(step.previousAlpha ?? 0)}) = ${current(step.pivot)}`;
-  const alphaTex = `\\alpha_{${i}} = -\\frac{c_{${i}}}{m_{${i}}} = -\\frac{${current(step.c)}}{${current(step.pivot)}} = ${current(step.alpha)}`;
-  const betaTex =
+      : `m_{${i}} = b_{${i}} + a_{${i}}u_{${i - 1}} = ${current(step.b)} + (${current(step.a)})(${current(step.previousAlpha ?? 0)}) = ${current(step.pivot)}`;
+  const uTex = `u_{${i}} = -\\frac{c_{${i}}}{m_{${i}}} = -\\frac{${current(step.c)}}{${current(step.pivot)}} = ${current(step.alpha)}`;
+  const vTex =
     i === 1
-      ? `\\beta_1 = \\frac{d_1}{m_1} = \\frac{${current(step.d)}}{${current(step.pivot)}} = ${current(step.beta)}`
-      : `\\beta_{${i}} = \\frac{d_{${i}} - a_{${i}}\\beta_{${i - 1}}}{m_{${i}}} = \\frac{${current(step.d)} - (${current(step.a)})(${current(step.previousBeta ?? 0)})}{${current(step.pivot)}} = ${current(step.beta)}`;
-  return [pivotTex, alphaTex, betaTex];
+      ? `v_1 = \\frac{d_1}{m_1} = \\frac{${current(step.d)}}{${current(step.pivot)}} = ${current(step.beta)}`
+      : `v_{${i}} = \\frac{d_{${i}} - a_{${i}}v_{${i - 1}}}{m_{${i}}} = \\frac{${current(step.d)} - (${current(step.a)})(${current(step.previousBeta ?? 0)})}{${current(step.pivot)}} = ${current(step.beta)}`;
+  return [pivotTex, uTex, vTex];
 }
 
 function getBackwardFormula(
@@ -99,9 +108,99 @@ function getBackwardFormula(
 ): string {
   const current = (value: number) => formatSweep(value, digits);
   if (step.nextX === null) {
-    return `x_{${step.index}} = \\beta_{${step.index}} = ${current(step.beta)} = ${current(step.x)}`;
+    return `x_{${step.index}} = v_{${step.index}} = ${current(step.beta)} = ${current(step.x)}`;
   }
-  return `x_{${step.index}} = \\alpha_{${step.index}}x_{${step.index + 1}} + \\beta_{${step.index}} = (${current(step.alpha)})(${current(step.nextX)}) + (${current(step.beta)}) = ${current(step.x)}`;
+  return `x_{${step.index}} = u_{${step.index}}x_{${step.index + 1}} + v_{${step.index}} = (${current(step.alpha)})(${current(step.nextX)}) + (${current(step.beta)}) = ${current(step.x)}`;
+}
+
+function syncSweepUrl(rows: readonly SweepInputRow[], size: number, precision: number) {
+  const params = new URLSearchParams();
+  params.set('n', String(size));
+  params.set('p', String(precision));
+  (['a', 'b', 'c', 'd'] as const).forEach((key) => {
+    params.set(key, rows.map((row) => row[key]).join(','));
+  });
+  window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+}
+
+type SweepInitialState = {
+  size: number;
+  precision: number;
+  rows: SweepInputRow[];
+  result: SweepResult | null;
+  error: string;
+};
+
+type SweepTranslator = (
+  key: string,
+  params?: Record<string, string | number>,
+) => string;
+
+function readSweepUrl(t: SweepTranslator): SweepInitialState {
+  const fallback: SweepInitialState = {
+    size: 4,
+    precision: 6,
+    rows: makeDefaultRows(4),
+    result: null,
+    error: '',
+  };
+  if (typeof window === 'undefined') return fallback;
+
+  const params = new URLSearchParams(window.location.search);
+  const rawSize = params.get('n');
+  const rawPrecision = params.get('p');
+  if (!rawSize && !params.has('a') && !params.has('b') && !params.has('c') && !params.has('d')) {
+    return fallback;
+  }
+
+  const nextSize = rawSize ? Number(rawSize) : 4;
+  const nextPrecision = rawPrecision ? Number(rawPrecision) : 6;
+  if (
+    !Number.isInteger(nextSize) ||
+    nextSize < MIN_SIZE ||
+    nextSize > MAX_SIZE ||
+    !PRECISION_OPTIONS.includes(nextPrecision as (typeof PRECISION_OPTIONS)[number])
+  ) {
+    return { ...fallback, error: t('sweep.err_link') };
+  }
+
+  const arrays = (['a', 'b', 'c', 'd'] as const).map((key) =>
+    (params.get(key) ?? '').split(',').map((value) => value.trim()),
+  );
+  const [aValues, bValues, cValues, dValues] = arrays;
+  if (
+    aValues.length !== nextSize ||
+    bValues.length !== nextSize ||
+    cValues.length !== nextSize ||
+    dValues.length !== nextSize
+  ) {
+    return { ...fallback, error: t('sweep.err_link') };
+  }
+
+  const nextRows = Array.from({ length: nextSize }, (_, index) => ({
+    a: aValues[index] || (index === 0 ? '0' : ''),
+    b: bValues[index] || '',
+    c: cValues[index] || (index === nextSize - 1 ? '0' : ''),
+    d: dValues[index] || '',
+  }));
+
+  try {
+    return {
+      size: nextSize,
+      precision: nextPrecision,
+      rows: nextRows,
+      result: calculateSweep(nextRows, t),
+      error: '',
+    };
+  } catch (cause) {
+    return {
+      size: nextSize,
+      precision: nextPrecision,
+      rows: nextRows,
+      result: null,
+      error: cause instanceof Error ? cause.message : t('sweep.err_calc'),
+    };
+  }
 }
 
 export function SweepMethod() {
@@ -112,6 +211,19 @@ export function SweepMethod() {
   const [result, setResult] = useState<SweepResult | null>(null);
   const resultRef = useScrollToResult(result);
   const [error, setError] = useState('');
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const initial = readSweepUrl(t);
+      setSize(initial.size);
+      setPrecision(initial.precision);
+      setRows(initial.rows);
+      setResult(initial.result);
+      setError(initial.error);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [t]);
 
   const clearResult = () => {
     setResult(null);
@@ -133,16 +245,10 @@ export function SweepMethod() {
       const next = Array.from({ length: nextSize }, (_, index) => {
         const previous = current[index];
         if (!previous) return defaultRows[index];
-        const wasLastRow = index === current.length - 1;
         return {
           ...previous,
-          a: index === 0 ? '0' : previous.a,
-          c:
-            index === nextSize - 1
-              ? '0'
-              : wasLastRow && nextSize > current.length
-                ? defaultRows[index].c
-                : previous.c,
+          a: index === 0 ? '' : previous.a,
+          c: index === nextSize - 1 ? '' : previous.c,
         };
       });
       return next;
@@ -152,7 +258,9 @@ export function SweepMethod() {
   }
 
   function applyExample(example: 'exact' | 'v2') {
-    const nextRows = example === 'v2' ? V2_EXAMPLE.map((row) => ({ ...row })) : makeDefaultRows(4);
+    const nextRows = example === 'v2'
+      ? V2_EXAMPLE.map((row) => ({ ...row }))
+      : makeExactExampleRows(4);
     setRows(nextRows);
     setSize(4);
     clearResult();
@@ -162,19 +270,25 @@ export function SweepMethod() {
     event.preventDefault();
     try {
       setError('');
-      setResult(calculateSweep(rows, t));
+      const nextResult = calculateSweep(rows, t);
+      setResult(nextResult);
+      syncSweepUrl(rows, size, precision);
     } catch (cause) {
       setResult(null);
       setError(cause instanceof Error ? cause.message : t('sweep.err_calc'));
     }
   }
 
-  const forwardHeadings = [
-    { tex: 'i', label: t('sweep.tbl_row') },
-    { tex: 'm_i', label: t('sweep.tbl_pivot') },
-    { tex: '\\alpha_i', label: t('sweep.tbl_alpha') },
-    { tex: '\\beta_i', label: t('sweep.tbl_beta') },
-  ];
+  async function shareExample() {
+    syncSweepUrl(rows, size, precision);
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setLinkCopied(true);
+      window.setTimeout(() => setLinkCopied(false), 2000);
+    } catch {
+      setError(t('sweep.err_share'));
+    }
+  }
 
   const reportRows = result?.rows ?? [];
   const toleranceChip = result?.diagonallyDominant
@@ -367,13 +481,23 @@ export function SweepMethod() {
                 <p className="text-[12px] leading-relaxed text-muted">
                   {t('sweep.matrix_hint')}
                 </p>
-                <button
-                  type="submit"
-                  className="flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-lg border border-ink bg-ink px-7 py-3 font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan shrink-0 cursor-pointer"
-                >
-                  <span>{t('sweep.btn_calc')}</span>
-                  <Calculator size={18} />
-                </button>
+                <div className="flex w-full sm:w-auto items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={shareExample}
+                    className="flex min-h-11 flex-1 sm:flex-none items-center justify-center gap-2 rounded-lg border border-line-2 bg-bg-2 px-3 py-3 font-sans text-[13px] font-[650] text-ink transition-all hover:border-brand hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan cursor-pointer"
+                  >
+                    {linkCopied ? <Check size={17} /> : <Link2 size={17} />}
+                    <span>{linkCopied ? t('sweep.link_copied') : t('sweep.share_link')}</span>
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex min-h-11 w-full sm:w-auto flex-1 items-center justify-center gap-2.5 rounded-lg border border-ink bg-ink px-7 py-3 font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan shrink-0 cursor-pointer"
+                  >
+                    <span>{t('sweep.btn_calc')}</span>
+                    <Calculator size={18} />
+                  </button>
+                </div>
               </div>
             </form>
 
@@ -437,23 +561,22 @@ export function SweepMethod() {
           {result && (
             <PsPanel>
               <PsPanelHead eyebrow={t('sweep.forward_eyebrow')} title={t('sweep.forward_title')} idx="04" />
-              <div className="mb-4 overflow-x-auto rounded-lg border border-line bg-bg-2">
-                <table className="w-full min-w-[440px] border-collapse text-right font-mono text-[12px]">
-                  <thead className="border-b border-line bg-panel text-muted"><tr>{forwardHeadings.map(({ tex, label }) => <th className="px-4 py-3 font-semibold" key={label}><MathMarkup tex={tex} /></th>)}</tr></thead>
-                  <tbody>{result.forwardSteps.map((step) => <tr className="border-b border-line last:border-b-0" key={step.index}>
-                    <td className="px-4 py-3 text-center text-muted">{step.index}</td>
-                    <td className="px-4 py-3">{formatSweep(step.pivot, precision)}</td>
-                    <td className="px-4 py-3">{formatSweep(step.alpha, precision)}</td>
-                    <td className="px-4 py-3">{formatSweep(step.beta, precision)}</td>
-                  </tr>)}</tbody>
-                </table>
-              </div>
-              <div className="grid gap-3">
+              <p className="mb-4 border-l-4 border-cyan bg-cyan-soft px-4 py-3 text-[13.5px] leading-relaxed text-ink">
+                {t('sweep.map_1_s')}
+              </p>
+              <div className="grid gap-3" aria-label={t('sweep.forward_title')}>
                 {result.forwardSteps.map((step) => (
-                  <article className="rounded-lg border border-line bg-bg-2 p-4" key={step.index}>
-                    <b className="mb-2 block font-mono text-xs font-semibold uppercase tracking-[.1em] text-brand">{t('sweep.step_title')} {step.index}</b>
-                    <div className="grid gap-2 overflow-x-auto text-[13px] text-cyan">
-                      {getForwardFormulas(step, precision).map((tex) => <MathMarkup key={tex} tex={tex} />)}
+                  <article className="rounded-lg border border-line-2 border-l-4 border-l-cyan bg-bg-2 p-4" key={step.index}>
+                    <h3 className="mb-3 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[.1em] text-cyan">
+                      <span className="grid size-7 place-items-center rounded-full bg-cyan text-[11px] text-white">{step.index}</span>
+                      {t('sweep.step_title')} {step.index}
+                    </h3>
+                    <div className="grid gap-2 md:grid-cols-2">
+                      {getForwardFormulas(step, precision).map((tex) => (
+                        <div className="min-w-0 overflow-x-auto rounded-md border-l-[3px] border-cyan bg-panel px-3 py-3 text-[13px] text-cyan" key={tex}>
+                          <MathMarkup tex={tex} />
+                        </div>
+                      ))}
                     </div>
                   </article>
                 ))}
@@ -464,11 +587,16 @@ export function SweepMethod() {
           {result && (
             <PsPanel>
               <PsPanelHead eyebrow={t('sweep.backward_eyebrow')} title={t('sweep.backward_title')} idx="05" />
-              <div className="grid gap-3">
+              <p className="mb-4 border-l-4 border-pos bg-pos/10 px-4 py-3 text-[13.5px] leading-relaxed text-ink">
+                {t('sweep.map_2_s')}
+              </p>
+              <div className="grid gap-3" aria-label={t('sweep.backward_title')}>
                 {result.backwardSteps.map((step) => (
-                  <article className="rounded-lg border border-line bg-bg-2 p-4" key={step.index}>
-                    <b className="mb-2 block font-mono text-xs font-semibold uppercase tracking-[.1em] text-brand">x{step.index}</b>
-                    <div className="overflow-x-auto text-[13px] text-cyan"><MathMarkup tex={getBackwardFormula(step, precision)} /></div>
+                  <article className="rounded-lg border border-pos/30 bg-bg-2 p-4" key={step.index}>
+                    <h3 className="mb-3 font-mono text-xs font-semibold uppercase tracking-[.1em] text-pos">x{step.index}</h3>
+                    <div className="overflow-x-auto rounded-md border-l-4 border-pos bg-panel px-3 py-3 text-[13px] text-ink">
+                      <MathMarkup tex={getBackwardFormula(step, precision)} />
+                    </div>
                   </article>
                 ))}
               </div>

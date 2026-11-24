@@ -5,7 +5,7 @@ import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: "Progonka usuli (Quvib ötiş) | Метод прогонки | Thomas Algorithm",
-  description: "Uç diagonalli çiziqli algebraik tenglamalar sistemasini (SLAU) Progonka (Tomas algoritmi / TDMA) usuli bilan yeçiş. Töğri yuriş (α, β) va teskari yuriş koeffitsientlari, qadam-baqam yeçim va qoldiq tekşiruvi.",
+  description: "Uç diagonalli çiziqli algebraik tenglamalar sistemasini (SLAU) Progonka (Tomas algoritmi / TDMA) usuli bilan yeçiş. Töğri yuriş (u, v) va teskari yuriş koeffitsientlari, qadam-baqam yeçim va qoldiq tekşiruvi.",
   keywords: [
     'progonka usuli',
     'quvib otiş usuli',
@@ -49,7 +49,7 @@ export default function SweepPage() {
         alternateName="Метод прогонки (трехдиагональная матрица) / Thomas Algorithm"
         description="Uç diagonalli tenglamalar sistemasini O(n) çiziqli murakkablikda töğri va teskari yuriş orqali yeçing."
         path="/methods/sweep"
-        formula="x_i = \alpha_{i+1} x_{i+1} + \beta_{i+1}"
+        formula="x_i = u_{i+1} x_{i+1} + v_{i+1}"
       />
       <SweepMethod />
     </>

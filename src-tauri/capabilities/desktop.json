@@ -7,6 +7,8 @@
   "permissions": [
     "core:default",
     "process:default",
-    "updater:default"
+    "updater:default",
+    "opener:allow-open-url",
+    "opener:allow-default-urls"
   ]
 }
