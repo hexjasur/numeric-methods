@@ -630,7 +630,7 @@
     "lag_x": "Hisoblanadigan x* qiymatini son yoki kasr körinişida kiriting.",
     "lag_target": "Ixtiyoriy f(x) ifodasini tekşiring; Math.js sintaksisidan foydalaning.",
     "sweep_rows": "Sistema ölçami {min} dan {max} gaça bölişi kerak.",
-    "sweep_number": "{row}-qatordagi barça qiymatlar son bölişi kerak.",
+    "sweep_number": "{row}-qatordagi maydonlar to'ldirilmagan yoki son emas. Avval barcha kerakli maydonlarni to'ldiring.",
     "sweep_boundary": "Birinçi a₁ va oxirgi cₙ qiymati 0 bölişi kerak.",
     "sweep_pivot": "{row}-qatorda nolga yaqin pivot hosil böldi.",
     "sweep_overflow": "{row}-qatorda hisoblaş natijasi çekli emas."
@@ -669,6 +669,7 @@
     "btn_download_exe": "Örnatuvçini yuklab oliş",
     "btn_later": "Keyinroq",
     "btn_check_update": "Yangilanişlarni tekşiriş",
+    "btn_refresh_web": "Saytni yangilaş",
     "status_up_to_date": "Sizda eng sönggi talqin örnatilgan ({version})",
     "android_install_tip": "Tugmani bossangiz APK tizim brauzerida yuklanadi. Yuklangaç, bildirişnomadan faylni oçib, Android örnatiş sörovini tasdiqlang. Android sörasa, brauzer orqali ilova örnatişga ruxsat bering.",
     "android_download_opened": "Brauzer oçildi. APK yuklangaç, bildirişnomadan uni oçib, örnatişni tasdiqlang.",

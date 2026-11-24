@@ -56,6 +56,15 @@ function MathMarkup({
 }
 
 function makeDefaultRows(size: number): SweepInputRow[] {
+  return Array.from({ length: size }, () => ({
+    a: '',
+    b: '',
+    c: '',
+    d: '',
+  }));
+}
+
+function makeExactExampleRows(size: number): SweepInputRow[] {
   return Array.from({ length: size }, (_, index) => {
     const a = index === 0 ? 0 : -1;
     const b = 4;
@@ -236,16 +245,10 @@ export function SweepMethod() {
       const next = Array.from({ length: nextSize }, (_, index) => {
         const previous = current[index];
         if (!previous) return defaultRows[index];
-        const wasLastRow = index === current.length - 1;
         return {
           ...previous,
-          a: index === 0 ? '0' : previous.a,
-          c:
-            index === nextSize - 1
-              ? '0'
-              : wasLastRow && nextSize > current.length
-                ? defaultRows[index].c
-                : previous.c,
+          a: index === 0 ? '' : previous.a,
+          c: index === nextSize - 1 ? '' : previous.c,
         };
       });
       return next;
@@ -255,7 +258,9 @@ export function SweepMethod() {
   }
 
   function applyExample(example: 'exact' | 'v2') {
-    const nextRows = example === 'v2' ? V2_EXAMPLE.map((row) => ({ ...row })) : makeDefaultRows(4);
+    const nextRows = example === 'v2'
+      ? V2_EXAMPLE.map((row) => ({ ...row }))
+      : makeExactExampleRows(4);
     setRows(nextRows);
     setSize(4);
     clearResult();

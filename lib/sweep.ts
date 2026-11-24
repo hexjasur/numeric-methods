@@ -64,7 +64,13 @@ export function calculateSweep(
   }
 
   const coefficients = inputs.map((row, index) => {
-    const parse = (value: string): number => {
+    const parse = (value: string, field: keyof SweepInputRow): number => {
+      if (
+        (index === 0 && field === 'a') ||
+        (index === inputs.length - 1 && field === 'c')
+      ) {
+        return 0;
+      }
       if (!value.trim()) throw new Error(t('errors.sweep_number', { row: index + 1 }));
       const parsed = Number(value);
       if (!Number.isFinite(parsed)) {
@@ -74,16 +80,13 @@ export function calculateSweep(
     };
 
     return {
-      a: parse(row.a),
-      b: parse(row.b),
-      c: parse(row.c),
-      d: parse(row.d),
+      a: parse(row.a, 'a'),
+      b: parse(row.b, 'b'),
+      c: parse(row.c, 'c'),
+      d: parse(row.d, 'd'),
     };
   });
 
-  if (coefficients[0].a !== 0 || coefficients[coefficients.length - 1].c !== 0) {
-    throw new Error(t('errors.sweep_boundary'));
-  }
 
   const forwardSteps: SweepForwardStep[] = [];
   for (let index = 0; index < coefficients.length; index += 1) {

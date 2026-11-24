@@ -630,7 +630,7 @@
     "lag_x": "Enter the evaluation x* as a number or fraction.",
     "lag_target": "Check the optional f(x) expression and use Math.js syntax.",
     "sweep_rows": "System size must be between {min} and {max}.",
-    "sweep_number": "Every value in row {row} must be numeric.",
+    "sweep_number": "The fields in row {row} are incomplete or invalid. Fill every required field with a number first.",
     "sweep_boundary": "The first a₁ and last cₙ values must be 0.",
     "sweep_pivot": "A near-zero pivot occurred in row {row}.",
     "sweep_overflow": "The calculation became non-finite in row {row}."
@@ -669,6 +669,7 @@
     "btn_download_exe": "Download Installer",
     "btn_later": "Later",
     "btn_check_update": "Check for updates",
+    "btn_refresh_web": "Refresh website",
     "status_up_to_date": "You are using the latest version ({version})",
     "android_install_tip": "The button opens the system browser to download the APK. After it downloads, open it from notifications and confirm Android's install prompt. If asked, allow installs from this browser.",
     "android_download_opened": "The browser is open. When the APK finishes downloading, open it from notifications and confirm installation.",
