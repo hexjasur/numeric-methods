@@ -84,13 +84,13 @@ function getForwardFormulas(
   const pivotTex =
     i === 1
       ? `m_1 = b_1 = ${current(step.b)} = ${current(step.pivot)}`
-      : `m_{${i}} = b_{${i}} + a_{${i}}\\alpha_{${i - 1}} = ${current(step.b)} + (${current(step.a)})(${current(step.previousAlpha ?? 0)}) = ${current(step.pivot)}`;
-  const alphaTex = `\\alpha_{${i}} = -\\frac{c_{${i}}}{m_{${i}}} = -\\frac{${current(step.c)}}{${current(step.pivot)}} = ${current(step.alpha)}`;
-  const betaTex =
+      : `m_{${i}} = b_{${i}} + a_{${i}}u_{${i - 1}} = ${current(step.b)} + (${current(step.a)})(${current(step.previousAlpha ?? 0)}) = ${current(step.pivot)}`;
+  const uTex = `u_{${i}} = -\\frac{c_{${i}}}{m_{${i}}} = -\\frac{${current(step.c)}}{${current(step.pivot)}} = ${current(step.alpha)}`;
+  const vTex =
     i === 1
-      ? `\\beta_1 = \\frac{d_1}{m_1} = \\frac{${current(step.d)}}{${current(step.pivot)}} = ${current(step.beta)}`
-      : `\\beta_{${i}} = \\frac{d_{${i}} - a_{${i}}\\beta_{${i - 1}}}{m_{${i}}} = \\frac{${current(step.d)} - (${current(step.a)})(${current(step.previousBeta ?? 0)})}{${current(step.pivot)}} = ${current(step.beta)}`;
-  return [pivotTex, alphaTex, betaTex];
+      ? `v_1 = \\frac{d_1}{m_1} = \\frac{${current(step.d)}}{${current(step.pivot)}} = ${current(step.beta)}`
+      : `v_{${i}} = \\frac{d_{${i}} - a_{${i}}v_{${i - 1}}}{m_{${i}}} = \\frac{${current(step.d)} - (${current(step.a)})(${current(step.previousBeta ?? 0)})}{${current(step.pivot)}} = ${current(step.beta)}`;
+  return [pivotTex, uTex, vTex];
 }
 
 function getBackwardFormula(
@@ -99,9 +99,9 @@ function getBackwardFormula(
 ): string {
   const current = (value: number) => formatSweep(value, digits);
   if (step.nextX === null) {
-    return `x_{${step.index}} = \\beta_{${step.index}} = ${current(step.beta)} = ${current(step.x)}`;
+    return `x_{${step.index}} = v_{${step.index}} = ${current(step.beta)} = ${current(step.x)}`;
   }
-  return `x_{${step.index}} = \\alpha_{${step.index}}x_{${step.index + 1}} + \\beta_{${step.index}} = (${current(step.alpha)})(${current(step.nextX)}) + (${current(step.beta)}) = ${current(step.x)}`;
+  return `x_{${step.index}} = u_{${step.index}}x_{${step.index + 1}} + v_{${step.index}} = (${current(step.alpha)})(${current(step.nextX)}) + (${current(step.beta)}) = ${current(step.x)}`;
 }
 
 export function SweepMethod() {
@@ -168,13 +168,6 @@ export function SweepMethod() {
       setError(cause instanceof Error ? cause.message : t('sweep.err_calc'));
     }
   }
-
-  const forwardHeadings = [
-    { tex: 'i', label: t('sweep.tbl_row') },
-    { tex: 'm_i', label: t('sweep.tbl_pivot') },
-    { tex: '\\alpha_i', label: t('sweep.tbl_alpha') },
-    { tex: '\\beta_i', label: t('sweep.tbl_beta') },
-  ];
 
   const reportRows = result?.rows ?? [];
   const toleranceChip = result?.diagonallyDominant
@@ -437,23 +430,22 @@ export function SweepMethod() {
           {result && (
             <PsPanel>
               <PsPanelHead eyebrow={t('sweep.forward_eyebrow')} title={t('sweep.forward_title')} idx="04" />
-              <div className="mb-4 overflow-x-auto rounded-lg border border-line bg-bg-2">
-                <table className="w-full min-w-[440px] border-collapse text-right font-mono text-[12px]">
-                  <thead className="border-b border-line bg-panel text-muted"><tr>{forwardHeadings.map(({ tex, label }) => <th className="px-4 py-3 font-semibold" key={label}><MathMarkup tex={tex} /></th>)}</tr></thead>
-                  <tbody>{result.forwardSteps.map((step) => <tr className="border-b border-line last:border-b-0" key={step.index}>
-                    <td className="px-4 py-3 text-center text-muted">{step.index}</td>
-                    <td className="px-4 py-3">{formatSweep(step.pivot, precision)}</td>
-                    <td className="px-4 py-3">{formatSweep(step.alpha, precision)}</td>
-                    <td className="px-4 py-3">{formatSweep(step.beta, precision)}</td>
-                  </tr>)}</tbody>
-                </table>
-              </div>
-              <div className="grid gap-3">
+              <p className="mb-4 border-l-4 border-cyan bg-cyan-soft px-4 py-3 text-[13.5px] leading-relaxed text-ink">
+                {t('sweep.map_1_s')}
+              </p>
+              <div className="grid gap-3" aria-label={t('sweep.forward_title')}>
                 {result.forwardSteps.map((step) => (
-                  <article className="rounded-lg border border-line bg-bg-2 p-4" key={step.index}>
-                    <b className="mb-2 block font-mono text-xs font-semibold uppercase tracking-[.1em] text-brand">{t('sweep.step_title')} {step.index}</b>
-                    <div className="grid gap-2 overflow-x-auto text-[13px] text-cyan">
-                      {getForwardFormulas(step, precision).map((tex) => <MathMarkup key={tex} tex={tex} />)}
+                  <article className="rounded-lg border border-line-2 border-l-4 border-l-cyan bg-bg-2 p-4" key={step.index}>
+                    <h3 className="mb-3 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[.1em] text-cyan">
+                      <span className="grid size-7 place-items-center rounded-full bg-cyan text-[11px] text-white">{step.index}</span>
+                      {t('sweep.step_title')} {step.index}
+                    </h3>
+                    <div className="grid gap-2 md:grid-cols-2">
+                      {getForwardFormulas(step, precision).map((tex) => (
+                        <div className="min-w-0 overflow-x-auto rounded-md border-l-[3px] border-cyan bg-panel px-3 py-3 text-[13px] text-cyan" key={tex}>
+                          <MathMarkup tex={tex} />
+                        </div>
+                      ))}
                     </div>
                   </article>
                 ))}
@@ -464,11 +456,16 @@ export function SweepMethod() {
           {result && (
             <PsPanel>
               <PsPanelHead eyebrow={t('sweep.backward_eyebrow')} title={t('sweep.backward_title')} idx="05" />
-              <div className="grid gap-3">
+              <p className="mb-4 border-l-4 border-pos bg-pos/10 px-4 py-3 text-[13.5px] leading-relaxed text-ink">
+                {t('sweep.map_2_s')}
+              </p>
+              <div className="grid gap-3" aria-label={t('sweep.backward_title')}>
                 {result.backwardSteps.map((step) => (
-                  <article className="rounded-lg border border-line bg-bg-2 p-4" key={step.index}>
-                    <b className="mb-2 block font-mono text-xs font-semibold uppercase tracking-[.1em] text-brand">x{step.index}</b>
-                    <div className="overflow-x-auto text-[13px] text-cyan"><MathMarkup tex={getBackwardFormula(step, precision)} /></div>
+                  <article className="rounded-lg border border-pos/30 bg-bg-2 p-4" key={step.index}>
+                    <h3 className="mb-3 font-mono text-xs font-semibold uppercase tracking-[.1em] text-pos">x{step.index}</h3>
+                    <div className="overflow-x-auto rounded-md border-l-4 border-pos bg-panel px-3 py-3 text-[13px] text-ink">
+                      <MathMarkup tex={getBackwardFormula(step, precision)} />
+                    </div>
                   </article>
                 ))}
               </div>
