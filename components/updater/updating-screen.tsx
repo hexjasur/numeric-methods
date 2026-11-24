@@ -18,7 +18,7 @@ export function UpdatingScreen({ progress, statusText }: UpdatingScreenProps) {
     });
 
   return (
-    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#07080b] text-[#eef0f2] select-none overflow-hidden font-sans">
+    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center overflow-y-auto overscroll-none bg-[#07080b] text-[#eef0f2] select-none font-sans">
       {/* Ambient background glows matching user's design */}
       <div 
         className="pointer-events-none absolute -left-[10%] top-[20%] h-[500px] w-[500px] rounded-full opacity-20 blur-[130px]"
