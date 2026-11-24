@@ -28,6 +28,15 @@ interface NavItem {
   icon: LucideIcon;
   isNew?: boolean;
 }
+
+async function openExternalLink(url: string): Promise<void> {
+  if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+    const { openUrl } = await import('@tauri-apps/plugin-opener');
+    await openUrl(url);
+    return;
+  }
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
 import logo from '@/public/logo.webp';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LangToggle } from '@/components/lang-toggle';
@@ -308,6 +317,12 @@ export function AppShell({
               href="https://v2.sonli-usullar.uz"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(event) => {
+                if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+                  event.preventDefault();
+                  void openExternalLink('https://v2.sonli-usullar.uz');
+                }
+              }}
               className="group flex items-center justify-between min-h-[42px] px-3 rounded-lg border border-line bg-bg-2/50 text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 transition-all text-[13px] font-semibold w-full min-w-0 overflow-hidden"
               title={t('nav.v2_tooltip')}
             >
@@ -381,6 +396,12 @@ export function AppShell({
               href="https://v2.sonli-usullar.uz"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(event) => {
+                if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+                  event.preventDefault();
+                  void openExternalLink('https://v2.sonli-usullar.uz');
+                }
+              }}
               className="hidden sm:inline-flex items-center gap-1.5 h-9 px-2.5 rounded-lg border border-line bg-panel text-muted hover:text-ink hover:border-brand/40 hover:bg-brand-soft/40 font-mono text-[12px] font-semibold transition-all shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
               title={t('nav.v2_tooltip')}
             >
