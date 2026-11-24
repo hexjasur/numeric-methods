@@ -1,9 +1,9 @@
 'use client';
 
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
-import { ArrowUpRight, Calculator, Check, Info } from 'lucide-react';
+import { ArrowUpRight, Calculator, Check, Info, Link2 } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { ResultActions } from '@/components/ui/result-actions';
 import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
@@ -104,6 +104,96 @@ function getBackwardFormula(
   return `x_{${step.index}} = u_{${step.index}}x_{${step.index + 1}} + v_{${step.index}} = (${current(step.alpha)})(${current(step.nextX)}) + (${current(step.beta)}) = ${current(step.x)}`;
 }
 
+function syncSweepUrl(rows: readonly SweepInputRow[], size: number, precision: number) {
+  const params = new URLSearchParams();
+  params.set('n', String(size));
+  params.set('p', String(precision));
+  (['a', 'b', 'c', 'd'] as const).forEach((key) => {
+    params.set(key, rows.map((row) => row[key]).join(','));
+  });
+  window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+}
+
+type SweepInitialState = {
+  size: number;
+  precision: number;
+  rows: SweepInputRow[];
+  result: SweepResult | null;
+  error: string;
+};
+
+type SweepTranslator = (
+  key: string,
+  params?: Record<string, string | number>,
+) => string;
+
+function readSweepUrl(t: SweepTranslator): SweepInitialState {
+  const fallback: SweepInitialState = {
+    size: 4,
+    precision: 6,
+    rows: makeDefaultRows(4),
+    result: null,
+    error: '',
+  };
+  if (typeof window === 'undefined') return fallback;
+
+  const params = new URLSearchParams(window.location.search);
+  const rawSize = params.get('n');
+  const rawPrecision = params.get('p');
+  if (!rawSize && !params.has('a') && !params.has('b') && !params.has('c') && !params.has('d')) {
+    return fallback;
+  }
+
+  const nextSize = rawSize ? Number(rawSize) : 4;
+  const nextPrecision = rawPrecision ? Number(rawPrecision) : 6;
+  if (
+    !Number.isInteger(nextSize) ||
+    nextSize < MIN_SIZE ||
+    nextSize > MAX_SIZE ||
+    !PRECISION_OPTIONS.includes(nextPrecision as (typeof PRECISION_OPTIONS)[number])
+  ) {
+    return { ...fallback, error: t('sweep.err_link') };
+  }
+
+  const arrays = (['a', 'b', 'c', 'd'] as const).map((key) =>
+    (params.get(key) ?? '').split(',').map((value) => value.trim()),
+  );
+  const [aValues, bValues, cValues, dValues] = arrays;
+  if (
+    aValues.length !== nextSize ||
+    bValues.length !== nextSize ||
+    cValues.length !== nextSize ||
+    dValues.length !== nextSize
+  ) {
+    return { ...fallback, error: t('sweep.err_link') };
+  }
+
+  const nextRows = Array.from({ length: nextSize }, (_, index) => ({
+    a: aValues[index] || (index === 0 ? '0' : ''),
+    b: bValues[index] || '',
+    c: cValues[index] || (index === nextSize - 1 ? '0' : ''),
+    d: dValues[index] || '',
+  }));
+
+  try {
+    return {
+      size: nextSize,
+      precision: nextPrecision,
+      rows: nextRows,
+      result: calculateSweep(nextRows, t),
+      error: '',
+    };
+  } catch (cause) {
+    return {
+      size: nextSize,
+      precision: nextPrecision,
+      rows: nextRows,
+      result: null,
+      error: cause instanceof Error ? cause.message : t('sweep.err_calc'),
+    };
+  }
+}
+
 export function SweepMethod() {
   const { t } = useI18n();
   const [size, setSize] = useState(4);
@@ -112,6 +202,19 @@ export function SweepMethod() {
   const [result, setResult] = useState<SweepResult | null>(null);
   const resultRef = useScrollToResult(result);
   const [error, setError] = useState('');
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const initial = readSweepUrl(t);
+      setSize(initial.size);
+      setPrecision(initial.precision);
+      setRows(initial.rows);
+      setResult(initial.result);
+      setError(initial.error);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [t]);
 
   const clearResult = () => {
     setResult(null);
@@ -162,10 +265,23 @@ export function SweepMethod() {
     event.preventDefault();
     try {
       setError('');
-      setResult(calculateSweep(rows, t));
+      const nextResult = calculateSweep(rows, t);
+      setResult(nextResult);
+      syncSweepUrl(rows, size, precision);
     } catch (cause) {
       setResult(null);
       setError(cause instanceof Error ? cause.message : t('sweep.err_calc'));
+    }
+  }
+
+  async function shareExample() {
+    syncSweepUrl(rows, size, precision);
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setLinkCopied(true);
+      window.setTimeout(() => setLinkCopied(false), 2000);
+    } catch {
+      setError(t('sweep.err_share'));
     }
   }
 
@@ -360,13 +476,23 @@ export function SweepMethod() {
                 <p className="text-[12px] leading-relaxed text-muted">
                   {t('sweep.matrix_hint')}
                 </p>
-                <button
-                  type="submit"
-                  className="flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-lg border border-ink bg-ink px-7 py-3 font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan shrink-0 cursor-pointer"
-                >
-                  <span>{t('sweep.btn_calc')}</span>
-                  <Calculator size={18} />
-                </button>
+                <div className="flex w-full sm:w-auto items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={shareExample}
+                    className="flex min-h-11 flex-1 sm:flex-none items-center justify-center gap-2 rounded-lg border border-line-2 bg-bg-2 px-3 py-3 font-sans text-[13px] font-[650] text-ink transition-all hover:border-brand hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan cursor-pointer"
+                  >
+                    {linkCopied ? <Check size={17} /> : <Link2 size={17} />}
+                    <span>{linkCopied ? t('sweep.link_copied') : t('sweep.share_link')}</span>
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex min-h-11 w-full sm:w-auto flex-1 items-center justify-center gap-2.5 rounded-lg border border-ink bg-ink px-7 py-3 font-sans text-[15px] font-[650] tracking-[-.01em] text-brand-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white hover:shadow-[0_10px_22px_-10px_var(--brand)] active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan shrink-0 cursor-pointer"
+                  >
+                    <span>{t('sweep.btn_calc')}</span>
+                    <Calculator size={18} />
+                  </button>
+                </div>
               </div>
             </form>
 
