@@ -79,8 +79,13 @@ const SIMPSON_N = 800;
 
 type Scope = Record<string, number>;
 
+// Accept Pi, PI, pI as well as pi
+function normalizeConstants(source: string): string {
+  return source.replace(/\bpi\b/gi, 'pi');
+}
+
 function parseOrThrow(source: string, label: string): MathNode {
-  const text = source.trim();
+  const text = normalizeConstants(source.trim());
   if (!text) throw new Error(`${label} bo‘sh bo‘lmasligi kerak.`);
   let node: MathNode;
   try {
@@ -132,7 +137,7 @@ function makeFunction(source: string, label: string): GalerkinFunction {
 function parseNumber(value: string, label: string): number {
   if (!value.trim()) throw new Error(`${label} kiritilishi shart.`);
   try {
-    const result = Number(math.evaluate(value.trim()));
+    const result = Number(math.evaluate(normalizeConstants(value.trim())));
     if (!Number.isFinite(result)) throw new Error();
     return result;
   } catch {
