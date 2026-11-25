@@ -21,7 +21,7 @@ export function DashboardView() {
   ];
 
   return (
-    <div className="relative ax-w-290 mx-auto px-4 pb-12">
+    <div className="relative max-w-290 mx-auto px-4 pb-12">
       <PsStrip eyebrow="DSH-000" id="MAIN" name={t('dashboard.strip')} />
 
       <PsHero
@@ -49,7 +49,7 @@ export function DashboardView() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-[14px]">
           {stats.map(([number, label, value, mark]) => (
             <article
-              className="relative flex items-center gap-3 rounded-lg border border-line bg-bg-2 px-3.5 py-3 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-brand md:block md:min-h-[140px] md:p-5"
+              className="relative flex items-center gap-3 rounded-lg border border-line bg-bg-2 px-3.5 py-3 shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:shadow-md hover:border-brand md:block md:min-h-[140px] md:p-5"
               key={number}
             >
               <span className="shrink-0 font-mono text-[11px] font-bold text-brand bg-brand-soft py-1 px-1.5 rounded md:inline-block">
