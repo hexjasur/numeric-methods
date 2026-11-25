@@ -253,7 +253,10 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
     const valueAtA = alphaValue / alpha0;
     const valueAtB = betaValue / beta0;
     const slope = (valueAtB - valueAtA) / (b - a);
-    phi0Source = `(${valueAtA}) + (${slope})*(x - (${a}))`;
+    phi0Source =
+      Math.abs(valueAtA) < EPS && Math.abs(slope) < EPS
+        ? '0'
+        : `(${valueAtA}) + (${slope})*(x - (${a}))`;
   }
   const phi0 = makeFunction(phi0Source, 'φ₀(x)');
   const basis = input.basis.map((source, index) =>
@@ -356,7 +359,10 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
     right: beta0 * uOf(b) + beta1 * d1Of(b) - betaValue,
   };
 
-  const terms = basis.map((phi, i) => `${texNumber(coefficients[i])}\\,${phi.tex}`);
+  const terms = basis.map((phi, i) => {
+    const c = coefficients[i];
+    return `${c < 0 ? '-' : '+'}${texNumber(Math.abs(c))}\\,${phi.tex}`;
+  });
   const finalTex = `u_n(x)=${phi0.tex}${coefficients
     .map((c, i) => `${c < 0 ? '-' : '+'}${texNumber(Math.abs(c))}\\,${basis[i].tex}`)
     .join('')}`;
@@ -371,7 +377,7 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
     fTex: fFn.tex,
     boundaryLeft,
     boundaryRight,
-    approximationTex: `u_n(x)=${phi0.tex}+${terms.join('+').replace(/\+-/g, '-')}`,
+    approximationTex: `u_n(x)=${phi0.tex}${terms.join('')}`,
     integrals,
     matrix,
     rhs,
