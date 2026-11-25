@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { Moon, Sun } from 'lucide-react';
 import { useSyncExternalStore } from 'react';
@@ -22,14 +22,19 @@ export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getTheme, () => 'light');
   const isDark = theme === 'dark';
 
+  function applyTheme(next: Theme) {
+    document.documentElement.dataset.theme = next;
+    window.localStorage.setItem('numeric-theme', next);
+    window.dispatchEvent(new Event(themeEvent));
+  }
+
   function toggleTheme(event: React.MouseEvent<HTMLButtonElement>) {
     const next: Theme = isDark ? 'light' : 'dark';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Fallback for browsers that don't support View Transitions
-    if (!document.startViewTransition) {
-      document.documentElement.dataset.theme = next;
-      window.localStorage.setItem('numeric-theme', next);
-      window.dispatchEvent(new Event(themeEvent));
+    // Instant switch: no View Transitions support or the user prefers reduced motion
+    if (!document.startViewTransition || reduceMotion) {
+      applyTheme(next);
       return;
     }
 
@@ -40,29 +45,23 @@ export function ThemeToggle() {
       Math.max(y, innerHeight - y)
     );
 
-    const transition = document.startViewTransition(() => {
-      document.documentElement.dataset.theme = next;
-      window.localStorage.setItem('numeric-theme', next);
-      window.dispatchEvent(new Event(themeEvent));
-    });
+    const transition = document.startViewTransition(() => applyTheme(next));
 
+    // The new view always expands from the click point, in both directions.
+    // Animating the old snapshot (dark -> light) was invisible because the new
+    // view is layered on top of it.
     transition.ready.then(() => {
-      const clipPath = [
-        `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`,
-      ];
-
-      // To light: new view expands. To dark: old view shrinks (revealing dark underneath)
       document.documentElement.animate(
         {
-          clipPath: isDark ? [...clipPath].reverse() : clipPath,
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
         },
         {
           duration: 400,
           easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-          pseudoElement: isDark
-            ? '::view-transition-old(root)'
-            : '::view-transition-new(root)',
+          pseudoElement: '::view-transition-new(root)',
         }
       );
     });

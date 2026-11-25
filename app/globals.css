@@ -86,7 +86,6 @@
     background-attachment: fixed;
     color: var(--ink);
     font-family: var(--font-sans);
-    transition: background .2s ease, color .2s ease;
   }
   button, input { font: inherit; }
   button { cursor: pointer; }
@@ -151,7 +150,6 @@
 ::view-transition-new(root) {
   z-index: 9999;
 }
-/* When transitioning to dark, we can either expand the new dark theme, or shrink the old light theme */
 
 /* Print Stream Navigation Top Loader */
 #nprogress {
