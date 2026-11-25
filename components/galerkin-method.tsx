@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent, type ReactNode } from 'react';
+import { math } from '@/lib/math';
 import katex from 'katex';
 import { Calculator, Check, Copy, Info } from 'lucide-react';
 import {
@@ -34,6 +35,7 @@ const DEFAULT_INPUT: GalerkinInput = {
   basis: ['sin(x)', 'sin(2*x)'],
 };
 
+const DEFAULT_TEMPLATE = 'sin(i*x)';
 const PRESET_BASIS = ['sin(x)', 'sin(2*x)', 'sin(3*x)', 'sin(4*x)', 'sin(5*x)', 'sin(6*x)'];
 const PRECISIONS = [4, 6, 8, 12] as const;
 
@@ -387,8 +389,26 @@ function SystemView({ result, digits }: { result: GalerkinResult; digits: number
   );
 }
 
+function basisFromTemplate(template: string, count: number): string[] {
+  return Array.from({ length: count }, (_, k) => template.replace(/\bi\b/g, String(k + 1)));
+}
+
+function equationTex(p: string, q: string, f: string): string {
+  const tex = (source: string) => {
+    try {
+      return math.parse(source.trim() || '0').toTex();
+    } catch {
+      return '\\text{?}';
+    }
+  };
+  return `u''+\\left(${tex(p)}\\right)u'+\\left(${tex(q)}\\right)u=${tex(f)}`;
+}
+
 export function GalerkinMethod() {
   const [input, setInput] = useState<GalerkinInput>(DEFAULT_INPUT);
+  const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
+  const [count, setCount] = useState(2);
+  const [advanced, setAdvanced] = useState(false);
   const [result, setResult] = useState<GalerkinResult | null>(null);
   const [error, setError] = useState('');
   const [digits, setDigits] = useState<(typeof PRECISIONS)[number]>(6);
@@ -400,17 +420,24 @@ export function GalerkinMethod() {
     setError('');
   };
 
-  const setBasisCount = (count: number) => {
-    const next = Array.from({ length: count }, (_, i) =>
-      input.basis[i] ?? PRESET_BASIS[i] ?? `sin(${i + 1}*x)`,
-    );
-    update('basis', next);
+  const changeTemplate = (value: string) => {
+    setTemplate(value);
+    update('basis', basisFromTemplate(value, count));
+  };
+
+  const changeCount = (value: number) => {
+    setCount(value);
+    update('basis', basisFromTemplate(template, value));
   };
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // Simple mode uses Dirichlet conditions: u(a) and u(b) are given directly
+    const payload: GalerkinInput = advanced
+      ? input
+      : { ...input, alpha0: '1', alpha1: '0', beta0: '1', beta1: '0' };
     try {
-      setResult(solveGalerkin(input));
+      setResult(solveGalerkin(payload));
       setError('');
     } catch (cause) {
       setResult(null);
@@ -420,13 +447,17 @@ export function GalerkinMethod() {
 
   const reset = () => {
     setInput(DEFAULT_INPUT);
+    setTemplate(DEFAULT_TEMPLATE);
+    setCount(2);
+    setAdvanced(false);
     setResult(null);
     setError('');
   };
 
   const fieldClass =
-    'w-full rounded-md border border-line bg-bg-2 px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand/40';
+    'w-full rounded-md border border-line bg-bg-2 px-3 py-2.5 font-mono text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand/40';
   const labelClass = 'font-mono text-[11px] uppercase tracking-[.1em] text-muted';
+  const hintClass = 'text-xs leading-[1.5] text-muted';
 
   return (
     <>
@@ -439,92 +470,116 @@ export function GalerkinMethod() {
 
       <form onSubmit={submit} className="mb-6">
         <PsPanel className="mb-5">
-          <PsPanelHead eyebrow="Kiritish" title="Masala parametrlari" idx="IN" />
+          <PsPanelHead eyebrow="Kiritish" title="Masala" idx="IN" />
+
+          <div className="mb-5 rounded-lg border border-line bg-bg-2 px-4 py-3 text-cyan overflow-x-auto">
+            <div dangerouslySetInnerHTML={{ __html: katex.renderToString(equationTex(input.p, input.q, input.f), { throwOnError: false, displayMode: true }) }} />
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>p(x)</span>
+              <span className={labelClass}>p(x) — u′ oldidagi koeffitsiyent</span>
               <input className={fieldClass} value={input.p} onChange={(e) => update('p', e.target.value)} />
+              <span className={hintClass}>Masalan: 0, -cos(x), x^2</span>
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>q(x)</span>
+              <span className={labelClass}>q(x) — u oldidagi koeffitsiyent</span>
               <input className={fieldClass} value={input.q} onChange={(e) => update('q', e.target.value)} />
+              <span className={hintClass}>Masalan: 0, sin(x), 1</span>
             </label>
             <label className="flex flex-col gap-1.5 sm:col-span-2">
-              <span className={labelClass}>f(x)</span>
+              <span className={labelClass}>f(x) — o‘ng tomon</span>
               <input className={fieldClass} value={input.f} onChange={(e) => update('f', e.target.value)} />
             </label>
+
             <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>a</span>
+              <span className={labelClass}>a — chap chegara</span>
               <input className={fieldClass} value={input.a} onChange={(e) => update('a', e.target.value)} />
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>b</span>
+              <span className={labelClass}>b — o‘ng chegara</span>
               <input className={fieldClass} value={input.b} onChange={(e) => update('b', e.target.value)} />
+              <span className={hintClass}>π uchun: pi</span>
             </label>
-            <fieldset className="grid grid-cols-3 gap-2 sm:col-span-2">
-              <legend className={`${labelClass} mb-1.5`}>Chap chegara: α₀ u(a) + α₁ u′(a) = F_a</legend>
-              <input aria-label="α₀" className={fieldClass} value={input.alpha0} onChange={(e) => update('alpha0', e.target.value)} />
-              <input aria-label="α₁" className={fieldClass} value={input.alpha1} onChange={(e) => update('alpha1', e.target.value)} />
-              <input aria-label="F_a" className={fieldClass} value={input.alphaValue} onChange={(e) => update('alphaValue', e.target.value)} />
-            </fieldset>
-            <fieldset className="grid grid-cols-3 gap-2 sm:col-span-2">
-              <legend className={`${labelClass} mb-1.5`}>O‘ng chegara: β₀ u(b) + β₁ u′(b) = F_b</legend>
-              <input aria-label="β₀" className={fieldClass} value={input.beta0} onChange={(e) => update('beta0', e.target.value)} />
-              <input aria-label="β₁" className={fieldClass} value={input.beta1} onChange={(e) => update('beta1', e.target.value)} />
-              <input aria-label="F_b" className={fieldClass} value={input.betaValue} onChange={(e) => update('betaValue', e.target.value)} />
-            </fieldset>
+
+            {advanced ? (
+              <>
+                <fieldset className="grid grid-cols-3 gap-2 sm:col-span-2">
+                  <legend className={`${labelClass} mb-1.5`}>Chap: α₀·u(a) + α₁·u′(a) = F_a</legend>
+                  <input aria-label="α₀" className={fieldClass} value={input.alpha0} onChange={(e) => update('alpha0', e.target.value)} />
+                  <input aria-label="α₁" className={fieldClass} value={input.alpha1} onChange={(e) => update('alpha1', e.target.value)} />
+                  <input aria-label="F_a" className={fieldClass} value={input.alphaValue} onChange={(e) => update('alphaValue', e.target.value)} />
+                </fieldset>
+                <fieldset className="grid grid-cols-3 gap-2 sm:col-span-2">
+                  <legend className={`${labelClass} mb-1.5`}>O‘ng: β₀·u(b) + β₁·u′(b) = F_b</legend>
+                  <input aria-label="β₀" className={fieldClass} value={input.beta0} onChange={(e) => update('beta0', e.target.value)} />
+                  <input aria-label="β₁" className={fieldClass} value={input.beta1} onChange={(e) => update('beta1', e.target.value)} />
+                  <input aria-label="F_b" className={fieldClass} value={input.betaValue} onChange={(e) => update('betaValue', e.target.value)} />
+                </fieldset>
+              </>
+            ) : (
+              <>
+                <label className="flex flex-col gap-1.5">
+                  <span className={labelClass}>u(a) = ?</span>
+                  <input className={fieldClass} value={input.alphaValue} onChange={(e) => update('alphaValue', e.target.value)} />
+                </label>
+                <label className="flex flex-col gap-1.5">
+                  <span className={labelClass}>u(b) = ?</span>
+                  <input className={fieldClass} value={input.betaValue} onChange={(e) => update('betaValue', e.target.value)} />
+                </label>
+              </>
+            )}
+
             <label className="flex flex-col gap-1.5 sm:col-span-2">
-              <span className={labelClass}>φ₀(x) — chegaraviy shartlarni qanoatlantiruvchi</span>
+              <span className={labelClass}>φ₀(x) — chegarani qanoatlantiruvchi funksiya</span>
               <input className={fieldClass} value={input.phi0} onChange={(e) => update('phi0', e.target.value)} />
+              <span className={hintClass}>Masalan: 1 + x/pi (u(0)=1, u(π)=2 uchun)</span>
             </label>
-            <div className="flex flex-col gap-1.5">
+
+            <div className="flex flex-col gap-1.5 sm:col-span-2">
               <span className={labelClass}>Bazis funksiyalar soni (n)</span>
               <div className="flex gap-1.5">
-                {[1, 2, 3, 4, 5, 6].map((count) => (
+                {[1, 2, 3, 4, 5, 6].map((value) => (
                   <button
-                    key={count}
+                    key={value}
                     type="button"
-                    onClick={() => setBasisCount(count)}
-                    className={`min-w-9 rounded-md border px-2.5 py-2 font-mono text-sm ${
-                      input.basis.length === count
-                        ? 'border-brand bg-brand-soft text-ink'
-                        : 'border-line text-muted hover:text-ink'
+                    onClick={() => changeCount(value)}
+                    className={`min-w-10 rounded-md border px-3 py-2.5 font-mono text-sm ${
+                      count === value ? 'border-brand bg-brand-soft text-ink' : 'border-line text-muted hover:text-ink'
                     }`}
                   >
-                    {count}
+                    {value}
                   </button>
                 ))}
               </div>
             </div>
-            {input.basis.map((source, index) => (
-              <label key={index} className="flex flex-col gap-1.5">
-                <span className={labelClass}>φ{index + 1}(x)</span>
-                <input
-                  className={fieldClass}
-                  value={source}
-                  onChange={(e) =>
-                    update(
-                      'basis',
-                      input.basis.map((item, i) => (i === index ? e.target.value : item)),
-                    )
-                  }
-                />
-              </label>
-            ))}
+
+            <label className="flex flex-col gap-1.5 sm:col-span-2">
+              <span className={labelClass}>φᵢ(x) shabloni — i o‘rniga 1, 2, … qo‘yiladi</span>
+              <input className={fieldClass} value={template} onChange={(e) => changeTemplate(e.target.value)} />
+              <span className={hintClass}>
+                Hozir: {input.basis.map((item, index) => `φ${index + 1} = ${item}`).join(',  ')}
+              </span>
+            </label>
           </div>
-          <p className="mt-4 font-mono text-xs text-muted">
-            Misol: sin(x), sin(2*x), x/pi, exp(x), x^2. Ifodalar xavfsiz parser orqali o‘qiladi.
-          </p>
+
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
               type="submit"
               className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2.5 text-sm font-semibold text-white"
             >
               <Calculator size={16} />
-              Yechishni boshlash
+              Yechish
             </button>
             <button type="button" onClick={reset} className="rounded-md border border-line px-3 py-2 text-sm text-muted hover:text-ink">
-              Namuna masalani yuklash
+              Namuna masala
+            </button>
+            <button
+              type="button"
+              onClick={() => setAdvanced((value) => !value)}
+              className="rounded-md px-2 py-2 text-xs text-muted underline underline-offset-4 hover:text-ink"
+            >
+              {advanced ? 'Oddiy rejim' : 'Kengaytirilgan sozlamalar'}
             </button>
             <label className="ml-auto flex items-center gap-2 font-mono text-xs text-muted">
               Aniqlik
@@ -541,6 +596,29 @@ export function GalerkinMethod() {
               </select>
             </label>
           </div>
+
+          {advanced && (
+            <div className="mt-5 grid gap-4 border-t border-line pt-5">
+              <p className={hintClass}>
+                Kengaytirilgan rejim: chegaraviy shartlar umumiy ko‘rinishda (α, β) va har bir bazis funksiyani alohida kiritish.
+              </p>
+              {input.basis.map((source, index) => (
+                <label key={index} className="flex flex-col gap-1.5">
+                  <span className={labelClass}>φ{index + 1}(x)</span>
+                  <input
+                    className={fieldClass}
+                    value={source}
+                    onChange={(e) =>
+                      update(
+                        'basis',
+                        input.basis.map((item, i) => (i === index ? e.target.value : item)),
+                      )
+                    }
+                  />
+                </label>
+              ))}
+            </div>
+          )}
         </PsPanel>
       </form>
 
