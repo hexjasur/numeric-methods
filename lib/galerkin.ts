@@ -244,7 +244,18 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
   const a1Fn = makeFunction(input.a1.trim() || '0', 'a₁(x)');
   const a0Fn = makeFunction(input.a0.trim() || '0', 'a₀(x)');
   const fFn = makeFunction(input.f.trim() || '0', 'f(x)');
-  const phi0 = makeFunction(input.phi0, 'φ₀(x)');
+  // If phi0 is empty, build the linear function through (a, u(a)) and (b, u(b)).
+  // This only holds for the Dirichlet form: alpha1 = beta1 = 0.
+  let phi0Source = input.phi0.trim();
+  if (!phi0Source) {
+    if (Math.abs(alpha1) > EPS || Math.abs(beta1) > EPS)
+      throw new Error('φ₀ avtomatik tuzilmadi: chegaraviy shartlar u(a) va u(b) ko‘rinishida bo‘lishi kerak. φ₀ ni o‘zingiz kiriting.');
+    const valueAtA = alphaValue / alpha0;
+    const valueAtB = betaValue / beta0;
+    const slope = (valueAtB - valueAtA) / (b - a);
+    phi0Source = `(${valueAtA}) + (${slope})*(x - (${a}))`;
+  }
+  const phi0 = makeFunction(phi0Source, 'φ₀(x)');
   const basis = input.basis.map((source, index) =>
     makeFunction(source, `φ${index + 1}(x)`),
   );

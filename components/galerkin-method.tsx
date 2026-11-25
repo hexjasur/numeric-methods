@@ -51,7 +51,7 @@ const SAMPLE_INPUT: GalerkinInput = {
   beta0: '1',
   beta1: '0',
   betaValue: '2',
-  phi0: '1 + x/pi',
+  phi0: '',
   basis: ['sin(x)', 'sin(2*x)'],
 };
 
@@ -576,7 +576,7 @@ export function GalerkinMethod() {
             <label className="flex flex-col gap-1.5 sm:col-span-2">
               <span className={labelClass}>φ₀(x) — chegarani qanoatlantiruvchi funksiya</span>
               <input className={fieldClass} value={input.phi0} onChange={(e) => update('phi0', e.target.value)} />
-              <span className={hintClass}>Masalan: 1 + x/pi (u(0)=1, u(π)=2 uchun)</span>
+              <span className={hintClass}>Bo‘sh qolsa u(a) va u(b) dan chiziqli funksiya avtomatik tuziladi</span>
             </label>
 
             <div className="flex flex-col gap-1.5 sm:col-span-2">
