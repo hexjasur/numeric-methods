@@ -89,7 +89,7 @@ function parseOrThrow(source: string, label: string): MathNode {
   node.traverse((child) => {
     if (child.type !== 'SymbolNode') return;
     const name = (child as unknown as { name: string }).name;
-    const isFunctionName = name in math && typeof math[name] === 'function';
+    const isFunctionName = name in math && typeof Reflect.get(math, name) === 'function';
     if (ALLOWED_SYMBOLS.has(name) || (isFunctionName && !FORBIDDEN_FUNCTIONS.has(name)))
       return;
     if (name in math && !isFunctionName) return;
