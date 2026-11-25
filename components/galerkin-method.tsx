@@ -19,9 +19,29 @@ import {
   type GalerkinResult,
 } from '@/lib/galerkin';
 
-const DEFAULT_INPUT: GalerkinInput = {
-  p: '-cos(x)',
-  q: 'sin(x)',
+// Empty form on page load; the user enters their own problem
+const EMPTY_INPUT: GalerkinInput = {
+  a2: '',
+  a1: '',
+  a0: '',
+  f: '',
+  a: '',
+  b: '',
+  alpha0: '1',
+  alpha1: '0',
+  alphaValue: '',
+  beta0: '1',
+  beta1: '0',
+  betaValue: '',
+  phi0: '',
+  basis: [],
+};
+
+// Notebook example: u'' - u' cos x + u sin x = sin x, u(0)=1, u(pi)=2
+const SAMPLE_INPUT: GalerkinInput = {
+  a2: '1',
+  a1: '-cos(x)',
+  a0: 'sin(x)',
   f: 'sin(x)',
   a: '0',
   b: 'pi',
@@ -35,8 +55,7 @@ const DEFAULT_INPUT: GalerkinInput = {
   basis: ['sin(x)', 'sin(2*x)'],
 };
 
-const DEFAULT_TEMPLATE = 'sin(i*x)';
-const PRESET_BASIS = ['sin(x)', 'sin(2*x)', 'sin(3*x)', 'sin(4*x)', 'sin(5*x)', 'sin(6*x)'];
+const SAMPLE_TEMPLATE = 'sin(i*x)';
 const PRECISIONS = [4, 6, 8, 12] as const;
 
 function katexHtml(source: string, displayMode: boolean): string {
@@ -186,7 +205,7 @@ function ResultView({
       </Step>
 
       <Step index={2} title="Differensial operatorni aniqlash">
-        <Tex value={`L(u)=u''+(${result.pTex})\\,u'+(${result.qTex})\\,u`} />
+        <Tex value={`L(u)=\\left(${result.a2Tex}\\right)u''+\\left(${result.a1Tex}\\right)u'+\\left(${result.a0Tex}\\right)u`} />
         <PsNote>
           <p>
             Tenglamaning o‘ng tomoni <b>f(x) = {result.fTex}</b>.
@@ -393,20 +412,31 @@ function basisFromTemplate(template: string, count: number): string[] {
   return Array.from({ length: count }, (_, k) => template.replace(/\bi\b/g, String(k + 1)));
 }
 
-function equationTex(p: string, q: string, f: string): string {
-  const tex = (source: string) => {
+function equationTex(a2: string, a1: string, a0: string, f: string): string {
+  const tex = (source: string): string | null => {
+    if (!source.trim()) return null;
     try {
-      return math.parse(source.trim() || '0').toTex();
+      return math.parse(source.trim()).toTex();
     } catch {
       return '\\text{?}';
     }
   };
-  return `u''+\\left(${tex(p)}\\right)u'+\\left(${tex(q)}\\right)u=${tex(f)}`;
+  // Empty u'' coefficient means 1; other empty terms are omitted
+  const a2t = tex(a2);
+  const a1t = tex(a1);
+  const a0t = tex(a0);
+  const ft = tex(f) ?? '0';
+  const lhs = [
+    a2t ? `\\left(${a2t}\\right)u''` : "u''",
+    a1t ? `+\\left(${a1t}\\right)u'` : '',
+    a0t ? `+\\left(${a0t}\\right)u` : '',
+  ].join('');
+  return `${lhs}=${ft}`;
 }
 
 export function GalerkinMethod() {
-  const [input, setInput] = useState<GalerkinInput>(DEFAULT_INPUT);
-  const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
+  const [input, setInput] = useState<GalerkinInput>(EMPTY_INPUT);
+  const [template, setTemplate] = useState('');
   const [count, setCount] = useState(2);
   const [advanced, setAdvanced] = useState(false);
   const [result, setResult] = useState<GalerkinResult | null>(null);
@@ -446,10 +476,17 @@ export function GalerkinMethod() {
   };
 
   const reset = () => {
-    setInput(DEFAULT_INPUT);
-    setTemplate(DEFAULT_TEMPLATE);
+    setInput(SAMPLE_INPUT);
+    setTemplate(SAMPLE_TEMPLATE);
     setCount(2);
     setAdvanced(false);
+    setResult(null);
+    setError('');
+  };
+
+  const clear = () => {
+    setInput(EMPTY_INPUT);
+    setTemplate('');
     setResult(null);
     setError('');
   };
@@ -473,23 +510,29 @@ export function GalerkinMethod() {
           <PsPanelHead eyebrow="Kiritish" title="Masala" idx="IN" />
 
           <div className="mb-5 rounded-lg border border-line bg-bg-2 px-4 py-3 text-cyan overflow-x-auto">
-            <div dangerouslySetInnerHTML={{ __html: katex.renderToString(equationTex(input.p, input.q, input.f), { throwOnError: false, displayMode: true }) }} />
+            <div dangerouslySetInnerHTML={{ __html: katex.renderToString(equationTex(input.a2, input.a1, input.a0, input.f), { throwOnError: false, displayMode: true }) }} />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>p(x) — u′ oldidagi koeffitsiyent</span>
-              <input className={fieldClass} value={input.p} onChange={(e) => update('p', e.target.value)} />
-              <span className={hintClass}>Masalan: 0, -cos(x), x^2</span>
+              <span className={labelClass}>a₂(x) — u″ oldidagi koeffitsiyent</span>
+              <input className={fieldClass} value={input.a2} placeholder="1" onChange={(e) => update('a2', e.target.value)} />
+              <span className={hintClass}>Bo‘sh qolsa 1 deb olinadi</span>
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>q(x) — u oldidagi koeffitsiyent</span>
-              <input className={fieldClass} value={input.q} onChange={(e) => update('q', e.target.value)} />
-              <span className={hintClass}>Masalan: 0, sin(x), 1</span>
+              <span className={labelClass}>a₁(x) — u′ oldidagi koeffitsiyent</span>
+              <input className={fieldClass} value={input.a1} placeholder="0" onChange={(e) => update('a1', e.target.value)} />
+              <span className={hintClass}>Bo‘sh qolsa 0. Masalan: -cos(x)</span>
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className={labelClass}>a₀(x) — u oldidagi koeffitsiyent</span>
+              <input className={fieldClass} value={input.a0} placeholder="0" onChange={(e) => update('a0', e.target.value)} />
+              <span className={hintClass}>Bo‘sh qolsa 0. Masalan: sin(x)</span>
             </label>
             <label className="flex flex-col gap-1.5 sm:col-span-2">
               <span className={labelClass}>f(x) — o‘ng tomon</span>
-              <input className={fieldClass} value={input.f} onChange={(e) => update('f', e.target.value)} />
+              <input className={fieldClass} value={input.f} placeholder="0" onChange={(e) => update('f', e.target.value)} />
+              <span className={hintClass}>Bo‘sh qolsa 0. Masalan: sin(x)</span>
             </label>
 
             <label className="flex flex-col gap-1.5">
@@ -557,9 +600,11 @@ export function GalerkinMethod() {
             <label className="flex flex-col gap-1.5 sm:col-span-2">
               <span className={labelClass}>φᵢ(x) shabloni — i o‘rniga 1, 2, … qo‘yiladi</span>
               <input className={fieldClass} value={template} onChange={(e) => changeTemplate(e.target.value)} />
-              <span className={hintClass}>
-                Hozir: {input.basis.map((item, index) => `φ${index + 1} = ${item}`).join(',  ')}
-              </span>
+              {template.trim() && (
+                <span className={hintClass}>
+                  Hozir: {input.basis.map((item, index) => `φ${index + 1} = ${item}`).join(',  ')}
+                </span>
+              )}
             </label>
           </div>
 
@@ -573,6 +618,9 @@ export function GalerkinMethod() {
             </button>
             <button type="button" onClick={reset} className="rounded-md border border-line px-3 py-2 text-sm text-muted hover:text-ink">
               Namuna masala
+            </button>
+            <button type="button" onClick={clear} className="rounded-md px-2 py-2 text-sm text-muted hover:text-ink">
+              Tozalash
             </button>
             <button
               type="button"

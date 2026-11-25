@@ -2,8 +2,9 @@ import { math } from '@/lib/math';
 import type { MathNode } from 'mathjs';
 
 export interface GalerkinInput {
-  p: string;
-  q: string;
+  a2: string;
+  a1: string;
+  a0: string;
   f: string;
   a: string;
   b: string;
@@ -43,8 +44,9 @@ export interface GalerkinResult {
   operatorTex: string;
   phi0: GalerkinFunction;
   basis: GalerkinFunction[];
-  pTex: string;
-  qTex: string;
+  a2Tex: string;
+  a1Tex: string;
+  a0Tex: string;
   fTex: string;
   boundaryLeft: { phi0: number; target: number };
   boundaryRight: { phi0: number; target: number };
@@ -128,8 +130,9 @@ function makeFunction(source: string, label: string): GalerkinFunction {
 }
 
 function parseNumber(value: string, label: string): number {
+  if (!value.trim()) throw new Error(`${label} kiritilishi shart.`);
   try {
-    const result = Number(math.evaluate(value.trim() || '0'));
+    const result = Number(math.evaluate(value.trim()));
     if (!Number.isFinite(result)) throw new Error();
     return result;
   } catch {
@@ -236,9 +239,11 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
   if (Math.abs(beta0) + Math.abs(beta1) < EPS)
     throw new Error('O‘ng chegaraviy shartda β₀ yoki β₁ noldan farqli bo‘lishi kerak.');
 
-  const pFn = makeFunction(input.p, 'p(x)');
-  const qFn = makeFunction(input.q, 'q(x)');
-  const fFn = makeFunction(input.f, 'f(x)');
+  // Empty coefficients have defaults: u'' -> 1, the others -> 0
+  const a2Fn = makeFunction(input.a2.trim() || '1', 'a₂(x)');
+  const a1Fn = makeFunction(input.a1.trim() || '0', 'a₁(x)');
+  const a0Fn = makeFunction(input.a0.trim() || '0', 'a₀(x)');
+  const fFn = makeFunction(input.f.trim() || '0', 'f(x)');
   const phi0 = makeFunction(input.phi0, 'φ₀(x)');
   const basis = input.basis.map((source, index) =>
     makeFunction(source, `φ${index + 1}(x)`),
@@ -274,7 +279,7 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
 
   const operator = (u: { value: (x: number) => number; d1: (x: number) => number; d2: (x: number) => number }) =>
     (x: number) =>
-      u.d2(x) + pFn.value(x) * u.d1(x) + qFn.value(x) * u.value(x);
+      a2Fn.value(x) * u.d2(x) + a1Fn.value(x) * u.d1(x) + a0Fn.value(x) * u.value(x);
   const opPhi0 = operator(phi0);
   const opBasis = basis.map((phi) => operator(phi));
 
@@ -290,7 +295,7 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
         name: `a_{${k + 1}${i + 1}}`,
         row: k,
         col: i,
-        integrandTex: `\\varphi_{${k + 1}}(x)\\left[\\varphi_{${i + 1}}''+p(x)\\varphi_{${i + 1}}'+q(x)\\varphi_{${i + 1}}\\right]`,
+        integrandTex: `\\varphi_{${k + 1}}(x)\\left[a_2(x)\\varphi_{${i + 1}}''+a_1(x)\\varphi_{${i + 1}}'+a_0(x)\\varphi_{${i + 1}}\\right]`,
         samples: sampleGrid(a, b, 5).map((x) => ({ x, value: integrand(x) })),
         value,
         error,
@@ -324,7 +329,7 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
   const d2Of = (x: number) =>
     phi0.d2(x) + coefficients.reduce((s, c, i) => s + c * basis[i].d2(x), 0);
   const residualAt = (x: number) =>
-    d2Of(x) + pFn.value(x) * d1Of(x) + qFn.value(x) * uOf(x) - fFn.value(x);
+    a2Fn.value(x) * d2Of(x) + a1Fn.value(x) * d1Of(x) + a0Fn.value(x) * uOf(x) - fFn.value(x);
 
   const orthogonality = basis.map((phi) => {
     const { value } = integrate((x) => phi.value(x) * residualAt(x), a, b);
@@ -346,11 +351,12 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
     .join('')}`;
 
   return {
-    operatorTex: `u''+(${pFn.tex})u'+(${qFn.tex})u=${fFn.tex}`,
+    operatorTex: `\\left(${a2Fn.tex}\\right)u''+\\left(${a1Fn.tex}\\right)u'+\\left(${a0Fn.tex}\\right)u=${fFn.tex}`,
     phi0,
     basis,
-    pTex: pFn.tex,
-    qTex: qFn.tex,
+    a2Tex: a2Fn.tex,
+    a1Tex: a1Fn.tex,
+    a0Tex: a0Fn.tex,
     fTex: fFn.tex,
     boundaryLeft,
     boundaryRight,
