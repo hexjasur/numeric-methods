@@ -83,7 +83,6 @@
   body {
     margin: 0; min-width: 320px;
     background: var(--page-glow), var(--bg);
-    background-attachment: fixed;
     color: var(--ink);
     font-family: var(--font-sans);
   }

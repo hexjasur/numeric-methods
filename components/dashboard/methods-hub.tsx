@@ -335,7 +335,7 @@ export function MethodsHub() {
                 key={method.id}
                 href={method.href}
                 prefetch={false}
-                className="group relative flex flex-col justify-between p-5 rounded-xl border border-line bg-bg-2 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-brand hover:bg-panel hover:shadow-md cursor-pointer"
+                className="group relative flex flex-col justify-between p-5 rounded-xl border border-line bg-bg-2 shadow-xs transition-[transform,box-shadow,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-brand hover:bg-panel hover:shadow-md cursor-pointer"
               >
                 <div>
                   {/* Top Bar: Code, Category & Order */}
