@@ -20,7 +20,8 @@
     "newtonInterpolation": "Nyuton interpolyatsiyasi",
     "adamsPredictor": "Adams başorat qiluvçi usuli",
     "bvp": "Chekli ayirmalar usuli",
-    "collocation": "Kollokatsiya usuli"
+    "collocation": "Kollokatsiya usuli",
+    "galerkin": "Galyorkin usuli"
   },
   "about": {
     "strip": "DOC-002 / HAQIDA",
@@ -117,7 +118,8 @@
     "desc_newtonInterpolation": "Bölingan ayirmalar orqali Nyuton köphadini tuzing, çekli ayirmalarni taqqoslang va P(x*) qiymatini qadam-baqadam hisoblang.",
     "desc_adamsPredictor": "Koşi masalasini RK4 boşlanğiç qadamlari va uçinçi tartibli Adams başorat formulasi bilan yeçing.",
     "desc_bvp": "Ikkinchi tartibli chiziqli chegaraviy masalani chekli ayirmalar va qadamma-qadam haydash (progonka) usuli bilan yeching.",
-    "desc_collocation": "Ikkinchi tartibli chiziqli chegaraviy masalani bazis funksiyalar va kollokatsiya nuqtalari orqali yeching."
+    "desc_collocation": "Ikkinchi tartibli chiziqli chegaraviy masalani bazis funksiyalar va kollokatsiya nuqtalari orqali yeching.",
+    "desc_galerkin": "Chegaraviy masalani bazis funksiyalar va Galyorkin ortogonallik sharti orqali yeching."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",

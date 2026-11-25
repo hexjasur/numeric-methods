@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {
   Activity,
   ArrowRightLeft,
+  Layers,
   ArrowUpRight,
   Search,
   Sigma,
@@ -201,6 +202,19 @@ const METHODS: MethodDef[] = [
     orderTex: 'n',
     icon: Activity,
     accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+  },
+  {
+    id: 'galerkin',
+    code: '14 / ODE',
+    category: 'odes',
+    categoryKey: 'dashboard.cat_odes',
+    titleKey: 'nav.galerkin',
+    descKey: 'dashboard.desc_galerkin',
+    href: '/methods/galerkin',
+    formulaTex: '\\int_a^b \\varphi_k\\,L(u_n)\\,dx = \\int_a^b \\varphi_k f\\,dx',
+    orderTex: 'n',
+    icon: Layers,
+    accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
   },
 ];
 

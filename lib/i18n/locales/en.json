@@ -20,7 +20,8 @@
     "newtonInterpolation": "Newton Interpolation",
     "adamsPredictor": "Adams Predictor Method",
     "bvp": "Finite Difference BVP",
-    "collocation": "Collocation Method"
+    "collocation": "Collocation Method",
+    "galerkin": "Galerkin Method"
   },
   "about": {
     "strip": "DOC-002 / ABOUT",
@@ -117,7 +118,8 @@
     "desc_newtonInterpolation": "Build the Newton polynomial from divided differences, compare finite differences, and evaluate P(x*) step by step.",
     "desc_adamsPredictor": "Solve an initial value problem with RK4 startup steps and the third-order Adams predictor formula.",
     "desc_bvp": "Solve second-order linear boundary value problems with finite differences and a step-by-step Thomas algorithm trace.",
-    "desc_collocation": "Solve second-order linear boundary value problems with basis functions and collocation points."
+    "desc_collocation": "Solve second-order linear boundary value problems with basis functions and collocation points.",
+    "desc_galerkin": "Solve second-order linear boundary value problems with basis functions and the Galerkin orthogonality condition."
   },
   "actions": {
     "tools_badge": "EXPORT / TOOLS",
