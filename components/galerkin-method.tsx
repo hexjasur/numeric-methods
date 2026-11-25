@@ -434,6 +434,30 @@ function equationTex(a2: string, a1: string, a0: string, f: string): string {
   return `${lhs}=${ft}`;
 }
 
+function Field({
+  label,
+  placeholder,
+  value,
+  onChange,
+}: {
+  label: string;
+  placeholder?: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="flex min-w-0 flex-col gap-1">
+      <span className="font-mono text-[10px] uppercase tracking-[.1em] text-muted">{label}</span>
+      <input
+        className="w-full rounded-md border border-line bg-bg-2 px-2.5 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </label>
+  );
+}
+
 export function GalerkinMethod() {
   const [input, setInput] = useState<GalerkinInput>(EMPTY_INPUT);
   const [template, setTemplate] = useState('');
@@ -491,8 +515,6 @@ export function GalerkinMethod() {
     setError('');
   };
 
-  const fieldClass =
-    'w-full rounded-md border border-line bg-bg-2 px-3 py-2.5 font-mono text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand/40';
   const labelClass = 'font-mono text-[11px] uppercase tracking-[.1em] text-muted';
   const hintClass = 'text-xs leading-[1.5] text-muted';
 
@@ -505,89 +527,57 @@ export function GalerkinMethod() {
         lead="Chegaraviy masalani bazis funksiyalar yordamida, daftarda qo‘lda ishlagandek bosqichma-bosqich yeching."
       />
 
-      <form onSubmit={submit} className="mb-6">
-        <PsPanel className="mb-5">
+      <form onSubmit={submit} className="mx-auto mb-6 max-w-3xl">
+        <PsPanel className="mb-4">
           <PsPanelHead eyebrow="Kiritish" title="Masala" idx="IN" />
 
-          <div className="mb-5 rounded-lg border border-line bg-bg-2 px-4 py-3 text-cyan overflow-x-auto">
+          <div className="mb-4 overflow-x-auto rounded-lg border border-line bg-bg-2 px-3 py-2 text-cyan">
             <div dangerouslySetInnerHTML={{ __html: katex.renderToString(equationTex(input.a2, input.a1, input.a0, input.f), { throwOnError: false, displayMode: true }) }} />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>a₂(x) — u″ oldidagi koeffitsiyent</span>
-              <input className={fieldClass} value={input.a2} placeholder="1" onChange={(e) => update('a2', e.target.value)} />
-              <span className={hintClass}>Bo‘sh qolsa 1 deb olinadi</span>
-            </label>
-            <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>a₁(x) — u′ oldidagi koeffitsiyent</span>
-              <input className={fieldClass} value={input.a1} placeholder="0" onChange={(e) => update('a1', e.target.value)} />
-              <span className={hintClass}>Bo‘sh qolsa 0. Masalan: -cos(x)</span>
-            </label>
-            <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>a₀(x) — u oldidagi koeffitsiyent</span>
-              <input className={fieldClass} value={input.a0} placeholder="0" onChange={(e) => update('a0', e.target.value)} />
-              <span className={hintClass}>Bo‘sh qolsa 0. Masalan: sin(x)</span>
-            </label>
-            <label className="flex flex-col gap-1.5 sm:col-span-2">
-              <span className={labelClass}>f(x) — o‘ng tomon</span>
-              <input className={fieldClass} value={input.f} placeholder="0" onChange={(e) => update('f', e.target.value)} />
-              <span className={hintClass}>Bo‘sh qolsa 0. Masalan: sin(x)</span>
-            </label>
+          <fieldset className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <legend className={`${labelClass} mb-2`}>Tenglama koeffitsiyentlari</legend>
+            <Field label="a₂ (u″)" placeholder="1" value={input.a2} onChange={(v) => update('a2', v)} />
+            <Field label="a₁ (u′)" placeholder="0" value={input.a1} onChange={(v) => update('a1', v)} />
+            <Field label="a₀ (u)" placeholder="0" value={input.a0} onChange={(v) => update('a0', v)} />
+            <Field label="f(x)" placeholder="0" value={input.f} onChange={(v) => update('f', v)} />
+          </fieldset>
+          <p className={`${hintClass} mt-1.5`}>Bo‘sh qolsa: a₂ = 1, qolganlari = 0.</p>
 
-            <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>a — chap chegara</span>
-              <input className={fieldClass} value={input.a} onChange={(e) => update('a', e.target.value)} />
-            </label>
-            <label className="flex flex-col gap-1.5">
-              <span className={labelClass}>b — o‘ng chegara</span>
-              <input className={fieldClass} value={input.b} onChange={(e) => update('b', e.target.value)} />
-              <span className={hintClass}>π uchun: pi</span>
-            </label>
+          <fieldset className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <legend className={`${labelClass} mb-2`}>Oraliq va chegara shartlari</legend>
+            <Field label="a" placeholder="0" value={input.a} onChange={(v) => update('a', v)} />
+            <Field label="b" placeholder="pi" value={input.b} onChange={(v) => update('b', v)} />
+            <Field label="u(a)" placeholder="0" value={input.alphaValue} onChange={(v) => update('alphaValue', v)} />
+            <Field label="u(b)" placeholder="0" value={input.betaValue} onChange={(v) => update('betaValue', v)} />
+          </fieldset>
 
-            {advanced ? (
-              <>
-                <fieldset className="grid grid-cols-3 gap-2 sm:col-span-2">
-                  <legend className={`${labelClass} mb-1.5`}>Chap: α₀·u(a) + α₁·u′(a) = F_a</legend>
-                  <input aria-label="α₀" className={fieldClass} value={input.alpha0} onChange={(e) => update('alpha0', e.target.value)} />
-                  <input aria-label="α₁" className={fieldClass} value={input.alpha1} onChange={(e) => update('alpha1', e.target.value)} />
-                  <input aria-label="F_a" className={fieldClass} value={input.alphaValue} onChange={(e) => update('alphaValue', e.target.value)} />
-                </fieldset>
-                <fieldset className="grid grid-cols-3 gap-2 sm:col-span-2">
-                  <legend className={`${labelClass} mb-1.5`}>O‘ng: β₀·u(b) + β₁·u′(b) = F_b</legend>
-                  <input aria-label="β₀" className={fieldClass} value={input.beta0} onChange={(e) => update('beta0', e.target.value)} />
-                  <input aria-label="β₁" className={fieldClass} value={input.beta1} onChange={(e) => update('beta1', e.target.value)} />
-                  <input aria-label="F_b" className={fieldClass} value={input.betaValue} onChange={(e) => update('betaValue', e.target.value)} />
-                </fieldset>
-              </>
-            ) : (
-              <>
-                <label className="flex flex-col gap-1.5">
-                  <span className={labelClass}>u(a) = ?</span>
-                  <input className={fieldClass} value={input.alphaValue} onChange={(e) => update('alphaValue', e.target.value)} />
-                </label>
-                <label className="flex flex-col gap-1.5">
-                  <span className={labelClass}>u(b) = ?</span>
-                  <input className={fieldClass} value={input.betaValue} onChange={(e) => update('betaValue', e.target.value)} />
-                </label>
-              </>
-            )}
+          {advanced && (
+            <fieldset className="mt-4 grid grid-cols-3 gap-3">
+              <legend className={`${labelClass} mb-2`}>Umumiy chegara: α₀u + α₁u′ = F   ·   β₀u + β₁u′ = F</legend>
+              <Field label="α₀" value={input.alpha0} onChange={(v) => update('alpha0', v)} />
+              <Field label="α₁" value={input.alpha1} onChange={(v) => update('alpha1', v)} />
+              <Field label="β₀" value={input.beta0} onChange={(v) => update('beta0', v)} />
+              <Field label="β₁" value={input.beta1} onChange={(v) => update('beta1', v)} />
+            </fieldset>
+          )}
 
-            <label className="flex flex-col gap-1.5 sm:col-span-2">
-              <span className={labelClass}>φ₀(x) — chegarani qanoatlantiruvchi funksiya</span>
-              <input className={fieldClass} value={input.phi0} onChange={(e) => update('phi0', e.target.value)} />
-              <span className={hintClass}>Bo‘sh qolsa u(a) va u(b) dan chiziqli funksiya avtomatik tuziladi</span>
-            </label>
-
-            <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <span className={labelClass}>Bazis funksiyalar soni (n)</span>
-              <div className="flex gap-1.5">
+          <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+            <Field
+              label="φ₀(x) — bo‘sh qolsa avtomatik"
+              placeholder="avtomatik"
+              value={input.phi0}
+              onChange={(v) => update('phi0', v)}
+            />
+            <div className="flex flex-col gap-1.5">
+              <span className={labelClass}>n</span>
+              <div className="flex gap-1">
                 {[1, 2, 3, 4, 5, 6].map((value) => (
                   <button
                     key={value}
                     type="button"
                     onClick={() => changeCount(value)}
-                    className={`min-w-10 rounded-md border px-3 py-2.5 font-mono text-sm ${
+                    className={`min-w-9 rounded-md border py-2 font-mono text-sm ${
                       count === value ? 'border-brand bg-brand-soft text-ink' : 'border-line text-muted hover:text-ink'
                     }`}
                   >
@@ -596,19 +586,23 @@ export function GalerkinMethod() {
                 ))}
               </div>
             </div>
-
-            <label className="flex flex-col gap-1.5 sm:col-span-2">
-              <span className={labelClass}>φᵢ(x) shabloni — i o‘rniga 1, 2, … qo‘yiladi</span>
-              <input className={fieldClass} value={template} onChange={(e) => changeTemplate(e.target.value)} />
-              {template.trim() && (
-                <span className={hintClass}>
-                  Hozir: {input.basis.map((item, index) => `φ${index + 1} = ${item}`).join(',  ')}
-                </span>
-              )}
-            </label>
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-3">
+          <div className="mt-4">
+            <Field
+              label="φᵢ(x) shabloni (i = 1, 2, …, n)"
+              placeholder="sin(i*x)"
+              value={template}
+              onChange={changeTemplate}
+            />
+            {template.trim() && (
+              <p className={`${hintClass} mt-1.5 font-mono`}>
+                {input.basis.map((item, index) => `φ${index + 1} = ${item}`).join('   ')}
+              </p>
+            )}
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-2">
             <button
               type="submit"
               className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2.5 text-sm font-semibold text-white"
@@ -627,7 +621,7 @@ export function GalerkinMethod() {
               onClick={() => setAdvanced((value) => !value)}
               className="rounded-md px-2 py-2 text-xs text-muted underline underline-offset-4 hover:text-ink"
             >
-              {advanced ? 'Oddiy rejim' : 'Kengaytirilgan sozlamalar'}
+              {advanced ? 'Oddiy rejim' : 'Kengaytirilgan'}
             </button>
             <label className="ml-auto flex items-center gap-2 font-mono text-xs text-muted">
               Aniqlik
@@ -644,29 +638,6 @@ export function GalerkinMethod() {
               </select>
             </label>
           </div>
-
-          {advanced && (
-            <div className="mt-5 grid gap-4 border-t border-line pt-5">
-              <p className={hintClass}>
-                Kengaytirilgan rejim: chegaraviy shartlar umumiy ko‘rinishda (α, β) va har bir bazis funksiyani alohida kiritish.
-              </p>
-              {input.basis.map((source, index) => (
-                <label key={index} className="flex flex-col gap-1.5">
-                  <span className={labelClass}>φ{index + 1}(x)</span>
-                  <input
-                    className={fieldClass}
-                    value={source}
-                    onChange={(e) =>
-                      update(
-                        'basis',
-                        input.basis.map((item, i) => (i === index ? e.target.value : item)),
-                      )
-                    }
-                  />
-                </label>
-              ))}
-            </div>
-          )}
         </PsPanel>
       </form>
 
