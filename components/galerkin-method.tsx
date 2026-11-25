@@ -463,6 +463,7 @@ export function GalerkinMethod() {
   const [template, setTemplate] = useState('');
   const [count, setCount] = useState(2);
   const [advanced, setAdvanced] = useState(false);
+  const [board, setBoard] = useState(false);
   const [result, setResult] = useState<GalerkinResult | null>(null);
   const [error, setError] = useState('');
   const [digits, setDigits] = useState<(typeof PRECISIONS)[number]>(6);
@@ -487,9 +488,10 @@ export function GalerkinMethod() {
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Simple mode uses Dirichlet conditions: u(a) and u(b) are given directly
-    const payload: GalerkinInput = advanced
-      ? input
-      : { ...input, alpha0: '1', alpha1: '0', beta0: '1', beta1: '0' };
+    const payload: GalerkinInput = {
+      ...(advanced ? input : { ...input, alpha0: '1', alpha1: '0', beta0: '1', beta1: '0' }),
+      allowNonHomogeneousBasis: board,
+    };
     try {
       setResult(solveGalerkin(payload));
       setError('');
@@ -602,6 +604,18 @@ export function GalerkinMethod() {
             )}
           </div>
 
+          <label className="mt-4 flex items-start gap-2 text-xs leading-[1.5] text-muted">
+            <input
+              type="checkbox"
+              checked={board}
+              onChange={(e) => setBoard(e.target.checked)}
+              className="mt-0.5"
+            />
+            <span>
+              Doska (daftar) usuli: bazis funksiyalar chegarada nolga teng bo‘lishi shart emas. Bu usulda chegaraviy shartlar aniq bajarilmasligi mumkin.
+            </span>
+          </label>
+
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <button
               type="submit"
@@ -650,6 +664,13 @@ export function GalerkinMethod() {
       <div ref={resultRef}>
         {result && (
           <>
+            {board && (
+              <PsNote variant="orange" icon={<Info size={16} />}>
+                <p>
+                  Doska usuli yoqilgan. Bazis chegaraviy shartlarni qanoatlantirmasa, tekshiruvdagi chegara xatolari noldan farq qiladi.
+                </p>
+              </PsNote>
+            )}
             <PsNote>
               <p>
                 Integrallar sonli usulda (Simpson, 800 bo‘lak) hisoblandi; simvolik integrallash qo‘llanmaydi.

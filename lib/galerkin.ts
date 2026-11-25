@@ -16,6 +16,8 @@ export interface GalerkinInput {
   betaValue: string;
   phi0: string;
   basis: string[];
+  // Blackboard method: basis need not vanish at the boundary (boundary may not hold exactly)
+  allowNonHomogeneousBasis?: boolean;
 }
 
 export interface GalerkinFunction {
@@ -290,7 +292,7 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
   basis.forEach((phi, index) => {
     const left = alpha0 * phi.value(a) + alpha1 * phi.d1(a);
     const right = beta0 * phi.value(b) + beta1 * phi.d1(b);
-    if (Math.abs(left) > 1e-7 || Math.abs(right) > 1e-7)
+    if (!input.allowNonHomogeneousBasis && (Math.abs(left) > 1e-7 || Math.abs(right) > 1e-7))
       throw new Error(
         `φ${index + 1}(x) bir jinsli chegaraviy shartlarni qanoatlantirmaydi (chap: ${formatNumber(left)}, o‘ng: ${formatNumber(right)}).`,
       );
