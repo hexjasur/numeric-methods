@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n-provider";
 import { TopLoader } from "@/components/top-loader";
+import { SplashScreen } from "@/components/splash-screen";
 import { siteConfig } from "@/lib/config";
 import { RootJsonLd } from "@/components/seo/json-ld";
 
@@ -136,6 +137,7 @@ try {
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <SplashScreen />
         <TopLoader />
         <I18nProvider>
           {children}
