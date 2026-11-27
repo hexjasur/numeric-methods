@@ -259,3 +259,8 @@
     opacity: 1;
   }
 }
+
+/* Hide the page scrollbar while the splash screen is mounted */
+html:has(#app-splash) {
+  overflow: hidden;
+}

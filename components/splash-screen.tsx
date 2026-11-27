@@ -38,7 +38,7 @@ export function SplashScreen() {
   return (
     <>
       <noscript>
-        <style>{'#app-splash{display:none!important}'}</style>
+        <style>{'#app-splash{display:none!important}html:has(#app-splash){overflow:auto!important}'}</style>
       </noscript>
       <div
         id="app-splash"
