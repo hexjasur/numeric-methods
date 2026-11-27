@@ -11,15 +11,16 @@ type Dictionary = typeof uz;
 const dictionaries: Record<Locale, Dictionary> = { uz, ru, en };
 const localeEvent = 'app-locale-change';
 
+// Uzbek by default. The browser language is not used, so the server render and the
+// first client render agree and the page does not switch language after load.
 function getStoredLocale(): Locale {
   if (typeof window === 'undefined') return 'uz';
-  const saved = window.localStorage.getItem('app-locale') as Locale | null;
-  if (saved && (saved === 'uz' || saved === 'ru' || saved === 'en')) {
-    return saved;
+  try {
+    const saved = window.localStorage.getItem('app-locale') as Locale | null;
+    if (saved === 'uz' || saved === 'ru' || saved === 'en') return saved;
+  } catch {
+    // Storage can be blocked; fall back to the default
   }
-  const navLang = window.navigator.language.split('-')[0];
-  if (navLang === 'ru') return 'ru';
-  if (navLang === 'en') return 'en';
   return 'uz';
 }
 
