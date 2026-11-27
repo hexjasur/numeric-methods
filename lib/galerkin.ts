@@ -18,6 +18,8 @@ export interface GalerkinInput {
   basis: string[];
   // Blackboard method: basis need not vanish at the boundary (boundary may not hold exactly)
   allowNonHomogeneousBasis?: boolean;
+  // Number of basis functions to generate automatically when no template is given
+  autoCount?: number;
 }
 
 export interface GalerkinFunction {
@@ -251,26 +253,47 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
   const a1Fn = makeFunction(input.a1.trim() || '0', 'a₁(x)');
   const a0Fn = makeFunction(input.a0.trim() || '0', 'a₀(x)');
   const fFn = makeFunction(input.f.trim() || '0', 'f(x)');
-  // If phi0 is empty, build the linear function through (a, u(a)) and (b, u(b)).
-  // This only holds for the Dirichlet form: alpha1 = beta1 = 0.
+  // Linear function l(x) = c0 + c1*(x - a) whose boundary functionals equal
+  // (targetA, targetB): alpha0*l(a)+alpha1*l'(a) and beta0*l(b)+beta1*l'(b).
+  // Works for Dirichlet, Robin and mixed conditions.
+  const linearFor = (targetA: number, targetB: number) => {
+    const betaSlope = beta0 * (b - a) + beta1;
+    const det = alpha0 * betaSlope - alpha1 * beta0;
+    if (Math.abs(det) < EPS)
+      throw new Error('Chegaraviy shartlar yordamchi funksiyani aniqlamaydi. Shartlarni tekshiring.');
+    return {
+      c0: (targetA * betaSlope - alpha1 * targetB) / det,
+      c1: (alpha0 * targetB - beta0 * targetA) / det,
+    };
+  };
+
+  // phi0: if empty, a linear function that satisfies both boundary conditions
   let phi0Source = input.phi0.trim();
   if (!phi0Source) {
-    if (Math.abs(alpha1) > EPS || Math.abs(beta1) > EPS)
-      throw new Error('φ₀ avtomatik tuzilmadi: chegaraviy shartlar u(a) va u(b) ko‘rinishida bo‘lishi kerak. φ₀ ni o‘zingiz kiriting.');
-    const valueAtA = alphaValue / alpha0;
-    const valueAtB = betaValue / beta0;
-    const slope = (valueAtB - valueAtA) / (b - a);
-    phi0Source =
-      Math.abs(valueAtA) < EPS && Math.abs(slope) < EPS
-        ? '0'
-        : `(${valueAtA}) + (${slope})*(x - (${a}))`;
+    const { c0, c1 } = linearFor(alphaValue, betaValue);
+    phi0Source = `(${c0}) + (${c1})*(x - (${a}))`;
   }
   const phi0 = makeFunction(phi0Source, 'φ₀(x)');
-  const basis = input.basis.map((source, index) =>
+
+  // Basis: if no template is given, build n functions (x-a)^i minus a linear
+  // correction, so that every basis function satisfies the homogeneous conditions.
+  const autoCount = input.basis.length === 0 ? (input.autoCount ?? 0) : 0;
+  const generated = Array.from({ length: autoCount }, (_, k) => {
+    const i = k + 1;
+    // Powers start at 2 so the basis is not cancelled by its own linear correction
+    const pAt = (x: number) => (x - a) ** (i + 1);
+    const dAt = (x: number) => (i + 1) * (x - a) ** i;
+    const gammaA = alpha0 * pAt(a) + alpha1 * dAt(a);
+    const gammaB = beta0 * pAt(b) + beta1 * dAt(b);
+    const { c0, c1 } = linearFor(gammaA, gammaB);
+    return `(x - (${a}))^${i + 1} - ((${c0}) + (${c1})*(x - (${a})))`;
+  });
+  const basisSources = input.basis.length > 0 ? input.basis : generated;
+  const basis = basisSources.map((source, index) =>
     makeFunction(source, `φ${index + 1}(x)`),
   );
   const n = basis.length;
-  if (n < 1) throw new Error('Kamida bitta bazis funksiya kiriting.');
+  if (n < 1) throw new Error('Kamida bitta bazis funksiya kiriting yoki bazislar sonini tanlang.');
 
   const boundaryLeft = {
     phi0: alpha0 * phi0.value(a) + alpha1 * phi0.d1(a),

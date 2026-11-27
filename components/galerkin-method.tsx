@@ -475,14 +475,17 @@ export function GalerkinMethod() {
     setError('');
   };
 
+  // Empty template → empty basis, so the solver builds φᵢ itself (autoCount)
+  const buildBasis = (tpl: string, n: number) => (tpl.trim() ? basisFromTemplate(tpl, n) : []);
+
   const changeTemplate = (value: string) => {
     setTemplate(value);
-    update('basis', basisFromTemplate(value, count));
+    update('basis', buildBasis(value, count));
   };
 
   const changeCount = (value: number) => {
     setCount(value);
-    update('basis', basisFromTemplate(template, value));
+    update('basis', buildBasis(template, value));
   };
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
@@ -490,6 +493,7 @@ export function GalerkinMethod() {
     // Simple mode uses Dirichlet conditions: u(a) and u(b) are given directly
     const payload: GalerkinInput = {
       ...(advanced ? input : { ...input, alpha0: '1', alpha1: '0', beta0: '1', beta1: '0' }),
+      autoCount: count,
       allowNonHomogeneousBasis: board,
     };
     try {
@@ -592,14 +596,18 @@ export function GalerkinMethod() {
 
           <div className="mt-4">
             <Field
-              label="φᵢ(x) shabloni (i = 1, 2, …, n)"
-              placeholder="sin(i*x)"
+              label="φᵢ(x) shabloni (i = 1, 2, …, n) — bo‘sh qolsa avtomatik"
+              placeholder="avtomatik"
               value={template}
               onChange={changeTemplate}
             />
-            {template.trim() && (
+            {template.trim() ? (
               <p className={`${hintClass} mt-1.5 font-mono`}>
                 {input.basis.map((item, index) => `φ${index + 1} = ${item}`).join('   ')}
+              </p>
+            ) : (
+              <p className={`${hintClass} mt-1.5`}>
+                Avtomatik: φᵢ = (x − a)<sup>i+1</sup> − chiziqli tuzatma, chegara shartlarga mos.
               </p>
             )}
           </div>
