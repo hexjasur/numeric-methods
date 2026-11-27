@@ -83,13 +83,17 @@ const SIMPSON_N = 800;
 
 type Scope = Record<string, number>;
 
-// Accept Pi, PI, pI as well as pi
-function normalizeConstants(source: string): string {
-  return source.replace(/\bpi\b/gi, 'pi');
+// Function names followed directly by their argument: cosx, cos x, sin2 -> cos(x), cos(x), sin(2).
+// Brackets are required for anything longer than a single token, so cos(x+1) is left unchanged.
+const IMPLICIT_CALL = /\b(sinh|cosh|tanh|asin|acos|atan|sin|cos|tan|cot|sec|csc|exp|log|sqrt|abs)\s*(pi|x|\d+(?:\.\d+)?)(?![\w.])/gi;
+
+// Accept cosx, Pi, PI as well as cos(x) and pi
+function normalizeInput(source: string): string {
+  return source.replace(IMPLICIT_CALL, '$1($2)').replace(/\bpi\b/gi, 'pi');
 }
 
 function parseOrThrow(source: string, label: string): MathNode {
-  const text = normalizeConstants(source.trim());
+  const text = normalizeInput(source.trim());
   if (!text) throw new Error(`${label} bo‘sh bo‘lmasligi kerak.`);
   let node: MathNode;
   try {
@@ -141,7 +145,7 @@ function makeFunction(source: string, label: string): GalerkinFunction {
 function parseNumber(value: string, label: string): number {
   if (!value.trim()) throw new Error(`${label} kiritilishi shart.`);
   try {
-    const result = Number(math.evaluate(normalizeConstants(value.trim())));
+    const result = Number(math.evaluate(normalizeInput(value.trim())));
     if (!Number.isFinite(result)) throw new Error();
     return result;
   } catch {
