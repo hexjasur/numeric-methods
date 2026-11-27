@@ -214,3 +214,50 @@
   }
 }
 
+
+/* Splash screen — logo mark animation */
+.splash-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: splash-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) forwards;
+}
+
+.splash-fill {
+  opacity: 0;
+  animation: splash-fade 0.6s ease var(--d, 0s) forwards;
+}
+
+.splash-pop {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: splash-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) forwards;
+}
+
+@keyframes splash-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes splash-fade {
+  to { opacity: 1; }
+}
+
+@keyframes splash-pop {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-draw,
+  .splash-fill,
+  .splash-pop {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* Hide the page scrollbar while the splash screen is mounted */
+html:has(#app-splash) {
+  overflow: hidden;
+}
