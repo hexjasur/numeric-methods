@@ -1,4 +1,4 @@
-import { math } from '@/lib/math';
+import { expandImplicitCalls, math } from '@/lib/math';
 import type { MathNode } from 'mathjs';
 
 export interface GalerkinInput {
@@ -117,21 +117,9 @@ const SIMPSON_N = 800;
 
 type Scope = Record<string, number>;
 
-// Function names followed directly by their argument, with an optional power:
-// cosx -> cos(x), cos x^2 -> cos(x^2), sin2x -> sin(2x), sin 2 -> sin(2).
-// Brackets are required for anything longer than a single token, so cos(x+1) is left unchanged.
-const IMPLICIT_CALL =
-  /\b(sinh|cosh|tanh|asin|acos|atan|sin|cos|tan|cot|sec|csc|exp|log|sqrt|abs)\s*((?:\d+(?:\.\d+)?\*?)?x|pi|\d+(?:\.\d+)?)(\^\d+(?:\.\d+)?)?(?![\w.])/gi;
-
-// Accept cosx, COS X, Pi, PI as well as cos(x) and pi
+// Accept cosx, Pi, PI as well as cos(x) and pi (implicit calls are shared in lib/math)
 function normalizeInput(source: string): string {
-  return source
-    .replace(
-      IMPLICIT_CALL,
-      (_match: string, fn: string, arg: string, power: string | undefined) =>
-        `${fn.toLowerCase()}(${arg.toLowerCase()}${power ?? ''})`,
-    )
-    .replace(/\bpi\b/gi, 'pi');
+  return expandImplicitCalls(source).replace(/\bpi\b/gi, 'pi');
 }
 
 const ATOMIC_NODES = new Set(['SymbolNode', 'ConstantNode', 'FunctionNode', 'ParenthesisNode']);
