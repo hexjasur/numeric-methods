@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, type FormEvent, type ReactNode } from 'react';
-import { math } from '@/lib/math';
 import katex from 'katex';
 import { Calculator, Check, Copy, Info } from 'lucide-react';
 import {
@@ -12,11 +11,14 @@ import {
 } from '@/components/ui/print-stream';
 import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import {
+  exprTex,
   formatNumber,
+  operatorLhsTex,
   solveGalerkin,
   texNumber,
   type GalerkinInput,
   type GalerkinResult,
+  type TexTerm,
 } from '@/lib/galerkin';
 
 // Empty form on page load; the user enters their own problem
@@ -63,11 +65,11 @@ function katexHtml(source: string, displayMode: boolean): string {
 }
 
 function Tex({ value, block = true }: { value: string; block?: boolean }) {
-  return (
-    <div
-      className={block ? 'w-full overflow-x-auto text-cyan' : 'inline-block text-cyan'}
-      dangerouslySetInnerHTML={{ __html: katexHtml(value, block) }}
-    />
+  // Inline formulas are spans so they can sit inside paragraphs
+  return block ? (
+    <div className="w-full overflow-x-auto text-cyan" dangerouslySetInnerHTML={{ __html: katexHtml(value, true) }} />
+  ) : (
+    <span className="inline-block text-cyan" dangerouslySetInnerHTML={{ __html: katexHtml(value, false) }} />
   );
 }
 
@@ -205,10 +207,10 @@ function ResultView({
       </Step>
 
       <Step index={2} title="Differensial operatorni aniqlash">
-        <Tex value={`L(u)=\\left(${result.a2Tex}\\right)u''+\\left(${result.a1Tex}\\right)u'+\\left(${result.a0Tex}\\right)u`} />
+        <Tex value={`L(u)=${result.operatorLhsTex}`} />
         <PsNote>
           <p>
-            Tenglamaning o‘ng tomoni <b>f(x) = {result.fTex}</b>.
+            Tenglamaning o‘ng tomoni <Tex value={`f(x)=${result.fTex}`} block={false} />.
           </p>
         </PsNote>
       </Step>
@@ -413,25 +415,17 @@ function basisFromTemplate(template: string, count: number): string[] {
 }
 
 function equationTex(a2: string, a1: string, a0: string, f: string): string {
-  const tex = (source: string): string | null => {
-    if (!source.trim()) return null;
+  // Empty u'' coefficient means 1; empty u′ and u coefficients mean 0; empty f means 0
+  const term = (source: string, fallback: string): TexTerm => {
+    if (!source.trim()) return { tex: fallback, atomic: true };
     try {
-      return math.parse(source.trim()).toTex();
+      return exprTex(source);
     } catch {
-      return '\\text{?}';
+      return { tex: '\\text{?}', atomic: true };
     }
   };
-  // Empty u'' coefficient means 1; other empty terms are omitted
-  const a2t = tex(a2);
-  const a1t = tex(a1);
-  const a0t = tex(a0);
-  const ft = tex(f) ?? '0';
-  const lhs = [
-    a2t ? `\\left(${a2t}\\right)u''` : "u''",
-    a1t ? `+\\left(${a1t}\\right)u'` : '',
-    a0t ? `+\\left(${a0t}\\right)u` : '',
-  ].join('');
-  return `${lhs}=${ft}`;
+  const lhs = operatorLhsTex(term(a2, '1'), term(a1, '0'), term(a0, '0'));
+  return `${lhs}=${term(f, '0').tex}`;
 }
 
 function Field({
@@ -620,7 +614,7 @@ export function GalerkinMethod() {
               className="mt-0.5"
             />
             <span>
-              Doska (daftar) usuli: bazis funksiyalar chegarada nolga teng bo‘lishi shart emas. Bu usulda chegaraviy shartlar aniq bajarilmasligi mumkin.
+              Bazis funksiyalar chegarada nolga teng bo‘lishi shart emas. Bu usulda chegaraviy shartlar aniq bajarilmasligi mumkin.
             </span>
           </label>
 

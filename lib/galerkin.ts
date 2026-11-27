@@ -22,9 +22,14 @@ export interface GalerkinInput {
   autoCount?: number;
 }
 
-export interface GalerkinFunction {
-  text: string;
+export interface TexTerm {
   tex: string;
+  // Safe to put before u′ without brackets: x, 2, cos(x), x^{2}
+  atomic: boolean;
+}
+
+export interface GalerkinFunction extends TexTerm {
+  text: string;
   d1Text: string;
   d1Tex: string;
   d2Text: string;
@@ -46,6 +51,7 @@ export interface GalerkinIntegral {
 
 export interface GalerkinResult {
   operatorTex: string;
+  operatorLhsTex: string;
   phi0: GalerkinFunction;
   basis: GalerkinFunction[];
   a2Tex: string;
@@ -83,13 +89,61 @@ const SIMPSON_N = 800;
 
 type Scope = Record<string, number>;
 
-// Function names followed directly by their argument: cosx, cos x, sin2 -> cos(x), cos(x), sin(2).
+// Function names followed directly by their argument, with an optional power:
+// cosx -> cos(x), cos x^2 -> cos(x^2), sin2x -> sin(2x), sin 2 -> sin(2).
 // Brackets are required for anything longer than a single token, so cos(x+1) is left unchanged.
-const IMPLICIT_CALL = /\b(sinh|cosh|tanh|asin|acos|atan|sin|cos|tan|cot|sec|csc|exp|log|sqrt|abs)\s*(pi|x|\d+(?:\.\d+)?)(?![\w.])/gi;
+const IMPLICIT_CALL =
+  /\b(sinh|cosh|tanh|asin|acos|atan|sin|cos|tan|cot|sec|csc|exp|log|sqrt|abs)\s*((?:\d+(?:\.\d+)?\*?)?x|pi|\d+(?:\.\d+)?)(\^\d+(?:\.\d+)?)?(?![\w.])/gi;
 
-// Accept cosx, Pi, PI as well as cos(x) and pi
+// Accept cosx, COS X, Pi, PI as well as cos(x) and pi
 function normalizeInput(source: string): string {
-  return source.replace(IMPLICIT_CALL, '$1($2)').replace(/\bpi\b/gi, 'pi');
+  return source
+    .replace(
+      IMPLICIT_CALL,
+      (_match: string, fn: string, arg: string, power: string | undefined) =>
+        `${fn.toLowerCase()}(${arg.toLowerCase()}${power ?? ''})`,
+    )
+    .replace(/\bpi\b/gi, 'pi');
+}
+
+const ATOMIC_NODES = new Set(['SymbolNode', 'ConstantNode', 'FunctionNode', 'ParenthesisNode']);
+
+// mathjs wraps arguments in \left( … \right); plain brackets read better: \cos(x)
+function cleanTex(tex: string): string {
+  return tex
+    .replace(/\\left\(\s*/g, '(')
+    .replace(/\s*\\right\)/g, ')')
+    .replace(/\{\s+/g, '{')
+    .replace(/\s+\}/g, '}')
+    // mathjs marks implicit multiplication (2 x) with ~
+    .replace(/\s*~\s*/g, '\\,')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function texTerm(node: MathNode): TexTerm {
+  const atomic = ATOMIC_NODES.has(node.type) || ('op' in node && node.op === '^');
+  return { tex: cleanTex(node.toTex()), atomic };
+}
+
+export function exprTex(source: string): TexTerm {
+  return texTerm(math.parse(normalizeInput(source.trim())));
+}
+
+// Left side of L(u): unit coefficients and zero terms are not shown,
+// e.g. u'' + x^{2}u' + \left(-x\right)u
+export function operatorLhsTex(a2: TexTerm, a1: TexTerm, a0: TexTerm): string {
+  const parts = [operatorPart(a2, "u''"), operatorPart(a1, "u'"), operatorPart(a0, 'u')].filter(
+    (part): part is string => part !== null,
+  );
+  return parts.length > 0 ? parts.join(' + ') : '0';
+}
+
+function operatorPart(term: TexTerm, derivative: string): string | null {
+  if (term.tex === '0') return null;
+  const coefficient =
+    term.tex === '1' ? '' : term.atomic ? term.tex : `\\left(${term.tex}\\right)`;
+  return `${coefficient}${derivative}`;
 }
 
 function parseOrThrow(source: string, label: string): MathNode {
@@ -129,13 +183,15 @@ function makeFunction(source: string, label: string): GalerkinFunction {
   const compiledD2 = d2Node.compile();
   const evalAt = (fn: ReturnType<MathNode['compile']>) => (x: number) =>
     toScalar(fn.evaluate({ x } as Scope), label, x);
+  const term = texTerm(node);
   return {
     text: node.toString(),
-    tex: node.toTex(),
+    tex: term.tex,
+    atomic: term.atomic,
     d1Text: d1Node.toString(),
-    d1Tex: d1Node.toTex(),
+    d1Tex: cleanTex(d1Node.toTex()),
     d2Text: d2Node.toString(),
-    d2Tex: d2Node.toTex(),
+    d2Tex: cleanTex(d2Node.toTex()),
     value: evalAt(compiled),
     d1: evalAt(compiledD1),
     d2: evalAt(compiledD2),
@@ -401,8 +457,10 @@ export function solveGalerkin(input: GalerkinInput): GalerkinResult {
     .map((c, i) => `${c < 0 ? '-' : '+'}${texNumber(Math.abs(c))}\\,${basis[i].tex}`)
     .join('')}`;
 
+  const lhsTex = operatorLhsTex(a2Fn, a1Fn, a0Fn);
   return {
-    operatorTex: `\\left(${a2Fn.tex}\\right)u''+\\left(${a1Fn.tex}\\right)u'+\\left(${a0Fn.tex}\\right)u=${fFn.tex}`,
+    operatorTex: `${lhsTex}=${fFn.tex}`,
+    operatorLhsTex: lhsTex,
     phi0,
     basis,
     a2Tex: a2Fn.tex,
