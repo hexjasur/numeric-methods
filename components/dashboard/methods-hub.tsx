@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {
   Activity,
   ArrowRightLeft,
+  Layers,
   ArrowUpRight,
   Search,
   Sigma,
@@ -202,6 +203,19 @@ const METHODS: MethodDef[] = [
     icon: Activity,
     accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
   },
+  {
+    id: 'galerkin',
+    code: '14 / ODE',
+    category: 'odes',
+    categoryKey: 'dashboard.cat_odes',
+    titleKey: 'nav.galerkin',
+    descKey: 'dashboard.desc_galerkin',
+    href: '/methods/galerkin',
+    formulaTex: '\\int_a^b \\varphi_k\\,L(u_n)\\,dx = \\int_a^b \\varphi_k f\\,dx',
+    orderTex: 'n',
+    icon: Layers,
+    accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
+  },
 ];
 
 function renderKatexSafe(tex: string, displayMode = false): string {
@@ -321,7 +335,7 @@ export function MethodsHub() {
                 key={method.id}
                 href={method.href}
                 prefetch={false}
-                className="group relative flex flex-col justify-between p-5 rounded-xl border border-line bg-bg-2 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-brand hover:bg-panel hover:shadow-md cursor-pointer"
+                className="group relative flex flex-col justify-between p-5 rounded-xl border border-line bg-bg-2 shadow-xs transition-[transform,box-shadow,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-brand hover:bg-panel hover:shadow-md cursor-pointer"
               >
                 <div>
                   {/* Top Bar: Code, Category & Order */}

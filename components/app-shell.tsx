@@ -10,6 +10,7 @@ import {
   ArrowUpRight,
   BookOpenText,
   Orbit,
+  Layers,
   ExternalLink,
   Info,
   LayoutDashboard,
@@ -152,6 +153,12 @@ export function AppShell({
         icon: Orbit,
         isNew: true,
       },
+      {
+        href: '/methods/galerkin',
+        label: t('nav.galerkin'),
+        icon: Layers,
+        isNew: true,
+      },
     ];
 
     const sortedMethods = [...methodItems].sort((a, b) => {
@@ -201,6 +208,8 @@ export function AppShell({
             ? t('nav.bvp')
           : pathname.startsWith('/methods/collocation')
             ? t('nav.collocation')
+          : pathname.startsWith('/methods/galerkin')
+            ? t('nav.galerkin')
             : pathname.startsWith('/methods/sweep')
                 ? t('nav.sweep')
                 : pathname.startsWith('/methods/lagrange')

@@ -95,12 +95,12 @@ export function PsPanel({ children, className = '' }: { children: React.ReactNod
 
 export function PsPanelHead({ eyebrow, title, idx }: { eyebrow: string; title: string; idx: string }) {
   return (
-    <header className="relative flex justify-between items-start mb-5 pt-1.5 pb-4 pl-7 border-b border-line">
+    <header className="relative flex justify-between items-start mb-3 sm:mb-5 pt-1.5 pb-3 sm:pb-4 pl-7 border-b border-line">
       <div>
         <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted leading-[1.2]">
           {eyebrow}
         </span>
-        <h2 className="mt-2 text-[22px] font-[650] tracking-[-.035em]">
+        <h2 className="mt-1.5 sm:mt-2 text-[18px] sm:text-[22px] font-[650] tracking-[-.035em]">
           {title}
         </h2>
       </div>

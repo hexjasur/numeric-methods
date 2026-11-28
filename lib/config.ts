@@ -86,6 +86,8 @@ export const siteConfig = {
     'collocation method',
     'collocation points',
     'boundary value problem collocation',
+    'galerkin method',
+    'galerkin boundary value problem',
     'math solver online',
   ],
 };
