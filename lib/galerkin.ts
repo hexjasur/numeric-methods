@@ -296,6 +296,55 @@ function sampleGrid(a: number, b: number, count: number): number[] {
   return Array.from({ length: count }, (_, index) => a + ((b - a) * index) / (count - 1));
 }
 
+// Expand uₙ into powers of x, e.g. 1 + 0.3183x + 0.0388x², rounded to `digits`.
+// Works when uₙ is a polynomial (automatic and Legendre bases). The coefficients come
+// from interpolation at n+3 points and are checked at other points; otherwise returns null
+// (for example with sine bases).
+export function expandedApproximation(
+  result: GalerkinResult,
+  digits: number,
+): { tex: string; text: string } | null {
+  const u = (x: number) =>
+    result.phi0.value(x) + result.coefficients.reduce((s, c, i) => s + c * result.basis[i].value(x), 0);
+  const a = result.samples[0].x;
+  const b = result.samples[result.samples.length - 1].x;
+  const nodes = result.basis.length + 3;
+  const points = Array.from({ length: nodes }, (_, k) => a + ((b - a) * k) / (nodes - 1));
+  const matrix = points.map((x) => Array.from({ length: nodes }, (_, j) => x ** j));
+  let coeffs: number[];
+  try {
+    coeffs = solveLinearSystem(matrix, points.map(u));
+  } catch {
+    return null;
+  }
+  for (let k = 0; k < 9; k++) {
+    const x = a + ((b - a) * (k + 0.37)) / 9;
+    const fitted = coeffs.reduce((s, c, j) => s + c * x ** j, 0);
+    if (Math.abs(fitted - u(x)) > 1e-7 * Math.max(1, Math.abs(u(x)))) return null;
+  }
+
+  const rounded = coeffs.map((c) => Number(c.toFixed(digits)));
+  let tex = '';
+  let text = '';
+  rounded.forEach((c, j) => {
+    if (c === 0) return;
+    const mag = Math.abs(c);
+    const num = String(mag);
+    const powTex = j === 0 ? '' : j === 1 ? 'x' : `x^{${j}}`;
+    const powText = j === 0 ? '' : j === 1 ? 'x' : `x^${j}`;
+    const bodyTex = j > 0 && mag === 1 ? powTex : `${num}${powTex}`;
+    const bodyText = j > 0 && mag === 1 ? powText : `${num}${powText}`;
+    if (!tex) {
+      tex = c < 0 ? `-${bodyTex}` : bodyTex;
+      text = c < 0 ? `-${bodyText}` : bodyText;
+    } else {
+      tex += c < 0 ? ` - ${bodyTex}` : ` + ${bodyTex}`;
+      text += c < 0 ? ` - ${bodyText}` : ` + ${bodyText}`;
+    }
+  });
+  return tex ? { tex, text } : { tex: '0', text: '0' };
+}
+
 export function solveLinearSystem(matrix: number[][], rhs: number[]): number[] {
   const n = rhs.length;
   const m = matrix.map((row, i) => [...row, rhs[i]]);
