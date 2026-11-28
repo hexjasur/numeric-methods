@@ -40,14 +40,19 @@ export function useSharedNote(): { note: string; dismiss: () => void } {
 export function SharedNoteBanner({ note, onDismiss }: { note: string; onDismiss: () => void }) {
   const { t } = useI18n();
   if (!note) return null;
-  // Floating toast above the page content; stays until the user closes it
+  // Floating toast above the page content; stays until the user closes it.
+  // Colours follow the top loader gradient and adapt to light and dark themes.
   return (
     <div
       role="note"
-      className="fixed inset-x-4 top-20 z-40 mx-auto flex max-w-md items-start gap-3 rounded-xl border border-line border-l-4 border-l-cyan bg-panel px-4 py-3 shadow-xl"
+      className="fixed inset-x-4 top-20 z-40 mx-auto flex max-w-md items-start gap-3 overflow-hidden rounded-xl border border-line px-4 py-3 shadow-xl bg-[linear-gradient(135deg,color-mix(in_srgb,var(--brand)_10%,var(--panel)),color-mix(in_srgb,var(--cyan)_10%,var(--panel)))]"
     >
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--brand)_0%,#ff8c42_55%,var(--cyan)_100%)]"
+      />
       <div className="min-w-0 flex-1">
-        <div className="font-mono text-[11px] font-semibold uppercase tracking-[.12em] text-cyan">
+        <div className="font-mono text-[11px] font-semibold uppercase tracking-[.12em] text-ink-2">
           {t('share.banner_label')}
         </div>
         <p className="mt-1 break-words text-[14px] text-ink">{note}</p>
