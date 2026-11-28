@@ -8,9 +8,10 @@ import { ArrowUpRight, Info, Waves } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/components/ui/print-stream';
 import { QuadraturePlot } from '@/components/integration/trapezoid-plot';
-import { calculateRectangles, formatRectangle, type RectangleResult } from '@/lib/rectangles';
+import { calculateRectangles, type RectangleResult } from '@/lib/rectangles';
 import { math, normalizeExpression } from '@/lib/math';
 import { ResultActions } from '@/components/ui/result-actions';
+import { formatTrimmed } from '@/lib/format';
 
 type PlotShape = 'left-rectangle' | 'right-rectangle';
 const EXAMPLE = { expression: 'dx/sqrt(1+2*x^2)', a: '0.6', b: '1.6', n: '8' };
@@ -37,9 +38,9 @@ function NodeTable({ result }: { result: RectangleResult }) {
         </tr></thead>
         <tbody>{result.points.map((point) => <tr className="border-t border-line" key={point.index}>
           <td className="px-3 py-2 text-brand">{point.index}</td>
-          <td className="px-3 py-2">{formatRectangle(point.x, 7)}</td>
-          <td className="px-3 py-2"><MathOutput tex={`f(${formatRectangle(point.x, 5)})`} /></td>
-          <td className="px-3 py-2 text-right font-semibold">{formatRectangle(point.y, 8)}</td>
+          <td className="px-3 py-2">{formatTrimmed(point.x, 7)}</td>
+          <td className="px-3 py-2"><MathOutput tex={`f(${formatTrimmed(point.x, 5)})`} /></td>
+          <td className="px-3 py-2 text-right font-semibold">{formatTrimmed(point.y, 8)}</td>
         </tr>)}</tbody>
       </table>
       <span className="sr-only">{t('rectangle.tbl_y')}</span>
@@ -58,10 +59,10 @@ function AreasTable({ result }: { result: RectangleResult }) {
         </tr></thead>
         <tbody>{result.slices.map((slice) => <tr className="border-t border-line" key={slice.index}>
           <td className="px-3 py-2 text-brand">{slice.index}</td>
-          <td className="px-3 py-2">[{formatRectangle(slice.x0, 4)}, {formatRectangle(slice.x1, 4)}]</td>
-          <td className="px-3 py-2"><MathOutput tex={`${formatRectangle(result.h, 5)}\\cdot ${formatRectangle(slice.y0, 6)} = ${formatRectangle(slice.leftArea, 7)}`} /></td>
-          <td className="px-3 py-2"><MathOutput tex={`${formatRectangle(result.h, 5)}\\cdot ${formatRectangle(slice.y1, 6)} = ${formatRectangle(slice.rightArea, 7)}`} /></td>
-          <td className="px-3 py-2 text-right font-semibold">{formatRectangle((slice.leftArea + slice.rightArea) / 2, 7)}</td>
+          <td className="px-3 py-2">[{formatTrimmed(slice.x0, 4)}, {formatTrimmed(slice.x1, 4)}]</td>
+          <td className="px-3 py-2"><MathOutput tex={`${formatTrimmed(result.h, 5)}\\cdot ${formatTrimmed(slice.y0, 6)} = ${formatTrimmed(slice.leftArea, 7)}`} /></td>
+          <td className="px-3 py-2"><MathOutput tex={`${formatTrimmed(result.h, 5)}\\cdot ${formatTrimmed(slice.y1, 6)} = ${formatTrimmed(slice.rightArea, 7)}`} /></td>
+          <td className="px-3 py-2 text-right font-semibold">{formatTrimmed((slice.leftArea + slice.rightArea) / 2, 7)}</td>
         </tr>)}</tbody>
       </table>
     </div>
@@ -150,11 +151,11 @@ export function RectangleMethod() {
 
           {result ? <>
             <ResultActions
-              summaryText={`Töğri törtburçaklar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> Örta I_M ≈ ${formatRectangle(result.meanIntegral, 10)}, Çap I_L ≈ ${formatRectangle(result.leftIntegral, 10)}, Öng I_R ≈ ${formatRectangle(result.rightIntegral, 10)}`}
+              summaryText={`Töğri törtburçaklar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> Örta I_M ≈ ${formatTrimmed(result.meanIntegral, 10)}, Çap I_L ≈ ${formatTrimmed(result.leftIntegral, 10)}, Öng I_R ≈ ${formatTrimmed(result.rightIntegral, 10)}`}
               csvData={result.points.map((p) => ({
                 i: p.index,
-                x_i: formatRectangle(p.x),
-                y_i: formatRectangle(p.y),
+                x_i: formatTrimmed(p.x),
+                y_i: formatTrimmed(p.y),
               }))}
               csvFileName="tortburchaklar-integral.csv"
               imageFileName="tortburchaklar-integral.png"
@@ -163,22 +164,22 @@ export function RectangleMethod() {
             <PsPanel>
               <PsPanelHead eyebrow={t('rectangle.result_eyebrow')} title={t('rectangle.result_title')} idx="03" />
               <div className="grid gap-3 sm:grid-cols-3">
-                <div className="rounded-lg border border-brand bg-brand-soft p-4 sm:col-span-3"><span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('rectangle.mean_label')}</span><strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">{formatRectangle(result.meanIntegral, 10)}</strong></div>
+                <div className="rounded-lg border border-brand bg-brand-soft p-4 sm:col-span-3"><span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('rectangle.mean_label')}</span><strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">{formatTrimmed(result.meanIntegral, 10)}</strong></div>
                 {[
                   [t('rectangle.left_label'), result.leftIntegral],
                   [t('rectangle.right_label'), result.rightIntegral],
                   [t('rectangle.trap_label'), result.trapezoidIntegral],
-                ].map(([label, value]) => <div key={String(label)} className="rounded-lg border border-line bg-bg-2 p-3"><span className="block text-xs text-muted">{label}</span><b className="font-mono text-sm">{formatRectangle(Number(value), 9)}</b></div>)}
+                ].map(([label, value]) => <div key={String(label)} className="rounded-lg border border-line bg-bg-2 p-3"><span className="block text-xs text-muted">{label}</span><b className="font-mono text-sm">{formatTrimmed(Number(value), 9)}</b></div>)}
               </div>
             </PsPanel>
 
             <PsPanel>
               <PsPanelHead eyebrow="Trace / Qadamlar" title={t('rectangle.steps_title')} idx="04" />
               <div className="space-y-4">
-                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">01 · {t('rectangle.step_h')}</h3><div className="overflow-x-auto text-center"><MathOutput display tex={`h=\\frac{b-a}{n}=\\frac{${formatRectangle(result.b, 5)}-${formatRectangle(result.a, 5)}}{${result.n}}=${formatRectangle(result.h, 8)}`} /></div></section>
+                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">01 · {t('rectangle.step_h')}</h3><div className="overflow-x-auto text-center"><MathOutput display tex={`h=\\frac{b-a}{n}=\\frac{${formatTrimmed(result.b, 5)}-${formatTrimmed(result.a, 5)}}{${result.n}}=${formatTrimmed(result.h, 8)}`} /></div></section>
                 <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">02 · {t('rectangle.step_nodes')}</h3><p className="mb-3 text-xs text-muted">{t('rectangle.step_nodes_desc')}</p><NodeTable result={{ ...result, points: visiblePoints }} />{visiblePoints.length !== result.points.length && <details className="mt-3 rounded-lg border border-line bg-panel p-3"><summary className="cursor-pointer text-sm font-semibold text-brand">{t('rectangle.show_all_nodes', { count: result.points.length })}</summary><div className="mt-3"><NodeTable result={result} /></div></details>}</section>
-                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">03 · {t('rectangle.step_areas')}</h3><div className="mb-3 grid gap-2 overflow-x-auto text-center sm:grid-cols-3"><MathOutput display tex="I_L=h\\sum_{i=0}^{n-1}f(x_i)" /><MathOutput display tex="I_R=h\\sum_{i=1}^{n}f(x_i)" /><MathOutput display tex="I_M=\\frac{I_L+I_R}{2}" /></div><AreasTable result={{ ...result, slices: visibleSlices }} />{visibleSlices.length !== result.slices.length && <details className="mt-3 rounded-lg border border-line bg-panel p-3"><summary className="cursor-pointer text-sm font-semibold text-brand">{t('rectangle.show_all_slices', { count: result.slices.length })}</summary><div className="mt-3"><AreasTable result={result} /></div></details>}<div className="mt-4 overflow-x-auto rounded-lg border border-dashed border-line-2 p-3 text-center"><MathOutput display tex={`I_L=${formatRectangle(result.leftIntegral, 9)},\\quad I_R=${formatRectangle(result.rightIntegral, 9)},\\quad I_M=\\frac{I_L+I_R}{2}=${formatRectangle(result.meanIntegral, 9)}`} /></div></section>
-                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">04 · {t('rectangle.step_compare')}</h3><p className="mb-3 text-xs leading-relaxed text-muted">{t('rectangle.benchmark_note', { count: 10000 })}</p><div className="overflow-x-auto rounded-lg border border-line"><table className="w-full min-w-[500px] border-collapse text-left font-mono text-xs"><thead className="bg-bg-2 text-muted"><tr><th className="px-3 py-2">{t('rectangle.tbl_method')}</th><th className="px-3 py-2 text-right">{t('rectangle.tbl_result')}</th><th className="px-3 py-2 text-right">|Δ|</th></tr></thead><tbody>{[[t('rectangle.left_label'), result.leftIntegral, result.leftError], [t('rectangle.right_label'), result.rightIntegral, result.rightError], [t('rectangle.mean_label'), result.meanIntegral, result.meanError], [t('rectangle.trap_label'), result.trapezoidIntegral, result.trapezoidError], [t('rectangle.benchmark_value'), result.benchmark, 0]].map(([label, value, errorValue]) => <tr className="border-t border-line" key={String(label)}><td className="px-3 py-2 font-semibold">{label}</td><td className="px-3 py-2 text-right">{formatRectangle(Number(value), 8)}</td><td className="px-3 py-2 text-right">{String(label) === t('rectangle.benchmark_value') ? '—' : formatRectangle(Number(errorValue), 8)}</td></tr>)}</tbody></table></div><div className="mt-3 rounded-md border border-cyan/30 bg-cyan-soft p-3 text-xs text-muted">{t('rectangle.error_note')}</div></section>
+                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">03 · {t('rectangle.step_areas')}</h3><div className="mb-3 grid gap-2 overflow-x-auto text-center sm:grid-cols-3"><MathOutput display tex="I_L=h\\sum_{i=0}^{n-1}f(x_i)" /><MathOutput display tex="I_R=h\\sum_{i=1}^{n}f(x_i)" /><MathOutput display tex="I_M=\\frac{I_L+I_R}{2}" /></div><AreasTable result={{ ...result, slices: visibleSlices }} />{visibleSlices.length !== result.slices.length && <details className="mt-3 rounded-lg border border-line bg-panel p-3"><summary className="cursor-pointer text-sm font-semibold text-brand">{t('rectangle.show_all_slices', { count: result.slices.length })}</summary><div className="mt-3"><AreasTable result={result} /></div></details>}<div className="mt-4 overflow-x-auto rounded-lg border border-dashed border-line-2 p-3 text-center"><MathOutput display tex={`I_L=${formatTrimmed(result.leftIntegral, 9)},\\quad I_R=${formatTrimmed(result.rightIntegral, 9)},\\quad I_M=\\frac{I_L+I_R}{2}=${formatTrimmed(result.meanIntegral, 9)}`} /></div></section>
+                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">04 · {t('rectangle.step_compare')}</h3><p className="mb-3 text-xs leading-relaxed text-muted">{t('rectangle.benchmark_note', { count: 10000 })}</p><div className="overflow-x-auto rounded-lg border border-line"><table className="w-full min-w-[500px] border-collapse text-left font-mono text-xs"><thead className="bg-bg-2 text-muted"><tr><th className="px-3 py-2">{t('rectangle.tbl_method')}</th><th className="px-3 py-2 text-right">{t('rectangle.tbl_result')}</th><th className="px-3 py-2 text-right">|Δ|</th></tr></thead><tbody>{[[t('rectangle.left_label'), result.leftIntegral, result.leftError], [t('rectangle.right_label'), result.rightIntegral, result.rightError], [t('rectangle.mean_label'), result.meanIntegral, result.meanError], [t('rectangle.trap_label'), result.trapezoidIntegral, result.trapezoidError], [t('rectangle.benchmark_value'), result.benchmark, 0]].map(([label, value, errorValue]) => <tr className="border-t border-line" key={String(label)}><td className="px-3 py-2 font-semibold">{label}</td><td className="px-3 py-2 text-right">{formatTrimmed(Number(value), 8)}</td><td className="px-3 py-2 text-right">{String(label) === t('rectangle.benchmark_value') ? '—' : formatTrimmed(Number(errorValue), 8)}</td></tr>)}</tbody></table></div><div className="mt-3 rounded-md border border-cyan/30 bg-cyan-soft p-3 text-xs text-muted">{t('rectangle.error_note')}</div></section>
               </div>
             </PsPanel>
           </> : !error ? <PsPanel className="grid min-h-[230px] place-items-center text-center"><div className="max-w-sm text-muted"><Waves size={44} className="mx-auto mb-3 text-cyan" /><b className="text-ink">{t('rectangle.empty_title')}</b><p className="mt-2 text-sm">{t('rectangle.empty_desc')}</p></div></PsPanel> : null}

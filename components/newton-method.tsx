@@ -15,8 +15,9 @@ import {
   PsPanelHead,
   PsStrip,
 } from '@/components/ui/print-stream';
-import { calculateNewton, formatNewton, type NewtonResult } from '@/lib/newton';
+import { calculateNewton, type NewtonResult } from '@/lib/newton';
 import { math, normalizeExpression } from '@/lib/math';
+import { formatTrimmed } from '@/lib/format';
 
 const examples = [
   { expression: 'x^3 + x - 1', a: '0', b: '1', epsilon: '0.000001', label: 'newton.example_1' },
@@ -70,7 +71,7 @@ export function NewtonMethod() {
       ? t('newton.exact_endpoint', { endpoint: value.exactEndpoint })
       : t('newton.initial_choice', {
           endpoint: value.selectedEndpoint,
-          value: formatNewton(value.selectionValue),
+          value: formatTrimmed(value.selectionValue),
         });
 
   const resultRef = useScrollToResult(result);
@@ -210,14 +211,14 @@ export function NewtonMethod() {
         <div ref={resultRef} className="scroll-mt-24 grid min-w-0 gap-[18px]">
           {result && (
             <ResultActions
-              summaryText={`Newton method: f(x) = ${expression}, [a, b] = [${a}, ${b}], ε = ${epsilon}; x ≈ ${formatNewton(result.root, 8)}, residual = ${formatNewton(result.residual, 8)} (${result.iterations} iterations)`}
+              summaryText={`Newton method: f(x) = ${expression}, [a, b] = [${a}, ${b}], ε = ${epsilon}; x ≈ ${formatTrimmed(result.root, 8)}, residual = ${formatTrimmed(result.residual, 8)} (${result.iterations} iterations)`}
               csvData={result.steps.map((step) => ({
                 [t('newton.step_title')]: step.iteration,
-                [t('newton.tbl_x')]: formatNewton(step.x),
-                [t('newton.tbl_fx')]: formatNewton(step.fx),
-                [t('newton.tbl_dfx')]: formatNewton(step.derivative),
-                [t('newton.tbl_next')]: formatNewton(step.nextX),
-                [t('newton.tbl_diff')]: formatNewton(step.delta),
+                [t('newton.tbl_x')]: formatTrimmed(step.x),
+                [t('newton.tbl_fx')]: formatTrimmed(step.fx),
+                [t('newton.tbl_dfx')]: formatTrimmed(step.derivative),
+                [t('newton.tbl_next')]: formatTrimmed(step.nextX),
+                [t('newton.tbl_diff')]: formatTrimmed(step.delta),
               }))}
               csvFileName="newton-usuli-hisobot.csv"
               imageFileName="newton-usuli-hisobot.png"
@@ -228,7 +229,7 @@ export function NewtonMethod() {
             <div className="min-w-0 flex-1">
               <span className="block font-mono text-xs font-semibold uppercase tracking-[.14em] text-muted">{t('newton.res_eyebrow')}</span>
               <strong className="my-2.5 block overflow-x-auto whitespace-nowrap font-mono text-[clamp(28px,3.8vw,44px)] leading-none tracking-[-.04em] text-brand [scrollbar-width:none]">
-                {result ? formatNewton(result.root, 8) : t('newton.res_empty')}
+                {result ? formatTrimmed(result.root, 8) : t('newton.res_empty')}
               </strong>
               <small className="text-[13.5px] text-muted">{result ? t('newton.res_desc_done') : t('newton.res_desc_wait')}</small>
             </div>
@@ -244,9 +245,9 @@ export function NewtonMethod() {
               <p className="text-[14px] leading-[1.7] text-ink-2">{initialChoice(result)}</p>
               {!result.exactEndpoint && (
                 <div className="mt-3 grid gap-1 rounded-lg border border-dashed border-line-2 bg-bg-2 p-3.5 font-mono text-[13px]">
-                  <span>{t('newton.initial_point')}: x₀ = {formatNewton(result.initialPoint)}</span>
-                  <span>f(x₀) = {formatNewton(result.initialValue)}</span>
-                  <span>f″(x₀) ≈ {formatNewton(result.initialSecondDerivative)}</span>
+                  <span>{t('newton.initial_point')}: x₀ = {formatTrimmed(result.initialPoint)}</span>
+                  <span>f(x₀) = {formatTrimmed(result.initialValue)}</span>
+                  <span>f″(x₀) ≈ {formatTrimmed(result.initialSecondDerivative)}</span>
                 </div>
               )}
             </PsPanel>
@@ -285,10 +286,10 @@ export function NewtonMethod() {
                   <span>|Δx| {step.done ? '<' : '≥'} ε</span>
                 </div>
                 <div className="my-3 grid gap-2 rounded-lg border border-dashed border-line-2 bg-bg-2 p-3.5 font-mono text-[13px] leading-[1.7]">
-                  <div>xₙ = {formatNewton(step.x)} <span className="text-muted">→</span> f(xₙ) = {formatNewton(step.fx)}</div>
-                  <div className="text-muted" dangerouslySetInnerHTML={{ __html: renderMath(`f'(x_{${step.iteration - 1}}) \\approx ${formatNewton(step.derivative)}`) }} />
-                  <div dangerouslySetInnerHTML={{ __html: renderMath(`x_{${step.iteration}} = ${formatNewton(step.x)} - \\frac{${formatNewton(step.fx)}}{${formatNewton(step.derivative)}} \\approx ${formatNewton(step.nextX)}`) }} />
-                  <div className="border-t border-dashed border-line-2 pt-2" dangerouslySetInnerHTML={{ __html: renderMath(`|x_{${step.iteration}} - x_{${step.iteration - 1}}| = ${formatNewton(step.delta)} ${step.done ? '<' : '\\ge'} \\varepsilon`) }} />
+                  <div>xₙ = {formatTrimmed(step.x)} <span className="text-muted">→</span> f(xₙ) = {formatTrimmed(step.fx)}</div>
+                  <div className="text-muted" dangerouslySetInnerHTML={{ __html: renderMath(`f'(x_{${step.iteration - 1}}) \\approx ${formatTrimmed(step.derivative)}`) }} />
+                  <div dangerouslySetInnerHTML={{ __html: renderMath(`x_{${step.iteration}} = ${formatTrimmed(step.x)} - \\frac{${formatTrimmed(step.fx)}}{${formatTrimmed(step.derivative)}} \\approx ${formatTrimmed(step.nextX)}`) }} />
+                  <div className="border-t border-dashed border-line-2 pt-2" dangerouslySetInnerHTML={{ __html: renderMath(`|x_{${step.iteration}} - x_{${step.iteration - 1}}| = ${formatTrimmed(step.delta)} ${step.done ? '<' : '\\ge'} \\varepsilon`) }} />
                 </div>
                 <p className="m-0 text-[14px] leading-[1.6] text-ink-2">
                   <b className="text-ink">{step.done ? t('newton.step_done') : t('newton.step_continue')}</b>{' '}
@@ -302,8 +303,8 @@ export function NewtonMethod() {
             <PsPanel>
               <PsPanelHead eyebrow={t('newton.verify_title')} title={t('newton.verify_title')} idx="04" />
               <div className="grid gap-2 rounded-lg border border-dashed border-line-2 bg-bg-2 p-3.5 font-mono text-[14px]">
-                <span>x ≈ {formatNewton(result.root, 8)}</span>
-                <span>f(x) ≈ {formatNewton(result.residual, 10)}</span>
+                <span>x ≈ {formatTrimmed(result.root, 8)}</span>
+                <span>f(x) ≈ {formatTrimmed(result.residual, 10)}</span>
                 <span>{t('newton.iteration_count')}: {result.iterations}</span>
               </div>
             </PsPanel>

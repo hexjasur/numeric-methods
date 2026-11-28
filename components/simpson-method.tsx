@@ -5,12 +5,13 @@ import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Info, Sigma } from 'lucide-react';
-import { calculateSimpson, format, type SimpsonResult } from '@/lib/simpson';
+import { calculateSimpson, type SimpsonResult } from '@/lib/simpson';
 import { isSumOperatorNode, math, normalizeExpression } from '@/lib/math';
 import { SimpsonPlot } from '@/components/simpson/plot';
 import { PsHero, PsStrip, PsMap, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
 import { ResultActions } from '@/components/ui/result-actions';
+import { formatFixed } from '@/lib/format';
 
 function MathInline({ tex, className = '' }: { tex: string; className?: string }) {
   const html = useMemo(() => {
@@ -246,11 +247,11 @@ export function SimpsonMethod() {
           {result ? (
             <>
               <ResultActions
-                summaryText={`Simpson usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${format(result.integral, 6)}`}
+                summaryText={`Simpson usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${formatFixed(result.integral, 6)}`}
                 csvData={result.points.map((s) => ({
                   i: s.i,
-                  x_i: format(s.x, 6),
-                  y_i: format(s.y, 6),
+                  x_i: formatFixed(s.x, 6),
+                  y_i: formatFixed(s.y, 6),
                   Turi: s.type,
                   Koeffitsiyent: s.coeff,
                 }))}
@@ -264,17 +265,17 @@ export function SimpsonMethod() {
 
                 <div className="flex flex-wrap items-baseline gap-4 mb-4">
                   <div className="font-mono text-[36px] font-extrabold text-brand tracking-tight whitespace-nowrap overflow-x-auto [scrollbar-width:none]">
-                    {format(result.integral, 6)}
+                    {formatFixed(result.integral, 6)}
                   </div>
                   <div className="font-mono text-xs px-2.5 py-1 rounded-full border border-cyan/40 bg-cyan-soft text-cyan font-bold flex items-center gap-1.5">
-                    <MathInline tex={`h = ${format(result.h, 5)}`} />
+                    <MathInline tex={`h = ${formatFixed(result.h, 5)}`} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-line text-xs font-mono">
                   <div className="p-2.5 rounded bg-bg-2 border border-line">
                     <span className="text-muted block mb-1">{t('simpson.res_exact')}:</span>
-                    <strong className="text-ink text-[13px]">{format(result.exactIntegral, 6)}</strong>
+                    <strong className="text-ink text-[13px]">{formatFixed(result.exactIntegral, 6)}</strong>
                   </div>
                   <div className="p-2.5 rounded bg-bg-2 border border-line">
                     <span className="text-muted block mb-1 flex items-center gap-1">
@@ -303,7 +304,7 @@ export function SimpsonMethod() {
                       className="text-ink overflow-x-auto overflow-y-hidden text-sm [scrollbar-width:thin]"
                       dangerouslySetInnerHTML={{
                         __html: renderKatex(
-                          `h = \\frac{b - a}{n} = \\frac{${format(result.b, 4)} - ${format(result.a, 4)}}{${result.n}} = ${format(result.h, 6)}`,
+                          `h = \\frac{b - a}{n} = \\frac{${formatFixed(result.b, 4)} - ${formatFixed(result.a, 4)}}{${result.n}} = ${formatFixed(result.h, 6)}`,
                         ),
                       }}
                     />
@@ -320,9 +321,9 @@ export function SimpsonMethod() {
                       dangerouslySetInnerHTML={{
                         __html: renderKatex(
                           `\\begin{aligned}
-                          Y_{chet} &= y_0 + y_n = ${format(result.sumEnds, 6)} \\\\
-                          \\sum Y_{toq} &= y_1 + y_3 + \\dots = ${format(result.sumOdd, 6)} \\\\
-                          \\sum Y_{juft} &= y_2 + y_4 + \\dots = ${format(result.sumEven, 6)}
+                          Y_{chet} &= y_0 + y_n = ${formatFixed(result.sumEnds, 6)} \\\\
+                          \\sum Y_{toq} &= y_1 + y_3 + \\dots = ${formatFixed(result.sumOdd, 6)} \\\\
+                          \\sum Y_{juft} &= y_2 + y_4 + \\dots = ${formatFixed(result.sumEven, 6)}
                           \\end{aligned}`,
                         ),
                       }}
@@ -341,8 +342,8 @@ export function SimpsonMethod() {
                         __html: renderKatex(
                           `\\begin{aligned}
                           I &\\approx \\frac{h}{3} \\Big[ Y_{chet} + 4\\sum Y_{toq} + 2\\sum Y_{juft} \\Big] \\\\
-                          I &\\approx \\frac{${format(result.h, 5)}}{3} \\Big[ ${format(result.sumEnds, 4)} + 4(${format(result.sumOdd, 4)}) + 2(${format(result.sumEven, 4)}) \\Big] \\\\
-                          I &\\approx \\mathbf{${format(result.integral, 6)}}
+                          I &\\approx \\frac{${formatFixed(result.h, 5)}}{3} \\Big[ ${formatFixed(result.sumEnds, 4)} + 4(${formatFixed(result.sumOdd, 4)}) + 2(${formatFixed(result.sumEven, 4)}) \\Big] \\\\
+                          I &\\approx \\mathbf{${formatFixed(result.integral, 6)}}
                           \\end{aligned}`,
                         ),
                       }}
@@ -363,7 +364,7 @@ export function SimpsonMethod() {
                       dangerouslySetInnerHTML={{
                         __html: renderKatex(
                           `\\begin{aligned}
-                          I_{aniq} &\\approx \\int_{${format(result.a, 2)}}^{${format(result.b, 2)}} ${result.expressionTex} \\approx ${format(result.exactIntegral, 6)} \\\\
+                          I_{aniq} &\\approx \\int_{${formatFixed(result.a, 2)}}^{${formatFixed(result.b, 2)}} ${result.expressionTex} \\approx ${formatFixed(result.exactIntegral, 6)} \\\\
                           \\Delta &= |I - I_{aniq}| = \\mathbf{${result.errorScientific}}
                           \\end{aligned}`,
                         ),
@@ -411,8 +412,8 @@ export function SimpsonMethod() {
                         return (
                           <tr key={p.i} className="hover:bg-panel transition-colors">
                             <td className="py-2 px-3 font-bold text-muted">{p.i}</td>
-                            <td className="py-2 px-3 text-ink">{format(p.x, 5)}</td>
-                            <td className="py-2 px-3 font-semibold text-ink">{format(p.y, 6)}</td>
+                            <td className="py-2 px-3 text-ink">{formatFixed(p.x, 5)}</td>
+                            <td className="py-2 px-3 font-semibold text-ink">{formatFixed(p.y, 6)}</td>
                             <td className="py-2 px-3 font-bold text-brand">{p.coeff}</td>
                             <td className="py-2 px-3">
                               <span

@@ -1,4 +1,5 @@
 import { math, normalizeExpression } from '@/lib/math';
+import { formatTrimmed } from '@/lib/format';
 
 export type RectanglePoint = { index: number; x: number; y: number };
 
@@ -34,11 +35,6 @@ export type RectangleResult = {
 
 const MAX_SUBINTERVALS = 1000;
 const BENCHMARK_SUBINTERVALS = 10_000;
-
-export function formatRectangle(value: number, digits = 6): string {
-  if (!Number.isFinite(value)) return '—';
-  return Number(value.toFixed(digits)).toString();
-}
 
 export function calculateRectangles(
   expression: string,
@@ -78,7 +74,7 @@ export function calculateRectangles(
       if (!Number.isFinite(value)) throw new Error('non-finite');
       return value;
     } catch {
-      throw new Error(t('errors.rect_eval', { x: formatRectangle(x, 6) }));
+      throw new Error(t('errors.rect_eval', { x: formatTrimmed(x, 6) }));
     }
   };
 

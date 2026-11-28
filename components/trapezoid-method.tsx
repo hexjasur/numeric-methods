@@ -8,9 +8,10 @@ import { ArrowUpRight, Info, Waves } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/components/ui/print-stream';
 import { TrapezoidPlot } from '@/components/integration/trapezoid-plot';
-import { calculateTrapezoid, formatTrapezoid, type TrapezoidResult } from '@/lib/trapezoid';
+import { calculateTrapezoid, type TrapezoidResult } from '@/lib/trapezoid';
 import { math, normalizeExpression } from '@/lib/math';
 import { ResultActions } from '@/components/ui/result-actions';
+import { formatTrimmed } from '@/lib/format';
 
 const EXAMPLE = {
   expression: 'dx/sqrt(1+2*x^2)',
@@ -68,19 +69,19 @@ function NodeTable({ result }: { result: TrapezoidResult }) {
               <td className="px-3 py-2 text-center font-bold text-brand">{point.index}</td>
               <td className="px-3 py-2">
                 <MathOutput
-                  tex={`x_{${point.index}} = ${formatTrapezoid(result.a, 4)} + ${point.index}\\cdot ${formatTrapezoid(result.h, 4)} = ${formatTrapezoid(point.x, 4)}`}
+                  tex={`x_{${point.index}} = ${formatTrimmed(result.a, 4)} + ${point.index}\\cdot ${formatTrimmed(result.h, 4)} = ${formatTrimmed(point.x, 4)}`}
                 />
               </td>
               <td className="px-3 py-2 text-ink">
                 <MathOutput
                   tex={
                     point.expandedTex ||
-                    `f(${formatTrapezoid(point.x, 4)}) = ${formatTrapezoid(point.y, 4)}`
+                    `f(${formatTrimmed(point.x, 4)}) = ${formatTrimmed(point.y, 4)}`
                   }
                 />
               </td>
               <td className="px-3 py-2 text-right font-semibold text-brand">
-                {formatTrapezoid(point.y, 6)}
+                {formatTrimmed(point.y, 6)}
               </td>
             </tr>
           ))}
@@ -105,9 +106,9 @@ function TrapezoidTable({ result }: { result: TrapezoidResult }) {
         <tbody>
           {result.slices.map((slice) => (
             <tr className="border-t border-line" key={slice.index}>
-              <td className="px-3 py-2 text-brand">[{formatTrapezoid(slice.x0, 4)}, {formatTrapezoid(slice.x1, 4)}]</td>
-              <td className="px-3 py-2"><MathOutput tex={`\\frac{${formatTrapezoid(slice.y0, 5)} + ${formatTrapezoid(slice.y1, 5)}}{2}\\cdot ${formatTrapezoid(result.h, 5)}`} /></td>
-              <td className="px-3 py-2 text-right font-semibold">{formatTrapezoid(slice.area, 8)}</td>
+              <td className="px-3 py-2 text-brand">[{formatTrimmed(slice.x0, 4)}, {formatTrimmed(slice.x1, 4)}]</td>
+              <td className="px-3 py-2"><MathOutput tex={`\\frac{${formatTrimmed(slice.y0, 5)} + ${formatTrimmed(slice.y1, 5)}}{2}\\cdot ${formatTrimmed(result.h, 5)}`} /></td>
+              <td className="px-3 py-2 text-right font-semibold">{formatTrimmed(slice.area, 8)}</td>
             </tr>
           ))}
         </tbody>
@@ -261,14 +262,14 @@ export function TrapezoidMethod() {
           {result ? (
             <>
               <ResultActions
-                summaryText={`Trapetsiyalar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${formatTrapezoid(result.integral, 10)}`}
+                summaryText={`Trapetsiyalar usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], n = ${result.n} -> I ≈ ${formatTrimmed(result.integral, 10)}`}
                 csvData={result.slices.map((s) => ({
                   Index: s.index,
-                  x_left: formatTrapezoid(s.x0),
-                  x_right: formatTrapezoid(s.x1),
-                  y_left: formatTrapezoid(s.y0),
-                  y_right: formatTrapezoid(s.y1),
-                  Area: formatTrapezoid(s.area),
+                  x_left: formatTrimmed(s.x0),
+                  x_right: formatTrimmed(s.x1),
+                  y_left: formatTrimmed(s.y0),
+                  y_right: formatTrimmed(s.y1),
+                  Area: formatTrimmed(s.area),
                 }))}
                 csvFileName="trapetsiya-integral.csv"
                 imageFileName="trapetsiya-integral.png"
@@ -279,11 +280,11 @@ export function TrapezoidMethod() {
                 <div className="grid gap-3 sm:grid-cols-3">
                   <div className="rounded-lg border border-brand bg-brand-soft p-4 sm:col-span-3">
                     <span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('trapezoid.result_value')}</span>
-                    <strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">{formatTrapezoid(result.integral, 10)}</strong>
+                    <strong className="mt-2 block break-all font-mono text-3xl font-bold tracking-tight text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">{formatTrimmed(result.integral, 10)}</strong>
                   </div>
                   <div className="rounded-lg border border-line bg-bg-2 p-3">
                     <span className="block text-xs text-muted">h</span>
-                    <b className="font-mono text-sm">{formatTrapezoid(result.h, 8)}</b>
+                    <b className="font-mono text-sm">{formatTrimmed(result.h, 8)}</b>
                   </div>
                   <div className="rounded-lg border border-line bg-bg-2 p-3">
                     <span className="block text-xs text-muted">{t('trapezoid.result_intervals')}</span>
@@ -291,7 +292,7 @@ export function TrapezoidMethod() {
                   </div>
                   <div className="rounded-lg border border-line bg-bg-2 p-3">
                     <span className="block text-xs text-muted">{t('trapezoid.result_error')}</span>
-                    <b className="font-mono text-sm">{formatTrapezoid(result.absoluteError, 8)}</b>
+                    <b className="font-mono text-sm">{formatTrimmed(result.absoluteError, 8)}</b>
                   </div>
                 </div>
               </PsPanel>
@@ -301,7 +302,7 @@ export function TrapezoidMethod() {
                 <div className="space-y-4">
                   <section className="rounded-lg border border-line bg-bg-2 p-4">
                     <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">01 · {t('trapezoid.step_h')}</h3>
-                    <div className="overflow-x-auto text-center text-ink"><MathOutput display tex={`h=\\frac{b-a}{n}=\\frac{${formatTrapezoid(result.b, 5)}-${formatTrapezoid(result.a, 5)}}{${result.n}}=${formatTrapezoid(result.h, 8)}`} /></div>
+                    <div className="overflow-x-auto text-center text-ink"><MathOutput display tex={`h=\\frac{b-a}{n}=\\frac{${formatTrimmed(result.b, 5)}-${formatTrimmed(result.a, 5)}}{${result.n}}=${formatTrimmed(result.h, 8)}`} /></div>
                   </section>
 
                   <section className="rounded-lg border border-line bg-bg-2 p-4">
@@ -329,7 +330,7 @@ export function TrapezoidMethod() {
                       </details>
                     )}
                     <div className="mt-4 overflow-x-auto rounded-lg border border-dashed border-line-2 p-3 text-center text-ink">
-                      <MathOutput display tex={`I_T=\\sum_{i=0}^{${result.n - 1}} A_i=${formatTrapezoid(result.integral, 10)}`} />
+                      <MathOutput display tex={`I_T=\\sum_{i=0}^{${result.n - 1}} A_i=${formatTrimmed(result.integral, 10)}`} />
                     </div>
                   </section>
 
@@ -337,9 +338,9 @@ export function TrapezoidMethod() {
                     <h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">04 · {t('trapezoid.step_error')}</h3>
                     <p className="mb-3 text-xs leading-relaxed text-muted">{t('trapezoid.benchmark_note', { count: 10000 })}</p>
                     <div className="grid gap-3 sm:grid-cols-3">
-                      <div className="rounded-md border border-line bg-panel p-3"><span className="block text-xs text-muted">{t('trapezoid.benchmark_value')}</span><b className="font-mono text-sm">{formatTrapezoid(result.benchmark, 9)}</b></div>
-                      <div className="rounded-md border border-line bg-panel p-3"><span className="block text-xs text-muted">|Δ|</span><b className="font-mono text-sm">{formatTrapezoid(result.absoluteError, 9)}</b></div>
-                      <div className="rounded-md border border-line bg-panel p-3"><span className="block text-xs text-muted">{t('trapezoid.relative_error')}</span><b className="font-mono text-sm">{result.relativeErrorPercent === null ? '—' : `${formatTrapezoid(result.relativeErrorPercent, 5)}%`}</b></div>
+                      <div className="rounded-md border border-line bg-panel p-3"><span className="block text-xs text-muted">{t('trapezoid.benchmark_value')}</span><b className="font-mono text-sm">{formatTrimmed(result.benchmark, 9)}</b></div>
+                      <div className="rounded-md border border-line bg-panel p-3"><span className="block text-xs text-muted">|Δ|</span><b className="font-mono text-sm">{formatTrimmed(result.absoluteError, 9)}</b></div>
+                      <div className="rounded-md border border-line bg-panel p-3"><span className="block text-xs text-muted">{t('trapezoid.relative_error')}</span><b className="font-mono text-sm">{result.relativeErrorPercent === null ? '—' : `${formatTrimmed(result.relativeErrorPercent, 5)}%`}</b></div>
                     </div>
                   </section>
                 </div>
