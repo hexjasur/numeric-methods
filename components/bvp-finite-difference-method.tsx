@@ -8,6 +8,7 @@ import { useI18n } from '@/components/i18n-provider';
 import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/components/ui/print-stream';
 import { solveBvp, type BvpInput, type BvpResult } from '@/lib/bvp-finite-difference';
 import { DEFAULT_BVP_INTERVALS, parseBvpProblem } from '@/lib/parse-bvp-problem';
+import { useToast } from '@/components/ui/toast';
 
 const INITIAL: BvpInput = {
   p: '0', q: '0', f: '0', a: '0', b: '1', h: String(1 / DEFAULT_BVP_INTERVALS), intervals: String(DEFAULT_BVP_INTERVALS),
@@ -119,20 +120,15 @@ function SolutionPlot({ result }: { result: BvpResult }) {
 
 export function BvpFiniteDifferenceMethod() {
   const { t } = useI18n();
+  const { showToast } = useToast();
   const [input, setInput] = useState(INITIAL);
   const [problemFields, setProblemFields] = useState(EMPTY_PROBLEM);
   const [result, setResult] = useState<BvpResult | null>(null);
   const resultRef = useScrollToResult(result);
-  const [error, setError] = useState('');
-  const [parsedNotice, setParsedNotice] = useState('');
   const [copiedNotebook, setCopiedNotebook] = useState(false);
-  const [copyError, setCopyError] = useState('');
   const updateProblemField = (key: keyof typeof EMPTY_PROBLEM, value: string) => {
     setProblemFields((current) => ({ ...current, [key]: value }));
-    setError('');
-    setParsedNotice('');
     setCopiedNotebook(false);
-    setCopyError('');
   };
   const update = (key: keyof BvpInput, value: string) => {
     setInput((current) => {
@@ -147,21 +143,16 @@ export function BvpFiniteDifferenceMethod() {
       return next;
     });
     setResult(null);
-    setError('');
-    setParsedNotice('');
     setCopiedNotebook(false);
-    setCopyError('');
   };
   const calculate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       setResult(solveBvp(input));
-      setError('');
       setCopiedNotebook(false);
-      setCopyError('');
     } catch (cause) {
       setResult(null);
-      setError(cause instanceof Error ? cause.message : t('bvp.error'));
+      showToast('error', cause instanceof Error ? cause.message : t('bvp.error'));
     }
   };
   const parseProblem = (fields = problemFields) => {
@@ -172,22 +163,18 @@ export function BvpFiniteDifferenceMethod() {
       const parsed = parseBvpProblem(text, input);
       setInput(parsed);
       setResult(null);
-      setError('');
-      setParsedNotice(t('bvp.parsed_summary', {
+      showToast('success', t('bvp.parsed_summary', {
         h: fmt((Number(parsed.b) - Number(parsed.a)) / Number(parsed.intervals)),
         a: parsed.a, b: parsed.b, n: parsed.intervals,
       }));
     } catch (cause) {
       setResult(null);
-      setParsedNotice('');
-      setError(cause instanceof Error ? cause.message : t('bvp.parse_error'));
+      showToast('error', cause instanceof Error ? cause.message : t('bvp.parse_error'));
     }
   };
   const applyExample = () => {
     setProblemFields(EXAMPLE_PROBLEM);
     setResult(null);
-    setError('');
-    setParsedNotice('');
     parseProblem(EXAMPLE_PROBLEM);
   };
   const fields: Array<{ key: keyof BvpInput; label: string; step?: string }> = [
@@ -229,10 +216,9 @@ export function BvpFiniteDifferenceMethod() {
     try {
       await navigator.clipboard.writeText(notebook);
       setCopiedNotebook(true);
-      setCopyError('');
     } catch {
       setCopiedNotebook(false);
-      setCopyError(t('bvp.copy_error'));
+      showToast('error', t('bvp.copy_error'));
     }
   };
   return (
@@ -271,7 +257,7 @@ export function BvpFiniteDifferenceMethod() {
                         autoComplete="off"
                         spellCheck={false}
                         placeholder={
-                          key === 'equation' ? "y'' - 2(1 + x^2)y = 0"
+                          key === 'equation' ? "y'' - x y' + 2x y = 0.8"
                             : key === 'leftBoundary' ? 'y(0) = 0'
                               : 'y(0.8) = 3.5'
                         }
@@ -283,7 +269,6 @@ export function BvpFiniteDifferenceMethod() {
                     <button type="button" onClick={() => parseProblem()} className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-brand px-3 py-2 text-center text-sm font-semibold leading-snug text-brand-ink hover:opacity-90">{t('bvp.parse_button')}</button>
                     <button type="button" onClick={applyExample} className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-center text-sm font-semibold leading-snug text-brand transition-colors hover:bg-brand/15">{t('bvp.example_button')}</button>
                   </div>
-                  {parsedNotice && <p role="status" className="rounded-md bg-pos/10 p-2 text-xs leading-relaxed text-pos">{parsedNotice}</p>}
                 </div>
               </details>
               <p className="text-xs leading-relaxed text-muted">{t('bvp.expression_hint')}</p>
@@ -301,7 +286,6 @@ export function BvpFiniteDifferenceMethod() {
                 <strong className="text-ink">{t('bvp.right')}:</strong> g₀y(b) + g₁y′(b) = g₂
               </div>
               <button type="submit" className="flex min-h-12 w-full flex-wrap items-center justify-center gap-2 rounded-lg bg-brand px-3 py-3 text-center font-semibold leading-snug text-brand-ink transition-opacity hover:opacity-90"><Calculator size={17} className="shrink-0" /><span className="min-w-0">{t('bvp.calculate')}</span></button>
-              {error && <p role="alert" className="rounded-lg border border-neg/30 bg-neg/10 p-3 text-sm text-neg">{error}</p>}
             </form>
           </PsPanel>
           <PsNote icon={<Info size={15} />} variant="cyan"><span className="text-sm">{t('bvp.note')}</span></PsNote>
@@ -376,8 +360,7 @@ export function BvpFiniteDifferenceMethod() {
                   {copiedNotebook ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
                   {copiedNotebook ? t('bvp.copy_done') : t('bvp.copy_button')}
                 </button>
-                {copyError && <p role="alert" className="text-sm text-neg">{copyError}</p>}
-                <span className="text-xs text-muted">{t('bvp.notebook_values')}: {nodes.length}</span>
+                                <span className="text-xs text-muted">{t('bvp.notebook_values')}: {nodes.length}</span>
               </div>
             </PsPanel>
           )}
