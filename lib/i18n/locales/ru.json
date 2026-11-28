@@ -1061,5 +1061,8 @@
     "close": "Закрыть",
     "banner_label": "Заметка",
     "banner_dismiss": "Скрыть заметку"
+  },
+  "toast": {
+    "close": "Закрыть"
   }
 }

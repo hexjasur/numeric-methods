@@ -261,3 +261,24 @@
 html:has(#app-splash) {
   overflow: hidden;
 }
+
+/* Toast: rotating gradient border. The spin is a visual "live" cue, stopped for reduced motion. */
+@keyframes toast-rotate {
+  to { transform: rotate(360deg); }
+}
+.toast-frame {
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--panel);
+}
+.toast-spin {
+  position: absolute;
+  inset: -60%;
+  z-index: -1;
+  background: conic-gradient(from 0deg, var(--brand), var(--cyan), var(--pos), var(--brand));
+  animation: toast-rotate 3s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast-spin { animation: none; }
+}

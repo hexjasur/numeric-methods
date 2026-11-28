@@ -1061,5 +1061,8 @@
     "close": "Close",
     "banner_label": "Note",
     "banner_dismiss": "Dismiss note"
+  },
+  "toast": {
+    "close": "Close"
   }
 }

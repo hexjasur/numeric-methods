@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n-provider";
+import { ToastProvider } from "@/components/ui/toast";
 import { TopLoader } from "@/components/top-loader";
 import { SplashScreen } from "@/components/splash-screen";
 import { siteConfig } from "@/lib/config";
@@ -140,7 +141,7 @@ try {
         <SplashScreen />
         <TopLoader />
         <I18nProvider>
-          {children}
+          <ToastProvider>{children}</ToastProvider>
         </I18nProvider>
       </body>
     </html>

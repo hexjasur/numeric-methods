@@ -1061,5 +1061,8 @@
     "close": "Yopish",
     "banner_label": "Izoh",
     "banner_dismiss": "Izohni yopish"
+  },
+  "toast": {
+    "close": "Yopish"
   }
 }
