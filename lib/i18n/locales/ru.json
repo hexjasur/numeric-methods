@@ -21,7 +21,8 @@
     "adamsPredictor": "Метод предиктора Адамса",
     "bvp": "Метод конечных разностей",
     "collocation": "Метод коллокаций",
-    "galerkin": "Метод Галеркина"
+    "galerkin": "Метод Галеркина",
+    "download": "Скачать"
   },
   "about": {
     "strip": "DOC-002 / О ПРОЕКТЕ",
@@ -68,7 +69,9 @@
     "status_badge_current": "ТЕКУЩАЯ",
     "footer_univ": "Каршинский Государственный Университет · 2026",
     "btn_start_lab": "Начать лабораторную",
-    "contact_message": "Написать сообщение"
+    "contact_message": "Написать сообщение",
+    "download_title": "Скачайте приложение",
+    "download_btn": "Скачать"
   },
   "app": {
     "title": "SONLI",
@@ -1064,5 +1067,23 @@
   },
   "toast": {
     "close": "Закрыть"
+  },
+  "download": {
+    "strip": "Скачать",
+    "eyebrow": "Приложение / 0DWN",
+    "title": "Скачайте",
+    "titleHighlight": "приложение",
+    "lead": "Получите последнюю версию файлом для вашей платформы. Кнопка сама определит ваше устройство.",
+    "recommend_eyebrow": "Скачивание / 01",
+    "recommend_title": "Последний релиз",
+    "loading": "Загрузка последнего релиза…",
+    "error": "Не удалось загрузить релиз.",
+    "open_releases": "Страница релизов на GitHub",
+    "latest_version": "Последняя версия: {version}",
+    "choose_platform": "Выберите платформу",
+    "button": "Скачать для {platform}",
+    "not_available": "Файла для этой платформы нет",
+    "download_short": "Скачать",
+    "release_page": "Все релизы и история изменений:"
   }
 }

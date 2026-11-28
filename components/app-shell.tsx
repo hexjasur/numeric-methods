@@ -4,23 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, useMemo, useRef } from 'react';
-import {
-  Activity,
-  ArrowRightLeft,
-  ArrowUpRight,
-  BookOpenText,
-  Orbit,
-  Layers,
-  ExternalLink,
-  Info,
-  LayoutDashboard,
-  Menu,
-  Sigma,
-  Spline,
-  Split,
-  X,
-  type LucideIcon,
-} from 'lucide-react';
+import { Activity, ArrowRightLeft, ArrowUpRight, BookOpenText, Orbit, Layers, ExternalLink, Info, LayoutDashboard, Menu, Sigma, Spline, Split, X, type LucideIcon, Download } from 'lucide-react';
 
 interface NavItem {
   href: string;
@@ -68,6 +52,11 @@ export function AppShell({
         href: '/about',
         label: t('nav.about'),
         icon: Info,
+      },
+      {
+        href: '/download',
+        label: t('nav.download'),
+        icon: Download,
       },
       {
         href: '/docs/syntax',

@@ -21,7 +21,8 @@
     "adamsPredictor": "Adams başorat qiluvçi usuli",
     "bvp": "Chekli ayirmalar usuli",
     "collocation": "Kollokatsiya usuli",
-    "galerkin": "Galyorkin usuli"
+    "galerkin": "Galyorkin usuli",
+    "download": "Yuklab olish"
   },
   "about": {
     "strip": "DOC-002 / HAQIDA",
@@ -68,7 +69,9 @@
     "status_badge_current": "JORIY",
     "footer_univ": "Qarşi Davlat Universiteti · 2026",
     "btn_start_lab": "Laboratoriyani boşlaş",
-    "contact_message": "Xabar yuborish"
+    "contact_message": "Xabar yuborish",
+    "download_title": "Ilovani yuklab oling",
+    "download_btn": "Yuklab olish"
   },
   "app": {
     "title": "SONLI",
@@ -1064,5 +1067,23 @@
   },
   "toast": {
     "close": "Yopish"
+  },
+  "download": {
+    "strip": "Yuklab olish",
+    "eyebrow": "Ilova / 0DWN",
+    "title": "Ilovani",
+    "titleHighlight": "yuklab oling",
+    "lead": "Eng oxirgi versiyani platformangizga mos fayl bilan yuklab oling. Tugma sizning qurilmangizni avtomatik aniqlaydi.",
+    "recommend_eyebrow": "Yuklab olish / 01",
+    "recommend_title": "Eng oxirgi versiya",
+    "loading": "Eng oxirgi versiya yuklanmoqda…",
+    "error": "Relizni yuklab bo'lmadi.",
+    "open_releases": "GitHub'da relizlar sahifasi",
+    "latest_version": "So‘nggi versiya: {version}",
+    "choose_platform": "Platformangizni tanlang",
+    "button": "{platform} uchun yuklab olish",
+    "not_available": "Bu platforma uchun fayl yo‘q",
+    "download_short": "Yuklab olish",
+    "release_page": "Barcha relizlar va o‘zgarishlar tarixi:"
   }
 }
