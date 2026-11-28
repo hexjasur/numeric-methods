@@ -40,13 +40,14 @@ export function useSharedNote(): { note: string; dismiss: () => void } {
 export function SharedNoteBanner({ note, onDismiss }: { note: string; onDismiss: () => void }) {
   const { t } = useI18n();
   if (!note) return null;
+  // Floating toast above the page content; stays until the user closes it
   return (
     <div
       role="note"
-      className="mb-4 flex items-start gap-3 rounded-lg border border-brand/40 bg-brand-soft px-4 py-3"
+      className="fixed inset-x-4 top-20 z-40 mx-auto flex max-w-md items-start gap-3 rounded-xl border border-line border-l-4 border-l-cyan bg-panel px-4 py-3 shadow-xl"
     >
       <div className="min-w-0 flex-1">
-        <div className="font-mono text-[11px] font-semibold uppercase tracking-[.12em] text-brand">
+        <div className="font-mono text-[11px] font-semibold uppercase tracking-[.12em] text-cyan">
           {t('share.banner_label')}
         </div>
         <p className="mt-1 break-words text-[14px] text-ink">{note}</p>
