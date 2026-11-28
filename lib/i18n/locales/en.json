@@ -1049,5 +1049,16 @@
       "basisBoundary": "φ{index}(x) does not satisfy the homogeneous boundary conditions (left: {left}, right: {right}).",
       "noBasis": "Enter at least one basis function, or choose how many to generate."
     }
+  },
+  "share": {
+    "title": "Share example",
+    "note_label": "Note (optional)",
+    "note_placeholder": "e.g. Thomas method, check a₃ in step 1",
+    "hint": "The note is added to the link. Everyone who opens it sees it at the top of the page.",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "close": "Close",
+    "banner_label": "Note",
+    "banner_dismiss": "Dismiss note"
   }
 }
