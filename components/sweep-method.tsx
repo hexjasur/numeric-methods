@@ -1,11 +1,15 @@
 'use client';
 
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
+import {
+  ShareExampleModal,
+  SharedNoteBanner,
+  useSharedNote,
+} from '@/components/ui/share-example';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Calculator, Check, Info, Link2 } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
-import { ResultActions } from '@/components/ui/result-actions';
 import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import {
   PsHero,
@@ -120,6 +124,9 @@ function syncSweepUrl(rows: readonly SweepInputRow[], size: number, precision: n
   (['a', 'b', 'c', 'd'] as const).forEach((key) => {
     params.set(key, rows.map((row) => row[key]).join(','));
   });
+  // Keep the share note when the example is recalculated
+  const note = new URLSearchParams(window.location.search).get('note');
+  if (note) params.set('note', note);
   window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
 }
 
@@ -211,7 +218,8 @@ export function SweepMethod() {
   const [result, setResult] = useState<SweepResult | null>(null);
   const resultRef = useScrollToResult(result);
   const [error, setError] = useState('');
-  const [linkCopied, setLinkCopied] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const sharedNote = useSharedNote();
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -279,16 +287,13 @@ export function SweepMethod() {
     }
   }
 
-  async function shareExample() {
+  // Opens the share dialog; the URL is synced first so the link holds the current matrix
+  function openShare() {
     syncSweepUrl(rows, size, precision);
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setLinkCopied(true);
-      window.setTimeout(() => setLinkCopied(false), 2000);
-    } catch {
-      setError(t('sweep.err_share'));
-    }
+    setShareOpen(true);
   }
+
+  const closeShare = useCallback(() => setShareOpen(false), []);
 
   const reportRows = result?.rows ?? [];
   const toleranceChip = result?.diagonallyDominant
@@ -298,6 +303,8 @@ export function SweepMethod() {
   return (
     <div className="relative mx-auto max-w-[1160px] px-0 sm:px-2 md:px-4 pb-12">
       <PsStrip eyebrow="TDMA-001" id="LINEAR" name={t('nav.sweep')} />
+      <SharedNoteBanner note={sharedNote.note} onDismiss={sharedNote.dismiss} />
+      <ShareExampleModal open={shareOpen} onClose={closeShare} />
 
       <PsHero
         eyebrow={t('sweep.hero_eyebrow')}
@@ -484,11 +491,11 @@ export function SweepMethod() {
                 <div className="flex w-full sm:w-auto items-center gap-2">
                   <button
                     type="button"
-                    onClick={shareExample}
+                    onClick={openShare}
                     className="flex min-h-11 flex-1 sm:flex-none items-center justify-center gap-2 rounded-lg border border-line-2 bg-bg-2 px-3 py-3 font-sans text-[13px] font-[650] text-ink transition-all hover:border-brand hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-cyan cursor-pointer"
                   >
-                    {linkCopied ? <Check size={17} /> : <Link2 size={17} />}
-                    <span>{linkCopied ? t('sweep.link_copied') : t('sweep.share_link')}</span>
+                    <Link2 size={17} />
+                    <span>{t('sweep.share_link')}</span>
                   </button>
                   <button
                     type="submit"
@@ -508,25 +515,6 @@ export function SweepMethod() {
               </div>
             )}
           </PsPanel>
-          {result && (
-            <ResultActions
-              summaryText={`Haydash (Thomas) method: n=${result.rows.length}, x=[${result.rows.map((row) => formatSweep(row.x, precision)).join(', ')}], max residual=${formatSweep(result.maxResidual, precision + 2)}`}
-              csvData={result.rows.map((row) => ({
-                [t('sweep.tbl_row')]: row.index,
-                [t('sweep.tbl_a')]: row.a,
-                [t('sweep.tbl_b')]: row.b,
-                [t('sweep.tbl_c')]: row.c,
-                [t('sweep.tbl_d')]: row.d,
-                [t('sweep.tbl_pivot')]: formatSweep(row.pivot, precision),
-                [t('sweep.tbl_alpha')]: formatSweep(row.alpha, precision),
-                [t('sweep.tbl_beta')]: formatSweep(row.beta, precision),
-                [t('sweep.tbl_x')]: formatSweep(row.x, precision),
-                [t('sweep.tbl_residual')]: formatSweep(row.residual, precision + 2),
-              }))}
-              csvFileName="haydash-usuli-hisoboti.csv"
-              imageFileName="haydash-usuli-hisoboti.png"
-            />
-          )}
 
           <section ref={resultRef} className={`scroll-mt-24 flex min-h-[150px] flex-wrap items-center justify-between gap-5 rounded-[10px] border p-6 shadow-[var(--shadow)] transition-colors ${result ? 'border-brand bg-[linear-gradient(135deg,var(--brand-soft),var(--panel)_70%)]' : 'border-line bg-panel'}`}>
             <div className="min-w-0 flex-1">

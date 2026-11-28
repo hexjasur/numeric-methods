@@ -67,7 +67,8 @@
     "status_initial": "Boşlanğiç",
     "status_badge_current": "JORIY",
     "footer_univ": "Qarşi Davlat Universiteti · 2026",
-    "btn_start_lab": "Laboratoriyani boşlaş"
+    "btn_start_lab": "Laboratoriyani boşlaş",
+    "contact_message": "Xabar yuborish"
   },
   "app": {
     "title": "SONLI",
@@ -1049,5 +1050,16 @@
       "basisBoundary": "φ{index}(x) bir jinsli chegaraviy shartlarni qanoatlantirmaydi (chap: {left}, o‘ng: {right}).",
       "noBasis": "Kamida bitta bazis funksiya kiriting yoki bazislar sonini tanlang."
     }
+  },
+  "share": {
+    "title": "Misolni ulashish",
+    "note_label": "Izoh (ixtiyoriy)",
+    "note_placeholder": "Masalan: Haydash usuli, 1-qadamda a₃ ni tekshiring",
+    "hint": "Izoh havolaga qo‘shiladi. Havolani ochgan har kim uni sahifa tepasida ko‘radi.",
+    "copy": "Havolani nusxalash",
+    "copied": "Nusxalandi",
+    "close": "Yopish",
+    "banner_label": "Izoh",
+    "banner_dismiss": "Izohni yopish"
   }
 }
