@@ -129,6 +129,29 @@ refactor(plot): extract QuadraturePlot into shared integration component ♻️
 
 <!-- BEGIN:nextjs-agent-rules -->
 
+### Pull request descriptions
+
+- **Title:** the same Conventional Commits form as the commit subject, e.g. `feat(galerkin): Legendre basis option`. Keep it under 70 characters.
+- **Body:** use these sections in order. Leave out a section only if it truly does not apply.
+
+  ```md
+  ## Summary
+  One or two sentences: what changes for the user or the codebase, and why.
+
+  ## Changes
+  - Bullet per user-visible change, or per notable code change.
+
+  ## Testing
+  - Commands run and their result (`bun run lint`, `bun run build`, `bunx tsc --noEmit`).
+  - Manual checks done in the browser, and any that are still open.
+
+  ## Notes
+  Base branch, follow-ups, screenshots, or anything a reviewer must know.
+  ```
+
+- Write for a reviewer who has not seen the conversation. Say what was not verified.
+- Keep it short. A PR with more than about ten bullets should be split.
+
 ## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
