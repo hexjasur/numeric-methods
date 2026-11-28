@@ -263,8 +263,8 @@ export function CollocationMethod() {
           },
         ]}
       />
-      <div className="grid min-w-0 items-start gap-[18px] lg:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
-        <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+      <div className="min-w-0 space-y-[18px]">
+        <aside className="mx-auto w-full min-w-0 max-w-3xl space-y-[18px]">
           <PsPanel>
             <PsPanelHead
               eyebrow={t('collocation.input_eyebrow')}
@@ -321,7 +321,7 @@ export function CollocationMethod() {
                 <p className="mb-2 text-xs font-semibold text-ink">
                   {t('collocation.points_title')}
                 </p>
-                <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {input.points.map((point, index) => (
                     <input
                       key={index}
