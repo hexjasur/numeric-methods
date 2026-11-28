@@ -14,6 +14,7 @@ type ToastContextValue = {
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 const AUTO_DISMISS_MS = 6000;
+const MAX_VISIBLE_TOASTS = 2;
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const { t } = useI18n();
@@ -26,7 +27,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   const showToast = useCallback((kind: ToastKind, message: string) => {
     const id = nextId.current++;
-    setToasts((current) => [...current.slice(-2), { id, kind, message }]);
+    setToasts((current) => [...current.slice(-(MAX_VISIBLE_TOASTS - 1)), { id, kind, message }]);
     window.setTimeout(() => dismiss(id), AUTO_DISMISS_MS);
   }, [dismiss]);
 
