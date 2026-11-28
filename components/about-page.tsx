@@ -201,6 +201,8 @@ export function AboutPage() {
         <PsPanelHead eyebrow={t('about.author_eyebrow')} title={t('about.author_title')} idx="01" />
 
         <div className="grid grid-cols-1 lg:grid-cols-[120px_1fr] gap-6 items-start">
+          {/* Remote avatar for now; move the file to public/ to host it with the site */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://avatars.githubusercontent.com/u/315015959?v=4"
             alt={t('about.author_name')}
