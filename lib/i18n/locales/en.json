@@ -985,6 +985,8 @@
     "n_label": "n",
     "template_label": "φᵢ(x) template (i = 1, 2, …, n) — empty = automatic",
     "auto_placeholder": "automatic",
+    "legendre_button": "Legendre basis",
+    "legendre_hint": "φᵢ = (x − a)(b − x)·P(i−1)(t), zero at both ends. For Dirichlet problems.",
     "template_auto": "Automatic: φᵢ = (x − a)^(i+1) − linear correction, matching the boundary conditions.",
     "board_label": "Basis functions need not vanish at the boundary. With this option the boundary conditions may not hold exactly.",
     "submit": "Solve",

@@ -985,6 +985,8 @@
     "n_label": "n",
     "template_label": "φᵢ(x) shabloni (i = 1, 2, …, n) — bo‘sh qolsa avtomatik",
     "auto_placeholder": "avtomatik",
+    "legendre_button": "Legendre bazisi",
+    "legendre_hint": "φᵢ = (x − a)(b − x)·P(i−1)(t), chegarada nolga teng. Dirichlet masalalari uchun.",
     "template_auto": "Avtomatik: φᵢ = (x − a)^(i+1) − chiziqli tuzatma, chegara shartlarga mos.",
     "board_label": "Bazis funksiyalar chegarada nolga teng bo‘lishi shart emas. Bu usulda chegaraviy shartlar aniq bajarilmasligi mumkin.",
     "submit": "Yechish",

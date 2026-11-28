@@ -142,6 +142,27 @@ function texTerm(node: MathNode): TexTerm {
   return { tex: cleanTex(node.toTex()), atomic };
 }
 
+// Legendre polynomials P0, P1, … in t, where t maps [a, b] to [-1, 1]
+const LEGENDRE = [
+  '1',
+  't',
+  '(3*t^2-1)/2',
+  '(5*t^3-3*t)/2',
+  '(35*t^4-30*t^2+3)/8',
+  '(63*t^5-70*t^3+15*t)/8',
+  '(231*t^6-315*t^4+105*t^2-5)/16',
+  '(429*t^7-693*t^5+315*t^3-35*t)/16',
+];
+
+// Legendre-type basis: φᵢ = (x − a)(b − x)·P_{i−1}(t). The factor makes every φᵢ
+// vanish at both ends, so the basis fits Dirichlet conditions.
+export function legendreBasis(a: string, b: string, count: number): string[] {
+  const t = `((2*x-(${a})-(${b}))/((${b})-(${a})))`;
+  return LEGENDRE.slice(0, count).map(
+    (p) => `((x-(${a}))*((${b})-x))*${p.split('t').join(t)}`,
+  );
+}
+
 export function exprTex(source: string): TexTerm {
   return texTerm(math.parse(normalizeInput(source.trim())));
 }
