@@ -354,7 +354,7 @@ export function EulerMethod() {
                   <td className="px-5 py-3 text-muted">{row.step}</td>
                   <td className="px-5 py-3">{numeric(row.x)}</td>
                   <td className="px-5 py-3 text-neg font-medium">{numeric(row.yEuler)}</td>
-                  <td className="px-5 py-3 text-[#3b82f6] font-medium">{numeric(row.yImproved)}</td>
+                  <td className="px-5 py-3 text-cyan font-medium">{numeric(row.yImproved)}</td>
                   <td className="px-5 py-3 text-pos font-medium">{numeric(row.yExact)}</td>
                   <td className="px-5 py-3">{numeric(row.difference)}</td>
                 </tr>
@@ -386,7 +386,7 @@ export function EulerMethod() {
           className="flex flex-wrap items-center justify-between gap-4 cursor-pointer select-none relative z-10 group"
         >
           <div className="flex items-start gap-3.5 min-w-0">
-            <div className="p-2.5 rounded-lg bg-brand/10 text-brand border border-brand/20 shrink-0 mt-0.5 group-hover:bg-brand/15 transition-colors">
+            <div className="p-2.5 rounded-lg bg-brand-soft text-brand border border-brand/20 shrink-0 mt-0.5 group-hover:bg-brand/15 transition-colors">
               <BookOpen className="w-5 h-5" />
             </div>
             <div>
@@ -513,7 +513,7 @@ export function EulerMethod() {
                         className="p-3 sm:p-4 rounded-lg border border-line bg-bg-2 hover:border-line-2 transition-colors space-y-3 min-w-0 overflow-hidden"
                       >
                         <div className="flex items-center justify-between pb-2 border-b border-line/60 gap-2 min-w-0">
-                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-brand/10 text-brand border border-brand/20">
+                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-brand-soft text-brand border border-brand/20">
                             i = {step.i}
                           </span>
                           <MathKatex
@@ -584,7 +584,7 @@ export function EulerMethod() {
                               <span className="text-xs text-muted font-mono min-w-[70px]">Korrektor:</span>
                               <MathKatex
                                 tex={String.raw`y_{${step.i + 1}} = y_{${step.i}} + \frac{h}{2}(k_1 + k_2) = ${formatNum(step.yImproved)} + \frac{${formatNum(step.h)}}{2}\bigl(${formatNum(step.k1)} + (${formatNum(step.k2)})\bigr) = \mathbf{${formatNum(step.nextYImproved)}}`}
-                                className="text-[#3b82f6]"
+                                className="text-cyan"
                               />
                             </div>
                             <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 p-2 rounded bg-panel/60 border border-line/40 min-w-0 overflow-x-auto">
@@ -713,7 +713,7 @@ export function EulerMethod() {
                                 <td className="px-4 py-2">
                                   <MathKatex tex={formatNum(step.xImproved)} />
                                 </td>
-                                <td className="px-4 py-2 font-medium text-[#3b82f6]">
+                                <td className="px-4 py-2 font-medium text-cyan">
                                   <MathKatex tex={formatNum(step.yImproved)} />
                                 </td>
                                 <td className="px-4 py-2">
@@ -762,7 +762,7 @@ export function EulerMethod() {
                                     tex={formatNum(result.detailedSteps[result.detailedSteps.length - 1].nextX)}
                                   />
                                 </td>
-                                <td className="px-4 py-2.5 text-[#3b82f6] font-bold">
+                                <td className="px-4 py-2.5 text-cyan font-bold">
                                   <MathKatex
                                     tex={formatNum(
                                       result.detailedSteps[result.detailedSteps.length - 1].nextYImproved
@@ -859,9 +859,9 @@ function EulerChart({ result, t }: { result: EulerResult, t: (k: string) => stri
           name="yImproved"
           type="linear"
           dataKey="yImproved"
-          stroke="#3b82f6"
+          stroke="var(--cyan)"
           strokeWidth={2.5}
-          dot={{ r: 3, fill: '#3b82f6' }}
+          dot={{ r: 3, fill: 'var(--cyan)' }}
           activeDot={{ r: 6 }}
         />
         {result.hasExactSolution && (

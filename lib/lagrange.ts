@@ -24,11 +24,6 @@ const MIN_POINTS = 2;
 const MAX_POINTS = 12;
 const MAX_INPUT_MAGNITUDE = 1e6;
 
-export function formatLagrange(value: number, digits = 8): string {
-  if (!Number.isFinite(value)) return '—';
-  return Number(value.toFixed(digits)).toString();
-}
-
 function parseReal(value: string): number {
   const result = math.evaluate(value);
   if (typeof result !== 'number' || !Number.isFinite(result) || Math.abs(result) > MAX_INPUT_MAGNITUDE) {

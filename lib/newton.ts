@@ -30,11 +30,6 @@ export type NewtonResult = {
   steps: NewtonStep[];
 };
 
-export function formatNewton(value: number, digits = 6): string {
-  if (!Number.isFinite(value)) return '—';
-  return Number(value.toFixed(digits)).toString();
-}
-
 function finiteDifferenceFirstDerivative(
   f: (x: number) => number,
   x: number,

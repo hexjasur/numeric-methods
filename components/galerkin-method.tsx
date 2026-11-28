@@ -10,6 +10,7 @@ import {
   PsPanelHead,
 } from '@/components/ui/print-stream';
 import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
+import { useToast } from '@/components/ui/toast';
 import { useI18n } from '@/components/i18n-provider';
 import {
   GalerkinError,
@@ -484,6 +485,7 @@ function Field({
 
 export function GalerkinMethod() {
   const { t } = useI18n();
+  const { showToast } = useToast();
   const [input, setInput] = useState<GalerkinInput>(EMPTY_INPUT);
   const [template, setTemplate] = useState('');
   const [legendre, setLegendre] = useState(false);
@@ -491,14 +493,12 @@ export function GalerkinMethod() {
   const [advanced, setAdvanced] = useState(false);
   const [board, setBoard] = useState(false);
   const [result, setResult] = useState<GalerkinResult | null>(null);
-  const [error, setError] = useState('');
   const [digits, setDigits] = useState<(typeof PRECISIONS)[number]>(6);
   const resultRef = useScrollToResult(result);
 
   const update = <K extends keyof GalerkinInput>(key: K, value: GalerkinInput[K]) => {
     setInput((current) => ({ ...current, [key]: value }));
     setResult(null);
-    setError('');
   };
 
   const changeTemplate = (value: string) => {
@@ -510,7 +510,6 @@ export function GalerkinMethod() {
   const toggleLegendre = () => {
     setLegendre((on) => !on);
     setResult(null);
-    setError('');
   };
 
   const changeCount = (value: number) => {
@@ -522,7 +521,7 @@ export function GalerkinMethod() {
     event.preventDefault();
     if (legendre && (!input.a.trim() || !input.b.trim())) {
       setResult(null);
-      setError(describeError(new GalerkinError('empty', { label: input.a.trim() ? 'b' : 'a' }), t));
+      showToast('error', describeError(new GalerkinError('empty', { label: input.a.trim() ? 'b' : 'a' }), t));
       return;
     }
     // Simple mode uses Dirichlet conditions: u(a) and u(b) are given directly
@@ -534,10 +533,9 @@ export function GalerkinMethod() {
     };
     try {
       setResult(solveGalerkin(payload));
-      setError('');
     } catch (cause) {
       setResult(null);
-      setError(describeError(cause, t));
+      showToast('error', describeError(cause, t));
     }
   };
 
@@ -548,7 +546,6 @@ export function GalerkinMethod() {
     setCount(2);
     setAdvanced(false);
     setResult(null);
-    setError('');
   };
 
   const clear = () => {
@@ -556,7 +553,6 @@ export function GalerkinMethod() {
     setTemplate('');
     setLegendre(false);
     setResult(null);
-    setError('');
   };
 
   const labelClass = 'font-mono text-[11px] uppercase tracking-[.1em] text-muted';
@@ -710,12 +706,6 @@ export function GalerkinMethod() {
           </div>
         </PsPanel>
       </form>
-
-      {error && (
-        <PsNote variant="orange" icon={<Info size={16} />}>
-          <p>{error}</p>
-        </PsNote>
-      )}
 
       <div ref={resultRef}>
         {result && (

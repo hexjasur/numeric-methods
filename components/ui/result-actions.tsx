@@ -222,12 +222,12 @@ export function ResultActions({
           onClick={handleCopy}
           className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded-lg border transition-all cursor-pointer ${
             copied
-              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
+              ? 'bg-pos/10 border-pos/30 text-pos'
               : 'bg-bg-2 border-line text-ink hover:border-brand hover:text-brand'
           }`}
           title={t('actions.copy_tooltip')}
         >
-          {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+          {copied ? <Check size={14} className="text-pos" /> : <Copy size={14} />}
           <span>{copied ? t('actions.copied') : t('actions.copy')}</span>
         </button>
 

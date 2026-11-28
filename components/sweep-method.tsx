@@ -24,6 +24,7 @@ import {
   type SweepInputRow,
   type SweepResult,
 } from '@/lib/sweep';
+import { formatTrimmedSigned } from '@/lib/format';
 
 const MIN_SIZE = 2;
 const MAX_SIZE = 10;
@@ -31,11 +32,6 @@ const PRECISION_OPTIONS = [2, 3, 4, 6, 8, 10] as const;
 
 type CoefficientKey = keyof SweepInputRow;
 
-function formatSweep(value: number, digits: number): string {
-  if (!Number.isFinite(value)) return '—';
-  const rounded = Number(value.toFixed(digits));
-  return Object.is(rounded, -0) ? '0' : rounded.toString();
-}
 
 function renderMath(tex: string, displayMode = false): string {
   return katex.renderToString(tex, { throwOnError: false, displayMode });
@@ -93,7 +89,7 @@ function getForwardFormulas(
   digits: number,
 ): string[] {
   const i = step.index;
-  const current = (value: number) => formatSweep(value, digits);
+  const current = (value: number) => formatTrimmedSigned(value, digits);
   const pivotTex =
     i === 1
       ? `m_1 = b_1 = ${current(step.b)} = ${current(step.pivot)}`
@@ -110,7 +106,7 @@ function getBackwardFormula(
   step: SweepResult['backwardSteps'][number],
   digits: number,
 ): string {
-  const current = (value: number) => formatSweep(value, digits);
+  const current = (value: number) => formatTrimmedSigned(value, digits);
   if (step.nextX === null) {
     return `x_{${step.index}} = v_{${step.index}} = ${current(step.beta)} = ${current(step.x)}`;
   }
@@ -523,7 +519,7 @@ export function SweepMethod() {
                 {result ? result.rows.map((row) => (
                   <div className="min-w-[78px] rounded-lg border border-line bg-panel px-3 py-2 text-center" key={row.index}>
                     <span className="block font-mono text-[11px] text-muted">x{row.index}</span>
-                    <b className="mt-1 block font-mono text-[17px] text-brand">{formatSweep(row.x, precision)}</b>
+                    <b className="mt-1 block font-mono text-[17px] text-brand">{formatTrimmedSigned(row.x, precision)}</b>
                   </div>
                 )) : <strong className="font-mono text-[32px] text-muted">{t('sweep.result_empty')}</strong>}
               </div>
@@ -531,7 +527,7 @@ export function SweepMethod() {
             </div>
             <div className="shrink-0 border-l border-line pl-5 text-right">
               <span className="block text-[13px] text-muted">{t('sweep.residual_label')}</span>
-              <b className="mt-1 block font-mono text-[clamp(18px,2.4vw,26px)] font-semibold leading-tight text-ink">{result ? formatSweep(result.maxResidual, precision + 2) : '—'}</b>
+              <b className="mt-1 block font-mono text-[clamp(18px,2.4vw,26px)] font-semibold leading-tight text-ink">{result ? formatTrimmedSigned(result.maxResidual, precision + 2) : '—'}</b>
             </div>
           </section>
 
@@ -542,7 +538,7 @@ export function SweepMethod() {
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-pos/30 bg-pos/10 px-3 py-1.5 text-[12px] font-semibold text-pos"><Check size={14} />{t('sweep.verified')}</span>
                 <span className={`rounded-full border px-3 py-1.5 text-[12px] font-semibold ${result.diagonallyDominant ? 'border-cyan/30 bg-cyan-soft text-cyan' : 'border-brand/30 bg-brand-soft text-brand'}`}>{toleranceChip}</span>
               </div>
-              <p className="mt-3 text-[13px] leading-[1.6] text-muted">{t('sweep.relative_residual')}: <span className="font-mono text-ink">{formatSweep(result.relativeResidual, precision + 2)}</span></p>
+              <p className="mt-3 text-[13px] leading-[1.6] text-muted">{t('sweep.relative_residual')}: <span className="font-mono text-ink">{formatTrimmedSigned(result.relativeResidual, precision + 2)}</span></p>
             </PsPanel>
           )}
 
@@ -609,12 +605,12 @@ export function SweepMethod() {
                     const previousX = index > 0 ? reportRows[index - 1].x : 0;
                     const nextX = index < reportRows.length - 1 ? reportRows[index + 1].x : 0;
                     const reconstructed = row.a * previousX + row.b * row.x + row.c * nextX;
-                    const residualTex = `r_{${row.index}} = ${formatSweep(row.d, precision)} - (${formatSweep(row.a, precision)}\\cdot${formatSweep(previousX, precision)} + ${formatSweep(row.b, precision)}\\cdot${formatSweep(row.x, precision)} + ${formatSweep(row.c, precision)}\\cdot${formatSweep(nextX, precision)}) = ${formatSweep(row.residual, precision + 2)}`;
+                    const residualTex = `r_{${row.index}} = ${formatTrimmedSigned(row.d, precision)} - (${formatTrimmedSigned(row.a, precision)}\\cdot${formatTrimmedSigned(previousX, precision)} + ${formatTrimmedSigned(row.b, precision)}\\cdot${formatTrimmedSigned(row.x, precision)} + ${formatTrimmedSigned(row.c, precision)}\\cdot${formatTrimmedSigned(nextX, precision)}) = ${formatTrimmedSigned(row.residual, precision + 2)}`;
                     return (
                       <tr className="border-b border-line last:border-b-0" key={row.index}>
                         <td className="px-3 py-3 text-center text-muted">{row.index}</td>
-                        <td className="px-3 py-3">{formatSweep(row.d, precision)}</td>
-                        <td className="px-3 py-3">{formatSweep(reconstructed, precision)}</td>
+                        <td className="px-3 py-3">{formatTrimmedSigned(row.d, precision)}</td>
+                        <td className="px-3 py-3">{formatTrimmedSigned(reconstructed, precision)}</td>
                         <td className="px-3 py-3 text-brand"><MathMarkup tex={residualTex} /></td>
                       </tr>
                     );

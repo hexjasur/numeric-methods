@@ -5,12 +5,13 @@ import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Check, Info, Waves } from 'lucide-react';
-import { calculateBisection, format, type Result } from '@/lib/bisection';
+import { calculateBisection, type Result } from '@/lib/bisection';
 import { normalizeExpression } from '@/lib/math';
 import { BisectionPlot as Plot } from '@/components/bisection/plot';
 import { PsHero, PsStrip, PsMap, PsPanel, PsPanelHead, PsNote } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
 import { ResultActions } from '@/components/ui/result-actions';
+import { formatFixed } from '@/lib/format';
 
 export function BisectionMethod() {
   const { t } = useI18n();
@@ -182,15 +183,15 @@ export function BisectionMethod() {
         <div ref={resultRef} className="scroll-mt-24 grid gap-[18px] min-w-0">
           {result && (
             <ResultActions
-              summaryText={`Biseksiya usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], eps = ${epsilon} -> x ≈ ${format(result.root, 8)} (${result.iterations} iteratsiyada)`}
+              summaryText={`Biseksiya usuli: f(x) = ${expression}, [a, b] = [${a}, ${b}], eps = ${epsilon} -> x ≈ ${formatFixed(result.root, 8)} (${result.iterations} iteratsiyada)`}
               csvData={result.steps.map((s) => ({
                 Iteration: s.iteration,
-                a: format(s.a),
-                b: format(s.b),
-                c: format(s.c),
-                'f(a)': format(s.fa),
-                'f(c)': format(s.fc),
-                '|b-a|': format(s.width),
+                a: formatFixed(s.a),
+                b: formatFixed(s.b),
+                c: formatFixed(s.c),
+                'f(a)': formatFixed(s.fa),
+                'f(c)': formatFixed(s.fc),
+                '|b-a|': formatFixed(s.width),
               }))}
               csvFileName="biseksiya-hisobot.csv"
               imageFileName="biseksiya-hisobot.png"
@@ -201,7 +202,7 @@ export function BisectionMethod() {
             <div className="min-w-0 flex-1">
               <span className="block font-mono text-xs font-semibold tracking-[.14em] uppercase text-muted">{t('bisection.res_eyebrow')}</span>
               <strong className="block my-2.5 font-mono text-[clamp(28px,3.8vw,44px)] leading-none tracking-[-.04em] text-brand whitespace-nowrap overflow-x-auto [scrollbar-width:none]">
-                {result ? format(result.root, 8) : t('bisection.res_empty')}
+                {result ? formatFixed(result.root, 8) : t('bisection.res_empty')}
               </strong>
               <small className="text-[13.5px] text-muted">{result ? t('bisection.res_desc_done') : t('bisection.res_desc_wait')}</small>
             </div>
@@ -259,19 +260,19 @@ export function BisectionMethod() {
               >
                 <div className="flex justify-between gap-2 font-mono text-[13px] font-medium text-muted">
                   <b className="text-brand tracking-[.06em] uppercase">{t('bisection.step_title')} #{step.iteration}</b>
-                  <span>{`|b − a| = ${format(step.width)} ${step.done ? '≤' : '>'} ε`}</span>
+                  <span>{`|b − a| = ${formatFixed(step.width)} ${step.done ? '≤' : '>'} ε`}</span>
                 </div>
                 <div className="grid gap-1 my-3 p-3.5 bg-bg-2 border border-dashed border-line-2 rounded-lg font-mono text-[14px] font-medium leading-[1.6]">
                   <div>
-                    a = {format(step.a)}{' '}
+                    a = {formatFixed(step.a)}{' '}
                     <b>
-                      → f(a) = <i className={`font-semibold not-italic ${sign(step.fa)}`}>{format(step.fa)}</i>
+                      → f(a) = <i className={`font-semibold not-italic ${sign(step.fa)}`}>{formatFixed(step.fa)}</i>
                     </b>
                   </div>
                   <div>
-                    b = {format(step.b)}{' '}
+                    b = {formatFixed(step.b)}{' '}
                     <b>
-                      → f(b) = <i className={`font-semibold not-italic ${sign(step.fb)}`}>{format(step.fb)}</i>
+                      → f(b) = <i className={`font-semibold not-italic ${sign(step.fb)}`}>{formatFixed(step.fb)}</i>
                     </b>
                   </div>
                   <div className="grid gap-1.5 mt-2 pt-2.5 border-t border-dashed border-line-2">
@@ -280,13 +281,13 @@ export function BisectionMethod() {
                       <span
                         className="[&_.katex]:text-[1.05em]"
                         dangerouslySetInnerHTML={{
-                          __html: renderKatex(`c = \\frac{a + b}{2} = ${format(step.c)}`),
+                          __html: renderKatex(`c = \\frac{a + b}{2} = ${formatFixed(step.c)}`),
                         }}
                       />
                     </span>
                     <span>
                       {t('bisection.step_val')}{' '}
-                      <i className={`font-semibold not-italic ${sign(step.fc)}`}>{format(step.fc, 8)}</i>
+                      <i className={`font-semibold not-italic ${sign(step.fc)}`}>{formatFixed(step.fc, 8)}</i>
                     </span>
                   </div>
                 </div>

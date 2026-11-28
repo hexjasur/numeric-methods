@@ -84,7 +84,7 @@ const METHODS: MethodDef[] = [
     formulaTex: "y'' + P(x)y' + Q(x)y = f(x)",
     orderTex: 'O(n)',
     icon: Activity,
-    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+    accentClass: 'text-brand bg-brand-soft border-brand/25',
   },
   {
     id: 'lagrange',
@@ -97,7 +97,7 @@ const METHODS: MethodDef[] = [
     formulaTex: 'L_n(x) = \\sum_{i=0}^n y_i \\prod_{j \\neq i} \\frac{x - x_j}{x_i - x_j}',
     orderTex: 'O(n^2)',
     icon: Spline,
-    accentClass: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/25',
+    accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
   },
   {
     id: 'newton-interpolation',
@@ -110,7 +110,7 @@ const METHODS: MethodDef[] = [
     formulaTex: 'f[x_0,\\ldots,x_n] = \\frac{f[x_1,\\ldots,x_n]-f[x_0,\\ldots,x_{n-1}]}{x_n-x_0}',
     orderTex: 'O(n^2)',
     icon: Spline,
-    accentClass: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/25',
+    accentClass: 'text-cyan bg-cyan-soft border-cyan/25',
   },
   {
     id: 'rectangles',
@@ -123,7 +123,7 @@ const METHODS: MethodDef[] = [
     formulaTex: 'I \\approx h \\sum_{i=0}^{n-1} f(x_i^*), \\quad x_i^* \\in \\{x_i, x_{i+1}\\}',
     orderTex: 'O(h) \\dots O(h^2)',
     icon: Sigma,
-    accentClass: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/25',
+    accentClass: 'text-pos bg-pos/10 border-pos/25',
   },
   {
     id: 'trapezoid',
@@ -136,7 +136,7 @@ const METHODS: MethodDef[] = [
     formulaTex: 'I \\approx \\frac{h}{2} \\left[ y_0 + 2\\sum_{i=1}^{n-1} y_i + y_n \\right]',
     orderTex: 'O(h^2)',
     icon: Sigma,
-    accentClass: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/25',
+    accentClass: 'text-pos bg-pos/10 border-pos/25',
   },
   {
     id: 'simpson',
@@ -149,7 +149,7 @@ const METHODS: MethodDef[] = [
     formulaTex: 'I \\approx \\frac{h}{3} \\left[ y_0 + 4\\sum_{\\text{toq}} y_i + 2\\sum_{\\text{juft}} y_i + y_n \\right]',
     orderTex: 'O(h^4)',
     icon: Sigma,
-    accentClass: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/25',
+    accentClass: 'text-pos bg-pos/10 border-pos/25',
   },
   {
     id: 'euler',
@@ -162,7 +162,7 @@ const METHODS: MethodDef[] = [
     formulaTex: 'y_{i+1} = y_i + h \\cdot f(x_i, y_i), \\quad y(x_0) = y_0',
     orderTex: 'O(h)',
     icon: Activity,
-    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+    accentClass: 'text-brand bg-brand-soft border-brand/25',
   },
   {
     id: 'runge-kutta',
@@ -175,7 +175,7 @@ const METHODS: MethodDef[] = [
     formulaTex: String.raw`y_{i+1}=y_i+\frac{k_0+2k_1+2k_2+k_3}{6}`,
     orderTex: 'O(h^4)',
     icon: Activity,
-    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+    accentClass: 'text-brand bg-brand-soft border-brand/25',
   },
   {
     id: 'adams-predictor',
@@ -188,7 +188,7 @@ const METHODS: MethodDef[] = [
     formulaTex: String.raw`y_{i+1}=y_i+q_i+\frac{1}{2}\Delta q_{i-1}+\frac{5}{12}\Delta^2q_{i-2}+\frac{3}{8}\Delta^3q_{i-3}`,
     orderTex: 'O(h^4)',
     icon: Activity,
-    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+    accentClass: 'text-brand bg-brand-soft border-brand/25',
   },
   {
     id: 'collocation',
@@ -201,7 +201,7 @@ const METHODS: MethodDef[] = [
     formulaTex: "A_2(x)u'' + A_1(x)u' + A_0(x)u = f(x)",
     orderTex: 'n',
     icon: Activity,
-    accentClass: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/25',
+    accentClass: 'text-brand bg-brand-soft border-brand/25',
   },
   {
     id: 'galerkin',

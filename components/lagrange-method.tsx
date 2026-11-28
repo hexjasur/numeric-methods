@@ -7,9 +7,10 @@ import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Info, Minus, Plus, Waves } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
 import { PsHero, PsMap, PsNote, PsPanel, PsPanelHead, PsStrip } from '@/components/ui/print-stream';
-import { calculateLagrange, formatLagrange, type LagrangeInputPoint, type LagrangeResult } from '@/lib/lagrange';
+import { calculateLagrange, type LagrangeInputPoint, type LagrangeResult } from '@/lib/lagrange';
 import { math } from '@/lib/math';
 import { ResultActions } from '@/components/ui/result-actions';
+import { formatTrimmed } from '@/lib/format';
 
 const DEFAULT_POINTS: LagrangeInputPoint[] = [
   { x: '-1', y: '0' },
@@ -164,11 +165,11 @@ export function LagrangeMethod() {
         <div ref={resultRef} className="scroll-mt-24 grid min-w-0 gap-[18px]">
           {result ? <>
             <ResultActions
-              summaryText={`Lagranj interpolyatsiyasi: x* = ${formatLagrange(result.xValue, 6)}, P_n(x*) = ${formatLagrange(result.interpolatedValue, 10)}, Nuqtalar: ${result.points.length}`}
+              summaryText={`Lagranj interpolyatsiyasi: x* = ${formatTrimmed(result.xValue, 6)}, P_n(x*) = ${formatTrimmed(result.interpolatedValue, 10)}, Nuqtalar: ${result.points.length}`}
               csvData={result.points.map((p) => ({
                 i: p.index,
-                x_i: formatLagrange(p.x),
-                y_i: formatLagrange(p.y),
+                x_i: formatTrimmed(p.x, 8),
+                y_i: formatTrimmed(p.y, 8),
               }))}
               csvFileName="lagranj-nuqtalar.csv"
               imageFileName="lagranj-interpolyatsiya.png"
@@ -177,8 +178,8 @@ export function LagrangeMethod() {
             <PsPanel>
               <PsPanelHead eyebrow={t('lagrange.result_eyebrow')} title={t('lagrange.result_title')} idx="02" />
               <div className="rounded-lg border border-brand bg-brand-soft p-4"><span className="block font-mono text-xs font-semibold uppercase tracking-wider text-muted">{t('lagrange.result_poly')}</span><div className="mt-2 overflow-x-auto text-center text-brand"><MathOutput display tex={`P_{${result.points.length - 1}}(x)=${polynomialToTex(result.coefficients)}`} /></div></div>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2"><div className="rounded-lg border border-line bg-bg-2 p-3"><span className="block text-xs text-muted">{t('lagrange.at_x', { x: formatLagrange(result.xValue, 6) })}</span><b className="font-mono text-lg">{formatLagrange(result.interpolatedValue, 10)}</b></div><div className="rounded-lg border border-line bg-bg-2 p-3"><span className="block text-xs text-muted">{t('lagrange.result_points')}</span><b className="font-mono text-lg">{result.points.length}</b></div></div>
-              {result.targetValue !== null && <div className="mt-3 grid gap-3 rounded-lg border border-cyan/30 bg-cyan-soft p-3 sm:grid-cols-3"><div><span className="block text-xs text-muted">{t('lagrange.target_value')}</span><b className="font-mono">{formatLagrange(result.targetValue, 9)}</b></div><div><span className="block text-xs text-muted">Pₙ(x*)</span><b className="font-mono">{formatLagrange(result.interpolatedValue, 9)}</b></div><div><span className="block text-xs text-muted">|f(x*) − Pₙ(x*)|</span><b className="font-mono">{formatLagrange(result.absoluteError ?? 0, 9)}</b></div></div>}
+              <div className="mt-3 grid gap-3 sm:grid-cols-2"><div className="rounded-lg border border-line bg-bg-2 p-3"><span className="block text-xs text-muted">{t('lagrange.at_x', { x: formatTrimmed(result.xValue, 6) })}</span><b className="font-mono text-lg">{formatTrimmed(result.interpolatedValue, 10)}</b></div><div className="rounded-lg border border-line bg-bg-2 p-3"><span className="block text-xs text-muted">{t('lagrange.result_points')}</span><b className="font-mono text-lg">{result.points.length}</b></div></div>
+              {result.targetValue !== null && <div className="mt-3 grid gap-3 rounded-lg border border-cyan/30 bg-cyan-soft p-3 sm:grid-cols-3"><div><span className="block text-xs text-muted">{t('lagrange.target_value')}</span><b className="font-mono">{formatTrimmed(result.targetValue, 9)}</b></div><div><span className="block text-xs text-muted">Pₙ(x*)</span><b className="font-mono">{formatTrimmed(result.interpolatedValue, 9)}</b></div><div><span className="block text-xs text-muted">|f(x*) − Pₙ(x*)|</span><b className="font-mono">{formatTrimmed(result.absoluteError ?? 0, 9)}</b></div></div>}
             </PsPanel>
 
             <PsPanel>
@@ -201,8 +202,8 @@ export function LagrangeMethod() {
                         {result.points.map((point) => (
                           <tr key={point.index} className="border-b border-line last:border-b-0 hover:bg-panel/40 transition-colors">
                             <td className="px-3 py-2.5 text-center font-bold text-brand">{point.index}</td>
-                            <td className="px-3 py-2.5 text-center text-ink">{formatLagrange(point.x, 8)}</td>
-                            <td className="px-3 py-2.5 text-center text-ink">{formatLagrange(point.y, 8)}</td>
+                            <td className="px-3 py-2.5 text-center text-ink">{formatTrimmed(point.x, 8)}</td>
+                            <td className="px-3 py-2.5 text-center text-ink">{formatTrimmed(point.y, 8)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -211,7 +212,7 @@ export function LagrangeMethod() {
                 </section>
                 <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">02 · {t('lagrange.step_basis')}</h3><div className="mb-3 overflow-x-auto text-center"><MathOutput display tex="\\ell_i(x)=\\prod_{j\\ne i}\\frac{x-x_j}{x_i-x_j}" /></div><div className="space-y-3">{result.bases.map((basis) => { const numerator = result.points.filter((_, index) => index !== basis.index).map((other) => `(x-(${fractionTex(other.x)}))`).join('\\cdot'); return <div key={basis.index} className="overflow-x-auto rounded-lg border border-line bg-panel p-3"><p className="mb-2 font-mono text-xs font-bold text-brand">ℓ{basis.index}(x) · {t('lagrange.point_label', { index: basis.index })}</p><div className="text-center"><MathOutput display tex={`\\ell_{${basis.index}}(x)=\\frac{${numerator}}{${fractionTex(basis.denominator)}}=${polynomialToTex(basis.coefficients)}`} /></div><div className="mt-2 border-t border-dashed border-line pt-2 text-center text-sm"><span className="mr-1 text-muted">y{basis.index}ℓ{basis.index}(x) =</span><MathOutput tex={polynomialToTex(basis.weightedCoefficients)} /></div></div>; })}</div></section>
                 <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">03 · {t('lagrange.step_sum')}</h3><p className="mb-3 text-xs leading-relaxed text-muted">{t('lagrange.step_sum_desc')}</p><div className="overflow-x-auto rounded-lg border border-dashed border-line-2 bg-panel p-4 text-center text-brand"><MathOutput display tex={`P_{${result.points.length - 1}}(x)=\\sum_{i=0}^{${result.points.length - 1}} y_i\\ell_i(x)=${polynomialToTex(result.coefficients)}`} /></div></section>
-                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">04 · {t('lagrange.step_eval')}</h3><div className="overflow-x-auto text-center"><MathOutput display tex={`P(${formatLagrange(result.xValue, 6)})=${formatLagrange(result.interpolatedValue, 10)}`} /></div>{result.targetValue !== null && <><p className="my-3 text-xs text-muted">{t('lagrange.error_substitution')}</p><div className="overflow-x-auto rounded-lg border border-cyan/20 bg-panel p-3 text-center"><MathOutput display tex={`f(${formatLagrange(result.xValue, 6)})=${formatLagrange(result.targetValue, 10)},\\qquad |f(x^*)-P(x^*)|=${formatLagrange(result.absoluteError ?? 0, 10)}`} /></div></>}
+                <section className="rounded-lg border border-line bg-bg-2 p-4"><h3 className="mb-2 font-mono text-xs font-bold uppercase tracking-wider text-brand">04 · {t('lagrange.step_eval')}</h3><div className="overflow-x-auto text-center"><MathOutput display tex={`P(${formatTrimmed(result.xValue, 6)})=${formatTrimmed(result.interpolatedValue, 10)}`} /></div>{result.targetValue !== null && <><p className="my-3 text-xs text-muted">{t('lagrange.error_substitution')}</p><div className="overflow-x-auto rounded-lg border border-cyan/20 bg-panel p-3 text-center"><MathOutput display tex={`f(${formatTrimmed(result.xValue, 6)})=${formatTrimmed(result.targetValue, 10)},\\qquad |f(x^*)-P(x^*)|=${formatTrimmed(result.absoluteError ?? 0, 10)}`} /></div></>}
                   <div className="mt-3 rounded-md border border-line bg-panel p-3 text-xs leading-relaxed text-muted"><MathOutput tex={`R_{${result.points.length - 1}}(x)=\\frac{f^{(${result.points.length})}(\\xi)}{${result.points.length}!}\\prod_{i=0}^{${result.points.length - 1}}(x-x_i)`} /> <span>{t('lagrange.remainder_note')}</span></div>
                 </section>
               </div>

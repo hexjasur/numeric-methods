@@ -1,4 +1,5 @@
 import { math, normalizeExpression } from '@/lib/math';
+import { formatTrimmed } from '@/lib/format';
 
 export type TrapezoidPoint = {
   index: number;
@@ -33,14 +34,9 @@ export type TrapezoidResult = {
 const MAX_SUBINTERVALS = 1000;
 const BENCHMARK_SUBINTERVALS = 10_000;
 
-export function formatTrapezoid(value: number, digits = 6): string {
-  if (!Number.isFinite(value)) return '—';
-  return Number(value.toFixed(digits)).toString();
-}
-
 export function buildExpandedFormulaTex(expression: string, x: number, y: number): string {
-  const xStr = formatTrapezoid(x, 4);
-  const yStr = formatTrapezoid(y, 4);
+  const xStr = formatTrimmed(x, 4);
+  const yStr = formatTrimmed(y, 4);
   try {
     const normalized = normalizeExpression(expression).replace(/\bdx\b/g, '1');
     const substituted = normalized.replace(/\bx\b/g, `(${xStr})`);
@@ -100,7 +96,7 @@ export function calculateTrapezoid(
       if (!Number.isFinite(value)) throw new Error('non-finite');
       return value;
     } catch {
-      throw new Error(t('errors.trap_eval', { x: formatTrapezoid(x, 6) }));
+      throw new Error(t('errors.trap_eval', { x: formatTrimmed(x, 6) }));
     }
   };
 

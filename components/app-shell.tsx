@@ -4,23 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, useMemo, useRef } from 'react';
-import {
-  Activity,
-  ArrowRightLeft,
-  ArrowUpRight,
-  BookOpenText,
-  Orbit,
-  Layers,
-  ExternalLink,
-  Info,
-  LayoutDashboard,
-  Menu,
-  Sigma,
-  Spline,
-  Split,
-  X,
-  type LucideIcon,
-} from 'lucide-react';
+import { Activity, ArrowRightLeft, ArrowUpRight, BookOpenText, Orbit, Layers, ExternalLink, Info, LayoutDashboard, Menu, Sigma, Spline, Split, X, type LucideIcon, Download } from 'lucide-react';
 
 interface NavItem {
   href: string;
@@ -68,6 +52,11 @@ export function AppShell({
         href: '/about',
         label: t('nav.about'),
         icon: Info,
+      },
+      {
+        href: '/download',
+        label: t('nav.download'),
+        icon: Download,
       },
       {
         href: '/docs/syntax',
@@ -305,7 +294,7 @@ export function AppShell({
                   <span className="flex-1 min-w-0 truncate pr-1">{item.label}</span>
                   <div className="flex items-center gap-1.5 shrink-0 ml-auto">
                     {item.isNew && (
-                      <span className="font-mono text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 shrink-0 tracking-wider">
+                      <span className="font-mono text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-brand/15 text-brand border border-brand/30 shrink-0 tracking-wider">
                         NEW
                       </span>
                     )}

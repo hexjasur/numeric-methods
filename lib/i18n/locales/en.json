@@ -21,7 +21,8 @@
     "adamsPredictor": "Adams Predictor Method",
     "bvp": "Finite Difference BVP",
     "collocation": "Collocation Method",
-    "galerkin": "Galerkin Method"
+    "galerkin": "Galerkin Method",
+    "download": "Download"
   },
   "about": {
     "strip": "DOC-002 / ABOUT",
@@ -68,7 +69,9 @@
     "status_badge_current": "CURRENT",
     "footer_univ": "Karshi State University · 2026",
     "btn_start_lab": "Start Laboratory",
-    "contact_message": "Send a message"
+    "contact_message": "Send a message",
+    "download_title": "Download the app",
+    "download_btn": "Download"
   },
   "app": {
     "title": "SONLI",
@@ -1061,5 +1064,26 @@
     "close": "Close",
     "banner_label": "Note",
     "banner_dismiss": "Dismiss note"
+  },
+  "toast": {
+    "close": "Close"
+  },
+  "download": {
+    "strip": "Download",
+    "eyebrow": "App / 0DWN",
+    "title": "Download the",
+    "titleHighlight": "app",
+    "lead": "Get the latest version as a file for your platform. The button detects your device automatically.",
+    "recommend_eyebrow": "Download / 01",
+    "recommend_title": "Latest release",
+    "loading": "Loading the latest release…",
+    "error": "Could not load the release.",
+    "open_releases": "Releases page on GitHub",
+    "latest_version": "Latest version: {version}",
+    "choose_platform": "Choose your platform",
+    "button": "Download for {platform}",
+    "not_available": "No file for this platform",
+    "download_short": "Download",
+    "release_page": "All releases and changelog:"
   }
 }

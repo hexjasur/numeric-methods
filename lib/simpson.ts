@@ -1,4 +1,5 @@
 import { math, normalizeExpression, compileMath, isSumOperatorNode } from '@/lib/math';
+import { formatFixed } from '@/lib/format';
 
 export type SimpsonPoint = {
   i: number;
@@ -23,10 +24,6 @@ export type SimpsonResult = {
   errorScientific: string;
   expressionTex: string;
 };
-
-export function format(value: number, digits = 6): string {
-  return Number.isFinite(value) ? value.toFixed(digits) : '—';
-}
 
 export function compile(expression: string) {
   const code = compileMath(expression);
