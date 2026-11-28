@@ -11,7 +11,6 @@ import {
   ExternalLink,
   FileCode2,
   Globe,
-  GraduationCap,
   Layers,
   LineChart,
   Mail,
@@ -202,9 +201,15 @@ export function AboutPage() {
         <PsPanelHead eyebrow={t('about.author_eyebrow')} title={t('about.author_title')} idx="01" />
 
         <div className="grid grid-cols-1 lg:grid-cols-[120px_1fr] gap-6 items-start">
-          <div className="w-24 h-24 rounded-2xl bg-brand-soft border border-brand/30 text-brand grid place-items-center shrink-0 shadow-sm">
-            <GraduationCap size={44} />
-          </div>
+          <img
+            src="https://avatars.githubusercontent.com/u/315015959?v=4"
+            alt={t('about.author_name')}
+            width={96}
+            height={96}
+            loading="lazy"
+            decoding="async"
+            className="w-24 h-24 rounded-2xl border border-brand/30 object-cover shrink-0 shadow-sm"
+          />
 
           <div className="space-y-4">
             <div>
