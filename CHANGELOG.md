@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.7.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.6.0...numeric-methods-v3.7.0) (2026-11-28)
+
+
+### ✨ Features
+
+* **about:** link to the download page from the About footer ✨ ([002762e](https://github.com/hexjasur/numeric-methods/commit/002762e5d130200f9cb1e1601536ec87ca7a5f05))
+* **about:** local author photo and contact-page link 🎨 ([ae69438](https://github.com/hexjasur/numeric-methods/commit/ae694385eef97e27f0d6bdb315681abaea0fc12b))
+* **about:** show author photo in the author card ✨ ([fba2eed](https://github.com/hexjasur/numeric-methods/commit/fba2eedcaf25a623d8f5d1cec9a0f026291b7254))
+* **collocation:** live preview of the problem while typing ✨ ([69130d4](https://github.com/hexjasur/numeric-methods/commit/69130d4c8f2270ad4a74fe81e450eef679f815c9))
+* **download:** add page for the latest release downloads ✨ ([c57b40a](https://github.com/hexjasur/numeric-methods/commit/c57b40a230901a01cf2716512bd449a0220a50c8))
+* **galerkin:** add Legendre-type basis option for Dirichlet problems ✨ ([20946bc](https://github.com/hexjasur/numeric-methods/commit/20946bc93dbc46fb55d0a05a550b9b6d62d064ac))
+* **galerkin:** compute φ₀ and basis automatically from the problem ✨ ([948a1a2](https://github.com/hexjasur/numeric-methods/commit/948a1a22a335e2c6864654606426e7243603849d))
+* **galerkin:** Galerkin solver, Legendre basis and related work ([66816d6](https://github.com/hexjasur/numeric-methods/commit/66816d69195e34adbf8a930baf9805a15c6c56fb))
+* **galerkin:** show solver errors as toasts ✨ ([e66a05b](https://github.com/hexjasur/numeric-methods/commit/e66a05b7126ca13bdcf9b1249ce7e992a94f8995))
+* **i18n:** localize Galerkin page and solver errors to uz, en, ru ✨ ([e67e7be](https://github.com/hexjasur/numeric-methods/commit/e67e7be00eba82ad4688ba746f93559adf937466))
+* **og:** rebuild Open Graph images in light print-stream style 🎨 ([fec7d56](https://github.com/hexjasur/numeric-methods/commit/fec7d5631adfacce0bec61ef8c961c2be284d993))
+* **splash:** animate logo mark as a loading splash screen ✨ ([8f7927c](https://github.com/hexjasur/numeric-methods/commit/8f7927c640ba24ac6c8bdf0cad053b16c75f82b5))
+* **sweep:** share dialog with an optional note in the link ✨ ([9c39582](https://github.com/hexjasur/numeric-methods/commit/9c39582c1a3fd67755523758183c50a8a4a7c23c))
+* **ui:** add toast notifications with rotating gradient border ✨ ([202a15a](https://github.com/hexjasur/numeric-methods/commit/202a15ab8b016b00c878e45b58832957eaddc369))
+
+
+### 🐛 Bug Fixes
+
+* **bvp:** show errors as toasts and use the second-order example 🐛 ([46a4042](https://github.com/hexjasur/numeric-methods/commit/46a4042f786b88a0be540896a8e7e80760ce0f39))
+* **galerkin:** accept cosx, sinx and other function names without brackets 🐛 ([30d84ff](https://github.com/hexjasur/numeric-methods/commit/30d84ff8810a1c32c23c7a6cea549a28933d76d6))
+* **galerkin:** cosx syntax, plain TeX and hidden unit coefficients 🐛 ([2cd2477](https://github.com/hexjasur/numeric-methods/commit/2cd247781c7c92cec539b0a236536ae29f38d914))
+* **galerkin:** round formulas to chosen precision and expand final uₙ 🐛 ([2d8da44](https://github.com/hexjasur/numeric-methods/commit/2d8da4466ae100a35b165ad2966ca1a2aa385aeb))
+* **i18n:** open in Uzbek by default instead of browser language 🐛 ([8d7dda1](https://github.com/hexjasur/numeric-methods/commit/8d7dda1313e2bcb10d9274dfd4272bd3ee1a8c83))
+* **math:** accept sinx-style function calls in every method 🐛 ([70d48e5](https://github.com/hexjasur/numeric-methods/commit/70d48e58be9238e31e7ca45e072dc0dcf3eb4fc9))
+* **splash:** hide page scrollbar while splash is shown 🐛 ([fa06afd](https://github.com/hexjasur/numeric-methods/commit/fa06afd89da8f9da6ba27d22a061fbf89f2f7ee4))
+* **toast:** keep at most two toasts, closing the oldest first 🐛 ([2fbac77](https://github.com/hexjasur/numeric-methods/commit/2fbac770950cefbad2d397e2463475985e997717))
+
+
+### ♻️ Refactors
+
+* **collocation:** move input panel above results like Galerkin 🎨 ([e35d878](https://github.com/hexjasur/numeric-methods/commit/e35d87841a9f5af36b67514a3ff2df751fda4ef2))
+* **euler:** remove unused notebook text generator 🧹 ([babaa26](https://github.com/hexjasur/numeric-methods/commit/babaa2605c1540a45e8e0e8c1f53297183fa2f66))
+* **format:** consolidate result formatters into lib/format ♻️ ([df4ca3e](https://github.com/hexjasur/numeric-methods/commit/df4ca3eeecaf17eadf9765110c56ac25aab4462d))
+* **sweep:** remove copy, PNG and CSV export block 🧹 ([af3d55a](https://github.com/hexjasur/numeric-methods/commit/af3d55a45d6f6a0d7c11959dacf66a664bb54852))
+* **ui:** consolidate formatters, print-stream tokens, toasts and downloads ([d052430](https://github.com/hexjasur/numeric-methods/commit/d05243062ecc2ab2637ae04bf13add0d0af76124))
+
 ## [3.6.0](https://github.com/hexjasur/numeric-methods/compare/numeric-methods-v3.5.0...numeric-methods-v3.6.0) (2026-11-24)
 
 
