@@ -2,13 +2,33 @@ import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// MathJax setup for vector SVG math rendering
+// MathJax renders formulas to vector SVG so they stay sharp in every OG image.
 import { mathjax } from 'mathjax-full/js/mathjax.js';
 import { TeX } from 'mathjax-full/js/input/tex.js';
 import { SVG } from 'mathjax-full/js/output/svg.js';
 import { liteAdaptor } from 'mathjax-full/js/adaptors/liteAdaptor.js';
 import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html.js';
 import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages.js';
+
+// Print Stream light theme tokens (mirrors app/globals.css :root).
+const THEME = {
+  bg: '#eceef0',
+  bg2: '#f6f7f8',
+  panel: '#fbfbfc',
+  ink: '#0d0f12',
+  ink2: '#2a2e35',
+  muted: '#5d646e',
+  line: '#d5d9de',
+  line2: '#b9bfc7',
+  brand: '#e8480c',
+  brandSoft: '#fde8df',
+  cyan: '#0891b2',
+  cyanSoft: '#dff3f8',
+  pos: '#0f9d6b',
+} as const;
+
+const SANS = "'DejaVu Sans', Helvetica, Arial, sans-serif";
+const MONO = "'DejaVu Sans Mono', 'Courier New', monospace";
 
 const adaptor = liteAdaptor();
 RegisterHTMLHandler(adaptor);
@@ -17,18 +37,15 @@ const tex = new TeX({ packages: AllPackages });
 const svgJax = new SVG({ fontCache: 'none' });
 const mathDoc = mathjax.document('', { InputJax: tex, OutputJax: svgJax });
 
-function renderLatexToSvgInner(latex: string, color = '#22d3ee'): { inner: string; viewBox: string } {
+function renderLatexToSvgInner(latex: string, color: string): { inner: string; viewBox: string } {
   try {
     const node = mathDoc.convert(latex, { display: true });
     let svgHtml = adaptor.innerHTML(node);
     const vbMatch = svgHtml.match(/viewBox="([^"]+)"/);
     const viewBox = vbMatch ? vbMatch[1] : '0 0 1000 1000';
-
     svgHtml = svgHtml.replace(/currentColor/g, color);
-
     const innerMatch = svgHtml.match(/<svg[^>]*>([\s\S]*)<\/svg>/);
     const inner = innerMatch ? innerMatch[1] : svgHtml;
-
     return { inner, viewBox };
   } catch (err) {
     console.error('MathJax render error:', err);
@@ -45,198 +62,127 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, '&apos;');
 }
 
+export type OgAccent = 'brand' | 'cyan' | 'pos';
+
 export interface MethodOgConfig {
   slug: string;
   methodId: string;
   category: string;
-  titleUz: string;
-  titleAlt: string;
-  descriptionLine1: string;
-  descriptionLine2?: string;
+  /** English method name, one array item per line. Rendered large. */
+  titleLines: string[];
+  /** Uzbek name shown under the title. */
+  subtitleUz: string;
+  descriptionLines: string[];
   formulaLatex: string;
   conditionLatex?: string;
   badge: string;
-  accentColor?: string;
+  accent?: OgAccent;
+}
+
+const TITLE_MAX_PX = 84;
+const TITLE_BOX_W = 560;
+const DEFAULT_ACCENT: OgAccent = 'brand';
+
+// Font size that keeps the longest title line inside the left column.
+function titleFontSize(lines: string[]): number {
+  const longest = Math.max(...lines.map((l) => l.length));
+  return Math.min(TITLE_MAX_PX, Math.floor(TITLE_BOX_W / (0.62 * longest)));
+}
+
+function barcodeBars(x: number, y: number): string {
+  const widths = [4, 2, 8, 3, 6, 2, 9, 3, 5, 2, 7, 4, 3, 6, 2, 8, 3, 5, 2, 7];
+  let cursor = x;
+  return widths
+    .map((w) => {
+      const rect = `<rect x="${cursor}" y="${y}" width="${w}" height="18" fill="${THEME.line2}" />`;
+      cursor += w + 3;
+      return rect;
+    })
+    .join('');
 }
 
 export function generateOgSvg({
   methodId,
   category,
-  titleUz,
-  titleAlt,
-  descriptionLine1,
-  descriptionLine2,
+  titleLines,
+  subtitleUz,
+  descriptionLines,
   formulaLatex,
   conditionLatex,
   badge,
-  accentColor = '#ff6a2b',
+  accent = DEFAULT_ACCENT,
 }: MethodOgConfig): string {
-  const safeTitleUz = escapeXml(titleUz);
-  const safeTitleAlt = escapeXml(titleAlt);
-  const safeDesc1 = escapeXml(descriptionLine1);
-  const safeDesc2 = descriptionLine2 ? escapeXml(descriptionLine2) : '';
-  const safeCategory = escapeXml(category);
-  const safeMethodId = escapeXml(methodId);
-  const safeBadge = escapeXml(badge);
+  const accentColor = accent === 'brand' ? THEME.brand : accent === 'cyan' ? THEME.cyan : THEME.pos;
+  const accentSoft = accent === 'brand' ? THEME.brandSoft : accent === 'cyan' ? THEME.cyanSoft : '#dcf3ea';
 
-  const formulaSvg = renderLatexToSvgInner(formulaLatex, '#22d3ee');
-  const conditionSvg = conditionLatex ? renderLatexToSvgInner(conditionLatex, '#eef0f2') : null;
-
-  const gridLines: string[] = [];
-  for (let x = 40; x <= 1160; x += 60) {
-    gridLines.push(`<line x1="${x}" y1="40" x2="${x}" y2="590" stroke="#16191f" stroke-width="1" />`);
-  }
-  for (let y = 40; y <= 590; y += 50) {
-    gridLines.push(`<line x1="40" y1="${y}" x2="1160" y2="${y}" stroke="#16191f" stroke-width="1" />`);
-  }
-
-  const barcodeDashes = [4, 2, 8, 3, 6, 2, 9, 3, 5, 2, 7, 4, 3, 6, 2, 8, 3, 5, 2, 7]
-    .map((w, i) => `<rect x="${760 + i * 10}" y="67" width="${w}" height="14" fill="#303640" />`)
+  const fontSize = titleFontSize(titleLines);
+  const lineHeight = Math.round(fontSize * 1.02);
+  const categoryY = 158;
+  const titleTop = categoryY + 34 + Math.round(fontSize * 0.73);
+  const titleTspans = titleLines
+    .map((line, i) => `<tspan x="72" dy="${i === 0 ? 0 : lineHeight}">${escapeXml(line)}</tspan>`)
     .join('');
+  const titleBottom = titleTop + lineHeight * (titleLines.length - 1);
+  const underlineY = titleBottom + Math.round(fontSize * 0.18);
+  const subtitleY = underlineY + 50;
+  const descStartY = subtitleY + 42;
+
+  const descriptionSvg = descriptionLines
+    .map((line, i) => `<text x="72" y="${descStartY + i * 32}" fill="${THEME.ink2}" font-size="22" font-family="${SANS}">${escapeXml(line)}</text>`)
+    .join('\n    ');
+
+  const formulaSvg = renderLatexToSvgInner(formulaLatex, THEME.ink);
+  const conditionSvg = conditionLatex ? renderLatexToSvgInner(conditionLatex, THEME.ink) : null;
+
+  const conditionBlock = conditionSvg
+    ? `<rect x="724" y="316" width="380" height="56" rx="8" fill="${accentSoft}" stroke="${accentColor}" stroke-opacity="0.35" />
+    <text x="740" y="350" fill="${THEME.muted}" font-size="15" font-family="${MONO}" font-weight="700">IF</text>
+    <svg x="776" y="324" width="318" height="40" viewBox="${conditionSvg.viewBox}" preserveAspectRatio="xMinYMid meet">
+      ${conditionSvg.inner}
+    </svg>`
+    : '';
 
   return `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="cyan-glow" cx="85%" cy="15%" r="60%">
-      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.14" />
-      <stop offset="100%" stop-color="#0a0b0d" stop-opacity="0" />
-    </radialGradient>
-    <radialGradient id="brand-glow" cx="15%" cy="85%" r="55%">
-      <stop offset="0%" stop-color="${accentColor}" stop-opacity="0.12" />
-      <stop offset="100%" stop-color="#0a0b0d" stop-opacity="0" />
-    </radialGradient>
-    <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#14171d" />
-      <stop offset="100%" stop-color="#0e1014" />
-    </linearGradient>
-    <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="${accentColor}" />
-      <stop offset="60%" stop-color="#22d3ee" />
-      <stop offset="100%" stop-color="#272b32" />
-    </linearGradient>
+    <pattern id="stripe" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="4" height="8" fill="${THEME.ink}" fill-opacity="0.04" />
+    </pattern>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="${THEME.line}" stroke-width="1" />
+    </pattern>
   </defs>
 
-  <rect width="1200" height="630" fill="#0a0b0d" />
-  <rect width="1200" height="630" fill="url(#cyan-glow)" />
-  <rect width="1200" height="630" fill="url(#brand-glow)" />
+  <rect width="1200" height="630" fill="${THEME.bg}" />
+  <rect width="1200" height="630" fill="url(#stripe)" />
+  <rect x="32" y="32" width="1136" height="566" rx="12" fill="${THEME.panel}" stroke="${THEME.line}" stroke-width="1.5" />
 
-  <g opacity="0.4">
-    ${gridLines.join('\n    ')}
-  </g>
+  <!-- Top strip: eyebrow · barcode · id -->
+  <rect x="64" y="60" width="1072" height="48" rx="8" fill="${THEME.panel}" stroke="${THEME.line}" />
+  <text x="84" y="90" fill="${THEME.ink}" font-size="18" font-family="${MONO}" font-weight="700" letter-spacing="2">NUMERIC / METHODS</text>
+  ${barcodeBars(360, 75)}
+  <text x="1116" y="90" fill="${THEME.muted}" font-size="16" font-family="${MONO}" font-weight="700" text-anchor="end" letter-spacing="1.5">${escapeXml(methodId)}</text>
 
-  <rect x="40" y="40" width="1120" height="550" rx="14" fill="none" stroke="#23272e" stroke-width="1.5" />
+  <!-- Left column: category, English title, Uzbek name, description -->
+  <text x="72" y="${categoryY}" fill="${accentColor}" font-size="18" font-family="${MONO}" font-weight="700" letter-spacing="2.5">${escapeXml(category)}</text>
+  <text x="72" y="${titleTop}" fill="${THEME.ink}" font-size="${fontSize}" font-family="${SANS}" font-weight="800" letter-spacing="-${Math.max(1, Math.round(fontSize / 40))}">${titleTspans}</text>
+  <rect x="72" y="${underlineY}" width="${Math.min(TITLE_BOX_W, Math.round(fontSize * 3.2))}" height="10" fill="${accentColor}" />
+  <text x="72" y="${subtitleY}" fill="${THEME.muted}" font-size="30" font-family="${SANS}" font-weight="600">${escapeXml(subtitleUz)}</text>
+  ${descriptionSvg}
 
-  <g stroke="${accentColor}" stroke-width="2" opacity="0.8">
-    <line x1="32" y1="40" x2="48" y2="40" /><line x1="40" y1="32" x2="40" y2="48" />
-    <line x1="1152" y1="40" x2="1168" y2="40" /><line x1="1160" y1="32" x2="1160" y2="48" />
-    <line x1="32" y1="590" x2="48" y2="590" /><line x1="40" y1="582" x2="40" y2="598" />
-    <line x1="1152" y1="590" x2="1168" y2="590" /><line x1="1160" y1="582" x2="1160" y2="598" />
-  </g>
+  <!-- Right column: formula card -->
+  <rect x="700" y="150" width="428" height="240" rx="10" fill="${THEME.bg2}" stroke="${THEME.line}" stroke-width="1.5" />
+  <text x="724" y="184" fill="${THEME.muted}" font-size="15" font-family="${MONO}" font-weight="700" letter-spacing="1.5">FORMULA</text>
+  <rect x="724" y="200" width="380" height="${conditionSvg ? 100 : 140}" rx="8" fill="${THEME.panel}" stroke="${THEME.line2}" />
+  <svg x="740" y="208" width="348" height="${conditionSvg ? 84 : 124}" viewBox="${formulaSvg.viewBox}" preserveAspectRatio="xMidYMid meet">
+    ${formulaSvg.inner}
+  </svg>
+  ${conditionBlock}
 
-  <!-- HEADER -->
-  <g id="header-strip">
-    <rect x="70" y="60" width="168" height="28" rx="6" fill="#14171d" stroke="#272b32" stroke-width="1" />
-    <circle cx="85" cy="74" r="4" fill="${accentColor}" />
-    <text x="96" y="78" fill="#eef0f2" font-size="11" font-family="'Courier New', monospace" font-weight="700" letter-spacing="1.5">SONLI USULLAR</text>
-
-    <text x="254" y="78" fill="#8d949d" font-size="11" font-family="'Courier New', monospace" font-weight="600" letter-spacing="2">${safeCategory}</text>
-    <g>${barcodeDashes}</g>
-
-    <rect x="990" y="60" width="138" height="28" rx="6" fill="#14171d" stroke="#272b32" stroke-width="1" />
-    <text x="1059" y="78" fill="#22d3ee" font-size="11" font-family="'Courier New', monospace" font-weight="600" letter-spacing="1" text-anchor="middle">${safeBadge}</text>
-  </g>
-
-  <line x1="70" y1="104" x2="1128" y2="104" stroke="#1d2127" stroke-width="1" />
-
-  <!-- LEFT CONTENT -->
-  <g id="main-content">
-    <rect x="72" y="130" width="112" height="24" rx="4" fill="rgba(255, 106, 43, 0.12)" stroke="${accentColor}" stroke-opacity="0.3" stroke-width="1" />
-    <text x="128" y="146" fill="${accentColor}" font-size="11" font-family="'Courier New', monospace" font-weight="700" letter-spacing="1.5" text-anchor="middle">${safeMethodId}</text>
-
-    <text x="70" y="222" fill="#ffffff" font-size="52" font-family="'Segoe UI', Roboto, Helvetica, sans-serif" font-weight="800" letter-spacing="-1">
-      ${safeTitleUz}
-    </text>
-
-    <rect x="72" y="242" width="200" height="5" rx="2" fill="url(#line-grad)" />
-
-    <text x="72" y="280" fill="#8d949d" font-size="19" font-family="'Courier New', monospace" font-weight="500">
-      ${safeTitleAlt}
-    </text>
-
-    <text x="72" y="328" fill="#c3c8cf" font-size="19" font-family="'Segoe UI', Roboto, sans-serif">
-      ${safeDesc1}
-    </text>
-    ${
-      safeDesc2
-        ? `<text x="72" y="358" fill="#8d949d" font-size="18" font-family="'Segoe UI', Roboto, sans-serif">
-      ${safeDesc2}
-    </text>`
-        : ''
-    }
-  </g>
-
-  <!-- FORMULA CARD -->
-  <g id="formula-card">
-    <rect x="670" y="132" width="460" height="294" rx="12" fill="url(#card-grad)" stroke="#272b32" stroke-width="1.5" />
-    
-    <rect x="670" y="132" width="460" height="40" rx="12" fill="#181c24" />
-    <rect x="670" y="152" width="460" height="20" fill="#181c24" />
-    <circle cx="694" cy="152" r="3.5" fill="#ff6a2b" />
-    <circle cx="708" cy="152" r="3.5" fill="#22d3ee" />
-    <circle cx="722" cy="152" r="3.5" fill="#34d399" />
-    <text x="740" y="156" fill="#8d949d" font-size="11" font-family="'Courier New', monospace" font-weight="600" letter-spacing="1">MATEMATIK HISOB / FORMULA (LATEX)</text>
-
-    <rect x="692" y="188" width="416" height="88" rx="8" fill="#0a0b0d" stroke="#22262e" stroke-width="1" />
-    
-    <svg x="704" y="196" width="392" height="72" viewBox="${formulaSvg.viewBox}" preserveAspectRatio="xMidYMid meet">
-      ${formulaSvg.inner}
-    </svg>
-
-    ${
-      conditionSvg
-        ? `
-    <rect x="692" y="290" width="416" height="46" rx="6" fill="rgba(34, 211, 238, 0.08)" stroke="#22d3ee" stroke-opacity="0.25" stroke-width="1" />
-    <text x="712" y="318" fill="#8d949d" font-size="11" font-family="'Courier New', monospace">SHART:</text>
-    <svg x="768" y="297" width="320" height="32" viewBox="${conditionSvg.viewBox}" preserveAspectRatio="xMinYMid meet">
-      ${conditionSvg.inner}
-    </svg>
-    `
-        : `
-    <rect x="692" y="290" width="416" height="46" rx="6" fill="#14171d" stroke="#1f2329" stroke-width="1" />
-    <text x="712" y="318" fill="#8d949d" font-size="13" font-family="'Segoe UI', Roboto, sans-serif">✓ Qadam-baqam analitik yechim va taqqoslash</text>
-    `
-    }
-
-    <g transform="translate(692, 354)">
-      <rect x="0" y="0" width="130" height="32" rx="6" fill="#14171d" stroke="#272b32" stroke-width="1" />
-      <text x="65" y="20" fill="#34d399" font-size="11" font-family="'Courier New', monospace" font-weight="600" text-anchor="middle">✓ INTERAKTIV</text>
-
-      <rect x="142" y="0" width="132" height="32" rx="6" fill="#14171d" stroke="#272b32" stroke-width="1" />
-      <text x="208" y="20" fill="#ff6a2b" font-size="11" font-family="'Courier New', monospace" font-weight="600" text-anchor="middle">⚡ QADAM-BAQAM</text>
-
-      <rect x="286" y="0" width="130" height="32" rx="6" fill="#14171d" stroke="#272b32" stroke-width="1" />
-      <text x="351" y="20" fill="#22d3ee" font-size="11" font-family="'Courier New', monospace" font-weight="600" text-anchor="middle">📈 GRAFIK</text>
-    </g>
-  </g>
-
-  <!-- FOOTER -->
-  <g id="footer-strip">
-    <line x1="70" y1="460" x2="1128" y2="460" stroke="#1d2127" stroke-width="1" />
-
-    <g transform="translate(72, 492)">
-      <rect x="0" y="0" width="190" height="34" rx="8" fill="#14171d" stroke="#272b32" stroke-width="1" />
-      <text x="95" y="21" fill="#8d949d" font-size="11" font-family="'Courier New', monospace" font-weight="600" text-anchor="middle">✦ 100% BEPUL VA OCHIQ</text>
-
-      <rect x="204" y="0" width="230" height="34" rx="8" fill="#14171d" stroke="#272b32" stroke-width="1" />
-      <text x="319" y="21" fill="#8d949d" font-size="11" font-family="'Courier New', monospace" font-weight="600" text-anchor="middle">✦ WEB · WINDOWS · ANDROID</text>
-    </g>
-
-    <g transform="translate(900, 488)">
-      <text x="228" y="26" fill="#ffffff" font-size="22" font-family="'Courier New', monospace" font-weight="700" letter-spacing="1" text-anchor="end">
-        sonli-usullar<tspan fill="${accentColor}">.uz</tspan>
-      </text>
-      <text x="228" y="44" fill="#8d949d" font-size="11" font-family="'Courier New', monospace" letter-spacing="1.5" text-anchor="end">NUMERICAL METHODS LAB</text>
-    </g>
-  </g>
+  <!-- Footer -->
+  <line x1="72" y1="500" x2="1128" y2="500" stroke="${THEME.line}" stroke-width="1.5" />
+  <rect x="72" y="526" width="${Math.max(180, badge.length * 12 + 40)}" height="36" rx="8" fill="${accentSoft}" stroke="${accentColor}" stroke-opacity="0.4" />
+  <text x="${72 + Math.max(180, badge.length * 12 + 40) / 2}" y="550" fill="${accentColor}" font-size="16" font-family="${MONO}" font-weight="700" text-anchor="middle" letter-spacing="1">${escapeXml(badge)}</text>
+  <text x="1128" y="552" fill="${THEME.ink}" font-size="24" font-family="${MONO}" font-weight="700" text-anchor="end">sonli-usullar<tspan fill="${accentColor}">.uz</tspan></text>
 </svg>`;
 }
 
@@ -244,208 +190,192 @@ export const ALL_OG_CONFIGS: MethodOgConfig[] = [
   {
     slug: 'main',
     methodId: 'LAB // 2026',
-    category: 'MATEMATIK HISOB // NUMERICAL LAB',
-    titleUz: 'Sonli Usullar Laboratoriyasi',
-    titleAlt: 'Численные методы • Numerical Methods Platform',
-    descriptionLine1: 'Matematik va muhandislik tenglamalarini',
-    descriptionLine2: 'qadam-baqam yechuvchi interaktiv online laboratoriya.',
-    formulaLatex: 'f(x) = 0 \\quad \\int_a^b f(x)dx \\quad y\' = f(x,y)',
+    category: 'NUMERICAL LABORATORY',
+    titleLines: ['Numerical', 'Methods'],
+    subtitleUz: 'Sonli Usullar Laboratoriyasi',
+    descriptionLines: [
+      "Matematik va muhandislik masalalarini qadam-baqam",
+      'yechuvchi interaktiv online laboratoriya.',
+    ],
+    formulaLatex: "f(x) = 0 \\quad \\int_a^b f(x)\\,dx \\quad y' = f(x,y)",
     badge: '13 TA USUL',
-    accentColor: '#ff6a2b',
+    accent: 'brand',
   },
   {
     slug: 'bisection',
     methodId: 'METHOD // 001',
-    category: 'ILDIZ TOPISH // ROOT FINDING',
-    titleUz: 'Biseksiya usuli',
-    titleAlt: 'Метод бисекции • Bisection Method',
-    descriptionLine1: "Oraliqni teng ikkiga bo'lib, tenglama ildizini",
-    descriptionLine2: 'kafolatli tarzda yaqinlashtiring va qadam-baqam yeching.',
+    category: 'ROOT FINDING',
+    titleLines: ['Bisection', 'Method'],
+    subtitleUz: 'Biseksiya usuli',
+    descriptionLines: ["Oraliqni teng ikkiga bo'lib, ildizni", 'kafolatli tarzda yaqinlashtiring.'],
     formulaLatex: 'c = \\frac{a + b}{2}',
-    conditionLatex: 'f(a) \\cdot f(b) < 0',
-    badge: 'KAFOLATLI YAQL.',
-    accentColor: '#ff6a2b',
+    conditionLatex: 'f(a)\\cdot f(b) < 0',
+    badge: 'KAFOLATLI YAQINLASHISH',
+    accent: 'brand',
   },
   {
     slug: 'newton',
     methodId: 'METHOD // 002',
-    category: 'URINMALAR // TANGENT METHOD',
-    titleUz: 'Nyuton usuli',
-    titleAlt: 'Метод Ньютона • Newton-Raphson',
-    descriptionLine1: 'Hosila urinmasi yordamida nochiziqli tenglama',
-    descriptionLine2: 'ildiziga kvadratik tezlikda yaqinlashish.',
-    formulaLatex: 'x_{n+1} = x_n - \\frac{f(x_n)}{f\'(x_n)}',
+    category: 'TANGENT LINES',
+    titleLines: ["Newton's", 'Method'],
+    subtitleUz: 'Nyuton usuli',
+    descriptionLines: ['Hosila urinmasi yordamida nochiziqli', 'tenglama ildizini kvadratik tezlikda toping.'],
+    formulaLatex: "x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
     badge: 'KVADRATIK TEZLIK',
-    accentColor: '#ff6a2b',
+    accent: 'brand',
   },
   {
     slug: 'euler',
     methodId: 'METHOD // 003',
-    category: 'ODU // DIFFERENSIAL TENGLAMA',
-    titleUz: 'Eyler usullari',
-    titleAlt: 'Метод Эйлера • Euler Methods',
-    descriptionLine1: 'Oddiy differensial tenglamalarni Koshi masalasini',
-    descriptionLine2: 'standart va takomillashtirilgan Eyler usullari bilan yechish.',
+    category: 'ODE // INITIAL VALUE',
+    titleLines: ['Euler', 'Methods'],
+    subtitleUz: 'Eyler usullari',
+    descriptionLines: ['Koshi masalasini oddiy va takomillashtirilgan', 'Eyler usullari bilan yeching.'],
     formulaLatex: 'y_{i+1} = y_i + h \\cdot f(x_i, y_i)',
     badge: 'CHEKLI AYIRMALAR',
-    accentColor: '#22d3ee',
+    accent: 'cyan',
   },
   {
     slug: 'runge-kutta',
     methodId: 'METHOD // 004',
-    category: 'ODU // DIFFERENSIAL TENGLAMA',
-    titleUz: 'Runge-Kutta 4 usuli',
-    titleAlt: 'Метод Рунге-Кутты 4 • RK4 Solver',
-    descriptionLine1: 'Koshi masalasini 4-tartibli klassik Runge-Kutta',
-    descriptionLine2: 'usuli bilan yuqori O(h⁴) aniqlikda sonli integrallash.',
-    formulaLatex: 'y_{i+1} = y_i + \\frac{h}{6}(k_0 + 2k_1 + 2k_2 + k_3)',
-    badge: 'YUQORI O(h⁴) AN.',
-    accentColor: '#22d3ee',
+    category: 'ODE // INITIAL VALUE',
+    titleLines: ['Runge-Kutta', '4th Order'],
+    subtitleUz: 'Runge-Kutta 4 usuli',
+    descriptionLines: ["Koshi masalasini 4-tartibli klassik usul bilan", 'O(h⁴) aniqlikda yeching.'],
+    formulaLatex: 'y_{i+1} = y_i + \\frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)',
+    badge: "YUQORI ANIQLIK O(h⁴)",
+    accent: 'cyan',
   },
   {
     slug: 'lagrange',
     methodId: 'METHOD // 005',
-    category: 'APPROKSIMATSIYA // INTERPOLATION',
-    titleUz: 'Lagranj interpolyatsiyasi',
-    titleAlt: 'Интерполяция Лагранжа • Lagrange Polynomial',
-    descriptionLine1: 'Berilgan tugun nuqtalari orqali Lagranj bazis',
-    descriptionLine2: "ko'phadlarini va polinomni qadam-baqam hisoblash.",
-    formulaLatex: 'L(x) = \\sum_{i=0}^n y_i \\prod_{j \\ne i} \\frac{x - x_j}{x_i - x_j}',
+    category: 'APPROXIMATION',
+    titleLines: ['Lagrange', 'Interpolation'],
+    subtitleUz: 'Lagranj interpolyatsiyasi',
+    descriptionLines: ['Tugun nuqtalari orqali Lagranj', "ko'phadini qadam-baqam hisoblang."],
+    formulaLatex: 'L(x) = \\sum_{i=0}^{n} y_i \\prod_{j \\ne i} \\frac{x - x_j}{x_i - x_j}',
     badge: 'POLINOMIAL FIT',
-    accentColor: '#ff6a2b',
+    accent: 'brand',
   },
   {
     slug: 'newton-interpolation',
     methodId: 'METHOD // 010',
-    category: 'APPROKSIMATSIYA // INTERPOLATION',
-    titleUz: 'Nyuton interpolyatsiyasi',
-    titleAlt: 'Интерполяция Ньютона • Newton Interpolation',
-    descriptionLine1: 'Bo‘lingan ayirmalar jadvalidan Newton ko‘phadini',
-    descriptionLine2: 'tuzing va P(x*) qiymatini to‘liq qadamlar bilan toping.',
-    formulaLatex: 'f[x_0,\\ldots,x_n] = \\frac{f[x_1,\\ldots,x_n] - f[x_0,\\ldots,x_{n-1}]}{x_n - x_0}',
+    category: 'APPROXIMATION',
+    titleLines: ['Newton', 'Interpolation'],
+    subtitleUz: 'Nyuton interpolyatsiyasi',
+    descriptionLines: ['Bo‘lingan ayirmalar jadvalidan Newton', "ko'phadini tuzing va P(x*) ni toping."],
+    formulaLatex: 'P(x) = y_0 + f[x_0,x_1](x - x_0) + \\cdots',
     badge: 'DIVIDED DIFFERENCES',
-    accentColor: '#ff6a2b',
+    accent: 'brand',
   },
   {
     slug: 'rectangles',
     methodId: 'METHOD // 006',
-    category: 'INTEGRALLASH // QUADRATURE',
-    titleUz: "To'g'ri to'rtburchaklar",
-    titleAlt: 'Метод прямоугольников • Rectangles Rule',
-    descriptionLine1: "Aniq integrallarni chap va o'ng to'g'ri to'rtburchaklar",
-    descriptionLine2: 'yordamida geometrik yuzalarni jamlab hisoblash.',
+    category: 'QUADRATURE',
+    titleLines: ['Rectangle', 'Rule'],
+    subtitleUz: "To'g'ri to'rtburchaklar usuli",
+    descriptionLines: ["Aniq integralni chap va o'ng to'g'ri", "to'rtburchaklar yig'indisi bilan hisoblang."],
     formulaLatex: 'I \\approx h \\sum_{i=0}^{n-1} f(x_i)',
     badge: "RIEMANN YIG'INDISI",
-    accentColor: '#34d399',
+    accent: 'pos',
   },
   {
     slug: 'simpson',
     methodId: 'METHOD // 007',
-    category: 'INTEGRALLASH // QUADRATURE',
-    titleUz: 'Simpson usuli',
-    titleAlt: "Метод Симпсона • Simpson's Rule",
-    descriptionLine1: 'Aniq integrallarni parabolik approksimatsiya va',
-    descriptionLine2: "Simpson 1/3 qoidasi bo'yicha yuqori aniqlikda hisoblash.",
-    formulaLatex: 'I \\approx \\frac{h}{3}[y_0 + 4\\sum y_{toq} + 2\\sum y_{juft} + y_n]',
+    category: 'QUADRATURE',
+    titleLines: ["Simpson's", 'Rule'],
+    subtitleUz: 'Simpson usuli',
+    descriptionLines: ['Parabolik approksimatsiya asosida', "Simpson 1/3 qoidasi bilan integrallang."],
+    formulaLatex: 'I \\approx \\frac{h}{3}\\left[y_0 + 4\\sum y_{\\text{toq}} + 2\\sum y_{\\text{juft}} + y_n\\right]',
     badge: 'PARABOLIK O(h⁴)',
-    accentColor: '#34d399',
+    accent: 'pos',
   },
   {
     slug: 'trapezoid',
     methodId: 'METHOD // 008',
-    category: 'INTEGRALLASH // QUADRATURE',
-    titleUz: 'Trapetsiyalar usuli',
-    titleAlt: 'Метод трапеций • Trapezoidal Rule',
-    descriptionLine1: "Egri chiziqli oraliqni to'g'ri chiziqli trapetsiyalarga",
-    descriptionLine2: 'bo\'lib, integral qiymatini qadam-baqam jamlash.',
-    formulaLatex: 'I \\approx h \\left[ \\frac{y_0 + y_n}{2} + \\sum_{i=1}^{n-1} y_i \\right]',
+    category: 'QUADRATURE',
+    titleLines: ['Trapezoidal', 'Rule'],
+    subtitleUz: 'Trapetsiyalar usuli',
+    descriptionLines: ["Egri chiziq ostidagi yuzani trapetsiyalarga", "bo'lib hisoblang."],
+    formulaLatex: 'I \\approx h\\left[\\frac{y_0 + y_n}{2} + \\sum_{i=1}^{n-1} y_i\\right]',
     badge: 'CHIZIQLI TRAPETSIYA',
-    accentColor: '#34d399',
+    accent: 'pos',
   },
   {
     slug: 'sweep',
     methodId: 'METHOD // 009',
-    category: 'SLAU // CHIZIQLI ALGEBRA',
-    titleUz: 'Progonka usuli',
-    titleAlt: 'Метод прогонки • Thomas Algorithm',
-    descriptionLine1: 'Uch diagonalli chiziqli tenglamalar sistemasini',
-    descriptionLine2: "to'g'ri va teskari yurish koeffitsientlari orqali yechish.",
+    category: 'LINEAR ALGEBRA',
+    titleLines: ['Thomas', 'Algorithm'],
+    subtitleUz: 'Progonka usuli',
+    descriptionLines: ["Uch diagonalli chiziqli sistemani to'g'ri", 'va teskari yurish bilan yeching.'],
     formulaLatex: 'x_i = \\alpha_{i+1} x_{i+1} + \\beta_{i+1}',
     badge: 'CHIZIQLI O(n)',
-    accentColor: '#ff6a2b',
+    accent: 'brand',
   },
   {
     slug: 'bvp',
     methodId: 'METHOD // 011',
-    category: 'ODU // CHEGARAVIY MASALA',
-    titleUz: 'Chekli ayirmalar usuli',
-    titleAlt: 'Метод конечных разностей • Finite Difference BVP',
-    descriptionLine1: 'Ikkinchi tartibli chegaraviy masalani chekli ayirmalar',
-    descriptionLine2: 'va Tomas algoritmi bilan qadam-baqam yeching.',
-    formulaLatex: "y'' + P(x)y' + Q(x)y = f(x)",
-    conditionLatex: 'y(a)=g_0, \\quad y(b)=g_1',
+    category: 'BOUNDARY VALUE',
+    titleLines: ['Finite Difference', 'BVP'],
+    subtitleUz: 'Chekli ayirmalar usuli',
+    descriptionLines: ['Ikkinchi tartibli chegaraviy masalani chekli', 'ayirmalar va Tomas algoritmi bilan yeching.'],
+    formulaLatex: "y'' + P(x)\\,y' + Q(x)\\,y = f(x)",
+    conditionLatex: 'y(a)=g_0,\\quad y(b)=g_1',
     badge: 'CHEKLI AYIRMALAR',
-    accentColor: '#22d3ee',
+    accent: 'cyan',
   },
   {
     slug: 'adams-predictor',
     methodId: 'METHOD // 012',
-    category: 'ODU // SONLI YECHIM',
-    titleUz: 'Adams bashorat qiluvchi usuli',
-    titleAlt: 'Метод предиктора Адамса • Adams Predictor',
-    descriptionLine1: 'Koshi masalasini RK4 boshlang‘ich qadamlari',
-    descriptionLine2: 'va 3-tartibli Adams bashorat formulasi bilan yeching.',
-    formulaLatex: 'y_{i+1}=y_i+q_i+\\frac{1}{2}\\Delta q_{i-1}+\\frac{5}{12}\\Delta^2q_{i-2}',
+    category: 'ODE // MULTISTEP',
+    titleLines: ['Adams', 'Predictor'],
+    subtitleUz: 'Adams bashorat qiluvchi usuli',
+    descriptionLines: ['RK4 boshlang‘ich qadamlari va 3-tartibli', 'Adams bashorat formulasi.'],
+    formulaLatex: 'y_{i+1}=y_i+q_i+\\tfrac{1}{2}\\Delta q_{i-1}+\\tfrac{5}{12}\\Delta^2 q_{i-2}',
     badge: '3-TARTIBLI ADAMS',
-    accentColor: '#22d3ee',
+    accent: 'cyan',
   },
   {
     slug: 'collocation',
     methodId: 'METHOD // 013',
-    category: 'ODU // CHEGARAVIY MASALA',
-    titleUz: 'Kollokatsiya usuli',
-    titleAlt: 'Метод коллокаций • Collocation Method',
-    descriptionLine1: 'Ikkinchi tartibli chegaraviy masalani bazis funksiyalar',
-    descriptionLine2: 'va kollokatsiya nuqtalarida qadam-baqadam yeching.',
-    formulaLatex: "A_2(x)u'' + A_1(x)u' + A_0(x)u = f(x)",
-    conditionLatex: '\\alpha_0u(a)+\\alpha_1u\'(a)=A',
+    category: 'BOUNDARY VALUE',
+    titleLines: ['Collocation', 'Method'],
+    subtitleUz: 'Kollokatsiya usuli',
+    descriptionLines: ['Bazis funksiyalar va kollokatsiya nuqtalari', 'orqali chegaraviy masalani yeching.'],
+    formulaLatex: "A_2(x)\\,u'' + A_1(x)\\,u' + A_0(x)\\,u = f(x)",
+    conditionLatex: '\\alpha_0 u(a)+\\alpha_1 u\'(a)=A',
     badge: 'KOLLOKATSIYA',
-    accentColor: '#22d3ee',
+    accent: 'cyan',
   },
 ];
 
 async function main() {
   const isForce = process.argv.includes('--force');
   const targetDir = path.join(process.cwd(), 'public', 'images', 'og');
-
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir, { recursive: true });
   }
 
-  // Check which files need generation
   const missingConfigs = ALL_OG_CONFIGS.filter((cfg) => {
     if (isForce) return true;
-    const file = path.join(targetDir, `${cfg.slug}.png`);
-    return !fs.existsSync(file);
+    return !fs.existsSync(path.join(targetDir, `${cfg.slug}.png`));
   });
 
   if (missingConfigs.length === 0) {
-    console.log(`[og-generator] ✅ All ${ALL_OG_CONFIGS.length} OG images exist. (Use --force to regenerate)`);
+    console.log(`[og-generator] All ${ALL_OG_CONFIGS.length} OG images exist. (Use --force to regenerate)`);
     return;
   }
 
-  console.log(`[og-generator] 🚀 Generating ${missingConfigs.length} OG image(s)...`);
+  console.log(`[og-generator] Generating ${missingConfigs.length} OG image(s)...`);
   const start = performance.now();
-
   for (const config of missingConfigs) {
     const svg = generateOgSvg(config);
     const outFile = path.join(targetDir, `${config.slug}.png`);
     await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(outFile);
-    console.log(`  ✓ Created: public/images/og/${config.slug}.png`);
+    console.log(`  Created: public/images/og/${config.slug}.png`);
   }
-
   const duration = ((performance.now() - start) / 1000).toFixed(2);
-  console.log(`[og-generator] ✨ Completed in ${duration}s!`);
+  console.log(`[og-generator] Completed in ${duration}s`);
 }
 
 main().catch((err) => {
