@@ -67,7 +67,8 @@
     "status_initial": "Initial",
     "status_badge_current": "CURRENT",
     "footer_univ": "Karshi State University · 2026",
-    "btn_start_lab": "Start Laboratory"
+    "btn_start_lab": "Start Laboratory",
+    "contact_message": "Send a message"
   },
   "app": {
     "title": "SONLI",

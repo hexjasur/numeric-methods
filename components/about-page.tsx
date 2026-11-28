@@ -201,10 +201,10 @@ export function AboutPage() {
         <PsPanelHead eyebrow={t('about.author_eyebrow')} title={t('about.author_title')} idx="01" />
 
         <div className="grid grid-cols-1 lg:grid-cols-[120px_1fr] gap-6 items-start">
-          {/* Remote avatar for now; move the file to public/ to host it with the site */}
+          {/* Static export serves the photo from public/, so a plain img is used */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://avatars.githubusercontent.com/u/315015959?v=4"
+            src="/images/author.jpg"
             alt={t('about.author_name')}
             width={96}
             height={96}
@@ -254,11 +254,13 @@ export function AboutPage() {
               </a>
 
               <a
-                href="mailto:jasurhaydarovcode@gmail.com"
+                href="https://jasurdev.uz/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-line bg-panel hover:bg-brand-soft hover:border-brand/40 text-ink text-xs font-semibold transition-all"
               >
                 <Mail size={14} className="text-brand" />
-                <span>{t('about.contact_email')}</span>
+                <span>{t('about.contact_message')}</span>
               </a>
 
               <a

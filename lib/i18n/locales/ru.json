@@ -67,7 +67,8 @@
     "status_initial": "Начальная",
     "status_badge_current": "ТЕКУЩАЯ",
     "footer_univ": "Каршинский Государственный Университет · 2026",
-    "btn_start_lab": "Начать лабораторную"
+    "btn_start_lab": "Начать лабораторную",
+    "contact_message": "Написать сообщение"
   },
   "app": {
     "title": "SONLI",
