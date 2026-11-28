@@ -19,6 +19,11 @@ import {
   type CollocationResult,
 } from '@/lib/collocation';
 import { useI18n } from '@/components/i18n-provider';
+import {
+  exprTex,
+  operatorLhsTex,
+  type TexTerm,
+} from '@/lib/galerkin';
 
 const INITIAL: CollocationInput = {
   a2: '1',
@@ -39,6 +44,31 @@ const INITIAL: CollocationInput = {
 
 function tex(value: string): string {
   return value.replaceAll('*', '\\,').replaceAll('~', '').replaceAll('u', 'u');
+}
+
+// Live LaTeX of the typed problem; empty fields fall back to the defaults used by the solver
+function fieldTerm(source: string, fallback: string): TexTerm {
+  if (!source.trim()) return { tex: fallback, atomic: true };
+  try {
+    return exprTex(source);
+  } catch {
+    return { tex: '\\text{?}', atomic: true };
+  }
+}
+
+function problemTex(input: CollocationInput): string {
+  const lhs = operatorLhsTex(
+    fieldTerm(String(input.a2), '1'),
+    fieldTerm(String(input.a1), '0'),
+    fieldTerm(String(input.a0), '0'),
+  );
+  return `${lhs}=${fieldTerm(String(input.f), '0').tex}`;
+}
+
+function boundaryTex(input: CollocationInput): string[] {
+  const left = `${fieldTerm(String(input.alpha0), '1').tex}u(a)+${fieldTerm(String(input.alpha1), '0').tex}u'(a)=${fieldTerm(String(input.alphaValue), '0').tex}`;
+  const right = `${fieldTerm(String(input.beta0), '1').tex}u(b)+${fieldTerm(String(input.beta1), '0').tex}u'(b)=${fieldTerm(String(input.betaValue), '0').tex}`;
+  return [left, right];
 }
 
 function formatApproximation(value: number): string {
@@ -263,14 +293,23 @@ export function CollocationMethod() {
           },
         ]}
       />
-      <div className="grid min-w-0 items-start gap-[18px] lg:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
-        <aside className="min-w-0 space-y-[18px] lg:sticky lg:top-[88px] lg:max-h-[calc(100dvh-104px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
+      <div className="min-w-0 space-y-[18px]">
+        <aside className="mx-auto w-full min-w-0 max-w-3xl space-y-[18px]">
           <PsPanel>
             <PsPanelHead
               eyebrow={t('collocation.input_eyebrow')}
               title={t('collocation.input_title')}
               idx="01"
             />
+            <div className="mb-4 space-y-1 overflow-x-auto rounded-lg border border-line bg-bg-2 px-3 py-2">
+              <MathDisplay value={problemTex(input)} />
+              {boundaryTex(input).map((line, index) => (
+                <MathDisplay key={index} value={line} />
+              ))}
+              <p className="text-center font-mono text-[11px] text-muted">
+                [{String(input.a)}, {String(input.b)}]
+              </p>
+            </div>
             <form onSubmit={calculate} className="space-y-4">
               <p className="text-xs leading-relaxed text-muted">
                 {t('collocation.input_hint')}{' '}
@@ -321,7 +360,7 @@ export function CollocationMethod() {
                 <p className="mb-2 text-xs font-semibold text-ink">
                   {t('collocation.points_title')}
                 </p>
-                <div className="space-y-2">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {input.points.map((point, index) => (
                     <input
                       key={index}

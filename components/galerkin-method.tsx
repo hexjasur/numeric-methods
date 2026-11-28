@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { createContext, useContext, useState, type FormEvent, type ReactNode } from 'react';
 import katex from 'katex';
 import { Calculator, Check, Copy, Info } from 'lucide-react';
 import {
@@ -14,7 +14,9 @@ import { useI18n } from '@/components/i18n-provider';
 import {
   GalerkinError,
   exprTex,
+  expandedApproximation,
   formatNumber,
+  legendreBasis,
   operatorLhsTex,
   solveGalerkin,
   texNumber,
@@ -68,12 +70,21 @@ function katexHtml(source: string, displayMode: boolean): string {
   return katex.renderToString(source, { throwOnError: false, displayMode });
 }
 
+// Precision chosen by the user; every decimal in result formulas is rounded to it
+const PrecisionContext = createContext(6);
+
+function roundNumbers(source: string, digits: number): string {
+  return source.replace(/\d+\.\d+/g, (m) => String(Number(Number(m).toFixed(digits))));
+}
+
 function Tex({ value, block = true }: { value: string; block?: boolean }) {
+  const digits = useContext(PrecisionContext);
+  const text = roundNumbers(value, digits);
   // Inline formulas are spans so they can sit inside paragraphs
   return block ? (
-    <div className="w-full overflow-x-auto text-cyan" dangerouslySetInnerHTML={{ __html: katexHtml(value, true) }} />
+    <div className="w-full overflow-x-auto text-cyan" dangerouslySetInnerHTML={{ __html: katexHtml(text, true) }} />
   ) : (
-    <span className="inline-block text-cyan" dangerouslySetInnerHTML={{ __html: katexHtml(value, false) }} />
+    <span className="inline-block text-cyan" dangerouslySetInnerHTML={{ __html: katexHtml(text, false) }} />
   );
 }
 
@@ -200,9 +211,14 @@ function ResultView({
 }) {
   const { t } = useI18n();
   const n = result.coefficients.length;
-  const copyText = `u_n(x) = ${result.phi0.text} + ${result.coefficients
-    .map((c, i) => `${fmt(c, digits)}*(${result.basis[i].text})`)
-    .join(' + ')}`;
+  // Fully expanded form when uₙ is a polynomial; otherwise the sum of basis terms
+  const expanded = expandedApproximation(result, digits);
+  const finalTex = expanded ? `u_n(x)=${expanded.tex}` : result.finalTex;
+  const copyText = expanded
+    ? `u_n(x) = ${expanded.text}`
+    : `u_n(x) = ${result.phi0.text} + ${result.coefficients
+        .map((c, i) => `${fmt(c, digits)}*(${result.basis[i].text})`)
+        .join(' + ')}`;
 
   return (
     <>
@@ -321,7 +337,7 @@ function ResultView({
           <CopyButton value={copyText} />
         </div>
         <div className="mt-4">
-          <Tex value={result.finalTex} />
+          <Tex value={finalTex} />
         </div>
         <div className="mt-4 font-mono text-sm text-muted">
           {t('galerkin.final_meta', { precision: digits, n })}
@@ -470,6 +486,7 @@ export function GalerkinMethod() {
   const { t } = useI18n();
   const [input, setInput] = useState<GalerkinInput>(EMPTY_INPUT);
   const [template, setTemplate] = useState('');
+  const [legendre, setLegendre] = useState(false);
   const [count, setCount] = useState(2);
   const [advanced, setAdvanced] = useState(false);
   const [board, setBoard] = useState(false);
@@ -486,7 +503,14 @@ export function GalerkinMethod() {
 
   const changeTemplate = (value: string) => {
     setTemplate(value);
+    setLegendre(false);
     update('basis', buildBasis(value, count));
+  };
+
+  const toggleLegendre = () => {
+    setLegendre((on) => !on);
+    setResult(null);
+    setError('');
   };
 
   const changeCount = (value: number) => {
@@ -496,9 +520,15 @@ export function GalerkinMethod() {
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (legendre && (!input.a.trim() || !input.b.trim())) {
+      setResult(null);
+      setError(describeError(new GalerkinError('empty', { label: input.a.trim() ? 'b' : 'a' }), t));
+      return;
+    }
     // Simple mode uses Dirichlet conditions: u(a) and u(b) are given directly
     const payload: GalerkinInput = {
       ...(advanced ? input : { ...input, alpha0: '1', alpha1: '0', beta0: '1', beta1: '0' }),
+      basis: legendre ? legendreBasis(input.a, input.b, count) : input.basis,
       autoCount: count,
       allowNonHomogeneousBasis: board,
     };
@@ -514,6 +544,7 @@ export function GalerkinMethod() {
   const reset = () => {
     setInput(SAMPLE_INPUT);
     setTemplate(SAMPLE_TEMPLATE);
+    setLegendre(false);
     setCount(2);
     setAdvanced(false);
     setResult(null);
@@ -523,6 +554,7 @@ export function GalerkinMethod() {
   const clear = () => {
     setInput(EMPTY_INPUT);
     setTemplate('');
+    setLegendre(false);
     setResult(null);
     setError('');
   };
@@ -607,12 +639,26 @@ export function GalerkinMethod() {
               value={template}
               onChange={changeTemplate}
             />
-            {template.trim() ? (
+            {template.trim() && !legendre ? (
               <p className={`${hintClass} mt-1.5 font-mono`}>
                 {input.basis.map((item, index) => `φ${index + 1} = ${item}`).join('   ')}
               </p>
             ) : (
-              <p className={`${hintClass} mt-1.5`}>{t('galerkin.template_auto')}</p>
+              <div className="mt-1.5 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  aria-pressed={legendre}
+                  onClick={toggleLegendre}
+                  className={`rounded-md border px-2.5 py-1 text-xs ${
+                    legendre ? 'border-brand bg-brand-soft text-ink' : 'border-line text-muted hover:text-ink'
+                  }`}
+                >
+                  {t('galerkin.legendre_button')}
+                </button>
+                <span className={hintClass}>
+                  {legendre ? t('galerkin.legendre_hint') : t('galerkin.template_auto')}
+                </span>
+              </div>
             )}
           </div>
 
@@ -673,7 +719,7 @@ export function GalerkinMethod() {
 
       <div ref={resultRef}>
         {result && (
-          <>
+          <PrecisionContext.Provider value={digits}>
             {board && (
               <PsNote variant="orange" icon={<Info size={16} />}>
                 <p>{t('galerkin.board_notice')}</p>
@@ -683,7 +729,7 @@ export function GalerkinMethod() {
               <p>{t('galerkin.numeric_notice')}</p>
             </PsNote>
             <ResultView result={result} digits={digits} />
-          </>
+          </PrecisionContext.Provider>
         )}
       </div>
     </>

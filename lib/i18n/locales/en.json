@@ -67,7 +67,8 @@
     "status_initial": "Initial",
     "status_badge_current": "CURRENT",
     "footer_univ": "Karshi State University · 2026",
-    "btn_start_lab": "Start Laboratory"
+    "btn_start_lab": "Start Laboratory",
+    "contact_message": "Send a message"
   },
   "app": {
     "title": "SONLI",
@@ -985,6 +986,8 @@
     "n_label": "n",
     "template_label": "φᵢ(x) template (i = 1, 2, …, n) — empty = automatic",
     "auto_placeholder": "automatic",
+    "legendre_button": "Legendre basis",
+    "legendre_hint": "φᵢ = (x − a)(b − x)·P(i−1)(t), zero at both ends. For Dirichlet problems.",
     "template_auto": "Automatic: φᵢ = (x − a)^(i+1) − linear correction, matching the boundary conditions.",
     "board_label": "Basis functions need not vanish at the boundary. With this option the boundary conditions may not hold exactly.",
     "submit": "Solve",
@@ -1047,5 +1050,16 @@
       "basisBoundary": "φ{index}(x) does not satisfy the homogeneous boundary conditions (left: {left}, right: {right}).",
       "noBasis": "Enter at least one basis function, or choose how many to generate."
     }
+  },
+  "share": {
+    "title": "Share example",
+    "note_label": "Note (optional)",
+    "note_placeholder": "e.g. Thomas method, check a₃ in step 1",
+    "hint": "The note is added to the link. Everyone who opens it sees it at the top of the page.",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "close": "Close",
+    "banner_label": "Note",
+    "banner_dismiss": "Dismiss note"
   }
 }
