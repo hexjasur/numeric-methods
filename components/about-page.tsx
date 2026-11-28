@@ -1,26 +1,6 @@
 'use client';
 
-import {
-  ArrowUpRight,
-  Atom,
-  Binary,
-  Calculator,
-  CheckCircle2,
-  Code2,
-  Cpu,
-  ExternalLink,
-  FileCode2,
-  Globe,
-  Layers,
-  LineChart,
-  Mail,
-  MonitorSmartphone,
-  Palette,
-  Send,
-  Shapes,
-  Sparkles,
-  Zap,
-} from 'lucide-react';
+import { ArrowUpRight, Atom, Binary, Calculator, CheckCircle2, Code2, Cpu, ExternalLink, FileCode2, Globe, Layers, LineChart, Mail, MonitorSmartphone, Palette, Send, Shapes, Sparkles, Zap, Download } from 'lucide-react';
 import Link from 'next/link';
 import { PsHero, PsStrip, PsPanel, PsPanelHead } from '@/components/ui/print-stream';
 import { useI18n } from '@/components/i18n-provider';
@@ -408,6 +388,13 @@ export function AboutPage() {
           >
             <span>{t('about.btn_start_lab')}</span>
             <ArrowUpRight size={14} />
+          </Link>
+          <Link
+            href="/download"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-brand/40 bg-brand-soft text-brand font-semibold text-xs transition-all hover:bg-brand/15"
+          >
+            <Download size={14} aria-hidden="true" />
+            <span>{t('about.download_btn')}</span>
           </Link>
         </div>
       </PsPanel>
