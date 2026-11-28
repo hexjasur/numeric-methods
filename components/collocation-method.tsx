@@ -401,7 +401,7 @@ export function CollocationMethod() {
               {error && (
                 <p
                   role="alert"
-                  className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-700 dark:text-red-300"
+                  className="rounded-lg border border-neg/30 bg-neg/10 p-3 text-sm text-neg"
                 >
                   {error}
                 </p>
@@ -517,7 +517,7 @@ export function CollocationMethod() {
                       {result.coefficients.map((coefficient, index) => (
                         <span
                           key={index}
-                          className="rounded-md border border-brand/30 bg-brand/10 px-2 py-1 text-xs text-brand"
+                          className="rounded-md border border-brand/30 bg-brand-soft px-2 py-1 text-xs text-brand"
                         >
                           <InlineMath
                             value={`C_${index + 1} = ${texNumber(coefficient)} \\approx ${formatApproximation(coefficient)}`}

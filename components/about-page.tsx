@@ -139,7 +139,7 @@ export function AboutPage() {
       cat: 'Runtime & PM',
       desc: 'Speedy package manager & build pipeline',
       icon: Zap,
-      color: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
+      color: 'text-brand bg-brand-soft border-brand/20',
       tag: 'Tooling',
     },
     {

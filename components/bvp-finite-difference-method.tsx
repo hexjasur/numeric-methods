@@ -283,7 +283,7 @@ export function BvpFiniteDifferenceMethod() {
                     <button type="button" onClick={() => parseProblem()} className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-brand px-3 py-2 text-center text-sm font-semibold leading-snug text-brand-ink hover:opacity-90">{t('bvp.parse_button')}</button>
                     <button type="button" onClick={applyExample} className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-brand/40 bg-brand-soft px-3 py-2 text-center text-sm font-semibold leading-snug text-brand transition-colors hover:bg-brand/15">{t('bvp.example_button')}</button>
                   </div>
-                  {parsedNotice && <p role="status" className="rounded-md bg-emerald-500/10 p-2 text-xs leading-relaxed text-emerald-700 dark:text-emerald-300">{parsedNotice}</p>}
+                  {parsedNotice && <p role="status" className="rounded-md bg-pos/10 p-2 text-xs leading-relaxed text-pos">{parsedNotice}</p>}
                 </div>
               </details>
               <p className="text-xs leading-relaxed text-muted">{t('bvp.expression_hint')}</p>
@@ -301,7 +301,7 @@ export function BvpFiniteDifferenceMethod() {
                 <strong className="text-ink">{t('bvp.right')}:</strong> g₀y(b) + g₁y′(b) = g₂
               </div>
               <button type="submit" className="flex min-h-12 w-full flex-wrap items-center justify-center gap-2 rounded-lg bg-brand px-3 py-3 text-center font-semibold leading-snug text-brand-ink transition-opacity hover:opacity-90"><Calculator size={17} className="shrink-0" /><span className="min-w-0">{t('bvp.calculate')}</span></button>
-              {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-700 dark:text-red-300">{error}</p>}
+              {error && <p role="alert" className="rounded-lg border border-neg/30 bg-neg/10 p-3 text-sm text-neg">{error}</p>}
             </form>
           </PsPanel>
           <PsNote icon={<Info size={15} />} variant="cyan"><span className="text-sm">{t('bvp.note')}</span></PsNote>
@@ -372,11 +372,11 @@ export function BvpFiniteDifferenceMethod() {
                 </li>
               </ol>
               <div className="mt-4 flex flex-wrap items-center gap-3">
-                <button type="button" onClick={copyNotebook} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-brand/30 bg-brand/10 px-3 py-2 text-sm font-semibold text-brand hover:bg-brand/20">
+                <button type="button" onClick={copyNotebook} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-brand/30 bg-brand-soft px-3 py-2 text-sm font-semibold text-brand hover:bg-brand/20">
                   {copiedNotebook ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
                   {copiedNotebook ? t('bvp.copy_done') : t('bvp.copy_button')}
                 </button>
-                {copyError && <p role="alert" className="text-sm text-red-700 dark:text-red-300">{copyError}</p>}
+                {copyError && <p role="alert" className="text-sm text-neg">{copyError}</p>}
                 <span className="text-xs text-muted">{t('bvp.notebook_values')}: {nodes.length}</span>
               </div>
             </PsPanel>
