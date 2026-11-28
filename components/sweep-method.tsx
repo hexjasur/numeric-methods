@@ -5,7 +5,6 @@ import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { ArrowUpRight, Calculator, Check, Info, Link2 } from 'lucide-react';
 import { useI18n } from '@/components/i18n-provider';
-import { ResultActions } from '@/components/ui/result-actions';
 import { useScrollToResult } from '@/components/ui/use-scroll-to-result';
 import {
   PsHero,
@@ -508,25 +507,6 @@ export function SweepMethod() {
               </div>
             )}
           </PsPanel>
-          {result && (
-            <ResultActions
-              summaryText={`Haydash (Thomas) method: n=${result.rows.length}, x=[${result.rows.map((row) => formatSweep(row.x, precision)).join(', ')}], max residual=${formatSweep(result.maxResidual, precision + 2)}`}
-              csvData={result.rows.map((row) => ({
-                [t('sweep.tbl_row')]: row.index,
-                [t('sweep.tbl_a')]: row.a,
-                [t('sweep.tbl_b')]: row.b,
-                [t('sweep.tbl_c')]: row.c,
-                [t('sweep.tbl_d')]: row.d,
-                [t('sweep.tbl_pivot')]: formatSweep(row.pivot, precision),
-                [t('sweep.tbl_alpha')]: formatSweep(row.alpha, precision),
-                [t('sweep.tbl_beta')]: formatSweep(row.beta, precision),
-                [t('sweep.tbl_x')]: formatSweep(row.x, precision),
-                [t('sweep.tbl_residual')]: formatSweep(row.residual, precision + 2),
-              }))}
-              csvFileName="haydash-usuli-hisoboti.csv"
-              imageFileName="haydash-usuli-hisoboti.png"
-            />
-          )}
 
           <section ref={resultRef} className={`scroll-mt-24 flex min-h-[150px] flex-wrap items-center justify-between gap-5 rounded-[10px] border p-6 shadow-[var(--shadow)] transition-colors ${result ? 'border-brand bg-[linear-gradient(135deg,var(--brand-soft),var(--panel)_70%)]' : 'border-line bg-panel'}`}>
             <div className="min-w-0 flex-1">
